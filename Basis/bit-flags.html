@@ -1,0 +1,160 @@
+<!-- HTML/bit-flags.html -->
+
+<!-- COPYRIGHT (c) 1997 Bell Labs, Lucent Technologies. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The BIT_FLAGS signature</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF"><A NAME="top"></A>
+<H1 align=CENTER>The Standard ML Basis Library</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>BIT_FLAGS</CODE> signature</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="BIT_FLAGS:SIG:SPEC"></A><CODE>BIT_FLAGS</CODE>&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+The <CODE>BIT_FLAGS</CODE> signature defines a generic set of operations on an abstract representation of system flags. It is typically included as part of the interface of substructures which provide a set of options. 
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>eqtype</B>&nbsp;<A NAME="SIG:BIT_FLAGS.flags:TY:SPEC" HREF="#SIG:BIT_FLAGS.flags:TY">flags</A><BR>
+<B>val</B>&nbsp;<A NAME="SIG:BIT_FLAGS.toWord:VAL:SPEC" HREF="#SIG:BIT_FLAGS.toWord:VAL">toWord</A>&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;flags&nbsp;<B>-&gt;</B>&nbsp;SysWord.word<BR>
+<B>val</B>&nbsp;<A NAME="SIG:BIT_FLAGS.fromWord:VAL:SPEC" HREF="#SIG:BIT_FLAGS.fromWord:VAL">fromWord</A>&nbsp;<B>:</B>&nbsp;SysWord.word&nbsp;<B>-&gt;</B>&nbsp;flags<BR>
+<B>val</B>&nbsp;<A NAME="SIG:BIT_FLAGS.all:VAL:SPEC" HREF="#SIG:BIT_FLAGS.all:VAL">all</A>&nbsp;<B>:</B>&nbsp;flags<BR>
+<B>val</B>&nbsp;<A NAME="SIG:BIT_FLAGS.flags:VAL:SPEC" HREF="#SIG:BIT_FLAGS.flags:VAL">flags</A>&nbsp;<B>:</B>&nbsp;flags&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;flags<BR>
+<B>val</B>&nbsp;<A NAME="SIG:BIT_FLAGS.intersect:VAL:SPEC" HREF="#SIG:BIT_FLAGS.intersect:VAL">intersect</A>&nbsp;<B>:</B>&nbsp;flags&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;flags<BR>
+<B>val</B>&nbsp;<A NAME="SIG:BIT_FLAGS.clear:VAL:SPEC" HREF="#SIG:BIT_FLAGS.clear:VAL">clear</A>&nbsp;<B>:</B>&nbsp;flags&nbsp;<B>*</B>&nbsp;flags&nbsp;<B>-&gt;</B>&nbsp;flags<BR>
+<B>val</B>&nbsp;<A NAME="SIG:BIT_FLAGS.allSet:VAL:SPEC" HREF="#SIG:BIT_FLAGS.allSet:VAL">allSet</A>&nbsp;<B>:</B>&nbsp;flags&nbsp;<B>*</B>&nbsp;flags&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="SIG:BIT_FLAGS.anySet:VAL:SPEC" HREF="#SIG:BIT_FLAGS.anySet:VAL">anySet</A>&nbsp;<B>:</B>&nbsp;flags&nbsp;<B>*</B>&nbsp;flags&nbsp;<B>-&gt;</B>&nbsp;bool</CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="SIG:BIT_FLAGS.flags:TY"></A><CODE><B>eqtype</B>&nbsp;flags</CODE>
+<DD>
+ This type is the abstract representation of a set of system flags. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:BIT_FLAGS.toWord:VAL"></A><CODE><B>val</B>&nbsp;toWord&nbsp;<B>:</B>&nbsp;flags&nbsp;<B>-&gt;</B>&nbsp;SysWord.word<BR>
+<B>val</B>&nbsp;fromWord&nbsp;<B>:</B>&nbsp;SysWord.word&nbsp;<B>-&gt;</B>&nbsp;flags</CODE>
+<DD>
+ These functions convert between the abstract <CODE><A HREF="bit-flags.html#SIG:BIT_FLAGS.flags:TY:SPEC">flags</A></CODE> type  and a bit-vector that is represented as a system <CODE><A HREF="word.html#SIG:WORD.word:TY:SPEC">word</A></CODE>.  The interpretation of the bits is system-dependent, but follows  the C language binding for the host operating system. Note that there is no error checking on the <CODE>fromWord</CODE> function's argument. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:BIT_FLAGS.all:VAL"></A>
+<DT> <CODE>all </CODE>
+<DD>
+represents the union of all flags. Note that this may well be a superset of the <CODE>flags</CODE> value defined in a matching structure. For example, <CODE><A HREF="bit-flags.html#BIT_FLAGS:SIG:SPEC">BIT_FLAGS</A></CODE> is used to define the flags specified by the POSIX standard; a POSIX-conforming operating system may provide additional flags that will not be defined in the <CODE><A HREF="posix.html#Posix:STR:SPEC">Posix</A></CODE> structure but could be set in the <CODE>all</CODE> value. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:BIT_FLAGS.flags:VAL"></A>
+<DT> <CODE>flags <VAR>l</VAR> </CODE>
+<DD>
+returns a value that represents the union of the flags in the  list <VAR>l</VAR>. The expression <CODE>flags []</CODE> denotes the empty set. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:BIT_FLAGS.intersect:VAL"></A>
+<DT> <CODE>intersect <VAR>l</VAR> </CODE>
+<DD>
+returns a value that represents the intersection of the sets of flags in the list <VAR>l</VAR>. The expression <CODE>intersect []</CODE> denotes <CODE>all</CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:BIT_FLAGS.clear:VAL"></A>
+<DT> <CODE>clear (<VAR>fl1</VAR>, <VAR>fl2</VAR>) </CODE>
+<DD>
+returns the set of those flags in <VAR>fl2</VAR> that are not set in <VAR>fl1</VAR>, <I>i.e.</I>, the set difference <CODE><VAR>fl2</VAR> \ <VAR>fl1</VAR></CODE>. It is equivalent to: 
+<PRE>
+fromWord(SysWord.andb(SysWord.notb (toWord fl1), toWord fl2))
+</PRE>
+ 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:BIT_FLAGS.allSet:VAL"></A>
+<DT> <CODE>allSet (<VAR>fl1</VAR>, <VAR>fl2</VAR>) </CODE>
+<DD>
+returns <CODE>true</CODE> if all of the flags in <VAR>fl1</VAR> are also  in <VAR>fl2</VAR> (<I>i.e.</I>, this tests for inclusion of <VAR>fl1</VAR> in  <VAR>fl2</VAR>). 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:BIT_FLAGS.anySet:VAL"></A>
+<DT> <CODE>anySet (<VAR>fl1</VAR>, <VAR>fl2</VAR>) </CODE>
+<DD>
+returns <CODE>true</CODE> if any of the flags in <VAR>fl1</VAR> is also  in <VAR>fl2</VAR> (<I>i.e.</I>, this tests for non-empty intersection).
+<BR>
+<BR>
+
+</DL>
+<H4>See Also</H4>
+<BLOCKQUOTE>
+<CODE><A HREF="posix.html#SIG:POSIX.FileSys:STR:SPEC">Posix.FileSys</A></CODE>, <CODE><A HREF="posix.html#SIG:POSIX.IO:STR:SPEC">Posix.IO</A></CODE>, <CODE><A HREF="posix.html#SIG:POSIX.Process:STR:SPEC">Posix.Process</A></CODE>, <CODE><A HREF="posix.html#SIG:POSIX.TTY:STR:SPEC">Posix.TTY</A></CODE>, <CODE><A HREF="word.html#SysWord:STR:SPEC">SysWord</A></CODE>, <CODE><A HREF="windows.html#Windows:STR:SPEC">Windows</A></CODE>
+</BLOCKQUOTE>
+<H4>Discussion</H4>
+<P>
+The number of distinct flags in an implementation of the <CODE>BIT_FLAGS</CODE> interface must be less than or equal to the number of bits in the <CODE><A HREF="word.html#SIG:WORD.word:TY:SPEC">SysWord.word</A></CODE> type. In addition, <CODE>fromWord o toWord</CODE> must be the identity function, and <CODE>toWord o fromWord</CODE> must be equivalent to 
+<PRE>
+fn w =&gt; SysWord.andb(w, toWord all)
+</PRE>
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="manpages.html">Parent</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   | <A HREF="index.html">Root</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Generated April 12, 2004</I><BR>
+<I>Last Modified July 1, 2002</I><BR>
+<I>Comments to <A HREF="http://www.cs.uchicago.edu/people/jhr">John Reppy.</A></I><BR>
+
+<HR>
+<P>
+
+This document may be distributed freely over the internet as long as the
+copyright notice and license terms below are prominently displayed within
+every machine-readable copy.  
+
+<P>
+
+<TABLE ALIGN=CENTER WIDTH="80%" BORDER="2" CELLPADDING="5">
+<TR>
+<TD>
+<P>
+
+Copyright &copy; 2004 AT&amp;T and Lucent Technologies.
+All rights reserved.
+
+<P>
+
+Permission is granted for internet users to make one paper copy for their
+own personal use.  Further hardcopy reproduction is strictly prohibited. 
+Permission to distribute the HTML document electronically on any medium
+other than the internet must be requested from the copyright holders by
+contacting the editors.
+Printed versions of the SML Basis Manual are available from Cambridge
+University Press.
+To order, please visit
+<A HREF="http://www.cup.org">www.cup.org</A> (North America) or
+<A HREF="http://www.cup.cam.ac.uk">www.cup.cam.ac.uk</A> (outside North America).<BR>
+
+</TABLE>
+<P>
+
+<HR>
+</BODY></HTML>

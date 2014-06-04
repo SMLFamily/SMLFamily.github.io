@@ -1,0 +1,422 @@
+<!-- HTML/substring.html -->
+
+<!-- COPYRIGHT (c) 1997 Bell Labs, Lucent Technologies. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The SUBSTRING signature</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF"><A NAME="top"></A>
+<H1 align=CENTER>The Standard ML Basis Library</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>SUBSTRING</CODE> signature</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="SUBSTRING:SIG:SPEC"></A><CODE>SUBSTRING</CODE><BR>
+<B>structure</B>&nbsp;<A NAME="Substring:STR:SPEC"></A><CODE>Substring</CODE><B> :> </B>SUBSTRING<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;substring&nbsp;=&nbsp;<A HREF="mono-vector-slice.html#SIG:MONO_VECTOR_SLICE.slice:TY:SPEC">CharVectorSlice.slice</A><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;string&nbsp;=&nbsp;<A HREF="string.html#SIG:STRING.string:TY:SPEC">String.string</A><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;char&nbsp;=&nbsp;<A HREF="char.html#SIG:CHAR.char:TY:SPEC">Char.char</A><BR>
+<B>structure</B>&nbsp;<A NAME="WideSubstring:STR:SPEC"></A><CODE>WideSubstring</CODE><B> :> </B>SUBSTRING&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;substring&nbsp;=&nbsp;<A HREF="mono-vector-slice.html#SIG:MONO_VECTOR_SLICE.slice:TY:SPEC">WideCharVectorSlice.slice</A><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;string&nbsp;=&nbsp;<A HREF="string.html#SIG:STRING.string:TY:SPEC">WideString.string</A><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;char&nbsp;=&nbsp;<A HREF="char.html#SIG:CHAR.char:TY:SPEC">WideChar.char</A><BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+The <CODE>SUBSTRING</CODE> signature specifies manipulations on an abstract representation of a sequence of contiguous characters in a string. A <CODE>substring</CODE> value can be modeled as a triple  <CODE>(<VAR>s</VAR>, <VAR>i</VAR>, <VAR>n</VAR>)</CODE>, where <VAR>s</VAR> is the underlying string, <VAR>i</VAR> is the starting index, and <VAR>n</VAR> is the size of the substring, with the constraint that  0 &lt;= <VAR>i</VAR> &lt;= <VAR>i</VAR> + <VAR>n</VAR> &lt;= |<VAR>s</VAR>|. 
+<P>
+The <CODE>substring</CODE> type and its attendant functions provide a convenient abstraction for performing a variety of common analyses of strings, such as finding the leftmost occurrence, if any, of a character in a string. In addition, using the <CODE>substring</CODE> functions avoids much of the copying and bounds checking that occur if similar operations are implemented solely in terms of strings. 
+<P>
+The <CODE>SUBSTRING</CODE> signature is matched by two structures, the required <CODE>Substring</CODE> and the optional <CODE>WideSubstring</CODE>. The former is a companion structure to the <CODE><A HREF="char.html#Char:STR:SPEC">Char</A></CODE> and <CODE><A HREF="string.html#String:STR:SPEC">String</A></CODE> structures, which are based on the extended ASCII 8-bit character set. The structure <CODE><A HREF="substring.html#WideSubstring:STR:SPEC">WideSubstring</A></CODE> is related in the same way to the structures <CODE><A HREF="char.html#WideChar:STR:SPEC">WideChar</A></CODE> and <CODE><A HREF="string.html#WideString:STR:SPEC">WideString</A></CODE>, which are based on characters of some size greater than or equal to 8 bits. In particular, the types <CODE>Substring.string</CODE> and <CODE>Substring.char</CODE> are identical to those types in the structure <CODE><A HREF="string.html#String:STR:SPEC">String</A></CODE> and, when <CODE><A HREF="substring.html#WideSubstring:STR:SPEC">WideSubstring</A></CODE> is defined, the types <CODE>WideSubstring.string</CODE> and <CODE>WideSubstring.char</CODE> are identical to those types in the structure <CODE><A HREF="string.html#WideString:STR:SPEC">WideString</A></CODE>.
+<P>
+All of these connections are made explicit in the <CODE><A HREF="text.html#Text:STR:SPEC">Text</A></CODE> and <CODE><A HREF="text.html#WideText:STR:SPEC">WideText</A></CODE> structures, which match the <CODE><A HREF="text.html#TEXT:SIG:SPEC">TEXT</A></CODE> signature. In the exposition below, references to a <CODE>String</CODE> structure refers to the substructure of that name defined in either the <CODE><A HREF="text.html#Text:STR:SPEC">Text</A></CODE> or the <CODE><A HREF="text.html#WideText:STR:SPEC">WideText</A></CODE> structure, which ever is appropriate.
+<P>
+The design of the <CODE><A HREF="substring.html#SUBSTRING:SIG:SPEC">SUBSTRING</A></CODE> interface was influenced by the paper ``Subsequence References: First-Class Values for Substrings,'' by Wilfred J. Hansen<B>[CITE]</B>. 
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>type</B>&nbsp;<A NAME="SIG:SUBSTRING.substring:TY:SPEC" HREF="#SIG:SUBSTRING.substring:TY">substring</A><BR>
+<B>eqtype</B>&nbsp;<A NAME="SIG:SUBSTRING.char:TY:SPEC" HREF="#SIG:SUBSTRING.char:TY">char</A><BR>
+<B>eqtype</B>&nbsp;<A NAME="SIG:SUBSTRING.string:TY:SPEC" HREF="#SIG:SUBSTRING.string:TY">string</A><BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:SUBSTRING.sub:VAL:SPEC" HREF="#SIG:SUBSTRING.sub:VAL">sub</A>&nbsp;<B>:</B>&nbsp;substring&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;char<BR>
+<B>val</B>&nbsp;<A NAME="SIG:SUBSTRING.size:VAL:SPEC" HREF="#SIG:SUBSTRING.size:VAL">size</A>&nbsp;<B>:</B>&nbsp;substring&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:SUBSTRING.base:VAL:SPEC" HREF="#SIG:SUBSTRING.base:VAL">base</A>&nbsp;<B>:</B>&nbsp;substring&nbsp;<B>-&gt;</B>&nbsp;string&nbsp;<B>*</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:SUBSTRING.extract:VAL:SPEC" HREF="#SIG:SUBSTRING.extract:VAL">extract</A>&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;option&nbsp;<B>-&gt;</B>&nbsp;substring<BR>
+<B>val</B>&nbsp;<A NAME="SIG:SUBSTRING.substring:VAL:SPEC" HREF="#SIG:SUBSTRING.substring:VAL">substring</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;substring<BR>
+<B>val</B>&nbsp;<A NAME="SIG:SUBSTRING.full:VAL:SPEC" HREF="#SIG:SUBSTRING.full:VAL">full</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;substring<BR>
+<B>val</B>&nbsp;<A NAME="SIG:SUBSTRING.string:VAL:SPEC" HREF="#SIG:SUBSTRING.string:VAL">string</A>&nbsp;<B>:</B>&nbsp;substring&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="SIG:SUBSTRING.isEmpty:VAL:SPEC" HREF="#SIG:SUBSTRING.isEmpty:VAL">isEmpty</A>&nbsp;<B>:</B>&nbsp;substring&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="SIG:SUBSTRING.getc:VAL:SPEC" HREF="#SIG:SUBSTRING.getc:VAL">getc</A>&nbsp;<B>:</B>&nbsp;substring&nbsp;<B>-&gt;</B>&nbsp;(char&nbsp;<B>*</B>&nbsp;substring)&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="SIG:SUBSTRING.first:VAL:SPEC" HREF="#SIG:SUBSTRING.first:VAL">first</A>&nbsp;<B>:</B>&nbsp;substring&nbsp;<B>-&gt;</B>&nbsp;char&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="SIG:SUBSTRING.triml:VAL:SPEC" HREF="#SIG:SUBSTRING.triml:VAL">triml</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;substring&nbsp;<B>-&gt;</B>&nbsp;substring<BR>
+<B>val</B>&nbsp;<A NAME="SIG:SUBSTRING.trimr:VAL:SPEC" HREF="#SIG:SUBSTRING.trimr:VAL">trimr</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;substring&nbsp;<B>-&gt;</B>&nbsp;substring<BR>
+<B>val</B>&nbsp;<A NAME="SIG:SUBSTRING.slice:VAL:SPEC" HREF="#SIG:SUBSTRING.slice:VAL">slice</A>&nbsp;<B>:</B>&nbsp;substring&nbsp;<B>*</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;option&nbsp;<B>-&gt;</B>&nbsp;substring<BR>
+<B>val</B>&nbsp;<A NAME="SIG:SUBSTRING.concat:VAL:SPEC" HREF="#SIG:SUBSTRING.concat:VAL">concat</A>&nbsp;<B>:</B>&nbsp;substring&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="SIG:SUBSTRING.concatWith:VAL:SPEC" HREF="#SIG:SUBSTRING.concatWith:VAL">concatWith</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;substring&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="SIG:SUBSTRING.explode:VAL:SPEC" HREF="#SIG:SUBSTRING.explode:VAL">explode</A>&nbsp;<B>:</B>&nbsp;substring&nbsp;<B>-&gt;</B>&nbsp;char&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="SIG:SUBSTRING.isPrefix:VAL:SPEC" HREF="#SIG:SUBSTRING.isPrefix:VAL">isPrefix</A>&nbsp;&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;substring&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="SIG:SUBSTRING.isSubstring:VAL:SPEC" HREF="#SIG:SUBSTRING.isSubstring:VAL">isSubstring</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;substring&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="SIG:SUBSTRING.isSuffix:VAL:SPEC" HREF="#SIG:SUBSTRING.isSuffix:VAL">isSuffix</A>&nbsp;&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;substring&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="SIG:SUBSTRING.compare:VAL:SPEC" HREF="#SIG:SUBSTRING.compare:VAL">compare</A>&nbsp;<B>:</B>&nbsp;substring&nbsp;<B>*</B>&nbsp;substring&nbsp;<B>-&gt;</B>&nbsp;order<BR>
+<B>val</B>&nbsp;<A NAME="SIG:SUBSTRING.collate:VAL:SPEC" HREF="#SIG:SUBSTRING.collate:VAL">collate</A>&nbsp;<B>:</B>&nbsp;(char&nbsp;<B>*</B>&nbsp;char&nbsp;<B>-&gt;</B>&nbsp;order)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;substring&nbsp;<B>*</B>&nbsp;substring&nbsp;<B>-&gt;</B>&nbsp;order<BR>
+<B>val</B>&nbsp;<A NAME="SIG:SUBSTRING.splitl:VAL:SPEC" HREF="#SIG:SUBSTRING.splitl:VAL">splitl</A>&nbsp;<B>:</B>&nbsp;(char&nbsp;<B>-&gt;</B>&nbsp;bool)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;substring&nbsp;<B>-&gt;</B>&nbsp;substring&nbsp;<B>*</B>&nbsp;substring<BR>
+<B>val</B>&nbsp;<A NAME="SIG:SUBSTRING.splitr:VAL:SPEC" HREF="#SIG:SUBSTRING.splitr:VAL">splitr</A>&nbsp;<B>:</B>&nbsp;(char&nbsp;<B>-&gt;</B>&nbsp;bool)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;substring&nbsp;<B>-&gt;</B>&nbsp;substring&nbsp;<B>*</B>&nbsp;substring<BR>
+<B>val</B>&nbsp;<A NAME="SIG:SUBSTRING.splitAt:VAL:SPEC" HREF="#SIG:SUBSTRING.splitAt:VAL">splitAt</A>&nbsp;<B>:</B>&nbsp;substring&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;substring&nbsp;<B>*</B>&nbsp;substring<BR>
+<B>val</B>&nbsp;<A NAME="SIG:SUBSTRING.dropl:VAL:SPEC" HREF="#SIG:SUBSTRING.dropl:VAL">dropl</A>&nbsp;<B>:</B>&nbsp;(char&nbsp;<B>-&gt;</B>&nbsp;bool)&nbsp;<B>-&gt;</B>&nbsp;substring&nbsp;<B>-&gt;</B>&nbsp;substring<BR>
+<B>val</B>&nbsp;<A NAME="SIG:SUBSTRING.dropr:VAL:SPEC" HREF="#SIG:SUBSTRING.dropr:VAL">dropr</A>&nbsp;<B>:</B>&nbsp;(char&nbsp;<B>-&gt;</B>&nbsp;bool)&nbsp;<B>-&gt;</B>&nbsp;substring&nbsp;<B>-&gt;</B>&nbsp;substring<BR>
+<B>val</B>&nbsp;<A NAME="SIG:SUBSTRING.takel:VAL:SPEC" HREF="#SIG:SUBSTRING.takel:VAL">takel</A>&nbsp;<B>:</B>&nbsp;(char&nbsp;<B>-&gt;</B>&nbsp;bool)&nbsp;<B>-&gt;</B>&nbsp;substring&nbsp;<B>-&gt;</B>&nbsp;substring<BR>
+<B>val</B>&nbsp;<A NAME="SIG:SUBSTRING.taker:VAL:SPEC" HREF="#SIG:SUBSTRING.taker:VAL">taker</A>&nbsp;<B>:</B>&nbsp;(char&nbsp;<B>-&gt;</B>&nbsp;bool)&nbsp;<B>-&gt;</B>&nbsp;substring&nbsp;<B>-&gt;</B>&nbsp;substring<BR>
+<B>val</B>&nbsp;<A NAME="SIG:SUBSTRING.position:VAL:SPEC" HREF="#SIG:SUBSTRING.position:VAL">position</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;substring&nbsp;<B>-&gt;</B>&nbsp;substring&nbsp;<B>*</B>&nbsp;substring<BR>
+<B>val</B>&nbsp;<A NAME="SIG:SUBSTRING.span:VAL:SPEC" HREF="#SIG:SUBSTRING.span:VAL">span</A>&nbsp;<B>:</B>&nbsp;substring&nbsp;<B>*</B>&nbsp;substring&nbsp;<B>-&gt;</B>&nbsp;substring<BR>
+<B>val</B>&nbsp;<A NAME="SIG:SUBSTRING.translate:VAL:SPEC" HREF="#SIG:SUBSTRING.translate:VAL">translate</A>&nbsp;<B>:</B>&nbsp;(char&nbsp;<B>-&gt;</B>&nbsp;string)&nbsp;<B>-&gt;</B>&nbsp;substring&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="SIG:SUBSTRING.tokens:VAL:SPEC" HREF="#SIG:SUBSTRING.tokens:VAL">tokens</A>&nbsp;<B>:</B>&nbsp;(char&nbsp;<B>-&gt;</B>&nbsp;bool)&nbsp;<B>-&gt;</B>&nbsp;substring&nbsp;<B>-&gt;</B>&nbsp;substring&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="SIG:SUBSTRING.fields:VAL:SPEC" HREF="#SIG:SUBSTRING.fields:VAL">fields</A>&nbsp;<B>:</B>&nbsp;(char&nbsp;<B>-&gt;</B>&nbsp;bool)&nbsp;<B>-&gt;</B>&nbsp;substring&nbsp;<B>-&gt;</B>&nbsp;substring&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="SIG:SUBSTRING.app:VAL:SPEC" HREF="#SIG:SUBSTRING.app:VAL">app</A>&nbsp;<B>:</B>&nbsp;(char&nbsp;<B>-&gt;</B>&nbsp;unit)&nbsp;<B>-&gt;</B>&nbsp;substring&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="SIG:SUBSTRING.foldl:VAL:SPEC" HREF="#SIG:SUBSTRING.foldl:VAL">foldl</A>&nbsp;<B>:</B>&nbsp;(char&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;substring&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I><BR>
+<B>val</B>&nbsp;<A NAME="SIG:SUBSTRING.foldr:VAL:SPEC" HREF="#SIG:SUBSTRING.foldr:VAL">foldr</A>&nbsp;<B>:</B>&nbsp;(char&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;substring&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I></CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="SIG:SUBSTRING.sub:VAL"></A>
+<DT> <CODE>sub (<VAR>s</VAR>, <VAR>i</VAR>) </CODE>
+<DD>
+returns the <VAR>i</VAR><SUP>(th)</SUP> character in the substring, counting from the beginning of <VAR>s</VAR>. It is equivalent to <CODE><CODE><A HREF="string.html#SIG:STRING.sub:VAL:SPEC">String.sub</A></CODE>(<CODE><A HREF="substring.html#SIG:SUBSTRING.string:VAL:SPEC">string</A></CODE> <VAR>s</VAR>, <VAR>i</VAR>)</CODE>. The exception <CODE><A HREF="general.html#SIG:GENERAL.Subscript:EXN:SPEC">Subscript</A></CODE> is raised unless 0 &lt;= <VAR>i</VAR> &lt; |<VAR>s</VAR>|. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:SUBSTRING.size:VAL"></A>
+<DT> <CODE>size <VAR>s</VAR> </CODE>
+<DD>
+returns the size of <VAR>s</VAR>. This is equivalent to <CODE>#3 o <CODE><A HREF="substring.html#SIG:SUBSTRING.base:VAL:SPEC">base</A></CODE></CODE> and <CODE><CODE><A HREF="string.html#SIG:STRING.size:VAL:SPEC">String.size</A></CODE> o <CODE><A HREF="substring.html#SIG:SUBSTRING.string:VAL:SPEC">string</A></CODE></CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:SUBSTRING.base:VAL"></A>
+<DT> <CODE>base <VAR>ss</VAR> </CODE>
+<DD>
+returns a triple <CODE>(<VAR>s</VAR>, <VAR>i</VAR>, <VAR>n</VAR>)</CODE> giving a concrete representation of the substring. <VAR>s</VAR> is the underlying string, <VAR>i</VAR> is the starting index, and <VAR>n</VAR> is the size of the substring.  It will always be the case that   0 &lt;= <VAR>i</VAR> &lt;= <VAR>i</VAR> + <VAR>n</VAR>  &lt;= |<VAR>s</VAR>|  .  
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:SUBSTRING.extract:VAL"></A>
+<DT> <CODE>extract (<VAR>s</VAR>, <VAR>i</VAR>, <A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A>) </CODE>
+<DT> <CODE>          extract (<VAR>s</VAR>, <VAR>i</VAR>, <A HREF="option.html#SIG:OPTION.option:TY:SPEC">SOME</A> <VAR>j</VAR>) </CODE>
+<DT> <CODE>          substring (<VAR>s</VAR>, <VAR>i</VAR>, <VAR>j</VAR>) </CODE>
+<DD>
+The first returns the substring of <VAR>s</VAR> from the <VAR>i</VAR><SUP>(th)</SUP> character to the end of the string, <I>i.e.</I>, the string <VAR>s</VAR>[<VAR>i</VAR>..|<VAR>s</VAR>|-1]. This raises <CODE><A HREF="general.html#SIG:GENERAL.Subscript:EXN:SPEC">Subscript</A></CODE> unless 0 &lt;= <VAR>i</VAR> &lt;= |<VAR>s</VAR>|. The second form returns the substring of size <VAR>j</VAR> starting at index <VAR>i</VAR>, <I>i.e.</I>, the string <CODE><VAR>s</VAR>[<VAR>i</VAR>..<VAR>i</VAR>+<VAR>j</VAR>-1]</CODE>. It raises <CODE><A HREF="general.html#SIG:GENERAL.Subscript:EXN:SPEC">Subscript</A></CODE> if <VAR>i</VAR> &lt; 0 or <VAR>j</VAR> &lt; 0 or |<VAR>s</VAR>| &lt; <VAR>i</VAR> + <VAR>j</VAR>. Note that, if defined, <CODE><A HREF="substring.html#SIG:SUBSTRING.extract:VAL:SPEC">extract</A></CODE> returns the empty substring when <VAR>i</VAR> = |<VAR>s</VAR>|. 
+<P>
+          The third form returns the substring <CODE><VAR>s</VAR>[<VAR>i</VAR>..<VAR>i</VAR>+<VAR>j</VAR>-1]</CODE>, <I>i.e.</I>, the substring of size <VAR>j</VAR> starting at index <VAR>i</VAR>. This is equivalent to <CODE><CODE><A HREF="string.html#SIG:STRING.extract:VAL:SPEC">extract</A></CODE>(<VAR>s</VAR>, <VAR>i</VAR>, <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">SOME</A></CODE> <VAR>j</VAR>)</CODE>. 
+<P>
+          We require that <CODE><CODE><A HREF="substring.html#SIG:SUBSTRING.base:VAL:SPEC">base</A></CODE> o <CODE><A HREF="substring.html#SIG:SUBSTRING.substring:VAL:SPEC">substring</A></CODE></CODE> be the identity function on valid arguments. 
+<BLOCKQUOTE>
+<B>Implementation note:</B><BR>
+
+<P>
+Implementations of these functions must perform bounds checking in such a way that the <CODE><A HREF="general.html#SIG:GENERAL.Overflow:EXN:SPEC">Overflow</A></CODE> exception is not raised. 
+</BLOCKQUOTE>
+ 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:SUBSTRING.full:VAL"></A>
+<DT> <CODE>full <VAR>s</VAR> </CODE>
+<DD>
+creates a substring representing the entire string <VAR>s</VAR>. It is equivalent to the expression <CODE><CODE><A HREF="substring.html#SIG:SUBSTRING.substring:VAL:SPEC">substring</A></CODE>(<VAR>s</VAR>, 0, <CODE><A HREF="string.html#SIG:STRING.size:VAL:SPEC">String.size</A></CODE> <VAR>s</VAR>)</CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:SUBSTRING.string:VAL"></A>
+<DT> <CODE>string <VAR>s</VAR> </CODE>
+<DD>
+creates a string value corresponding to the substring.  It is equivalent to  <CODE><CODE><A HREF="string.html#SIG:STRING.substring:VAL:SPEC">String.substring</A></CODE> o <CODE><A HREF="substring.html#SIG:SUBSTRING.base:VAL:SPEC">base</A></CODE></CODE>  for the corresponding <CODE>String</CODE> structure. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:SUBSTRING.isEmpty:VAL"></A>
+<DT> <CODE>isEmpty <VAR>s</VAR> </CODE>
+<DD>
+returns <CODE>true</CODE> if <VAR>s</VAR> has size 0. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:SUBSTRING.getc:VAL"></A>
+<DT> <CODE>getc <VAR>s</VAR> </CODE>
+<DD>
+returns the first character in <VAR>s</VAR> and the rest of the substring, or <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A></CODE> if <VAR>s</VAR> is empty. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:SUBSTRING.first:VAL"></A>
+<DT> <CODE>first <VAR>s</VAR> </CODE>
+<DD>
+returns the first character in <VAR>s</VAR>, or <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A></CODE> if <VAR>s</VAR> is empty. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:SUBSTRING.triml:VAL"></A>
+<DT> <CODE>triml <VAR>k</VAR> <VAR>s</VAR> </CODE>
+<DT> <CODE>          trimr <VAR>k</VAR> <VAR>s</VAR> </CODE>
+<DD>
+These functions remove <VAR>k</VAR> characters from the left (respectively, right) of the substring <VAR>s</VAR>. If <VAR>k</VAR> is greater than the size of the substring, an empty substring is returned. Specifically, for substring <CODE><VAR>ss</VAR> = <CODE><A HREF="substring.html#SIG:SUBSTRING.substring:VAL:SPEC">substring</A></CODE>(<VAR>s</VAR>, <VAR>i</VAR>, <VAR>j</VAR>)</CODE> and <VAR>k</VAR> &lt;= <VAR>j</VAR>, we have: 
+<PRE>
+<A HREF="substring.html#SIG:SUBSTRING.triml:VAL:SPEC">triml</A> <VAR>k</VAR> <VAR>ss</VAR> = <A HREF="substring.html#SIG:SUBSTRING.substring:VAL:SPEC">substring</A>(<VAR>s</VAR>, <VAR>i</VAR>+<VAR>k</VAR>, <VAR>j</VAR>-<VAR>k</VAR>)
+<A HREF="substring.html#SIG:SUBSTRING.trimr:VAL:SPEC">trimr</A> <VAR>k</VAR> <VAR>ss</VAR> = <A HREF="substring.html#SIG:SUBSTRING.substring:VAL:SPEC">substring</A>(<VAR>s</VAR>, <VAR>i</VAR>, <VAR>j</VAR>-<VAR>k</VAR>)
+</PRE>
+ The exception <CODE><A HREF="general.html#SIG:GENERAL.Subscript:EXN:SPEC">Subscript</A></CODE> is raised if <CODE><VAR>k</VAR> &lt; 0</CODE>. This exception is raised when <CODE>triml <VAR>k</VAR></CODE> or <CODE>trimr <VAR>k</VAR></CODE> is evaluated. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:SUBSTRING.slice:VAL"></A>
+<DT> <CODE>slice (<VAR>s</VAR>, <VAR>i</VAR>, <A HREF="option.html#SIG:OPTION.option:TY:SPEC">SOME</A> <VAR>m</VAR>) </CODE>
+<DT> <CODE>          slice (<VAR>s</VAR>, <VAR>i</VAR>, <A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A>) </CODE>
+<DD>
+These return a substring of <VAR>s</VAR> starting at the <VAR>i</VAR><SUP>(th)</SUP> character. In the former case, the size of the resulting substring is <VAR>m</VAR>. Otherwise, the size is |<VAR>s</VAR>| - <VAR>i</VAR>. To be valid, the arguments in the first case must satisfy 0 &lt;= <VAR>i</VAR>, 0 &lt;= <VAR>m</VAR> and <VAR>i</VAR> +  <VAR>m</VAR> &lt;= |<VAR>s</VAR>|. In the second case, the arguments must satisfy 0 &lt;= <VAR>i</VAR> &lt;= |<VAR>s</VAR>|. If the arguments are not valid, the exception <CODE><A HREF="general.html#SIG:GENERAL.Subscript:EXN:SPEC">Subscript</A></CODE> is raised. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:SUBSTRING.concat:VAL"></A>
+<DT> <CODE>concat <VAR>l</VAR> </CODE>
+<DD>
+generates a string that is the concatenation of the substrings in <VAR>l</VAR>. This is equivalent to <CODE><CODE><A HREF="string.html#SIG:STRING.concat:VAL:SPEC">String.concat</A></CODE> o (<CODE><A HREF="list.html#SIG:LIST.map:VAL:SPEC">List.map</A></CODE> <CODE><A HREF="substring.html#SIG:SUBSTRING.string:VAL:SPEC">string</A></CODE>)</CODE>. This raises <CODE><A HREF="general.html#SIG:GENERAL.Size:EXN:SPEC">Size</A></CODE> if the sum of all the sizes is greater than the corresponding <CODE><A HREF="string.html#SIG:STRING.maxSize:VAL:SPEC">maxSize</A></CODE> for the <CODE><A HREF="substring.html#SIG:SUBSTRING.string:TY:SPEC">string</A></CODE> type. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:SUBSTRING.concatWith:VAL"></A>
+<DT> <CODE>concatWith <VAR>s</VAR> <VAR>l</VAR> </CODE>
+<DD>
+returns the concatenation of the substrings in the list <VAR>l</VAR> using  the string <VAR>s</VAR> as a separator. This raises <CODE><A HREF="general.html#SIG:GENERAL.Size:EXN:SPEC">Size</A></CODE> if the size of the resulting string would be greater than <CODE><A HREF="string.html#SIG:STRING.maxSize:VAL:SPEC">maxSize</A></CODE> for the <CODE><A HREF="substring.html#SIG:SUBSTRING.string:TY:SPEC">string</A></CODE> type. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:SUBSTRING.explode:VAL"></A>
+<DT> <CODE>explode <VAR>s</VAR> </CODE>
+<DD>
+returns the list of characters composing the substring. This is equivalent to <CODE><CODE><A HREF="string.html#SIG:STRING.explode:VAL:SPEC">String.explode</A></CODE> (<CODE><A HREF="substring.html#SIG:SUBSTRING.string:VAL:SPEC">string</A></CODE> <VAR>s</VAR>)</CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:SUBSTRING.isPrefix:VAL"></A>
+<DT> <CODE>isPrefix <VAR>s</VAR> <VAR>ss</VAR> </CODE>
+<DT> <CODE>            isSubstring <VAR>s</VAR> <VAR>ss</VAR> </CODE>
+<DT> <CODE>            isSuffix <VAR>s</VAR> <VAR>ss</VAR> </CODE>
+<DD>
+These functions return <CODE>true</CODE> if the string <VAR>s</VAR> is a prefix, substring,  or suffix (respectively) of the substring <VAR>ss</VAR>. The functions are equivalent to their versions from <CODE><A HREF="string.html#STRING:SIG:SPEC">STRING</A></CODE>. For example, <CODE>isPrefix <VAR>s</VAR> <VAR>ss</VAR></CODE> is the same as <CODE>String.isPrefix <VAR>s</VAR> (<CODE><A HREF="substring.html#SIG:SUBSTRING.string:VAL:SPEC">string</A></CODE> <VAR>ss</VAR>)</CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:SUBSTRING.compare:VAL"></A>
+<DT> <CODE>compare (<VAR>s</VAR>, <VAR>t</VAR>) </CODE>
+<DD>
+compares the two substrings lexicographically using the default character comparison function. This is equivalent to 
+<PRE>
+<A HREF="string.html#SIG:STRING.compare:VAL:SPEC">String.compare</A> (<A HREF="substring.html#SIG:SUBSTRING.string:VAL:SPEC">string</A> <VAR>s</VAR>, <A HREF="substring.html#SIG:SUBSTRING.string:VAL:SPEC">string</A> <VAR>t</VAR>)
+</PRE>
+ 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:SUBSTRING.collate:VAL"></A>
+<DT> <CODE>collate <VAR>f</VAR> (<VAR>s</VAR>, <VAR>t</VAR>) </CODE>
+<DD>
+compares the two substrings lexicographically using the character comparison function <VAR>f</VAR>. This is equivalent to 
+<PRE>
+<A HREF="string.html#SIG:STRING.collate:VAL:SPEC">String.collate</A> <VAR>f</VAR> (<A HREF="substring.html#SIG:SUBSTRING.string:VAL:SPEC">string</A> <VAR>s</VAR>, <A HREF="substring.html#SIG:SUBSTRING.string:VAL:SPEC">string</A> <VAR>t</VAR>)
+</PRE>
+ 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:SUBSTRING.splitl:VAL"></A>
+<DT> <CODE>splitl <VAR>f</VAR> <VAR>s</VAR> </CODE>
+<DT> <CODE>          splitr <VAR>f</VAR> <VAR>s</VAR> </CODE>
+<DD>
+These functions scan <VAR>s</VAR> from left to right (respectively, right to left) looking for the first character that does not satisfy the predicate <VAR>f</VAR>. They return the pair <CODE>(<VAR>ls</VAR>, <VAR>rs</VAR>)</CODE> giving the split of the substring into the span up to that character and the rest. <VAR>ls</VAR> is the left side of the split, and <VAR>rs</VAR> is the right side. For example, if the characters <CODE>a</CODE> and <CODE>c</CODE> satisfy the predicate, but character <CODE>X</CODE> does not, then these functions work as follows on the substring <CODE>aaaXbbbbXccc</CODE>: 
+<PRE>
+<A HREF="substring.html#SIG:SUBSTRING.splitl:VAL:SPEC">splitl</A>   :           aaa         XbbbbXccc
+<A HREF="substring.html#SIG:SUBSTRING.splitr:VAL:SPEC">splitr</A>   :           aaaXbbbbX   ccc
+</PRE>
+  
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:SUBSTRING.splitAt:VAL"></A>
+<DT> <CODE>splitAt (<VAR>s</VAR>, <VAR>i</VAR>) </CODE>
+<DD>
+returns the pair of substring <CODE>(<VAR>ss</VAR>, <VAR>ss'</VAR>)</CODE>, where <VAR>ss</VAR> contains the first <VAR>i</VAR> characters of <VAR>s</VAR> and <VAR>ss'</VAR> contains the rest, assuming 0 &lt;= <VAR>i</VAR> &lt;= <CODE>size</CODE> <VAR>s</VAR>. Otherwise, it raises <CODE><A HREF="general.html#SIG:GENERAL.Subscript:EXN:SPEC">Subscript</A></CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:SUBSTRING.dropl:VAL"></A>
+<DT> <CODE>dropl <VAR>f</VAR> <VAR>s</VAR> </CODE>
+<DT> <CODE>          dropr <VAR>f</VAR> <VAR>s</VAR> </CODE>
+<DT> <CODE>          takel <VAR>f</VAR> <VAR>s</VAR> </CODE>
+<DT> <CODE>          taker <VAR>f</VAR> <VAR>s</VAR> </CODE>
+<DD>
+These routines scan the substring <VAR>s</VAR> for the first character not satisfying the predicate <VAR>p</VAR>.  The functions <CODE><A HREF="substring.html#SIG:SUBSTRING.dropl:VAL:SPEC">dropl</A></CODE> and <CODE><A HREF="substring.html#SIG:SUBSTRING.takel:VAL:SPEC">takel</A></CODE> scan left to right (<I>i.e.</I>, increasing character indices), while <CODE><A HREF="substring.html#SIG:SUBSTRING.dropr:VAL:SPEC">dropr</A></CODE> and <CODE><A HREF="substring.html#SIG:SUBSTRING.taker:VAL:SPEC">taker</A></CODE> scan from the right. The drop functions drop the maximal substring consisting of characters satisfying the predicate, while the take functions return the maximal such substring. These can be defined in terms of the split operations: 
+<PRE>
+<A HREF="substring.html#SIG:SUBSTRING.takel:VAL:SPEC">takel</A> <VAR>p</VAR> <VAR>s</VAR> = #1(<A HREF="substring.html#SIG:SUBSTRING.splitl:VAL:SPEC">splitl</A> <VAR>p</VAR> <VAR>s</VAR>)
+<A HREF="substring.html#SIG:SUBSTRING.dropl:VAL:SPEC">dropl</A> <VAR>p</VAR> <VAR>s</VAR> = #2(<A HREF="substring.html#SIG:SUBSTRING.splitl:VAL:SPEC">splitl</A> <VAR>p</VAR> <VAR>s</VAR>)
+<A HREF="substring.html#SIG:SUBSTRING.taker:VAL:SPEC">taker</A> <VAR>p</VAR> <VAR>s</VAR> = #2(<A HREF="substring.html#SIG:SUBSTRING.splitr:VAL:SPEC">splitr</A> <VAR>p</VAR> <VAR>s</VAR>)
+<A HREF="substring.html#SIG:SUBSTRING.dropr:VAL:SPEC">dropr</A> <VAR>p</VAR> <VAR>s</VAR> = #1(<A HREF="substring.html#SIG:SUBSTRING.splitr:VAL:SPEC">splitr</A> <VAR>p</VAR> <VAR>s</VAR>)
+</PRE>
+ 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:SUBSTRING.position:VAL"></A>
+<DT> <CODE>position <VAR>s</VAR> <VAR>ss</VAR> </CODE>
+<DD>
+splits the substring <VAR>ss</VAR> into a pair <CODE>(<VAR>pref</VAR>, <VAR>suff</VAR>)</CODE> of substrings, where <VAR>suff</VAR> is the longest suffix of <VAR>ss</VAR> that has <VAR>s</VAR> as a prefix and <VAR>pref</VAR> is the prefix of <VAR>ss</VAR> preceding <VAR>suff</VAR>. More precisely, let <VAR>m</VAR> be the size of <VAR>s</VAR> and let <VAR>ss</VAR> correspond to the substring <CODE>(<VAR>s'</VAR>, <VAR>i</VAR>, <VAR>n</VAR>)</CODE>. If there is a least index <VAR>k</VAR> &gt;= <VAR>i</VAR> such that <CODE><VAR>s</VAR> = <VAR>s'</VAR>[<VAR>k</VAR>..<VAR>k</VAR>+<VAR>m</VAR>-1]</CODE>, then <VAR>suff</VAR> corresponds to <CODE>(<VAR>s'</VAR>, <VAR>k</VAR>, <VAR>n</VAR>+<VAR>i</VAR>-<VAR>k</VAR>)</CODE> and <VAR>pref</VAR> corresponds to <CODE>(<VAR>s'</VAR>, <VAR>i</VAR>, <VAR>k</VAR>-<VAR>i</VAR>)</CODE>. If there is no such <VAR>k</VAR>, then <VAR>suff</VAR> is the empty substring corresponding to <CODE>(<VAR>s'</VAR>, <VAR>i</VAR>+<VAR>n</VAR>, 0)</CODE> and <VAR>pref</VAR> corresponds to <CODE>(<VAR>s'</VAR>, <VAR>i</VAR>, <VAR>n</VAR>)</CODE>, <I>i.e.</I>, all of <VAR>ss</VAR>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:SUBSTRING.span:VAL"></A>
+<DT> <CODE>span (<VAR>ss</VAR>, <VAR>ss'</VAR>) </CODE>
+<DD>
+produces a substring composed of a prefix <VAR>ss</VAR>, suffix <VAR>ss'</VAR>, plus all intermediate characters in the underlying string. It raises <CODE><A HREF="general.html#SIG:GENERAL.Span:EXN:SPEC">Span</A></CODE> if <VAR>ss</VAR> and <VAR>ss'</VAR> are not substrings of the same underlying string or if the start of <VAR>ss</VAR> is to the right of the end of <VAR>ss'</VAR>. More precisely, if we have 
+<PRE>
+val (s, i, n) = base <VAR>ss</VAR>
+val (s', i', n') = base <VAR>ss'</VAR>
+</PRE>
+ then <CODE>span</CODE> returns <CODE>substring(s, i, (i'+n')-i)</CODE> unless <CODE>s &lt;&gt; s'</CODE> or <CODE>i'+n' &lt; i</CODE>, in which case it raises <CODE><A HREF="general.html#SIG:GENERAL.Span:EXN:SPEC">Span</A></CODE>. Note that this does not preclude <VAR>ss'</VAR> from beginning to the left of <VAR>ss</VAR>, or <VAR>ss</VAR> from ending to the right of <VAR>ss'</VAR>. 
+<P>
+          This function allows one to scan for a substring using multiple pieces and then coalescing the pieces. For example, given a URL string such as 
+<PRE>
+&quot;http://www.standardml.org/Basis/overview.html&quot;
+</PRE>
+ to scan the protocol and host (<CODE>&quot;http://www.standardml.org&quot;</CODE>), one could write: 
+<PRE>
+local
+  open Substring
+in
+  fun protoAndHost url = let
+        fun notc (c : char) = fn c' =&gt; c &lt;&gt; c'
+        val (proto,rest) = splitl (notc #&quot;:&quot;) (full url)
+        val host = takel (notc #&quot;/&quot;) (triml 3 rest)
+        in
+          span (proto, host)
+        end
+end
+</PRE>
+ 
+<BLOCKQUOTE>
+<B>Implementation note:</B><BR>
+
+<P>
+When applied to substrings derived from the identical base string, the string equality test should be constant time. This can be achieved by first doing a pointer test and, only if that fails, then checking the strings character by character. 
+</BLOCKQUOTE>
+ 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:SUBSTRING.translate:VAL"></A>
+<DT> <CODE>translate <VAR>f</VAR> <VAR>s</VAR> </CODE>
+<DD>
+applies <VAR>f</VAR> to every character of <VAR>s</VAR>, from left to right, and returns the concatenation of the results. This is equivalent to <CODE><CODE><A HREF="string.html#SIG:STRING.concat:VAL:SPEC">String.concat</A></CODE>(<CODE><A HREF="list.html#SIG:LIST.map:VAL:SPEC">List.map</A></CODE> <VAR>f</VAR> (<CODE><A HREF="substring.html#SIG:SUBSTRING.explode:VAL:SPEC">explode</A></CODE> <VAR>s</VAR>))</CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:SUBSTRING.tokens:VAL"></A>
+<DT> <CODE>tokens <VAR>f</VAR> <VAR>s</VAR> </CODE>
+<DT> <CODE>          fields <VAR>f</VAR> <VAR>s</VAR> </CODE>
+<DD>
+These functions decompose a substring into a list of tokens or fields from left to right. A token is a non-empty maximal substring not containing any delimiter. A field is a (possibly empty) maximal substring of <VAR>s</VAR> not containing any delimiter. In both cases, a delimiter is a character satisfying predicate <VAR>f</VAR>. 
+<P>
+          Two tokens may be separated by more than one delimiter, whereas two fields are separated by exactly one delimiter. For example, if the only delimiter is the character <CODE>#&quot;|&quot;</CODE>, then the substring <CODE>&quot;|abc||def&quot;</CODE> contains two tokens <CODE>&quot;abc&quot;</CODE> and <CODE>&quot;def&quot;</CODE>, whereas it contains the four fields <CODE>&quot;&quot;</CODE>, <CODE>&quot;abc&quot;</CODE>, <CODE>&quot;&quot;</CODE> and <CODE>&quot;def&quot;</CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:SUBSTRING.app:VAL"></A>
+<DT> <CODE>app <VAR>f</VAR> <VAR>s</VAR> </CODE>
+<DD>
+applies <VAR>f</VAR> to each character of <VAR>s</VAR> from left to right. It is equivalent to <CODE><CODE><A HREF="list.html#SIG:LIST.app:VAL:SPEC">List.app</A></CODE> <VAR>f</VAR> (<CODE><A HREF="substring.html#SIG:SUBSTRING.explode:VAL:SPEC">explode</A></CODE> <VAR>s</VAR>)</CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:SUBSTRING.foldl:VAL"></A>
+<DT> <CODE>foldl <VAR>f</VAR> <VAR>a</VAR> <VAR>s</VAR> </CODE>
+<DT> <CODE>          foldr <VAR>f</VAR> <VAR>a</VAR> <VAR>s</VAR> </CODE>
+<DD>
+These fold the function <VAR>f</VAR> over the substring <VAR>s</VAR>, starting with the value <VAR>a</VAR>, from left to right and from right to left, respectively. They are the analogues of the identically named functions in <CODE><A HREF="list.html#List:STR:SPEC">List</A></CODE>.  In particular, they are respectively equivalent to: 
+<PRE>
+ 
+<A HREF="list.html#SIG:LIST.foldl:VAL:SPEC">List.foldl</A> <VAR>f</VAR> <VAR>a</VAR> (<A HREF="substring.html#SIG:SUBSTRING.explode:VAL:SPEC">explode</A> <VAR>s</VAR>)
+<A HREF="list.html#SIG:LIST.foldr:VAL:SPEC">List.foldr</A> <VAR>f</VAR> <VAR>a</VAR> (<A HREF="substring.html#SIG:SUBSTRING.explode:VAL:SPEC">explode</A> <VAR>s</VAR>)
+</PRE>
+ 
+<BR>
+<BR>
+
+</DL>
+<H4>See Also</H4>
+<BLOCKQUOTE>
+<CODE><A HREF="char.html#CHAR:SIG:SPEC">CHAR</A></CODE>, <CODE><A HREF="list.html#List:STR:SPEC">List</A></CODE>, <CODE><A HREF="string.html#STRING:SIG:SPEC">STRING</A></CODE>, <CODE><A HREF="string-cvt.html#StringCvt:STR:SPEC">StringCvt</A></CODE>, <CODE><A HREF="text.html#TEXT:SIG:SPEC">TEXT</A></CODE>
+</BLOCKQUOTE>
+<H4>Discussion</H4>
+<BLOCKQUOTE>
+<B>Implementation note:</B><BR>
+
+<P>
+Functions that extract pieces of a substring, such as <CODE><A HREF="substring.html#SIG:SUBSTRING.splitl:VAL:SPEC">splitl</A></CODE> or  <CODE><A HREF="substring.html#SIG:SUBSTRING.tokens:VAL:SPEC">tokens</A></CODE> must return substrings with the same base string. This requirement is particularly important if <CODE><A HREF="substring.html#SIG:SUBSTRING.span:VAL:SPEC">span</A></CODE> is to be used to put the pieces back together again.
+</BLOCKQUOTE>
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="manpages.html">Parent</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   | <A HREF="index.html">Root</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Generated April 12, 2004</I><BR>
+<I>Last Modified October 17, 2000</I><BR>
+<I>Comments to <A HREF="http://www.cs.uchicago.edu/people/jhr">John Reppy.</A></I><BR>
+
+<HR>
+<P>
+
+This document may be distributed freely over the internet as long as the
+copyright notice and license terms below are prominently displayed within
+every machine-readable copy.  
+
+<P>
+
+<TABLE ALIGN=CENTER WIDTH="80%" BORDER="2" CELLPADDING="5">
+<TR>
+<TD>
+<P>
+
+Copyright &copy; 2004 AT&amp;T and Lucent Technologies.
+All rights reserved.
+
+<P>
+
+Permission is granted for internet users to make one paper copy for their
+own personal use.  Further hardcopy reproduction is strictly prohibited. 
+Permission to distribute the HTML document electronically on any medium
+other than the internet must be requested from the copyright holders by
+contacting the editors.
+Printed versions of the SML Basis Manual are available from Cambridge
+University Press.
+To order, please visit
+<A HREF="http://www.cup.org">www.cup.org</A> (North America) or
+<A HREF="http://www.cup.cam.ac.uk">www.cup.cam.ac.uk</A> (outside North America).<BR>
+
+</TABLE>
+<P>
+
+<HR>
+</BODY></HTML>

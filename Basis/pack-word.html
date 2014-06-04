@@ -1,0 +1,139 @@
+<!-- HTML/pack-word.html -->
+
+<!-- COPYRIGHT (c) 1997 Bell Labs, Lucent Technologies. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The PACK_WORD signature</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF"><A NAME="top"></A>
+<H1 align=CENTER>The Standard ML Basis Library</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>PACK_WORD</CODE> signature</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="PACK_WORD:SIG:SPEC"></A><CODE>PACK_WORD</CODE>&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+<B>structure</B>&nbsp;<A NAME="PackWord{N}Big:STR:SPEC"></A><CODE>PackWord<I>&lt;N&gt;</I>Big</CODE><B> :> </B>PACK_WORD&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+<B>structure</B>&nbsp;<A NAME="PackWord{N}Little:STR:SPEC"></A><CODE>PackWord<I>&lt;N&gt;</I>Little</CODE><B> :> </B>PACK_WORD&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+ The <CODE>PackWord<I>&lt;N&gt;</I>Big</CODE> and  <CODE>PackWord<I>&lt;N&gt;</I>Little</CODE> structures provide facilities for packing and unpacking N-bit word elements into <CODE><A HREF="word.html#Word8:STR:SPEC">Word8</A></CODE> vectors. This mechanism allows word values to be transmitted in binary format over networks. The <CODE>PackWord<I>&lt;N&gt;</I>Big</CODE> structures perform big-endian packing and unpacking, while the <CODE>PackWord<I>&lt;N&gt;</I>Little</CODE> structures perform little-endian packing and unpacking.  
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>val</B>&nbsp;<A NAME="SIG:PACK_WORD.bytesPerElem:VAL:SPEC" HREF="#SIG:PACK_WORD.bytesPerElem:VAL">bytesPerElem</A>&nbsp;<B>:</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:PACK_WORD.isBigEndian:VAL:SPEC" HREF="#SIG:PACK_WORD.isBigEndian:VAL">isBigEndian</A>&nbsp;<B>:</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="SIG:PACK_WORD.subVec:VAL:SPEC" HREF="#SIG:PACK_WORD.subVec:VAL">subVec</A>&nbsp;&nbsp;<B>:</B>&nbsp;Word8Vector.vector&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;LargeWord.word<BR>
+<B>val</B>&nbsp;<A NAME="SIG:PACK_WORD.subVecX:VAL:SPEC" HREF="#SIG:PACK_WORD.subVecX:VAL">subVecX</A>&nbsp;<B>:</B>&nbsp;Word8Vector.vector&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;LargeWord.word<BR>
+<B>val</B>&nbsp;<A NAME="SIG:PACK_WORD.subArr:VAL:SPEC" HREF="#SIG:PACK_WORD.subArr:VAL">subArr</A>&nbsp;&nbsp;<B>:</B>&nbsp;Word8Array.array&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;LargeWord.word<BR>
+<B>val</B>&nbsp;<A NAME="SIG:PACK_WORD.subArrX:VAL:SPEC" HREF="#SIG:PACK_WORD.subArrX:VAL">subArrX</A>&nbsp;<B>:</B>&nbsp;Word8Array.array&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;LargeWord.word<BR>
+<B>val</B>&nbsp;<A NAME="SIG:PACK_WORD.update:VAL:SPEC" HREF="#SIG:PACK_WORD.update:VAL">update</A>&nbsp;<B>:</B>&nbsp;Word8Array.array&nbsp;<B>*</B>&nbsp;int&nbsp;<B>*</B>&nbsp;LargeWord.word<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;unit</CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="SIG:PACK_WORD.bytesPerElem:VAL"></A><CODE><B>val</B>&nbsp;bytesPerElem&nbsp;<B>:</B>&nbsp;int</CODE>
+<DD>
+          The number of bytes per element.  Most implementations will provide several structures with values of <CODE><A HREF="pack-word.html#SIG:PACK_WORD.bytesPerElem:VAL:SPEC">bytesPerElem</A></CODE> that are small powers of two (<I>e.g.</I>, 1, 2, 4, and 8, corresponding to N of 8, 16, 32, 64, respectively). 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:PACK_WORD.isBigEndian:VAL"></A><CODE><B>val</B>&nbsp;isBigEndian&nbsp;<B>:</B>&nbsp;bool</CODE>
+<DD>
+True if the structure implements a big-endian  view of the data (most-significant byte first).  Otherwise, the structure implements a little-endian  view (least-significant byte first). 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:PACK_WORD.subVec:VAL"></A>
+<DT> <CODE>subVec (<VAR>vec</VAR>, <VAR>i</VAR>) </CODE>
+<DT> <CODE>          subVecX (<VAR>vec</VAR>, <VAR>i</VAR>) </CODE>
+<DD>
+These extract the subvector 
+<PRE>
+<VAR>vec</VAR>[<A HREF="pack-word.html#SIG:PACK_WORD.bytesPerElem:VAL:SPEC">bytesPerElem</A>*<VAR>i</VAR>..<A HREF="pack-word.html#SIG:PACK_WORD.bytesPerElem:VAL:SPEC">bytesPerElem</A>*(<VAR>i</VAR>+1)-1]
+</PRE>
+ of the vector <VAR>vec</VAR> and convert it into a word according to the endianness of the structure. The <CODE><A HREF="pack-word.html#SIG:PACK_WORD.subVecX:VAL:SPEC">subVecX</A></CODE> version extends the sign bit (most significant bit) when converting the subvector to a word. The functions raise the <CODE><A HREF="general.html#SIG:GENERAL.Subscript:EXN:SPEC">Subscript</A></CODE> exception if <VAR>i</VAR> &lt; 0 or if <CODE>Word8Vector.length</CODE> <VAR>vec</VAR>  &lt; <CODE>bytesPerElem</CODE> * (<VAR>i</VAR> + 1). 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:PACK_WORD.subArr:VAL"></A>
+<DT> <CODE>subArr (<VAR>arr</VAR>, <VAR>i</VAR>) </CODE>
+<DT> <CODE>          subArrX (<VAR>arr</VAR>, <VAR>i</VAR>) </CODE>
+<DD>
+These extract the subarray  
+<PRE>
+<VAR>arr</VAR>[<A HREF="pack-word.html#SIG:PACK_WORD.bytesPerElem:VAL:SPEC">bytesPerElem</A>*<VAR>i</VAR>..<A HREF="pack-word.html#SIG:PACK_WORD.bytesPerElem:VAL:SPEC">bytesPerElem</A>*(<VAR>i</VAR>+1)-1]
+</PRE>
+ of the array <VAR>arr</VAR> and convert it into a word according to the endianness of the structure. The <CODE><A HREF="pack-word.html#SIG:PACK_WORD.subArrX:VAL:SPEC">subArrX</A></CODE> version extends the sign bit (most significant bit) when converting the subarray into a word. The functions raise the <CODE><A HREF="general.html#SIG:GENERAL.Subscript:EXN:SPEC">Subscript</A></CODE> exception if <VAR>i</VAR> &lt; 0 or if  <CODE><A HREF="mono-array.html#SIG:MONO_ARRAY.length:VAL:SPEC">Word8Array.length</A></CODE> <VAR>arr</VAR> &lt; <CODE>bytesPerElem</CODE> * (<VAR>i</VAR>+1). 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:PACK_WORD.update:VAL"></A>
+<DT> <CODE>update (<VAR>arr</VAR>, <VAR>i</VAR>, <VAR>w</VAR>) </CODE>
+<DD>
+stores the <CODE><A HREF="pack-word.html#SIG:PACK_WORD.bytesPerElem:VAL:SPEC">bytesPerElem</A></CODE> low-order bytes of the word <VAR>w</VAR> into the bytes <CODE><CODE><A HREF="pack-word.html#SIG:PACK_WORD.bytesPerElem:VAL:SPEC">bytesPerElem</A></CODE>*<VAR>i</VAR></CODE> through <CODE><CODE><A HREF="pack-word.html#SIG:PACK_WORD.bytesPerElem:VAL:SPEC">bytesPerElem</A></CODE>*(<VAR>i</VAR>+1)-1</CODE> of the array <VAR>arr</VAR>, according to the structure's endianness.  It raises the  <CODE><A HREF="general.html#SIG:GENERAL.Subscript:EXN:SPEC">Subscript</A></CODE> exception if <VAR>i</VAR> &lt; 0 or if <CODE>Word8Array.length</CODE> <VAR>arr</VAR> &lt; <CODE>bytesPerElem</CODE> * (<VAR>i</VAR>+1). 
+<BR>
+<BR>
+
+</DL>
+<H4>See Also</H4>
+<BLOCKQUOTE>
+<CODE><A HREF="byte.html#Byte:STR:SPEC">Byte</A></CODE>, <CODE><A HREF="word.html#LargeWord:STR:SPEC">LargeWord</A></CODE>, <CODE><A HREF="mono-array.html#MONO_ARRAY:SIG:SPEC">MONO_ARRAY</A></CODE>, <CODE><A HREF="mono-vector.html#MONO_VECTOR:SIG:SPEC">MONO_VECTOR</A></CODE>, <CODE><A HREF="pack-float.html#PACK_REAL:SIG:SPEC">PACK_REAL</A></CODE>
+</BLOCKQUOTE>
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="manpages.html">Parent</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   | <A HREF="index.html">Root</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Generated April 12, 2004</I><BR>
+<I>Last Modified May 29, 2000</I><BR>
+<I>Comments to <A HREF="http://www.cs.uchicago.edu/people/jhr">John Reppy.</A></I><BR>
+
+<HR>
+<P>
+
+This document may be distributed freely over the internet as long as the
+copyright notice and license terms below are prominently displayed within
+every machine-readable copy.  
+
+<P>
+
+<TABLE ALIGN=CENTER WIDTH="80%" BORDER="2" CELLPADDING="5">
+<TR>
+<TD>
+<P>
+
+Copyright &copy; 2004 AT&amp;T and Lucent Technologies.
+All rights reserved.
+
+<P>
+
+Permission is granted for internet users to make one paper copy for their
+own personal use.  Further hardcopy reproduction is strictly prohibited. 
+Permission to distribute the HTML document electronically on any medium
+other than the internet must be requested from the copyright holders by
+contacting the editors.
+Printed versions of the SML Basis Manual are available from Cambridge
+University Press.
+To order, please visit
+<A HREF="http://www.cup.org">www.cup.org</A> (North America) or
+<A HREF="http://www.cup.cam.ac.uk">www.cup.cam.ac.uk</A> (outside North America).<BR>
+
+</TABLE>
+<P>
+
+<HR>
+</BODY></HTML>

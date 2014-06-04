@@ -1,0 +1,385 @@
+<!-- HTML/word.html -->
+
+<!-- COPYRIGHT (c) 1997 Bell Labs, Lucent Technologies. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The WORD signature</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF"><A NAME="top"></A>
+<H1 align=CENTER>The Standard ML Basis Library</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>WORD</CODE> signature</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="WORD:SIG:SPEC"></A><CODE>WORD</CODE><BR>
+<B>structure</B>&nbsp;<A NAME="Word:STR:SPEC"></A><CODE>Word</CODE><B> :> </B>WORD<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;word&nbsp;=&nbsp;word<BR>
+<B>structure</B>&nbsp;<A NAME="Word8:STR:SPEC"></A><CODE>Word8</CODE><B> :> </B>WORD<BR>
+<B>structure</B>&nbsp;<A NAME="LargeWord:STR:SPEC"></A><CODE>LargeWord</CODE><B> :> </B>WORD<BR>
+<B>structure</B>&nbsp;<A NAME="Word{N}:STR:SPEC"></A><CODE>Word<I>&lt;N&gt;</I></CODE><B> :> </B>WORD&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+<B>structure</B>&nbsp;<A NAME="SysWord:STR:SPEC"></A><CODE>SysWord</CODE><B> :> </B>WORD&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+Instances of the signature <CODE>WORD</CODE> provide a type of unsigned integer with modular arithmetic and logical operations and conversion operations. They are also meant to give efficient access to the primitive machine word types of the underlying hardware, and support bit-level operations on integers. They are not meant to be a ``larger'' <CODE><A HREF="integer.html#SIG:INTEGER.int:TY:SPEC">int</A></CODE>.
+<P>
+In order to provide a more intuitive description of the shift operators below, we assume a bit ordering in which the most significant bit is leftmost, and the least significant bit is rightmost. 
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>eqtype</B>&nbsp;<A NAME="SIG:WORD.word:TY:SPEC" HREF="#SIG:WORD.word:TY">word</A><BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:WORD.wordSize:VAL:SPEC" HREF="#SIG:WORD.wordSize:VAL">wordSize</A>&nbsp;<B>:</B>&nbsp;int<BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:WORD.toLarge:VAL:SPEC" HREF="#SIG:WORD.toLarge:VAL">toLarge</A>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;word&nbsp;<B>-&gt;</B>&nbsp;LargeWord.word<BR>
+<B>val</B>&nbsp;<A NAME="SIG:WORD.toLargeX:VAL:SPEC" HREF="#SIG:WORD.toLargeX:VAL">toLargeX</A>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;word&nbsp;<B>-&gt;</B>&nbsp;LargeWord.word<BR>
+<B>val</B>&nbsp;<A NAME="SIG:WORD.toLargeWord:VAL:SPEC" HREF="#SIG:WORD.toLargeWord:VAL">toLargeWord</A>&nbsp;&nbsp;<B>:</B>&nbsp;word&nbsp;<B>-&gt;</B>&nbsp;LargeWord.word<BR>
+<B>val</B>&nbsp;<A NAME="SIG:WORD.toLargeWordX:VAL:SPEC" HREF="#SIG:WORD.toLargeWordX:VAL">toLargeWordX</A>&nbsp;<B>:</B>&nbsp;word&nbsp;<B>-&gt;</B>&nbsp;LargeWord.word<BR>
+<B>val</B>&nbsp;<A NAME="SIG:WORD.fromLarge:VAL:SPEC" HREF="#SIG:WORD.fromLarge:VAL">fromLarge</A>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;LargeWord.word&nbsp;<B>-&gt;</B>&nbsp;word<BR>
+<B>val</B>&nbsp;<A NAME="SIG:WORD.fromLargeWord:VAL:SPEC" HREF="#SIG:WORD.fromLargeWord:VAL">fromLargeWord</A>&nbsp;<B>:</B>&nbsp;LargeWord.word&nbsp;<B>-&gt;</B>&nbsp;word<BR>
+<B>val</B>&nbsp;<A NAME="SIG:WORD.toLargeInt:VAL:SPEC" HREF="#SIG:WORD.toLargeInt:VAL">toLargeInt</A>&nbsp;&nbsp;<B>:</B>&nbsp;word&nbsp;<B>-&gt;</B>&nbsp;LargeInt.int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:WORD.toLargeIntX:VAL:SPEC" HREF="#SIG:WORD.toLargeIntX:VAL">toLargeIntX</A>&nbsp;<B>:</B>&nbsp;word&nbsp;<B>-&gt;</B>&nbsp;LargeInt.int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:WORD.fromLargeInt:VAL:SPEC" HREF="#SIG:WORD.fromLargeInt:VAL">fromLargeInt</A>&nbsp;<B>:</B>&nbsp;LargeInt.int&nbsp;<B>-&gt;</B>&nbsp;word<BR>
+<B>val</B>&nbsp;<A NAME="SIG:WORD.toInt:VAL:SPEC" HREF="#SIG:WORD.toInt:VAL">toInt</A>&nbsp;&nbsp;<B>:</B>&nbsp;word&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:WORD.toIntX:VAL:SPEC" HREF="#SIG:WORD.toIntX:VAL">toIntX</A>&nbsp;<B>:</B>&nbsp;word&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:WORD.fromInt:VAL:SPEC" HREF="#SIG:WORD.fromInt:VAL">fromInt</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;word<BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:WORD.andb:VAL:SPEC" HREF="#SIG:WORD.andb:VAL">andb</A>&nbsp;<B>:</B>&nbsp;word&nbsp;<B>*</B>&nbsp;word&nbsp;<B>-&gt;</B>&nbsp;word<BR>
+<B>val</B>&nbsp;<A NAME="SIG:WORD.orb:VAL:SPEC" HREF="#SIG:WORD.orb:VAL">orb</A>&nbsp;&nbsp;<B>:</B>&nbsp;word&nbsp;<B>*</B>&nbsp;word&nbsp;<B>-&gt;</B>&nbsp;word<BR>
+<B>val</B>&nbsp;<A NAME="SIG:WORD.xorb:VAL:SPEC" HREF="#SIG:WORD.xorb:VAL">xorb</A>&nbsp;<B>:</B>&nbsp;word&nbsp;<B>*</B>&nbsp;word&nbsp;<B>-&gt;</B>&nbsp;word<BR>
+<B>val</B>&nbsp;<A NAME="SIG:WORD.notb:VAL:SPEC" HREF="#SIG:WORD.notb:VAL">notb</A>&nbsp;<B>:</B>&nbsp;word&nbsp;<B>-&gt;</B>&nbsp;word<BR>
+<B>val</B>&nbsp;<A NAME="SIG:WORD.\|@LT\|\|@LT\|:VAL:SPEC" HREF="#SIG:WORD.\|@LT\|\|@LT\|:VAL">&lt;&lt;</A>&nbsp;<B>:</B>&nbsp;word&nbsp;<B>*</B>&nbsp;Word.word&nbsp;<B>-&gt;</B>&nbsp;word<BR>
+<B>val</B>&nbsp;<A NAME="SIG:WORD.\|@GT\|\|@GT\|:VAL:SPEC" HREF="#SIG:WORD.\|@GT\|\|@GT\|:VAL">&gt;&gt;</A>&nbsp;<B>:</B>&nbsp;word&nbsp;<B>*</B>&nbsp;Word.word&nbsp;<B>-&gt;</B>&nbsp;word<BR>
+<B>val</B>&nbsp;<A NAME="SIG:WORD.~\|@GT\|\|@GT\|:VAL:SPEC" HREF="#SIG:WORD.~\|@GT\|\|@GT\|:VAL">~&gt;&gt;</A>&nbsp;<B>:</B>&nbsp;word&nbsp;<B>*</B>&nbsp;Word.word&nbsp;<B>-&gt;</B>&nbsp;word<BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:WORD.+:VAL:SPEC" HREF="#SIG:WORD.+:VAL">+</A>&nbsp;<B>:</B>&nbsp;word&nbsp;<B>*</B>&nbsp;word&nbsp;<B>-&gt;</B>&nbsp;word<BR>
+<B>val</B>&nbsp;<A NAME="SIG:WORD.-:VAL:SPEC" HREF="#SIG:WORD.-:VAL">-</A>&nbsp;<B>:</B>&nbsp;word&nbsp;<B>*</B>&nbsp;word&nbsp;<B>-&gt;</B>&nbsp;word<BR>
+<B>val</B>&nbsp;<A NAME="SIG:WORD.*:VAL:SPEC" HREF="#SIG:WORD.*:VAL">*</A>&nbsp;<B>:</B>&nbsp;word&nbsp;<B>*</B>&nbsp;word&nbsp;<B>-&gt;</B>&nbsp;word<BR>
+<B>val</B>&nbsp;<A NAME="SIG:WORD.div:VAL:SPEC" HREF="#SIG:WORD.div:VAL">div</A>&nbsp;<B>:</B>&nbsp;word&nbsp;<B>*</B>&nbsp;word&nbsp;<B>-&gt;</B>&nbsp;word<BR>
+<B>val</B>&nbsp;<A NAME="SIG:WORD.mod:VAL:SPEC" HREF="#SIG:WORD.mod:VAL">mod</A>&nbsp;<B>:</B>&nbsp;word&nbsp;<B>*</B>&nbsp;word&nbsp;<B>-&gt;</B>&nbsp;word<BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:WORD.compare:VAL:SPEC" HREF="#SIG:WORD.compare:VAL">compare</A>&nbsp;<B>:</B>&nbsp;word&nbsp;<B>*</B>&nbsp;word&nbsp;<B>-&gt;</B>&nbsp;order<BR>
+<B>val</B>&nbsp;<A NAME="SIG:WORD.\|@LT\|:VAL:SPEC" HREF="#SIG:WORD.\|@LT\|:VAL">&lt;</A>&nbsp;&nbsp;<B>:</B>&nbsp;word&nbsp;<B>*</B>&nbsp;word&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="SIG:WORD.\|@LTE\|:VAL:SPEC" HREF="#SIG:WORD.\|@LTE\|:VAL">&lt;=</A>&nbsp;<B>:</B>&nbsp;word&nbsp;<B>*</B>&nbsp;word&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="SIG:WORD.\|@GT\|:VAL:SPEC" HREF="#SIG:WORD.\|@GT\|:VAL">&gt;</A>&nbsp;&nbsp;<B>:</B>&nbsp;word&nbsp;<B>*</B>&nbsp;word&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="SIG:WORD.\|@GTE\|:VAL:SPEC" HREF="#SIG:WORD.\|@GTE\|:VAL">&gt;=</A>&nbsp;<B>:</B>&nbsp;word&nbsp;<B>*</B>&nbsp;word&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:WORD.~:VAL:SPEC" HREF="#SIG:WORD.~:VAL">~</A>&nbsp;<B>:</B>&nbsp;word&nbsp;<B>-&gt;</B>&nbsp;word<BR>
+<B>val</B>&nbsp;<A NAME="SIG:WORD.min:VAL:SPEC" HREF="#SIG:WORD.min:VAL">min</A>&nbsp;<B>:</B>&nbsp;word&nbsp;<B>*</B>&nbsp;word&nbsp;<B>-&gt;</B>&nbsp;word<BR>
+<B>val</B>&nbsp;<A NAME="SIG:WORD.max:VAL:SPEC" HREF="#SIG:WORD.max:VAL">max</A>&nbsp;<B>:</B>&nbsp;word&nbsp;<B>*</B>&nbsp;word&nbsp;<B>-&gt;</B>&nbsp;word<BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:WORD.fmt:VAL:SPEC" HREF="#SIG:WORD.fmt:VAL">fmt</A>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;StringCvt.radix&nbsp;<B>-&gt;</B>&nbsp;word&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="SIG:WORD.toString:VAL:SPEC" HREF="#SIG:WORD.toString:VAL">toString</A>&nbsp;<B>:</B>&nbsp;word&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="SIG:WORD.scan:VAL:SPEC" HREF="#SIG:WORD.scan:VAL">scan</A>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;StringCvt.radix<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;(char,&nbsp;<I>'a</I>)&nbsp;StringCvt.reader<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;(word,&nbsp;<I>'a</I>)&nbsp;StringCvt.reader<BR>
+<B>val</B>&nbsp;<A NAME="SIG:WORD.fromString:VAL:SPEC" HREF="#SIG:WORD.fromString:VAL">fromString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;word&nbsp;option</CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="SIG:WORD.wordSize:VAL"></A><CODE><B>val</B>&nbsp;wordSize&nbsp;<B>:</B>&nbsp;int</CODE>
+<DD>
+          The number of bits in type <CODE><A HREF="word.html#SIG:WORD.word:TY:SPEC">word</A></CODE>.  <CODE><A HREF="word.html#SIG:WORD.wordSize:VAL:SPEC">wordSize</A></CODE>  need not be a power of two. Note that <CODE><A HREF="word.html#SIG:WORD.word:TY:SPEC">word</A></CODE> has a fixed, finite precision. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:WORD.toLarge:VAL"></A>
+<DT> <CODE>toLarge <VAR>w</VAR> </CODE>
+<DT> <CODE>          toLargeX <VAR>w</VAR> </CODE>
+<DD>
+These convert <VAR>w</VAR> to a value of type <CODE><A HREF="word.html#SIG:WORD.word:TY:SPEC">LargeWord.word</A></CODE>. In the first case, <VAR>w</VAR> is converted to its equivalent <CODE><A HREF="word.html#SIG:WORD.word:TY:SPEC">LargeWord.word</A></CODE> value in the range [0,2<SUP>(<CODE>wordSize</CODE>)</SUP>-1]. In the second case, <VAR>w</VAR> is ``sign-extended,'' <I>i.e.</I>, the <CODE><A HREF="word.html#SIG:WORD.wordSize:VAL:SPEC">wordSize</A></CODE> low-order bits of <VAR>w</VAR> and <CODE><CODE><A HREF="word.html#SIG:WORD.toLargeX:VAL:SPEC">toLargeX</A></CODE> <VAR>w</VAR></CODE> are the same, and the remaining bits of <CODE><CODE><A HREF="word.html#SIG:WORD.toLargeX:VAL:SPEC">toLargeX</A></CODE> <VAR>w</VAR></CODE> are all equal to the most significant bit of <VAR>w</VAR>. 
+<P>
+          <CODE><A HREF="word.html#SIG:WORD.toLargeWord:VAL:SPEC">toLargeWord</A></CODE> and <CODE><A HREF="word.html#SIG:WORD.toLargeWordX:VAL:SPEC">toLargeWordX</A></CODE> are respective synonyms of the first two, and are deprecated. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:WORD.fromLarge:VAL"></A>
+<DT> <CODE>fromLarge <VAR>w</VAR> </CODE>
+<DT> <CODE>          fromLargeWord <VAR>w</VAR> </CODE>
+<DD>
+These functions convert <VAR>w</VAR> to the value <VAR>w</VAR>(<B>mod</B>&nbsp;(2<SUP>(<CODE>wordSize</CODE>)</SUP>)) of type <CODE><A HREF="word.html#SIG:WORD.word:TY:SPEC">word</A></CODE>. This has the effect of taking the low-order <CODE><A HREF="word.html#SIG:WORD.wordSize:VAL:SPEC">wordSize</A></CODE> bits of the 2's complement representation of <VAR>w</VAR>. 
+<P>
+          <CODE><A HREF="word.html#SIG:WORD.fromLargeWord:VAL:SPEC">fromLargeWord</A></CODE> is a deprecated synonym for <CODE><A HREF="word.html#SIG:WORD.fromLarge:VAL:SPEC">fromLarge</A></CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:WORD.toLargeInt:VAL"></A>
+<DT> <CODE>toLargeInt <VAR>w</VAR> </CODE>
+<DT> <CODE>          toLargeIntX <VAR>w</VAR> </CODE>
+<DD>
+These convert <VAR>w</VAR> to a value of type <CODE><A HREF="integer.html#SIG:INTEGER.int:TY:SPEC">LargeInt.int</A></CODE>. In the former case, <VAR>w</VAR> is viewed as an integer value in the range [0,2<SUP>(<CODE>wordSize</CODE>)</SUP>-1]. In the latter case, <VAR>w</VAR> is treated as a 2's complement signed integer with <CODE><A HREF="word.html#SIG:WORD.wordSize:VAL:SPEC">wordSize</A></CODE> precision, thereby having a value in the range [-2<SUP>(<CODE>wordSize</CODE>-1)</SUP>,2<SUP>(<CODE>wordSize</CODE>-1)</SUP>-1]. <CODE><A HREF="word.html#SIG:WORD.toLargeInt:VAL:SPEC">toLargeInt</A></CODE> raises <CODE><A HREF="general.html#SIG:GENERAL.Overflow:EXN:SPEC">Overflow</A></CODE> if the target integer value cannot be represented as a <CODE><A HREF="integer.html#SIG:INTEGER.int:TY:SPEC">LargeInt.int</A></CODE>. Since the precision of <CODE><A HREF="integer.html#SIG:INTEGER.int:TY:SPEC">LargeInt.int</A></CODE> is always at least <CODE><A HREF="word.html#SIG:WORD.wordSize:VAL:SPEC">wordSize</A></CODE> (see the discussion below), <CODE><A HREF="word.html#SIG:WORD.toLargeIntX:VAL:SPEC">toLargeIntX</A></CODE> will never raise an exception. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:WORD.fromLargeInt:VAL"></A>
+<DT> <CODE>fromLargeInt <VAR>i</VAR> </CODE>
+<DD>
+converts <VAR>i</VAR> of type <CODE><A HREF="integer.html#SIG:INTEGER.int:TY:SPEC">LargeInt.int</A></CODE> to a value of type <CODE><A HREF="word.html#SIG:WORD.word:TY:SPEC">word</A></CODE>. This has the effect of taking the low-order <CODE><A HREF="word.html#SIG:WORD.wordSize:VAL:SPEC">wordSize</A></CODE> bits of the 2's complement representation of <VAR>i</VAR>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:WORD.toInt:VAL"></A>
+<DT> <CODE>toInt <VAR>w</VAR> </CODE>
+<DT> <CODE>          toIntX <VAR>w</VAR> </CODE>
+<DD>
+These convert <VAR>w</VAR> to a value of default integer type. In the former case, <VAR>w</VAR> is viewed as an integer value in the range [0,2<SUP>(<CODE>wordSize</CODE>)</SUP>-1]. In the latter case, <VAR>w</VAR> is treated as a 2's complement signed integer with <CODE><A HREF="word.html#SIG:WORD.wordSize:VAL:SPEC">wordSize</A></CODE> precision, thereby having a value in the range [-2<SUP>(<CODE>wordSize</CODE>-1)</SUP>,2<SUP>(<CODE>wordSize</CODE>-1)</SUP>-1]. They raise <CODE><A HREF="general.html#SIG:GENERAL.Overflow:EXN:SPEC">Overflow</A></CODE> if the target integer value cannot be represented as an <CODE><A HREF="integer.html#SIG:INTEGER.int:TY:SPEC">Int.int</A></CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:WORD.fromInt:VAL"></A>
+<DT> <CODE>fromInt <VAR>i</VAR> </CODE>
+<DD>
+converts <VAR>i</VAR> of the default integer type to a value of type <CODE><A HREF="word.html#SIG:WORD.word:TY:SPEC">word</A></CODE>. This has the effect of taking the low-order <CODE><A HREF="word.html#SIG:WORD.wordSize:VAL:SPEC">wordSize</A></CODE> bits of the 2's complement representation of <VAR>i</VAR>. If the precision of <CODE><A HREF="integer.html#SIG:INTEGER.int:TY:SPEC">Int.int</A></CODE> is less than <CODE><A HREF="word.html#SIG:WORD.wordSize:VAL:SPEC">wordSize</A></CODE>, then <VAR>i</VAR> is sign-extended to <CODE><A HREF="word.html#SIG:WORD.wordSize:VAL:SPEC">wordSize</A></CODE> bits. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:WORD.andb:VAL"></A><CODE><B>val</B>&nbsp;andb&nbsp;<B>:</B>&nbsp;word&nbsp;<B>*</B>&nbsp;word&nbsp;<B>-&gt;</B>&nbsp;word<BR>
+<B>val</B>&nbsp;orb&nbsp;<B>:</B>&nbsp;word&nbsp;<B>*</B>&nbsp;word&nbsp;<B>-&gt;</B>&nbsp;word<BR>
+<B>val</B>&nbsp;xorb&nbsp;<B>:</B>&nbsp;word&nbsp;<B>*</B>&nbsp;word&nbsp;<B>-&gt;</B>&nbsp;word</CODE>
+<DD>
+          These functions return the bit-wise AND, OR, and exclusive OR, respectively, of their arguments. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:WORD.notb:VAL"></A>
+<DT> <CODE>notb <VAR>i</VAR> </CODE>
+<DD>
+returns the bit-wise complement (NOT) of <VAR>i</VAR>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:WORD.\|@LT\|\|@LT\|:VAL"></A>
+<DT> <CODE>&lt;&lt; (<VAR>i</VAR>, <VAR>n</VAR>) </CODE>
+<DD>
+shifts <VAR>i</VAR> to the left by <VAR>n</VAR> bit positions, filling  in zeros from the right.  When <VAR>i</VAR> and <VAR>n</VAR> are  interpreted as unsigned binary numbers, this returns (<VAR>i</VAR>* 2<SUP>(<VAR>n</VAR>)</SUP>)(<B>mod</B>&nbsp;(2 <SUP>(<CODE>wordSize</CODE>)</SUP>)). In particular, shifting by greater than or equal to <CODE><A HREF="word.html#SIG:WORD.wordSize:VAL:SPEC">wordSize</A></CODE> results in 0.  This operation is similar to the ``(logical) shift left''  instruction in many processors. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:WORD.\|@GT\|\|@GT\|:VAL"></A>
+<DT> <CODE>&gt;&gt; (<VAR>i</VAR>, <VAR>n</VAR>) </CODE>
+<DD>
+shifts <VAR>i</VAR> to the right by <VAR>n</VAR> bit positions, filling  in zeros from the left.  When <VAR>i</VAR> and <VAR>n</VAR> are  interpreted as unsigned binary numbers, it returns <B>floor</B>((<VAR>i</VAR> / 2<SUP>(<VAR>n</VAR>)</SUP>)). In particular, shifting by greater than or equal to <CODE><A HREF="word.html#SIG:WORD.wordSize:VAL:SPEC">wordSize</A></CODE> results in 0.  This operation is similar to the ``logical shift right''  instruction in many processors. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:WORD.~\|@GT\|\|@GT\|:VAL"></A>
+<DT> <CODE>~&gt;&gt; (<VAR>i</VAR>, <VAR>n</VAR>) </CODE>
+<DD>
+shifts <VAR>i</VAR> to the right by <VAR>n</VAR> bit positions.  The  value of the leftmost bit of <VAR>i</VAR> remains the same;  in a 2's-complement interpretation, this corresponds to sign extension.  When <VAR>i</VAR> is interpreted as a <CODE><A HREF="word.html#SIG:WORD.wordSize:VAL:SPEC">wordSize</A></CODE>-bit  2's-complement integer and <VAR>n</VAR> is interpreted as an  unsigned binary number, it returns <B>floor</B>((<VAR>i</VAR> / 2<SUP>(<VAR>n</VAR>)</SUP>)). In particular, shifting by greater than or equal to <CODE><A HREF="word.html#SIG:WORD.wordSize:VAL:SPEC">wordSize</A></CODE> results in either 0 or all 1's.  This operation is similar to the ``arithmetic shift right''  instruction in many processors. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:WORD.+:VAL"></A>
+<DT> <CODE><VAR>i</VAR> + <VAR>j</VAR> </CODE>
+<DD>
+returns  (<VAR>i</VAR>+<VAR>j</VAR>)(<B>mod</B>&nbsp;(2 <SUP>(<CODE>wordSize</CODE>)</SUP>)) when <VAR>i</VAR> and <VAR>j</VAR> are interpreted as unsigned binary numbers. It does <EM>not</EM> raise <CODE><A HREF="general.html#SIG:GENERAL.Overflow:EXN:SPEC">Overflow</A></CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:WORD.-:VAL"></A>
+<DT> <CODE><VAR>i</VAR> - <VAR>j</VAR> </CODE>
+<DD>
+returns the difference of <VAR>i</VAR> and <VAR>j</VAR> modulo (2<SUP>(<CODE>wordSize</CODE>)</SUP>): 
+<BLOCKQUOTE>
+(2<SUP>(<CODE>wordSize</CODE>)</SUP> + <VAR>i</VAR> - <VAR>j</VAR>)(<B>mod</B>&nbsp;(2<SUP>(<CODE>wordSize</CODE>)</SUP>))
+</BLOCKQUOTE>
+  when <VAR>i</VAR> and <VAR>j</VAR> are interpreted as unsigned binary numbers.  It does <EM>not</EM> raise <CODE><A HREF="general.html#SIG:GENERAL.Overflow:EXN:SPEC">Overflow</A></CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:WORD.*:VAL"></A>
+<DT> <CODE><VAR>i</VAR> * <VAR>j</VAR> </CODE>
+<DD>
+returns the product (<VAR>i</VAR>*<VAR>j</VAR>)(<B>mod</B>&nbsp;(2<SUP>(<CODE>wordSize</CODE>)</SUP>))  when <VAR>i</VAR> and <VAR>j</VAR> are interpreted as unsigned binary numbers.  It does <EM>not</EM> raise <CODE><A HREF="general.html#SIG:GENERAL.Overflow:EXN:SPEC">Overflow</A></CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:WORD.div:VAL"></A>
+<DT> <CODE><VAR>i</VAR> div <VAR>j</VAR> </CODE>
+<DD>
+returns the truncated quotient of <VAR>i</VAR> and  <VAR>j</VAR>, <B>floor</B>((<VAR>i</VAR> / <VAR>j</VAR>)),  when <VAR>i</VAR> and <VAR>j</VAR> are interpreted as unsigned binary  numbers.  It raises <CODE><A HREF="general.html#SIG:GENERAL.Div:EXN:SPEC">Div</A></CODE> when <VAR>j</VAR> = 0. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:WORD.mod:VAL"></A>
+<DT> <CODE><VAR>i</VAR> mod <VAR>j</VAR> </CODE>
+<DD>
+returns the remainder of the division of <VAR>i</VAR> by <VAR>j</VAR>:  
+<BLOCKQUOTE>
+<VAR>i</VAR> - <VAR>j</VAR> * <B>floor</B>((<VAR>i</VAR> / <VAR>j</VAR>))
+</BLOCKQUOTE>
+  when <VAR>i</VAR> and <VAR>j</VAR> are interpreted as unsigned binary  numbers.  It raises <CODE><A HREF="general.html#SIG:GENERAL.Div:EXN:SPEC">Div</A></CODE> when <VAR>j</VAR> = 0. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:WORD.compare:VAL"></A>
+<DT> <CODE>compare (<VAR>i</VAR>, <VAR>j</VAR>) </CODE>
+<DD>
+returns <CODE><A HREF="general.html#SIG:GENERAL.order:TY:SPEC">LESS</A></CODE>, <CODE><A HREF="general.html#SIG:GENERAL.order:TY:SPEC">EQUAL</A></CODE>, or  <CODE><A HREF="general.html#SIG:GENERAL.order:TY:SPEC">GREATER</A></CODE> if and only if <VAR>i</VAR> is less than, equal to, or  greater than <VAR>j</VAR>, respectively, considered as unsigned binary numbers. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:WORD.\|@LT\|:VAL"></A><CODE><B>val</B>&nbsp;&lt;&nbsp;<B>:</B>&nbsp;word&nbsp;<B>*</B>&nbsp;word&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;&lt;=&nbsp;<B>:</B>&nbsp;word&nbsp;<B>*</B>&nbsp;word&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;&gt;&nbsp;<B>:</B>&nbsp;word&nbsp;<B>*</B>&nbsp;word&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;&gt;=&nbsp;<B>:</B>&nbsp;word&nbsp;<B>*</B>&nbsp;word&nbsp;<B>-&gt;</B>&nbsp;bool</CODE>
+<DD>
+ These return <CODE>true</CODE> if and only  if the input arguments satisfy the given relation when interpreted as unsigned binary numbers. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:WORD.~:VAL"></A>
+<DT> <CODE>~ <VAR>i</VAR> </CODE>
+<DD>
+returns the 2's complement of <VAR>i</VAR>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:WORD.min:VAL"></A><CODE><B>val</B>&nbsp;min&nbsp;<B>:</B>&nbsp;word&nbsp;<B>*</B>&nbsp;word&nbsp;<B>-&gt;</B>&nbsp;word<BR>
+<B>val</B>&nbsp;max&nbsp;<B>:</B>&nbsp;word&nbsp;<B>*</B>&nbsp;word&nbsp;<B>-&gt;</B>&nbsp;word</CODE>
+<DD>
+ These return the smaller (respectively, larger) of the arguments. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:WORD.fmt:VAL"></A>
+<DT> <CODE>fmt <VAR>radix</VAR> <VAR>i</VAR> </CODE>
+<DT> <CODE>          toString <VAR>i</VAR> </CODE>
+<DD>
+These return a string containing a numeric representation of <VAR>i</VAR>. No prefix <CODE>&quot;Ow&quot;</CODE>, <CODE>&quot;OwX&quot;</CODE>, etc. is generated. The version using <CODE><A HREF="word.html#SIG:WORD.fmt:VAL:SPEC">fmt</A></CODE> creates a representation specified the given <VAR>radix</VAR>. The hexadecimal digits in the range [10,15] are represented by the characters <CODE>#&quot;A&quot;</CODE> through <CODE>#&quot;F&quot;</CODE>. The version using <CODE><A HREF="word.html#SIG:WORD.toString:VAL:SPEC">toString</A></CODE> is equivalent to <CODE><CODE><A HREF="word.html#SIG:WORD.fmt:VAL:SPEC">fmt</A></CODE> <CODE><A HREF="string-cvt.html#SIG:STRING_CVT.radix:TY:SPEC">StringCvt.HEX</A></CODE> <VAR>i</VAR></CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:WORD.scan:VAL"></A>
+<DT> <CODE>scan <VAR>radix</VAR> <VAR>getc</VAR> <VAR>strm</VAR> </CODE>
+<DT> <CODE>          fromString <VAR>s</VAR> </CODE>
+<DD>
+These functions scan a <CODE><A HREF="word.html#SIG:WORD.word:TY:SPEC">word</A></CODE> from a character source. In the first version, if an unsigned number in the format  denoted by <VAR>radix</VAR> can be parsed from a prefix of the  character strm <VAR>strm</VAR> using the character input function  <VAR>getc</VAR>, the expression evaluates to <CODE><CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">SOME</A></CODE>(w,rest)</CODE>, where <CODE>w</CODE> is the value of the number parsed and <CODE>rest</CODE>  is the remainder of the character stream. Initial whitespace is ignored. <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A></CODE> is returned otherwise.  It raises <CODE><A HREF="general.html#SIG:GENERAL.Overflow:EXN:SPEC">Overflow</A></CODE> when a number can be parsed, but is too large to fit in type <CODE>word</CODE>. 
+<P>
+ The format that <CODE>scan</CODE> accepts depends  on the <VAR>radix</VAR> argument. Regular expressions defining these formats are as follows: 
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TH ALIGN=CENTER VALIGN=TOP>
+<B>Radix</B>
+<TH ALIGN=CENTER VALIGN=TOP>
+<B>Format</B>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE><A HREF="string-cvt.html#SIG:STRING_CVT.radix:TY:SPEC">StringCvt.BIN</A></CODE>
+<TD ALIGN=CENTER VALIGN=TOP>
+(<TT>0w</TT>)<SUP>?</SUP>[<TT>0</TT>-<TT>1</TT>]<SUP>+</SUP>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE><A HREF="string-cvt.html#SIG:STRING_CVT.radix:TY:SPEC">StringCvt.OCT</A></CODE>
+<TD ALIGN=CENTER VALIGN=TOP>
+(<TT>0w</TT>)<SUP>?</SUP>[<TT>0</TT>-<TT>7</TT>]<SUP>+</SUP>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE><A HREF="string-cvt.html#SIG:STRING_CVT.radix:TY:SPEC">StringCvt.DEC</A></CODE>
+<TD ALIGN=CENTER VALIGN=TOP>
+(<TT>0w</TT>)<SUP>?</SUP>[<TT>0</TT>-<TT>9</TT>]<SUP>+</SUP>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE><A HREF="string-cvt.html#SIG:STRING_CVT.radix:TY:SPEC">StringCvt.HEX</A></CODE>
+<TD ALIGN=CENTER VALIGN=TOP>
+(<TT>0wx</TT>&nbsp;|&nbsp;<TT>0wX</TT>&nbsp;|&nbsp;<TT>0x</TT>&nbsp;|&nbsp;<TT>0X</TT>)<SUP>?</SUP>[<TT>0</TT>-<TT>9</TT><TT>a</TT>-<TT>f</TT><TT>A</TT>-<TT>F</TT>]<SUP>+</SUP>
+</TABLE>
+</CENTER>
+<HR>
+ 
+<P>
+      The <CODE><A HREF="word.html#SIG:WORD.fromString:VAL:SPEC">fromString</A></CODE> version returns <CODE><CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">SOME</A></CODE>(<VAR>w</VAR>)</CODE> if an unsigned hexadecimal number in the format  (<TT>0wx</TT>&nbsp;|&nbsp;<TT>0wX</TT>&nbsp;|&nbsp;<TT>0x</TT>&nbsp;|&nbsp;<TT>0X</TT>)<SUP>?</SUP>[<TT>0</TT>-<TT>9</TT><TT>a</TT>-<TT>f</TT><TT>A</TT>-<TT>F</TT>]<SUP>+</SUP>  can be parsed from a  prefix of string <VAR>s</VAR>, ignoring initial whitespace, where  <VAR>w</VAR> is the value of the number parsed.  <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A></CODE> is returned otherwise.  This function raises <CODE><A HREF="general.html#SIG:GENERAL.Overflow:EXN:SPEC">Overflow</A></CODE> when a  hexadecimal numeral can be parsed, but is too large to be represented by  type <CODE><A HREF="word.html#SIG:WORD.word:TY:SPEC">word</A></CODE>. It is equivalent to  
+<PRE>
+	    <A HREF="string-cvt.html#SIG:STRING_CVT.scanString:VAL:SPEC">StringCvt.scanString</A> (scan <A HREF="string-cvt.html#SIG:STRING_CVT.radix:TY:SPEC">StringCvt.HEX</A>)
+	  
+</PRE>
+ 
+<BR>
+<BR>
+
+</DL>
+<H4>See Also</H4>
+<BLOCKQUOTE>
+<CODE><A HREF="byte.html#Byte:STR:SPEC">Byte</A></CODE>, <CODE><A HREF="integer.html#Int:STR:SPEC">Int</A></CODE>, <CODE><A HREF="integer.html#LargeInt:STR:SPEC">LargeInt</A></CODE>, <CODE><A HREF="string-cvt.html#StringCvt:STR:SPEC">StringCvt</A></CODE>
+</BLOCKQUOTE>
+<H4>Discussion</H4>
+<P>
+A structure <CODE><A HREF="word.html#Word{N}:STR:SPEC">Word<I>&lt;N&gt;</I></A></CODE> implements <TT>N</TT>-bit words. The type <CODE><A HREF="word.html#SIG:WORD.word:TY:SPEC">LargeWord.word</A></CODE> represents the largest word supported. We require that 
+<BLOCKQUOTE>
+<CODE>LargeWord.wordSize</CODE> &lt;= <CODE>LargeInt.precision</CODE>
+</BLOCKQUOTE>
+ If <CODE><A HREF="word.html#LargeWord:STR:SPEC">LargeWord</A></CODE> is not the same as <CODE><A HREF="word.html#Word:STR:SPEC">Word</A></CODE>, then there must be a structure <CODE><A HREF="word.html#Word{N}:STR:SPEC">Word<I>&lt;N&gt;</I></A></CODE> equal to <CODE><A HREF="word.html#LargeWord:STR:SPEC">LargeWord</A></CODE>.
+<P>
+The structure <CODE><A HREF="word.html#SysWord:STR:SPEC">SysWord</A></CODE> is used with the optional <CODE><A HREF="posix.html#Posix:STR:SPEC">Posix</A></CODE> and <CODE><A HREF="windows.html#Windows:STR:SPEC">Windows</A></CODE> modules. The type <CODE><A HREF="word.html#SIG:WORD.word:TY:SPEC">SysWord.word</A></CODE> is guaranteed to be large enough to hold any unsigned integral value used by the underlying system.
+<P>
+For words and integers of the same precision/word size, the operations <CODE><A HREF="word.html#SIG:WORD.fromInt:VAL:SPEC">fromInt</A></CODE> and <CODE><A HREF="word.html#SIG:WORD.toIntX:VAL:SPEC">toIntX</A></CODE> act as bit-wise identity functions. Even in this case, however, <CODE><A HREF="word.html#SIG:WORD.toInt:VAL:SPEC">toInt</A></CODE> will raise <CODE><A HREF="general.html#SIG:GENERAL.Overflow:EXN:SPEC">Overflow</A></CODE> if the high-order bit of the word is set.
+<P>
+Note that operations on words, and conversions of integral types into words, never cause exceptions to arise due to lost precision.
+<P>
+Conversion between words and integers of any size can be handled by intermediate conversion into <CODE><A HREF="word.html#SIG:WORD.word:TY:SPEC">LargeWord.word</A></CODE> and <CODE><A HREF="integer.html#SIG:INTEGER.int:TY:SPEC">LargeInt.int</A></CODE>. For example, the functions <CODE><A HREF="word.html#SIG:WORD.fromInt:VAL:SPEC">fromInt</A></CODE>, <CODE><A HREF="word.html#SIG:WORD.toInt:VAL:SPEC">toInt</A></CODE> and <CODE><A HREF="word.html#SIG:WORD.toIntX:VAL:SPEC">toIntX</A></CODE> are respectively equivalent to: 
+<PRE>
+fromLargeWord o LargeWord.fromLargeInt o Int.toLarge
+Int.fromLarge o LargeWord.toLargeInt   o toLargeWord
+Int.fromLarge o LargeWord.toLargeIntX  o toLargeWordX
+</PRE>
+<P>
+Typically, implementations will provide very efficient word operations by expanding them inline to a few machine instructions. It also is assumed that implementations will catch the idiom of converting between words and integers of differing precisions using an intermediate representation (<I>e.g.</I>,  <CODE>Word32.fromLargeWord o Word8.toLargeWord</CODE>) and optimize these conversions. 
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="manpages.html">Parent</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   | <A HREF="index.html">Root</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Generated April 12, 2004</I><BR>
+<I>Last Modified May 29, 2000</I><BR>
+<I>Comments to <A HREF="http://www.cs.uchicago.edu/people/jhr">John Reppy.</A></I><BR>
+
+<HR>
+<P>
+
+This document may be distributed freely over the internet as long as the
+copyright notice and license terms below are prominently displayed within
+every machine-readable copy.  
+
+<P>
+
+<TABLE ALIGN=CENTER WIDTH="80%" BORDER="2" CELLPADDING="5">
+<TR>
+<TD>
+<P>
+
+Copyright &copy; 2004 AT&amp;T and Lucent Technologies.
+All rights reserved.
+
+<P>
+
+Permission is granted for internet users to make one paper copy for their
+own personal use.  Further hardcopy reproduction is strictly prohibited. 
+Permission to distribute the HTML document electronically on any medium
+other than the internet must be requested from the copyright holders by
+contacting the editors.
+Printed versions of the SML Basis Manual are available from Cambridge
+University Press.
+To order, please visit
+<A HREF="http://www.cup.org">www.cup.org</A> (North America) or
+<A HREF="http://www.cup.cam.ac.uk">www.cup.cam.ac.uk</A> (outside North America).<BR>
+
+</TABLE>
+<P>
+
+<HR>
+</BODY></HTML>

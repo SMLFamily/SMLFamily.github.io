@@ -1,0 +1,332 @@
+<!-- HTML/integer.html -->
+
+<!-- COPYRIGHT (c) 1997 Bell Labs, Lucent Technologies. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The INTEGER signature</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF"><A NAME="top"></A>
+<H1 align=CENTER>The Standard ML Basis Library</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>INTEGER</CODE> signature</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="INTEGER:SIG:SPEC"></A><CODE>INTEGER</CODE><BR>
+<B>structure</B>&nbsp;<A NAME="Int:STR:SPEC"></A><CODE>Int</CODE><B> :> </B>INTEGER<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;int&nbsp;=&nbsp;int<BR>
+<B>structure</B>&nbsp;<A NAME="FixedInt:STR:SPEC"></A><CODE>FixedInt</CODE><B> :> </B>INTEGER&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+<B>structure</B>&nbsp;<A NAME="LargeInt:STR:SPEC"></A><CODE>LargeInt</CODE><B> :> </B>INTEGER<BR>
+<B>structure</B>&nbsp;<A NAME="Int{N}:STR:SPEC"></A><CODE>Int<I>&lt;N&gt;</I></CODE><B> :> </B>INTEGER&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+<B>structure</B>&nbsp;<A NAME="Position:STR:SPEC"></A><CODE>Position</CODE><B> :> </B>INTEGER<BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+Instances of the <CODE>INTEGER</CODE> signature provide a type of signed integers of either a fixed or arbitrary precision, and arithmetic and conversion operations. For fixed precision implementations, most arithmetic operations raise the exception <CODE><A HREF="general.html#SIG:GENERAL.Overflow:EXN:SPEC">Overflow</A></CODE> when their result is not representable. 
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>eqtype</B>&nbsp;<A NAME="SIG:INTEGER.int:TY:SPEC" HREF="#SIG:INTEGER.int:TY">int</A><BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INTEGER.toLarge:VAL:SPEC" HREF="#SIG:INTEGER.toLarge:VAL">toLarge</A>&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;LargeInt.int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INTEGER.fromLarge:VAL:SPEC" HREF="#SIG:INTEGER.fromLarge:VAL">fromLarge</A>&nbsp;<B>:</B>&nbsp;LargeInt.int&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INTEGER.toInt:VAL:SPEC" HREF="#SIG:INTEGER.toInt:VAL">toInt</A>&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;Int.int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INTEGER.fromInt:VAL:SPEC" HREF="#SIG:INTEGER.fromInt:VAL">fromInt</A>&nbsp;<B>:</B>&nbsp;Int.int&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INTEGER.precision:VAL:SPEC" HREF="#SIG:INTEGER.precision:VAL">precision</A>&nbsp;<B>:</B>&nbsp;Int.int&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INTEGER.minInt:VAL:SPEC" HREF="#SIG:INTEGER.minInt:VAL">minInt</A>&nbsp;<B>:</B>&nbsp;int&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INTEGER.maxInt:VAL:SPEC" HREF="#SIG:INTEGER.maxInt:VAL">maxInt</A>&nbsp;<B>:</B>&nbsp;int&nbsp;option<BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INTEGER.+:VAL:SPEC" HREF="#SIG:INTEGER.+:VAL">+</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INTEGER.-:VAL:SPEC" HREF="#SIG:INTEGER.-:VAL">-</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INTEGER.*:VAL:SPEC" HREF="#SIG:INTEGER.*:VAL">*</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INTEGER.div:VAL:SPEC" HREF="#SIG:INTEGER.div:VAL">div</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INTEGER.mod:VAL:SPEC" HREF="#SIG:INTEGER.mod:VAL">mod</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INTEGER.quot:VAL:SPEC" HREF="#SIG:INTEGER.quot:VAL">quot</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INTEGER.rem:VAL:SPEC" HREF="#SIG:INTEGER.rem:VAL">rem</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INTEGER.compare:VAL:SPEC" HREF="#SIG:INTEGER.compare:VAL">compare</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;order<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INTEGER.\|@LT\|:VAL:SPEC" HREF="#SIG:INTEGER.\|@LT\|:VAL">&lt;</A>&nbsp;&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INTEGER.\|@LTE\|:VAL:SPEC" HREF="#SIG:INTEGER.\|@LTE\|:VAL">&lt;=</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INTEGER.\|@GT\|:VAL:SPEC" HREF="#SIG:INTEGER.\|@GT\|:VAL">&gt;</A>&nbsp;&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INTEGER.\|@GTE\|:VAL:SPEC" HREF="#SIG:INTEGER.\|@GTE\|:VAL">&gt;=</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INTEGER.~:VAL:SPEC" HREF="#SIG:INTEGER.~:VAL">~</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INTEGER.abs:VAL:SPEC" HREF="#SIG:INTEGER.abs:VAL">abs</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INTEGER.min:VAL:SPEC" HREF="#SIG:INTEGER.min:VAL">min</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INTEGER.max:VAL:SPEC" HREF="#SIG:INTEGER.max:VAL">max</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INTEGER.sign:VAL:SPEC" HREF="#SIG:INTEGER.sign:VAL">sign</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;Int.int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INTEGER.sameSign:VAL:SPEC" HREF="#SIG:INTEGER.sameSign:VAL">sameSign</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INTEGER.fmt:VAL:SPEC" HREF="#SIG:INTEGER.fmt:VAL">fmt</A>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;StringCvt.radix&nbsp;<B>-&gt;</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INTEGER.toString:VAL:SPEC" HREF="#SIG:INTEGER.toString:VAL">toString</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INTEGER.scan:VAL:SPEC" HREF="#SIG:INTEGER.scan:VAL">scan</A>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;StringCvt.radix<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;(char,&nbsp;<I>'a</I>)&nbsp;StringCvt.reader<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;(int,&nbsp;<I>'a</I>)&nbsp;StringCvt.reader<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INTEGER.fromString:VAL:SPEC" HREF="#SIG:INTEGER.fromString:VAL">fromString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;int&nbsp;option</CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="SIG:INTEGER.toLarge:VAL"></A><CODE><B>val</B>&nbsp;toLarge&nbsp;<B>:</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;LargeInt.int<BR>
+<B>val</B>&nbsp;fromLarge&nbsp;<B>:</B>&nbsp;LargeInt.int&nbsp;<B>-&gt;</B>&nbsp;int</CODE>
+<DD>
+          These convert between integer values of types  <CODE><A HREF="integer.html#SIG:INTEGER.int:TY:SPEC">int</A></CODE> and  <CODE><A HREF="integer.html#SIG:INTEGER.int:TY:SPEC">LargeInt.int</A></CODE>. The latter raises <CODE><A HREF="general.html#SIG:GENERAL.Overflow:EXN:SPEC">Overflow</A></CODE> if the value does not fit.
+<P>
+<CODE><CODE>Int<I>&lt;M&gt;</I></CODE>.fromLarge o <CODE>Int<I>&lt;N&gt;</I></CODE>.toLarge</CODE> converts an integer from type <CODE><CODE>Int<I>&lt;N&gt;</I></CODE>.int</CODE> to  <CODE><CODE>Int<I>&lt;M&gt;</I></CODE>.int</CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:INTEGER.toInt:VAL"></A><CODE><B>val</B>&nbsp;toInt&nbsp;<B>:</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;Int.int<BR>
+<B>val</B>&nbsp;fromInt&nbsp;<B>:</B>&nbsp;Int.int&nbsp;<B>-&gt;</B>&nbsp;int</CODE>
+<DD>
+          These convert between integer values of types  <CODE><A HREF="integer.html#SIG:INTEGER.int:TY:SPEC">int</A></CODE> and the default integer type. They raise <CODE><A HREF="general.html#SIG:GENERAL.Overflow:EXN:SPEC">Overflow</A></CODE> if the value  does not fit. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:INTEGER.precision:VAL"></A><CODE><B>val</B>&nbsp;precision&nbsp;<B>:</B>&nbsp;Int.int&nbsp;option</CODE>
+<DD>
+          If <CODE><CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">SOME</A></CODE>(<VAR>n</VAR>)</CODE>,  this denotes the number <VAR>n</VAR> of significant bits in type  <CODE><A HREF="integer.html#SIG:INTEGER.int:TY:SPEC">int</A></CODE>, including the sign bit. If it is <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A></CODE>,  <CODE><A HREF="integer.html#SIG:INTEGER.int:TY:SPEC">int</A></CODE> has arbitrary precision. The precision need not  necessarily be a power of two. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:INTEGER.minInt:VAL"></A><CODE><B>val</B>&nbsp;minInt&nbsp;<B>:</B>&nbsp;int&nbsp;option<BR>
+<B>val</B>&nbsp;maxInt&nbsp;<B>:</B>&nbsp;int&nbsp;option</CODE>
+<DD>
+          The minimal (most negative)  and the maximal (most positive) integers, respectively,  representable by <CODE><A HREF="integer.html#SIG:INTEGER.int:TY:SPEC">int</A></CODE>. If  a value is <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A></CODE>, <CODE><A HREF="integer.html#SIG:INTEGER.int:TY:SPEC">int</A></CODE> can represent all negative (respectively, positive) integers, within the limits of the heap size. 
+<P>
+          If <CODE><A HREF="integer.html#SIG:INTEGER.precision:VAL:SPEC">precision</A></CODE> is <CODE><CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">SOME</A></CODE>(<VAR>n</VAR>)</CODE>, then we have <CODE>minInt</CODE> = -2<SUP>(<VAR>n</VAR>-1)</SUP> and <CODE>maxInt</CODE> = 2<SUP>(<VAR>n</VAR>-1)</SUP> - 1. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:INTEGER.+:VAL"></A><CODE><B>val</B>&nbsp;+&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;-&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;*&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;int</CODE>
+<DD>
+          These functions return the sum, difference, and product, respectively, of the arguments. They raise  <CODE><A HREF="general.html#SIG:GENERAL.Overflow:EXN:SPEC">Overflow</A></CODE> when the result is not representable. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:INTEGER.div:VAL"></A>
+<DT> <CODE><VAR>i</VAR> div <VAR>j</VAR> </CODE>
+<DD>
+returns the greatest integer less than or equal to the quotient of <VAR>i</VAR> by  <VAR>j</VAR>, <I>i.e.</I>, <B>floor</B>(((<VAR>i</VAR> / <VAR>j</VAR>))). It raises <CODE><A HREF="general.html#SIG:GENERAL.Overflow:EXN:SPEC">Overflow</A></CODE>  when the result is not representable, or <CODE><A HREF="general.html#SIG:GENERAL.Div:EXN:SPEC">Div</A></CODE> when  <VAR>j</VAR> = 0. Note that rounding is towards negative infinity,  not zero. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:INTEGER.mod:VAL"></A>
+<DT> <CODE><VAR>i</VAR> mod <VAR>j</VAR> </CODE>
+<DD>
+returns the remainder of the division of <VAR>i</VAR> by <VAR>j</VAR>.  It raises <CODE><A HREF="general.html#SIG:GENERAL.Div:EXN:SPEC">Div</A></CODE> when <VAR>j</VAR> = 0. When defined,  <CODE>(<VAR>i</VAR> <CODE><A HREF="integer.html#SIG:INTEGER.mod:VAL:SPEC">mod</A></CODE> <VAR>j</VAR>)</CODE> has the same sign as <VAR>j</VAR>, and  
+<PRE>
+(<VAR>i</VAR> <A HREF="integer.html#SIG:INTEGER.div:VAL:SPEC">div</A> <VAR>j</VAR>) * <VAR>j</VAR> + (<VAR>i</VAR> <A HREF="integer.html#SIG:INTEGER.mod:VAL:SPEC">mod</A> <VAR>j</VAR>) = <VAR>i</VAR>
+</PRE>
+ 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:INTEGER.quot:VAL"></A>
+<DT> <CODE>quot (<VAR>i</VAR>, <VAR>j</VAR>) </CODE>
+<DD>
+returns the truncated quotient of the division of <VAR>i</VAR> by  <VAR>j</VAR>, <I>i.e.</I>, it computes (<VAR>i</VAR> / <VAR>j</VAR>) and then drops any fractional part of the quotient. It raises <CODE><A HREF="general.html#SIG:GENERAL.Overflow:EXN:SPEC">Overflow</A></CODE>  when the result is not representable, or <CODE><A HREF="general.html#SIG:GENERAL.Div:EXN:SPEC">Div</A></CODE> when  <VAR>j</VAR> = 0.  Note that unlike <CODE><A HREF="integer.html#SIG:INTEGER.div:VAL:SPEC">div</A></CODE>, <CODE><A HREF="integer.html#SIG:INTEGER.quot:VAL:SPEC">quot</A></CODE> rounds  towards zero. In addition, unlike <CODE><A HREF="integer.html#SIG:INTEGER.div:VAL:SPEC">div</A></CODE> and <CODE><A HREF="integer.html#SIG:INTEGER.mod:VAL:SPEC">mod</A></CODE>, neither <CODE><A HREF="integer.html#SIG:INTEGER.quot:VAL:SPEC">quot</A></CODE> nor <CODE><A HREF="integer.html#SIG:INTEGER.rem:VAL:SPEC">rem</A></CODE> are infix by default; an appropriate infix declaration would be <CODE>infix 7 quot rem</CODE>. 
+<BLOCKQUOTE>
+<B>Implementation note:</B><BR>
+
+<P>
+This is the semantics of most hardware divide instructions,  so <CODE><A HREF="integer.html#SIG:INTEGER.quot:VAL:SPEC">quot</A></CODE> may be faster than <CODE><A HREF="integer.html#SIG:INTEGER.div:VAL:SPEC">div</A></CODE>. 
+</BLOCKQUOTE>
+ 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:INTEGER.rem:VAL"></A>
+<DT> <CODE><VAR>i</VAR> rem <VAR>j</VAR> </CODE>
+<DD>
+returns the remainder of the division of <VAR>i</VAR> by <VAR>j</VAR>.  It raises <CODE><A HREF="general.html#SIG:GENERAL.Div:EXN:SPEC">Div</A></CODE> when <CODE><VAR>j</VAR> = 0</CODE>.  <CODE>(<VAR>i</VAR> <CODE><A HREF="integer.html#SIG:INTEGER.rem:VAL:SPEC">rem</A></CODE> <VAR>j</VAR>)</CODE> has the same sign as <VAR>i</VAR>, and  it holds that 
+<PRE>
+(<VAR>i</VAR> <A HREF="integer.html#SIG:INTEGER.quot:VAL:SPEC">quot</A> <VAR>j</VAR>) * <VAR>j</VAR> + (<VAR>i</VAR> <A HREF="integer.html#SIG:INTEGER.rem:VAL:SPEC">rem</A> <VAR>j</VAR>) = <VAR>i</VAR>
+</PRE>
+  This is the semantics of most hardware divide instructions,  so <CODE><A HREF="integer.html#SIG:INTEGER.rem:VAL:SPEC">rem</A></CODE> may be faster than <CODE><A HREF="integer.html#SIG:INTEGER.mod:VAL:SPEC">mod</A></CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:INTEGER.compare:VAL"></A>
+<DT> <CODE>compare (<VAR>i</VAR>, <VAR>j</VAR>) </CODE>
+<DD>
+returns <CODE><A HREF="general.html#SIG:GENERAL.order:TY:SPEC">LESS</A></CODE>, <CODE><A HREF="general.html#SIG:GENERAL.order:TY:SPEC">EQUAL</A></CODE>, or <CODE><A HREF="general.html#SIG:GENERAL.order:TY:SPEC">GREATER</A></CODE>  when <VAR>i</VAR> is less than, equal to, or greater than  <VAR>j</VAR>, respectively. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:INTEGER.\|@LT\|:VAL"></A><CODE><B>val</B>&nbsp;&lt;&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;&lt;=&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;&gt;&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;&gt;=&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;bool</CODE>
+<DD>
+          These return <CODE>true</CODE> if the corresponding relation holds between the two integers. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:INTEGER.~:VAL"></A>
+<DT> <CODE>~ <VAR>i</VAR> </CODE>
+<DD>
+returns the negation of <VAR>i</VAR>, <I>i.e.</I>, (0 - <VAR>i</VAR>). It raises <CODE><A HREF="general.html#SIG:GENERAL.Overflow:EXN:SPEC">Overflow</A></CODE> when the  result is not representable.  This can happen, for example,  when <CODE><A HREF="integer.html#SIG:INTEGER.int:TY:SPEC">int</A></CODE> is an n-bit 2's-complement integer type, and  <CODE>~</CODE> is applied to -2 <SUP>(n-1)</SUP>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:INTEGER.abs:VAL"></A>
+<DT> <CODE>abs <VAR>i</VAR> </CODE>
+<DD>
+returns the absolute value (magnitude) of <VAR>i</VAR>.  It raises  <CODE><A HREF="general.html#SIG:GENERAL.Overflow:EXN:SPEC">Overflow</A></CODE> when the result is not representable. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:INTEGER.min:VAL"></A><CODE><B>val</B>&nbsp;min&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;max&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;int</CODE>
+<DD>
+ These return the smaller (respectively, larger) of the arguments. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:INTEGER.sign:VAL"></A>
+<DT> <CODE>sign <VAR>i</VAR> </CODE>
+<DD>
+returns <CODE>~1</CODE>, <CODE>0</CODE>, or <CODE>1</CODE> when <VAR>i</VAR> is less than, equal to,  or greater than <CODE>0</CODE>, respectively. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:INTEGER.sameSign:VAL"></A>
+<DT> <CODE>sameSign (<VAR>i</VAR>, <VAR>j</VAR>) </CODE>
+<DD>
+returns <CODE>true</CODE> if <VAR>i</VAR> and <VAR>j</VAR> have the same sign. It is equivalent to <CODE>(<CODE><A HREF="integer.html#SIG:INTEGER.sign:VAL:SPEC">sign</A></CODE> <VAR>i</VAR> = <CODE><A HREF="integer.html#SIG:INTEGER.sign:VAL:SPEC">sign</A></CODE> <VAR>j</VAR>)</CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:INTEGER.fmt:VAL"></A>
+<DT> <CODE>fmt <VAR>radix</VAR> <VAR>i</VAR> </CODE>
+<DT> <CODE>          toString <VAR>i</VAR> </CODE>
+<DD>
+These return a string containing a representation of <VAR>i</VAR> with <CODE>#&quot;~&quot;</CODE> used as the sign for negative numbers. The former formats the string according to <VAR>radix</VAR>, The hexadecimal digits 10 through 15 are represented as <CODE>#&quot;A&quot;</CODE> through <CODE>#&quot;F&quot;</CODE>, respectively. No prefix <CODE>&quot;0x&quot;</CODE> is generated for the hexadecimal representation. The second form is equivalent to <CODE><CODE><A HREF="integer.html#SIG:INTEGER.fmt:VAL:SPEC">fmt</A></CODE> <CODE><A HREF="string-cvt.html#SIG:STRING_CVT.radix:TY:SPEC">StringCvt.DEC</A></CODE> <VAR>i</VAR></CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:INTEGER.scan:VAL"></A>
+<DT> <CODE>scan <VAR>radix</VAR> <VAR>getc</VAR> <VAR>strm</VAR> </CODE>
+<DT> <CODE>          fromString <VAR>s</VAR> </CODE>
+<DD>
+The first expression returns  <CODE><CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">SOME</A></CODE>(<VAR>i</VAR>,<VAR>rest</VAR>)</CODE>  if an integer  in the format denoted by <VAR>radix</VAR> can be parsed from a  prefix of the character stream <VAR>strm</VAR> after skipping initial  whitespace, where <VAR>i</VAR> is the  value of the integer parsed and <VAR>rest</VAR> is the rest of the  character stream.  <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A></CODE> is returned otherwise.  This function raises <CODE><A HREF="general.html#SIG:GENERAL.Overflow:EXN:SPEC">Overflow</A></CODE> when an  integer can be parsed, but is too large to be represented by  type <CODE><A HREF="integer.html#SIG:INTEGER.int:TY:SPEC">int</A></CODE>. 
+<P>
+ The format that <CODE>scan</CODE> accepts depends  on the <VAR>radix</VAR> argument. Regular expressions defining these formats are as follows: 
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TH ALIGN=CENTER VALIGN=TOP>
+<B>Radix</B>
+<TH ALIGN=CENTER VALIGN=TOP>
+<B>Format</B>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE><A HREF="string-cvt.html#SIG:STRING_CVT.radix:TY:SPEC">StringCvt.BIN</A></CODE>
+<TD ALIGN=CENTER VALIGN=TOP>
+[<TT>+~-</TT>]<SUP>?</SUP>[<TT>0</TT>-<TT>1</TT>]<SUP>+</SUP>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE><A HREF="string-cvt.html#SIG:STRING_CVT.radix:TY:SPEC">StringCvt.OCT</A></CODE>
+<TD ALIGN=CENTER VALIGN=TOP>
+[<TT>+~-</TT>]<SUP>?</SUP>[<TT>0</TT>-<TT>7</TT>]<SUP>+</SUP>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE><A HREF="string-cvt.html#SIG:STRING_CVT.radix:TY:SPEC">StringCvt.DEC</A></CODE>
+<TD ALIGN=CENTER VALIGN=TOP>
+[<TT>+~-</TT>]<SUP>?</SUP>[<TT>0</TT>-<TT>9</TT>]<SUP>+</SUP>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE><A HREF="string-cvt.html#SIG:STRING_CVT.radix:TY:SPEC">StringCvt.HEX</A></CODE>
+<TD ALIGN=CENTER VALIGN=TOP>
+[<TT>+~-</TT>]<SUP>?</SUP>(<TT>0x</TT>&nbsp;|&nbsp;<TT>0X</TT>)<SUP>?</SUP>[<TT>0</TT>-<TT>9</TT><TT>a</TT>-<TT>f</TT><TT>A</TT>-<TT>F</TT>]<SUP>+</SUP>
+</TABLE>
+</CENTER>
+<HR>
+ 
+<P>
+          Note that strings such as <CODE>&quot;0xg&quot;</CODE> and <CODE>&quot;0x 123&quot;</CODE> are scanned as <CODE><CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">SOME</A></CODE>(0)</CODE>, even using a hexadecimal radix. 
+<P>
+      The second expression returns <CODE><CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">SOME</A></CODE>(<VAR>i</VAR>)</CODE> if an  integer <VAR>i</VAR> in the format  [<TT>+~-</TT>]<SUP>?</SUP>[<TT>0</TT>-<TT>9</TT>]<SUP>+</SUP>  can be parsed from a prefix  of the string <VAR>s</VAR>, ignoring initial whitespace; <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A></CODE> is returned otherwise.  The function <CODE><A HREF="integer.html#SIG:INTEGER.fromString:VAL:SPEC">fromString</A></CODE> raises <CODE><A HREF="general.html#SIG:GENERAL.Overflow:EXN:SPEC">Overflow</A></CODE> when an integer can be parsed, but  is too large to fit in type <CODE><A HREF="integer.html#SIG:INTEGER.int:TY:SPEC">int</A></CODE>. It is equivalent to the expression  <CODE><CODE><A HREF="string-cvt.html#SIG:STRING_CVT.scanString:VAL:SPEC">StringCvt.scanString</A></CODE> (scan <CODE><A HREF="string-cvt.html#SIG:STRING_CVT.radix:TY:SPEC">StringCvt.DEC</A></CODE>)</CODE>. 
+<BR>
+<BR>
+
+</DL>
+<H4>See Also</H4>
+<BLOCKQUOTE>
+<CODE><A HREF="int-inf.html#IntInf:STR:SPEC">IntInf</A></CODE>, <CODE><A HREF="string-cvt.html#StringCvt:STR:SPEC">StringCvt</A></CODE>
+</BLOCKQUOTE>
+<H4>Discussion</H4>
+<P>
+Fixed precision representations are required to be 2's complement. Implementations of arbitrary precision should appear as 2's complement under conversion to and from words.
+<P>
+    If an implementation provides the <CODE><A HREF="int-inf.html#IntInf:STR:SPEC">IntInf</A></CODE> structure, then <CODE><A HREF="integer.html#LargeInt:STR:SPEC">LargeInt</A></CODE> must be the same structure as <CODE><A HREF="int-inf.html#IntInf:STR:SPEC">IntInf</A></CODE> (viewed through a thinning <CODE><A HREF="integer.html#INTEGER:SIG:SPEC">INTEGER</A></CODE> signature). Otherwise, if <CODE><A HREF="integer.html#LargeInt:STR:SPEC">LargeInt</A></CODE> is not the same as <CODE><A HREF="integer.html#Int:STR:SPEC">Int</A></CODE>, then there must be a structure <CODE><A HREF="integer.html#Int{N}:STR:SPEC">Int<I>&lt;N&gt;</I></A></CODE> equal to <CODE><A HREF="integer.html#LargeInt:STR:SPEC">LargeInt</A></CODE>.
+<P>
+    The type <CODE><A HREF="integer.html#SIG:INTEGER.int:TY:SPEC">FixedInt.int</A></CODE> is the largest fixed precision integer supported, while the type <CODE><A HREF="integer.html#SIG:INTEGER.int:TY:SPEC">LargeInt.int</A></CODE> is the largest integer supported. A structure <CODE><A HREF="integer.html#Int{N}:STR:SPEC">Int<I>&lt;N&gt;</I></A></CODE> implements <TT>N</TT>-bit integers. The type <CODE><A HREF="integer.html#SIG:INTEGER.int:TY:SPEC">Position.int</A></CODE> is used to represent positions in files and I/O streams.
+<P>
+    
+<BLOCKQUOTE>
+<B>Implementation note:</B><BR>
+
+<P>
+It is recommended that compilers recognize the idiom of converting between integers of differing precisions using an intermediate representation (<I>e.g.</I>, <CODE>Int31.fromLarge o Int8.toLarge</CODE>) and optimize these compositions. 
+</BLOCKQUOTE>
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="manpages.html">Parent</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   | <A HREF="index.html">Root</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Generated April 12, 2004</I><BR>
+<I>Last Modified January 9, 1997</I><BR>
+<I>Comments to <A HREF="http://www.cs.uchicago.edu/people/jhr">John Reppy.</A></I><BR>
+
+<HR>
+<P>
+
+This document may be distributed freely over the internet as long as the
+copyright notice and license terms below are prominently displayed within
+every machine-readable copy.  
+
+<P>
+
+<TABLE ALIGN=CENTER WIDTH="80%" BORDER="2" CELLPADDING="5">
+<TR>
+<TD>
+<P>
+
+Copyright &copy; 2004 AT&amp;T and Lucent Technologies.
+All rights reserved.
+
+<P>
+
+Permission is granted for internet users to make one paper copy for their
+own personal use.  Further hardcopy reproduction is strictly prohibited. 
+Permission to distribute the HTML document electronically on any medium
+other than the internet must be requested from the copyright holders by
+contacting the editors.
+Printed versions of the SML Basis Manual are available from Cambridge
+University Press.
+To order, please visit
+<A HREF="http://www.cup.org">www.cup.org</A> (North America) or
+<A HREF="http://www.cup.cam.ac.uk">www.cup.cam.ac.uk</A> (outside North America).<BR>
+
+</TABLE>
+<P>
+
+<HR>
+</BODY></HTML>

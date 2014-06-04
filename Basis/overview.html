@@ -1,0 +1,672 @@
+<!-- HTML/overview.html -->
+
+<!-- COPYRIGHT (c) 2002 Bell Labs, Lucent Technologies. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>SML Basis Library Overview</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF"><A NAME="top"></A>
+<H1 align=CENTER>The Standard ML Basis Library</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>Overview</H2>
+<P>
+This section gives an overview of the organization of the SML Basis Library. 
+<H3><A NAME="section:1"></A>Top-level environment</H3>
+<P>
+The top-level environment consists of those type, exception, and value identifiers that can be used without qualification. These identifiers are called <EM>pervasive</EM>. For example, the unqualified type <TT>int</TT> is bound to the type <CODE><A HREF="integer.html#SIG:INTEGER.int:TY:SPEC">Int.int</A></CODE> and the function <TT>length</TT> is bound to <CODE><A HREF="list.html#SIG:LIST.length:VAL:SPEC">List.length</A></CODE>.  In addition to the pervasive identifiers, the top-level environment also consists of overloaded identifiers (<I>e.g.</I>, <TT>+</TT> and <TT>*</TT>) and infix definitions.  The top-level environment is described in <A HREF="top-level-chapter.html#section:sec:top-level-env"><B>[Top-level environment]</B></A>.
+<H3><A NAME="section:2"></A>Basic types</H3>
+<P>
+Operations of the various basic types (<I>i.e.</I>, <CODE><A HREF="bool.html#SIG:BOOL.bool:TY:SPEC">bool</A></CODE>, <CODE><A HREF="integer.html#SIG:INTEGER.int:TY:SPEC">int</A></CODE>, <CODE><A HREF="word.html#SIG:WORD.word:TY:SPEC">word</A></CODE>, and <CODE><A HREF="real.html#SIG:REAL.real:TY:SPEC">real</A></CODE>) are all provided by the SML Basis Library. Additional support for computing with real numbers is provided by the <CODE><A HREF="math.html#Math:STR:SPEC">Math</A></CODE> and <CODE><A HREF="ieee-float.html#IEEEReal:STR:SPEC">IEEEReal</A></CODE> structures. In addition, implementations may implement multiple different precisions of integers, words, or reals.
+<H3><A NAME="section:3"></A>Standard datatypes</H3>
+<P>
+The SML Basis Library provides support for basic operations on the standard <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">option</A></CODE> and <CODE><A HREF="list.html#SIG:LIST.list:TY:SPEC">list</A></CODE> datatypes with the <CODE><A HREF="option.html#Option:STR:SPEC">Option</A></CODE>, <CODE><A HREF="list.html#List:STR:SPEC">List</A></CODE>, <CODE><A HREF="list-pair.html#ListPair:STR:SPEC">ListPair</A></CODE> structures.
+<H3><A NAME="section:4"></A>Vectors and arrays</H3>
+<P>
+The SML Basis Library supports of mutable <EM>array</EM> and immutable <EM>vector</EM> types. In addition to the <CODE><A HREF="array.html#SIG:ARRAY.array:TY:SPEC">array</A></CODE> and <CODE><A HREF="vector.html#SIG:VECTOR.vector:TY:SPEC">vector</A></CODE> type constructors, there are a variety of monomorphic array and vector types. The monomorphic types provide a more compact representation at the cost of less polymorphism. The Library also defines <EM>slices</EM> of arrays and vectors, which are an abstraction of contiguous subsequences.
+<H3><A NAME="section:5"></A>Text</H3>
+<P>
+Text processing is supported in the form three basic types: <CODE><A HREF="char.html#SIG:CHAR.char:TY:SPEC">char</A></CODE>, <CODE><A HREF="string.html#SIG:STRING.string:TY:SPEC">string</A></CODE>, and <CODE><A HREF="substring.html#SIG:SUBSTRING.substring:TY:SPEC">substring</A></CODE>. Strings are immutable vectors of characters and substrings are string slices (in fact, the types <CODE><A HREF="string.html#SIG:STRING.string:TY:SPEC">string</A></CODE> is just another name for <CODE><A HREF="mono-vector.html#SIG:MONO_VECTOR.vector:TY:SPEC">CharVector.vector</A></CODE> and <CODE><A HREF="substring.html#SIG:SUBSTRING.substring:TY:SPEC">substring</A></CODE> is another name for <CODE><A HREF="mono-vector-slice.html#SIG:MONO_VECTOR_SLICE.slice:TY:SPEC">CharVectorSlice.slice</A></CODE>). The SML Basis Library also provides functions for converting to and from basic types and strings.
+<H3><A NAME="section:6"></A>Input/output</H3>
+<P>
+The SML Basis Library supports both binary and text input/output (I/O) using a three-level I/O stack. At the lowest level, the <CODE><A HREF="prim-io.html#PRIM_IO:SIG:SPEC">PRIM_IO</A></CODE> interface provides unbuffered I/O on abstract <EM>readers</EM> and <EM>writers</EM>. The <CODE><A HREF="stream-io.html#STREAM_IO:SIG:SPEC">STREAM_IO</A></CODE> interface provides buffering on top of the primitive readers and writers; it also provides a <EM>functional</EM> input model that supports arbitrary lookahead. The top-level of I/O support is the <CODE><A HREF="imperative-io.html#IMPERATIVE_IO:SIG:SPEC">IMPERATIVE_IO</A></CODE> interface, which supports dynamically bound streams (<I>i.e.</I>, one can redirect an imperative I/O stream after it has been opened).
+<H3><A NAME="section:7"></A>System interfaces</H3>
+<P>
+The SML Basis Library provides support for writing portable code that uses common systems services (<I>e.g.</I>, directory navigation). The <CODE><A HREF="os.html#OS:STR:SPEC">OS</A></CODE> structure collects together support for file system operations (<CODE><A HREF="os.html#SIG:OS.FileSys:STR:SPEC">OS.FileSys</A></CODE>), low-level I/O (<CODE><A HREF="os.html#SIG:OS.FileSys:STR:SPEC">OS.FileSys</A></CODE>), pathnames (<CODE><A HREF="os.html#SIG:OS.Path:STR:SPEC">OS.Path</A></CODE>), and process control (<CODE><A HREF="os.html#SIG:OS.Process:STR:SPEC">OS.Process</A></CODE>). There is also support for time and date manipulations, as well as interval timing.
+<H3><A NAME="section:8"></A>Sockets</H3>
+<P>
+Network programming using <EM>sockets</EM> is supported by a collection of optional structures. The <CODE><A HREF="socket.html#Socket:STR:SPEC">Socket</A></CODE> structure collects together the various operations for socket control and I/O. Three structures are provided for socket creation: <CODE><A HREF="inet-sock.html#INetSock:STR:SPEC">INetSock</A></CODE> for Internet-domain sockets, <CODE><A HREF="unix-sock.html#UnixSock:STR:SPEC">UnixSock</A></CODE> for Unix-domain sockets, and <CODE><A HREF="generic-sock.html#GenericSock:STR:SPEC">GenericSock</A></CODE> for arbitrary sockets. The <CODE><A HREF="net-host-db.html#NetHostDB:STR:SPEC">NetHostDB</A></CODE>, <CODE><A HREF="prot-db.html#NetProtDB:STR:SPEC">NetProtDB</A></CODE>, and <CODE><A HREF="serv-db.html#NetServDB:STR:SPEC">NetServDB</A></CODE> structures provide access to the network database (<I>e.g.</I>, for hostname lookup).
+<H3><A NAME="section:9"></A>Unix-specific interfaces</H3>
+<P>
+The SML Basis Library supports access to additional system services on Unix systems via the optional <CODE><A HREF="unix.html#Unix:STR:SPEC">Unix</A></CODE> and <CODE><A HREF="posix.html#Posix:STR:SPEC">Posix</A></CODE> structures.
+<H3><A NAME="section:10"></A>Microsoft Windows-specific interfaces</H3>
+<P>
+The SML Basis Library supports access to additional system services on Microsoft Microsoft Windows systems via the optional <CODE><A HREF="windows.html#Windows:STR:SPEC">Windows</A></CODE> structure.
+<H3><A NAME="section:11"></A>Required components</H3>
+<P>
+For an implementation to be compliant with the SML Basis Library specification, it must provide all of the <EM>required</EM> components. Furthermore, these components must be implemented as defined by specification; extending these interfaces is not permitted. 
+<H4><A NAME="section:12"></A>Required signatures</H4>
+<P>
+The following table lists the signatures that every SML implementation is required to provide: 
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="array.html#ARRAY:SIG:SPEC">ARRAY</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="array-slice.html#ARRAY_SLICE:SIG:SPEC">ARRAY_SLICE</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="bin-io.html#BIN_IO:SIG:SPEC">BIN_IO</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="bool.html#BOOL:SIG:SPEC">BOOL</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="byte.html#BYTE:SIG:SPEC">BYTE</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="char.html#CHAR:SIG:SPEC">CHAR</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="command-line.html#COMMAND_LINE:SIG:SPEC">COMMAND_LINE</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="date.html#DATE:SIG:SPEC">DATE</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="general.html#GENERAL:SIG:SPEC">GENERAL</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="ieee-float.html#IEEE_REAL:SIG:SPEC">IEEE_REAL</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="imperative-io.html#IMPERATIVE_IO:SIG:SPEC">IMPERATIVE_IO</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="integer.html#INTEGER:SIG:SPEC">INTEGER</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="io.html#IO:SIG:SPEC">IO</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="list.html#LIST:SIG:SPEC">LIST</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="list-pair.html#LIST_PAIR:SIG:SPEC">LIST_PAIR</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="math.html#MATH:SIG:SPEC">MATH</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-array.html#MONO_ARRAY:SIG:SPEC">MONO_ARRAY</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-array-slice.html#MONO_ARRAY_SLICE:SIG:SPEC">MONO_ARRAY_SLICE</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-vector.html#MONO_VECTOR:SIG:SPEC">MONO_VECTOR</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-vector-slice.html#MONO_VECTOR_SLICE:SIG:SPEC">MONO_VECTOR_SLICE</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="option.html#OPTION:SIG:SPEC">OPTION</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="os.html#OS:SIG:SPEC">OS</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="os-file-sys.html#OS_FILE_SYS:SIG:SPEC">OS_FILE_SYS</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="os-io.html#OS_IO:SIG:SPEC">OS_IO</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="os-path.html#OS_PATH:SIG:SPEC">OS_PATH</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="os-process.html#OS_PROCESS:SIG:SPEC">OS_PROCESS</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="prim-io.html#PRIM_IO:SIG:SPEC">PRIM_IO</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="real.html#REAL:SIG:SPEC">REAL</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="stream-io.html#STREAM_IO:SIG:SPEC">STREAM_IO</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="string.html#STRING:SIG:SPEC">STRING</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="string-cvt.html#STRING_CVT:SIG:SPEC">STRING_CVT</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="substring.html#SUBSTRING:SIG:SPEC">SUBSTRING</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="text.html#TEXT:SIG:SPEC">TEXT</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="text-io.html#TEXT_IO:SIG:SPEC">TEXT_IO</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="text-stream-io.html#TEXT_STREAM_IO:SIG:SPEC">TEXT_STREAM_IO</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="time.html#TIME:SIG:SPEC">TIME</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="timer.html#TIMER:SIG:SPEC">TIMER</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="vector.html#VECTOR:SIG:SPEC">VECTOR</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="vector-slice.html#VECTOR_SLICE:SIG:SPEC">VECTOR_SLICE</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="word.html#WORD:SIG:SPEC">WORD</A></CODE></CODE> 
+</TABLE>
+</CENTER>
+<HR>
+<H4><A NAME="section:13"></A>Required structures</H4>
+<P>
+The following table lists the structures that every SML implementation is required to provide: 
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="array.html#Array:STR:SPEC">Array</A></CODE> :&gt; <CODE><A HREF="array.html#ARRAY:SIG:SPEC">ARRAY</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="array-slice.html#ArraySlice:STR:SPEC">ArraySlice</A></CODE> :&gt; <CODE><A HREF="array-slice.html#ARRAY_SLICE:SIG:SPEC">ARRAY_SLICE</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="bin-io.html#BinIO:STR:SPEC">BinIO</A></CODE> :&gt; <CODE><A HREF="bin-io.html#BIN_IO:SIG:SPEC">BIN_IO</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="prim-io.html#BinPrimIO:STR:SPEC">BinPrimIO</A></CODE> :&gt; <CODE><A HREF="prim-io.html#PRIM_IO:SIG:SPEC">PRIM_IO</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="bool.html#Bool:STR:SPEC">Bool</A></CODE> :&gt; <CODE><A HREF="bool.html#BOOL:SIG:SPEC">BOOL</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="byte.html#Byte:STR:SPEC">Byte</A></CODE> :&gt; <CODE><A HREF="byte.html#BYTE:SIG:SPEC">BYTE</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-array.html#CharArray:STR:SPEC">CharArray</A></CODE> :&gt; <CODE><A HREF="mono-array.html#MONO_ARRAY:SIG:SPEC">MONO_ARRAY</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-array-slice.html#CharArraySlice:STR:SPEC">CharArraySlice</A></CODE> :&gt; <CODE><A HREF="mono-array-slice.html#MONO_ARRAY_SLICE:SIG:SPEC">MONO_ARRAY_SLICE</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="char.html#Char:STR:SPEC">Char</A></CODE> :&gt; <CODE><A HREF="char.html#CHAR:SIG:SPEC">CHAR</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-vector.html#CharVector:STR:SPEC">CharVector</A></CODE> :&gt; <CODE><A HREF="mono-vector.html#MONO_VECTOR:SIG:SPEC">MONO_VECTOR</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-vector-slice.html#CharVectorSlice:STR:SPEC">CharVectorSlice</A></CODE> :&gt; <CODE><A HREF="mono-vector-slice.html#MONO_VECTOR_SLICE:SIG:SPEC">MONO_VECTOR_SLICE</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="command-line.html#CommandLine:STR:SPEC">CommandLine</A></CODE> :&gt; <CODE><A HREF="command-line.html#COMMAND_LINE:SIG:SPEC">COMMAND_LINE</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="date.html#Date:STR:SPEC">Date</A></CODE> :&gt; <CODE><A HREF="date.html#DATE:SIG:SPEC">DATE</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="general.html#General:STR:SPEC">General</A></CODE> :&gt; <CODE><A HREF="general.html#GENERAL:SIG:SPEC">GENERAL</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="ieee-float.html#IEEEReal:STR:SPEC">IEEEReal</A></CODE> :&gt; <CODE><A HREF="ieee-float.html#IEEE_REAL:SIG:SPEC">IEEE_REAL</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="integer.html#Int:STR:SPEC">Int</A></CODE> :&gt; <CODE><A HREF="integer.html#INTEGER:SIG:SPEC">INTEGER</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="io.html#IO:STR:SPEC">IO</A></CODE> :&gt; <CODE><A HREF="io.html#IO:SIG:SPEC">IO</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="integer.html#LargeInt:STR:SPEC">LargeInt</A></CODE> :&gt; <CODE><A HREF="integer.html#INTEGER:SIG:SPEC">INTEGER</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="real.html#LargeReal:STR:SPEC">LargeReal</A></CODE> :&gt; <CODE><A HREF="real.html#REAL:SIG:SPEC">REAL</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="word.html#LargeWord:STR:SPEC">LargeWord</A></CODE> :&gt; <CODE><A HREF="word.html#WORD:SIG:SPEC">WORD</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="list.html#List:STR:SPEC">List</A></CODE> :&gt; <CODE><A HREF="list.html#LIST:SIG:SPEC">LIST</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="list-pair.html#ListPair:STR:SPEC">ListPair</A></CODE> :&gt; <CODE><A HREF="list-pair.html#LIST_PAIR:SIG:SPEC">LIST_PAIR</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="math.html#Math:STR:SPEC">Math</A></CODE> :&gt; <CODE><A HREF="math.html#MATH:SIG:SPEC">MATH</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="option.html#Option:STR:SPEC">Option</A></CODE> :&gt; <CODE><A HREF="option.html#OPTION:SIG:SPEC">OPTION</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="os.html#OS:STR:SPEC">OS</A></CODE> :&gt; <CODE><A HREF="os.html#OS:SIG:SPEC">OS</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="integer.html#Position:STR:SPEC">Position</A></CODE> :&gt; <CODE><A HREF="integer.html#INTEGER:SIG:SPEC">INTEGER</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="real.html#Real:STR:SPEC">Real</A></CODE> :&gt; <CODE><A HREF="real.html#REAL:SIG:SPEC">REAL</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="string-cvt.html#StringCvt:STR:SPEC">StringCvt</A></CODE> :&gt; <CODE><A HREF="string-cvt.html#STRING_CVT:SIG:SPEC">STRING_CVT</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="string.html#String:STR:SPEC">String</A></CODE> :&gt; <CODE><A HREF="string.html#STRING:SIG:SPEC">STRING</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="substring.html#Substring:STR:SPEC">Substring</A></CODE> :&gt; <CODE><A HREF="substring.html#SUBSTRING:SIG:SPEC">SUBSTRING</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="text-io.html#TextIO:STR:SPEC">TextIO</A></CODE> :&gt; <CODE><A HREF="text-io.html#TEXT_IO:SIG:SPEC">TEXT_IO</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="prim-io.html#TextPrimIO:STR:SPEC">TextPrimIO</A></CODE> :&gt; <CODE><A HREF="prim-io.html#PRIM_IO:SIG:SPEC">PRIM_IO</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="text.html#Text:STR:SPEC">Text</A></CODE> :&gt; <CODE><A HREF="text.html#TEXT:SIG:SPEC">TEXT</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="timer.html#Timer:STR:SPEC">Timer</A></CODE> :&gt; <CODE><A HREF="timer.html#TIMER:SIG:SPEC">TIMER</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="time.html#Time:STR:SPEC">Time</A></CODE> :&gt; <CODE><A HREF="time.html#TIME:SIG:SPEC">TIME</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="vector-slice.html#VectorSlice:STR:SPEC">VectorSlice</A></CODE> :&gt; <CODE><A HREF="vector-slice.html#VECTOR_SLICE:SIG:SPEC">VECTOR_SLICE</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="vector.html#Vector:STR:SPEC">Vector</A></CODE> :&gt; <CODE><A HREF="vector.html#VECTOR:SIG:SPEC">VECTOR</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-array.html#Word8Array:STR:SPEC">Word8Array</A></CODE> :&gt; <CODE><A HREF="mono-array.html#MONO_ARRAY:SIG:SPEC">MONO_ARRAY</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-array-slice.html#Word8ArraySlice:STR:SPEC">Word8ArraySlice</A></CODE> :&gt; <CODE><A HREF="mono-array-slice.html#MONO_ARRAY_SLICE:SIG:SPEC">MONO_ARRAY_SLICE</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-vector.html#Word8Vector:STR:SPEC">Word8Vector</A></CODE> :&gt; <CODE><A HREF="mono-vector.html#MONO_VECTOR:SIG:SPEC">MONO_VECTOR</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-vector-slice.html#Word8VectorSlice:STR:SPEC">Word8VectorSlice</A></CODE> :&gt; <CODE><A HREF="mono-vector-slice.html#MONO_VECTOR_SLICE:SIG:SPEC">MONO_VECTOR_SLICE</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="word.html#Word8:STR:SPEC">Word8</A></CODE> :&gt; <CODE><A HREF="word.html#WORD:SIG:SPEC">WORD</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="word.html#Word:STR:SPEC">Word</A></CODE> :&gt; <CODE><A HREF="word.html#WORD:SIG:SPEC">WORD</A></CODE></CODE> 
+</TABLE>
+</CENTER>
+<HR>
+<H3><A NAME="section:14"></A>Optional components</H3>
+<P>
+In addition to the required components, an implementation may choose to provide some optional components. While these components are optional, if present, they must be implemented as defined by specification; extending these interfaces is not permitted. 
+<H4><A NAME="section:15"></A>Optional signatures</H4>
+<P>
+The following table lists the optional signatures that an SML implementation may choose to provide: 
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="array2.html#ARRAY2:SIG:SPEC">ARRAY2</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="bit-flags.html#BIT_FLAGS:SIG:SPEC">BIT_FLAGS</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="generic-sock.html#GENERIC_SOCK:SIG:SPEC">GENERIC_SOCK</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="inet-sock.html#INET_SOCK:SIG:SPEC">INET_SOCK</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="int-inf.html#INT_INF:SIG:SPEC">INT_INF</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-array2.html#MONO_ARRAY2:SIG:SPEC">MONO_ARRAY2</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="net-host-db.html#NET_HOST_DB:SIG:SPEC">NET_HOST_DB</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="prot-db.html#NET_PROT_DB:SIG:SPEC">NET_PROT_DB</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="serv-db.html#NET_SERV_DB:SIG:SPEC">NET_SERV_DB</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="pack-float.html#PACK_REAL:SIG:SPEC">PACK_REAL</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="pack-word.html#PACK_WORD:SIG:SPEC">PACK_WORD</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="posix.html#POSIX:SIG:SPEC">POSIX</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="posix-error.html#POSIX_ERROR:SIG:SPEC">POSIX_ERROR</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="posix-file-sys.html#POSIX_FILE_SYS:SIG:SPEC">POSIX_FILE_SYS</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="posix-io.html#POSIX_IO:SIG:SPEC">POSIX_IO</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="posix-proc-env.html#POSIX_PROC_ENV:SIG:SPEC">POSIX_PROC_ENV</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="posix-process.html#POSIX_PROCESS:SIG:SPEC">POSIX_PROCESS</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="posix-signal.html#POSIX_SIGNAL:SIG:SPEC">POSIX_SIGNAL</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="posix-sys-db.html#POSIX_SYS_DB:SIG:SPEC">POSIX_SYS_DB</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="posix-tty.html#POSIX_TTY:SIG:SPEC">POSIX_TTY</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="socket.html#SOCKET:SIG:SPEC">SOCKET</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="unix.html#UNIX:SIG:SPEC">UNIX</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="unix-sock.html#UNIX_SOCK:SIG:SPEC">UNIX_SOCK</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="windows.html#WINDOWS:SIG:SPEC">WINDOWS</A></CODE></CODE> 
+</TABLE>
+</CENTER>
+<HR>
+<H4><A NAME="section:16"></A>Optional structures</H4>
+<P>
+The following table lists the optional structures that an SML implementation may choose to provide: 
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="array2.html#Array2:STR:SPEC">Array2</A></CODE> :&gt; <CODE><A HREF="array2.html#ARRAY2:SIG:SPEC">ARRAY2</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-array.html#BoolArray:STR:SPEC">BoolArray</A></CODE> :&gt; <CODE><A HREF="mono-array.html#MONO_ARRAY:SIG:SPEC">MONO_ARRAY</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-array2.html#BoolArray2:STR:SPEC">BoolArray2</A></CODE> :&gt; <CODE><A HREF="mono-array2.html#MONO_ARRAY2:SIG:SPEC">MONO_ARRAY2</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-array-slice.html#BoolArraySlice:STR:SPEC">BoolArraySlice</A></CODE> :&gt; <CODE><A HREF="mono-array-slice.html#MONO_ARRAY_SLICE:SIG:SPEC">MONO_ARRAY_SLICE</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-vector.html#BoolVector:STR:SPEC">BoolVector</A></CODE> :&gt; <CODE><A HREF="mono-vector.html#MONO_VECTOR:SIG:SPEC">MONO_VECTOR</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-vector-slice.html#BoolVectorSlice:STR:SPEC">BoolVectorSlice</A></CODE> :&gt; <CODE><A HREF="mono-vector-slice.html#MONO_VECTOR_SLICE:SIG:SPEC">MONO_VECTOR_SLICE</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-array2.html#CharArray2:STR:SPEC">CharArray2</A></CODE> :&gt; <CODE><A HREF="mono-array2.html#MONO_ARRAY2:SIG:SPEC">MONO_ARRAY2</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="integer.html#FixedInt:STR:SPEC">FixedInt</A></CODE> :&gt; <CODE><A HREF="integer.html#INTEGER:SIG:SPEC">INTEGER</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="generic-sock.html#GenericSock:STR:SPEC">GenericSock</A></CODE> :&gt; <CODE><A HREF="generic-sock.html#GENERIC_SOCK:SIG:SPEC">GENERIC_SOCK</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="inet-sock.html#INetSock:STR:SPEC">INetSock</A></CODE> :&gt; <CODE><A HREF="inet-sock.html#INET_SOCK:SIG:SPEC">INET_SOCK</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-array.html#IntArray:STR:SPEC">IntArray</A></CODE> :&gt; <CODE><A HREF="mono-array.html#MONO_ARRAY:SIG:SPEC">MONO_ARRAY</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-array2.html#IntArray2:STR:SPEC">IntArray2</A></CODE> :&gt; <CODE><A HREF="mono-array2.html#MONO_ARRAY2:SIG:SPEC">MONO_ARRAY2</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-array-slice.html#IntArraySlice:STR:SPEC">IntArraySlice</A></CODE> :&gt; <CODE><A HREF="mono-array-slice.html#MONO_ARRAY_SLICE:SIG:SPEC">MONO_ARRAY_SLICE</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-vector.html#IntVector:STR:SPEC">IntVector</A></CODE> :&gt; <CODE><A HREF="mono-vector.html#MONO_VECTOR:SIG:SPEC">MONO_VECTOR</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-vector-slice.html#IntVectorSlice:STR:SPEC">IntVectorSlice</A></CODE> :&gt; <CODE><A HREF="mono-vector-slice.html#MONO_VECTOR_SLICE:SIG:SPEC">MONO_VECTOR_SLICE</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-array.html#Int{N}Array:STR:SPEC">Int<I>&lt;N&gt;</I>Array</A></CODE> :&gt; <CODE><A HREF="mono-array.html#MONO_ARRAY:SIG:SPEC">MONO_ARRAY</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-array2.html#Int{N}Array2:STR:SPEC">Int<I>&lt;N&gt;</I>Array2</A></CODE> :&gt; <CODE><A HREF="mono-array2.html#MONO_ARRAY2:SIG:SPEC">MONO_ARRAY2</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-array-slice.html#Int{N}ArraySlice:STR:SPEC">Int<I>&lt;N&gt;</I>ArraySlice</A></CODE> :&gt; <CODE><A HREF="mono-array-slice.html#MONO_ARRAY_SLICE:SIG:SPEC">MONO_ARRAY_SLICE</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="integer.html#Int{N}:STR:SPEC">Int<I>&lt;N&gt;</I></A></CODE> :&gt; <CODE><A HREF="integer.html#INTEGER:SIG:SPEC">INTEGER</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-vector.html#Int{N}Vector:STR:SPEC">Int<I>&lt;N&gt;</I>Vector</A></CODE> :&gt; <CODE><A HREF="mono-vector.html#MONO_VECTOR:SIG:SPEC">MONO_VECTOR</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-vector-slice.html#Int{N}VectorSlice:STR:SPEC">Int<I>&lt;N&gt;</I>VectorSlice</A></CODE> :&gt; <CODE><A HREF="mono-vector-slice.html#MONO_VECTOR_SLICE:SIG:SPEC">MONO_VECTOR_SLICE</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="int-inf.html#IntInf:STR:SPEC">IntInf</A></CODE> :&gt; <CODE><A HREF="int-inf.html#INT_INF:SIG:SPEC">INT_INF</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="net-host-db.html#NetHostDB:STR:SPEC">NetHostDB</A></CODE> :&gt; <CODE><A HREF="net-host-db.html#NET_HOST_DB:SIG:SPEC">NET_HOST_DB</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="prot-db.html#NetProtDB:STR:SPEC">NetProtDB</A></CODE> :&gt; <CODE><A HREF="prot-db.html#NET_PROT_DB:SIG:SPEC">NET_PROT_DB</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="serv-db.html#NetServDB:STR:SPEC">NetServDB</A></CODE> :&gt; <CODE><A HREF="serv-db.html#NET_SERV_DB:SIG:SPEC">NET_SERV_DB</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="pack-word.html#PackWord{N}Big:STR:SPEC">PackWord<I>&lt;N&gt;</I>Big</A></CODE> :&gt; <CODE><A HREF="pack-word.html#PACK_WORD:SIG:SPEC">PACK_WORD</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="pack-word.html#PackWord{N}Little:STR:SPEC">PackWord<I>&lt;N&gt;</I>Little</A></CODE> :&gt; <CODE><A HREF="pack-word.html#PACK_WORD:SIG:SPEC">PACK_WORD</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="pack-float.html#PackRealBig:STR:SPEC">PackRealBig</A></CODE> :&gt; <CODE><A HREF="pack-float.html#PACK_REAL:SIG:SPEC">PACK_REAL</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="pack-float.html#PackRealLittle:STR:SPEC">PackRealLittle</A></CODE> :&gt; <CODE><A HREF="pack-float.html#PACK_REAL:SIG:SPEC">PACK_REAL</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="pack-float.html#PackReal{N}Big:STR:SPEC">PackReal<I>&lt;N&gt;</I>Big</A></CODE> :&gt; <CODE><A HREF="pack-float.html#PACK_REAL:SIG:SPEC">PACK_REAL</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="pack-float.html#PackReal{N}Little:STR:SPEC">PackReal<I>&lt;N&gt;</I>Little</A></CODE> :&gt; <CODE><A HREF="pack-float.html#PACK_REAL:SIG:SPEC">PACK_REAL</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="posix.html#Posix:STR:SPEC">Posix</A></CODE> :&gt; <CODE><A HREF="posix.html#POSIX:SIG:SPEC">POSIX</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-array2.html#RealArray2:STR:SPEC">RealArray2</A></CODE> :&gt; <CODE><A HREF="mono-array2.html#MONO_ARRAY2:SIG:SPEC">MONO_ARRAY2</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-array.html#RealArray:STR:SPEC">RealArray</A></CODE> :&gt; <CODE><A HREF="mono-array.html#MONO_ARRAY:SIG:SPEC">MONO_ARRAY</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-array-slice.html#RealArraySlice:STR:SPEC">RealArraySlice</A></CODE> :&gt; <CODE><A HREF="mono-array-slice.html#MONO_ARRAY_SLICE:SIG:SPEC">MONO_ARRAY_SLICE</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-vector.html#RealVector:STR:SPEC">RealVector</A></CODE> :&gt; <CODE><A HREF="mono-vector.html#MONO_VECTOR:SIG:SPEC">MONO_VECTOR</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-vector-slice.html#RealVectorSlice:STR:SPEC">RealVectorSlice</A></CODE> :&gt; <CODE><A HREF="mono-vector-slice.html#MONO_VECTOR_SLICE:SIG:SPEC">MONO_VECTOR_SLICE</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-array.html#Real{N}Array:STR:SPEC">Real<I>&lt;N&gt;</I>Array</A></CODE> :&gt; <CODE><A HREF="mono-array.html#MONO_ARRAY:SIG:SPEC">MONO_ARRAY</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-array2.html#Real{N}Array2:STR:SPEC">Real<I>&lt;N&gt;</I>Array2</A></CODE> :&gt; <CODE><A HREF="mono-array2.html#MONO_ARRAY2:SIG:SPEC">MONO_ARRAY2</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-array-slice.html#Real{N}ArraySlice:STR:SPEC">Real<I>&lt;N&gt;</I>ArraySlice</A></CODE> :&gt; <CODE><A HREF="mono-array-slice.html#MONO_ARRAY_SLICE:SIG:SPEC">MONO_ARRAY_SLICE</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="real.html#Real{N}:STR:SPEC">Real<I>&lt;N&gt;</I></A></CODE> :&gt; <CODE><A HREF="real.html#REAL:SIG:SPEC">REAL</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-vector.html#Real{N}Vector:STR:SPEC">Real<I>&lt;N&gt;</I>Vector</A></CODE> :&gt; <CODE><A HREF="mono-vector.html#MONO_VECTOR:SIG:SPEC">MONO_VECTOR</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-vector-slice.html#Real{N}VectorSlice:STR:SPEC">Real<I>&lt;N&gt;</I>VectorSlice</A></CODE> :&gt; <CODE><A HREF="mono-vector-slice.html#MONO_VECTOR_SLICE:SIG:SPEC">MONO_VECTOR_SLICE</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="socket.html#Socket:STR:SPEC">Socket</A></CODE> :&gt; <CODE><A HREF="socket.html#SOCKET:SIG:SPEC">SOCKET</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="word.html#SysWord:STR:SPEC">SysWord</A></CODE> :&gt; <CODE><A HREF="word.html#WORD:SIG:SPEC">WORD</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="unix-sock.html#UnixSock:STR:SPEC">UnixSock</A></CODE> :&gt; <CODE><A HREF="unix-sock.html#UNIX_SOCK:SIG:SPEC">UNIX_SOCK</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="unix.html#Unix:STR:SPEC">Unix</A></CODE> :&gt; <CODE><A HREF="unix.html#UNIX:SIG:SPEC">UNIX</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-array.html#WideCharArray:STR:SPEC">WideCharArray</A></CODE> :&gt; <CODE><A HREF="mono-array.html#MONO_ARRAY:SIG:SPEC">MONO_ARRAY</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-array2.html#WideCharArray2:STR:SPEC">WideCharArray2</A></CODE> :&gt; <CODE><A HREF="mono-array2.html#MONO_ARRAY2:SIG:SPEC">MONO_ARRAY2</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-array-slice.html#WideCharArraySlice:STR:SPEC">WideCharArraySlice</A></CODE> :&gt; <CODE><A HREF="mono-array-slice.html#MONO_ARRAY_SLICE:SIG:SPEC">MONO_ARRAY_SLICE</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="char.html#WideChar:STR:SPEC">WideChar</A></CODE> :&gt; <CODE><A HREF="char.html#CHAR:SIG:SPEC">CHAR</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-vector.html#WideCharVector:STR:SPEC">WideCharVector</A></CODE> :&gt; <CODE><A HREF="mono-vector.html#MONO_VECTOR:SIG:SPEC">MONO_VECTOR</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-vector-slice.html#WideCharVectorSlice:STR:SPEC">WideCharVectorSlice</A></CODE> :&gt; <CODE><A HREF="mono-vector-slice.html#MONO_VECTOR_SLICE:SIG:SPEC">MONO_VECTOR_SLICE</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="string.html#WideString:STR:SPEC">WideString</A></CODE> :&gt; <CODE><A HREF="string.html#STRING:SIG:SPEC">STRING</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="substring.html#WideSubstring:STR:SPEC">WideSubstring</A></CODE> :&gt; <CODE><A HREF="substring.html#SUBSTRING:SIG:SPEC">SUBSTRING</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="prim-io.html#WideTextPrimIO:STR:SPEC">WideTextPrimIO</A></CODE> :&gt; <CODE><A HREF="prim-io.html#PRIM_IO:SIG:SPEC">PRIM_IO</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="text.html#WideText:STR:SPEC">WideText</A></CODE> :&gt; <CODE><A HREF="text.html#TEXT:SIG:SPEC">TEXT</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="windows.html#Windows:STR:SPEC">Windows</A></CODE> :&gt; <CODE><A HREF="windows.html#WINDOWS:SIG:SPEC">WINDOWS</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-array.html#Word{N}Array:STR:SPEC">Word<I>&lt;N&gt;</I>Array</A></CODE> :&gt; <CODE><A HREF="mono-array.html#MONO_ARRAY:SIG:SPEC">MONO_ARRAY</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-array2.html#Word{N}Array2:STR:SPEC">Word<I>&lt;N&gt;</I>Array2</A></CODE> :&gt; <CODE><A HREF="mono-array2.html#MONO_ARRAY2:SIG:SPEC">MONO_ARRAY2</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-array-slice.html#Word{N}ArraySlice:STR:SPEC">Word<I>&lt;N&gt;</I>ArraySlice</A></CODE> :&gt; <CODE><A HREF="mono-array-slice.html#MONO_ARRAY_SLICE:SIG:SPEC">MONO_ARRAY_SLICE</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-vector.html#Word{N}Vector:STR:SPEC">Word<I>&lt;N&gt;</I>Vector</A></CODE> :&gt; <CODE><A HREF="mono-vector.html#MONO_VECTOR:SIG:SPEC">MONO_VECTOR</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="mono-vector-slice.html#Word{N}VectorSlice:STR:SPEC">Word<I>&lt;N&gt;</I>VectorSlice</A></CODE> :&gt; <CODE><A HREF="mono-vector-slice.html#MONO_VECTOR_SLICE:SIG:SPEC">MONO_VECTOR_SLICE</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="word.html#Word{N}:STR:SPEC">Word<I>&lt;N&gt;</I></A></CODE> :&gt; <CODE><A HREF="word.html#WORD:SIG:SPEC">WORD</A></CODE></CODE> 
+</TABLE>
+</CENTER>
+<HR>
+<H4><A NAME="section:17"></A>Optional functors</H4>
+<P>
+The following table lists the optional functors that an SML implementation may choose to provide: 
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="imperative-io-fn.html#ImperativeIO:FCT:SPEC">ImperativeIO</A></CODE> :&gt; <CODE><A HREF="imperative-io.html#IMPERATIVE_IO:SIG:SPEC">IMPERATIVE_IO</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="prim-io-fn.html#PrimIO:FCT:SPEC">PrimIO</A></CODE> :&gt; <CODE><A HREF="prim-io.html#PRIM_IO:SIG:SPEC">PRIM_IO</A></CODE></CODE> 
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><CODE><A HREF="stream-io-fn.html#StreamIO:FCT:SPEC">StreamIO</A></CODE> :&gt; <CODE><A HREF="stream-io.html#STREAM_IO:SIG:SPEC">STREAM_IO</A></CODE></CODE> 
+</TABLE>
+</CENTER>
+<HR>
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="index.html">Parent</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   | <A HREF="index.html">Root</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Generated April 12, 2004</I><BR>
+<I>Last Modified July 18, 2002</I><BR>
+<I>Comments to <A HREF="http://www.cs.uchicago.edu/people/jhr">John Reppy.</A></I><BR>
+
+<HR>
+<P>
+
+This document may be distributed freely over the internet as long as the
+copyright notice and license terms below are prominently displayed within
+every machine-readable copy.  
+
+<P>
+
+<TABLE ALIGN=CENTER WIDTH="80%" BORDER="2" CELLPADDING="5">
+<TR>
+<TD>
+<P>
+
+Copyright &copy; 2004 AT&amp;T and Lucent Technologies.
+All rights reserved.
+
+<P>
+
+Permission is granted for internet users to make one paper copy for their
+own personal use.  Further hardcopy reproduction is strictly prohibited. 
+Permission to distribute the HTML document electronically on any medium
+other than the internet must be requested from the copyright holders by
+contacting the editors.
+Printed versions of the SML Basis Manual are available from Cambridge
+University Press.
+To order, please visit
+<A HREF="http://www.cup.org">www.cup.org</A> (North America) or
+<A HREF="http://www.cup.cam.ac.uk">www.cup.cam.ac.uk</A> (outside North America).<BR>
+
+</TABLE>
+<P>
+
+<HR>
+</BODY></HTML>

@@ -1,0 +1,118 @@
+<!-- HTML/bin-io.html -->
+
+<!-- COPYRIGHT (c) 1997 Bell Labs, Lucent Technologies. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The BinIO structure</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF"><A NAME="top"></A>
+<H1 align=CENTER>The Standard ML Basis Library</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>BinIO</CODE> structure</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="BIN_IO:SIG:SPEC"></A><CODE>BIN_IO</CODE><BR>
+<B>structure</B>&nbsp;<A NAME="BinIO:STR:SPEC"></A><CODE>BinIO</CODE><B> :> </B>BIN_IO<BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+The structure <CODE>BinIO</CODE> provides input/output of binary data (8-bit bytes). The semantics of the various I/O operations can be found in the description of the <CODE><A HREF="imperative-io.html#IMPERATIVE_IO:SIG:SPEC">IMPERATIVE_IO</A></CODE> signature. The <CODE><A HREF="bin-io.html#SIG:BIN_IO.openIn:VAL:SPEC">openIn</A></CODE> and <CODE><A HREF="bin-io.html#SIG:BIN_IO.openOut:VAL:SPEC">openOut</A></CODE> functions allow the creation of binary streams to read and write file data. Certain implementations may provide other ways to open files in structures specific to an operating system. 
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>include</B>&nbsp;<A HREF="imperative-io.html#IMPERATIVE_IO:SIG:SPEC">IMPERATIVE_IO</A><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;StreamIO.vector&nbsp;=&nbsp;Word8Vector.vector<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;StreamIO.elem&nbsp;=&nbsp;Word8.word<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;StreamIO.reader&nbsp;=&nbsp;BinPrimIO.reader<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;StreamIO.writer&nbsp;=&nbsp;BinPrimIO.writer<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;StreamIO.pos&nbsp;=&nbsp;BinPrimIO.pos<BR>
+<B>val</B>&nbsp;<A NAME="SIG:BIN_IO.openIn:VAL:SPEC" HREF="#SIG:BIN_IO.openIn:VAL">openIn</A>&nbsp;&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;instream<BR>
+<B>val</B>&nbsp;<A NAME="SIG:BIN_IO.openOut:VAL:SPEC" HREF="#SIG:BIN_IO.openOut:VAL">openOut</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;outstream<BR>
+<B>val</B>&nbsp;<A NAME="SIG:BIN_IO.openAppend:VAL:SPEC" HREF="#SIG:BIN_IO.openAppend:VAL">openAppend</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;outstream</CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="SIG:BIN_IO.openIn:VAL"></A>
+<DT> <CODE>openIn <VAR>name</VAR> </CODE>
+<DT> <CODE>        openOut <VAR>name</VAR> </CODE>
+<DD>
+These functions open the file named <VAR>name</VAR> for input and output, respectively. If <VAR>name</VAR> is a relative pathname, the file opened depends on the current working directory. With <CODE><A HREF="bin-io.html#SIG:BIN_IO.openOut:VAL:SPEC">openOut</A></CODE>, the file is created if it does not already exist and truncated to length zero otherwise. These raise <CODE><A HREF="io.html#SIG:IO.Io:EXN:SPEC">Io</A></CODE> if a stream cannot be opened on the given file or, in the case of <CODE><A HREF="bin-io.html#SIG:BIN_IO.openIn:VAL:SPEC">openIn</A></CODE>, the file <VAR>name</VAR> does not exist. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:BIN_IO.openAppend:VAL"></A>
+<DT> <CODE>openAppend <VAR>name</VAR></CODE>
+<DD>
+opens the file named <VAR>name</VAR> for output in append mode, creating it if it does not already exist.  If the file already exists, it sets the current position at the end of the file. It raises <CODE><A HREF="io.html#SIG:IO.Io:EXN:SPEC">Io</A></CODE> if a stream cannot be opened on the given file. 
+<P>
+        Beyond having the initial file position at the end of the file, any additional properties are system and implementation dependent. On operating systems (<I>e.g.</I>, Unix) that support ``atomic append mode,'' each (flushed) output operation to the file will be appended to the end, even if there are other processes writing to the file simultaneously. Due to buffering, however, writing on an <CODE><A HREF="imperative-io.html#SIG:IMPERATIVE_IO.outstream:TY:SPEC">outstream</A></CODE> need not be atomic, <I>i.e.</I>, output from a different process may interleave the output of a single write using the stream library. On certain other operating systems, having the file open for writing prevents any other process from opening the file for writing.
+<BR>
+<BR>
+
+</DL>
+<H4>See Also</H4>
+<BLOCKQUOTE>
+<CODE><A HREF="imperative-io.html#IMPERATIVE_IO:SIG:SPEC">IMPERATIVE_IO</A></CODE>, <CODE><A HREF="os.html#SIG:OS.Path:STR:SPEC">OS.Path</A></CODE>, <CODE><A HREF="posix.html#SIG:POSIX.FileSys:STR:SPEC">Posix.FileSys</A></CODE>, <CODE><A HREF="posix.html#SIG:POSIX.IO:STR:SPEC">Posix.IO</A></CODE>, <CODE><A HREF="text-io.html#TextIO:STR:SPEC">TextIO</A></CODE>
+</BLOCKQUOTE>
+<H4>Discussion</H4>
+<P>
+All streams created by <CODE><A HREF="imperative-io.html#SIG:IMPERATIVE_IO.mkInstream:VAL:SPEC">mkInstream</A></CODE>, <CODE><A HREF="imperative-io.html#SIG:IMPERATIVE_IO.mkOutstream:VAL:SPEC">mkOutstream</A></CODE>, and the open functions in <CODE><A HREF="bin-io.html#BinIO:STR:SPEC">BinIO</A></CODE> will be closed (and the output streams among them flushed) when the SML program exits.
+<P>
+Note that the <CODE><A HREF="stream-io.html#SIG:STREAM_IO.pos:TY:SPEC">BinIO.StreamIO.pos</A></CODE> type, equal to the <CODE><A HREF="prim-io.html#SIG:PRIM_IO.pos:TY:SPEC">BinPrimIO.pos</A></CODE> type, is concrete, being a synonym for <CODE><A HREF="integer.html#SIG:INTEGER.int:TY:SPEC">Position.int</A></CODE>.
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="manpages.html">Parent</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   | <A HREF="index.html">Root</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Generated April 12, 2004</I><BR>
+<I>Last Modified July 1, 2002</I><BR>
+<I>Comments to <A HREF="http://www.cs.uchicago.edu/people/jhr">John Reppy.</A></I><BR>
+
+<HR>
+<P>
+
+This document may be distributed freely over the internet as long as the
+copyright notice and license terms below are prominently displayed within
+every machine-readable copy.  
+
+<P>
+
+<TABLE ALIGN=CENTER WIDTH="80%" BORDER="2" CELLPADDING="5">
+<TR>
+<TD>
+<P>
+
+Copyright &copy; 2004 AT&amp;T and Lucent Technologies.
+All rights reserved.
+
+<P>
+
+Permission is granted for internet users to make one paper copy for their
+own personal use.  Further hardcopy reproduction is strictly prohibited. 
+Permission to distribute the HTML document electronically on any medium
+other than the internet must be requested from the copyright holders by
+contacting the editors.
+Printed versions of the SML Basis Manual are available from Cambridge
+University Press.
+To order, please visit
+<A HREF="http://www.cup.org">www.cup.org</A> (North America) or
+<A HREF="http://www.cup.cam.ac.uk">www.cup.cam.ac.uk</A> (outside North America).<BR>
+
+</TABLE>
+<P>
+
+<HR>
+</BODY></HTML>

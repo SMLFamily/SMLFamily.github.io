@@ -1,0 +1,469 @@
+<!-- HTML/prim-io.html -->
+
+<!-- COPYRIGHT (c) 1997 Bell Labs, Lucent Technologies. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The PRIM_IO signature</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF"><A NAME="top"></A>
+<H1 align=CENTER>The Standard ML Basis Library</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>PRIM_IO</CODE> signature</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="PRIM_IO:SIG:SPEC"></A><CODE>PRIM_IO</CODE><BR>
+<B>structure</B>&nbsp;<A NAME="BinPrimIO:STR:SPEC"></A><CODE>BinPrimIO</CODE><B> :> </B>PRIM_IO<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;array&nbsp;=&nbsp;Word8Array.array<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;vector&nbsp;=&nbsp;Word8Vector.vector<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;elem&nbsp;=&nbsp;Word8.word<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;pos&nbsp;=&nbsp;Position.int<BR>
+<B>structure</B>&nbsp;<A NAME="TextPrimIO:STR:SPEC"></A><CODE>TextPrimIO</CODE><B> :> </B>PRIM_IO<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;array&nbsp;=&nbsp;CharArray.array<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;vector&nbsp;=&nbsp;CharVector.vector<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;elem&nbsp;=&nbsp;Char.char<BR>
+<B>structure</B>&nbsp;<A NAME="WideTextPrimIO:STR:SPEC"></A><CODE>WideTextPrimIO</CODE><B> :> </B>PRIM_IO&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;array&nbsp;=&nbsp;WideCharArray.array<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;vector&nbsp;=&nbsp;WideCharVector.vector<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;elem&nbsp;=&nbsp;WideChar.char<BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+ The <CODE><A HREF="prim-io.html#PRIM_IO:SIG:SPEC">PRIM_IO</A></CODE> signature is an abstraction of the fundamental system call operations commonly available on open file descriptors <CODE><A HREF="os-io.html#SIG:OS_IO.iodesc:TY:SPEC">OS.IO.iodesc</A></CODE>. Imperative and Stream I/O facilities do not access the operating system directly, but access the appropriate <A NAME="PrimIO:Layer"></A>Primitive I/O <CODE><A HREF="prim-io.html#SIG:PRIM_IO.reader:TY:SPEC">reader</A></CODE> and <CODE><A HREF="prim-io.html#SIG:PRIM_IO.writer:TY:SPEC">writer</A></CODE> that accomplishes the required system call.  
+<P>
+ Several operations in the <CODE><A HREF="prim-io.html#PRIM_IO:SIG:SPEC">PRIM_IO</A></CODE> interface will raise exceptions that have been left intentionally unspecified. The actual exception raised will usually be operating system-dependent, but may vary. For example, a <CODE><A HREF="prim-io.html#SIG:PRIM_IO.reader:TY:SPEC">reader</A></CODE> connected to a prime number generator might raise <CODE><A HREF="general.html#SIG:GENERAL.Overflow:EXN:SPEC">Overflow</A></CODE>. More typically, the close operation on a reader or writer may cause an exception to be raised if there is a failure in the underlying file system, such as the disk being full or the file server being unavailable. In addition, one would expect <CODE>readVec</CODE> and <CODE>readVecNB</CODE> to raise <CODE><A HREF="general.html#SIG:GENERAL.Size:EXN:SPEC">Size</A></CODE> if the resulting vector would exceed the maximum allowed vector size or if the input parameter is negative. Similarly, one would expect <CODE>readArr</CODE>, <CODE>readArrNB</CODE>, <CODE>writeArr</CODE>, <CODE>writeArrNB</CODE>, <CODE>writeVec</CODE>, and <CODE>writeVecNB</CODE> to raise <CODE><A HREF="general.html#SIG:GENERAL.Subscript:EXN:SPEC">Subscript</A></CODE> if array bounds are violated. Readers and writers should not, in general, raise the  <CODE><A HREF="io.html#SIG:IO.Io:EXN:SPEC">IO.Io</A></CODE> exception. It is assumed that the higher levels will catch the exceptions raised at the Primitive I/O level, and appropriately construct and raise the <CODE><A HREF="io.html#SIG:IO.Io:EXN:SPEC">IO.Io</A></CODE> exception.
+<P>
+ A <CODE><A HREF="prim-io.html#SIG:PRIM_IO.reader:TY:SPEC">reader</A></CODE> is required to raise <CODE><A HREF="io.html#SIG:IO.Io:EXN:SPEC">IO.Io</A></CODE> if any of its functions, except <CODE>close</CODE> or <CODE>getPos</CODE>, is invoked after a call to <CODE>close</CODE>. A <CODE><A HREF="prim-io.html#SIG:PRIM_IO.writer:TY:SPEC">writer</A></CODE> is required to raise <CODE><A HREF="io.html#SIG:IO.Io:EXN:SPEC">IO.Io</A></CODE> if any of its functions, except <CODE>close</CODE>, is invoked after a call to <CODE>close</CODE>. In both cases, the <CODE>cause</CODE> field of the exception should be <CODE><A HREF="io.html#SIG:IO.ClosedStream:EXN:SPEC">IO.ClosedStream</A></CODE>. 
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>type</B>&nbsp;<A NAME="SIG:PRIM_IO.elem:TY:SPEC" HREF="#SIG:PRIM_IO.elem:TY">elem</A><BR>
+<B>type</B>&nbsp;<A NAME="SIG:PRIM_IO.vector:TY:SPEC" HREF="#SIG:PRIM_IO.vector:TY">vector</A><BR>
+<B>type</B>&nbsp;<A NAME="SIG:PRIM_IO.vector_slice:TY:SPEC" HREF="#SIG:PRIM_IO.vector_slice:TY">vector_slice</A><BR>
+<B>type</B>&nbsp;<A NAME="SIG:PRIM_IO.array:TY:SPEC" HREF="#SIG:PRIM_IO.array:TY">array</A><BR>
+<B>type</B>&nbsp;<A NAME="SIG:PRIM_IO.array_slice:TY:SPEC" HREF="#SIG:PRIM_IO.array_slice:TY">array_slice</A><BR>
+<BR>
+<B>eqtype</B>&nbsp;<A NAME="SIG:PRIM_IO.pos:TY:SPEC" HREF="#SIG:PRIM_IO.pos:TY">pos</A><BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:PRIM_IO.compare:VAL:SPEC" HREF="#SIG:PRIM_IO.compare:VAL">compare</A>&nbsp;<B>:</B>&nbsp;pos&nbsp;<B>*</B>&nbsp;pos&nbsp;<B>-&gt;</B>&nbsp;order<BR>
+<BR>
+<B>datatype</B>&nbsp;<A NAME="SIG:PRIM_IO.reader:TY:SPEC" HREF="#SIG:PRIM_IO.reader:TY">reader</A><BR>
+&nbsp;&nbsp;=&nbsp;<A NAME="SIG:PRIM_IO.RD:TY:SPEC" HREF="#SIG:PRIM_IO.RD:TY">RD</A>&nbsp;<B>of</B>&nbsp;{<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;<B>:</B>&nbsp;string,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;chunkSize&nbsp;<B>:</B>&nbsp;int,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;readVec&nbsp;<B>:</B>&nbsp;(int&nbsp;<B>-&gt;</B>&nbsp;vector)&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;readArr&nbsp;<B>:</B>&nbsp;(array_slice&nbsp;<B>-&gt;</B>&nbsp;int)&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;readVecNB&nbsp;<B>:</B>&nbsp;(int&nbsp;<B>-&gt;</B>&nbsp;vector&nbsp;option)&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;readArrNB&nbsp;<B>:</B>&nbsp;(array_slice&nbsp;<B>-&gt;</B>&nbsp;int&nbsp;option)&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;block&nbsp;<B>:</B>&nbsp;(unit&nbsp;<B>-&gt;</B>&nbsp;unit)&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;canInput&nbsp;<B>:</B>&nbsp;(unit&nbsp;<B>-&gt;</B>&nbsp;bool)&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;avail&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;int&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;getPos&nbsp;<B>:</B>&nbsp;(unit&nbsp;<B>-&gt;</B>&nbsp;pos)&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;setPos&nbsp;<B>:</B>&nbsp;(pos&nbsp;<B>-&gt;</B>&nbsp;unit)&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;endPos&nbsp;<B>:</B>&nbsp;(unit&nbsp;<B>-&gt;</B>&nbsp;pos)&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;verifyPos&nbsp;<B>:</B>&nbsp;(unit&nbsp;<B>-&gt;</B>&nbsp;pos)&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;close&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;unit,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;ioDesc&nbsp;<B>:</B>&nbsp;OS.IO.iodesc&nbsp;option<BR>
+&nbsp;&nbsp;}<BR>
+<BR>
+<B>datatype</B>&nbsp;<A NAME="SIG:PRIM_IO.writer:TY:SPEC" HREF="#SIG:PRIM_IO.writer:TY">writer</A><BR>
+&nbsp;&nbsp;=&nbsp;<A NAME="SIG:PRIM_IO.WR:TY:SPEC" HREF="#SIG:PRIM_IO.WR:TY">WR</A>&nbsp;<B>of</B>&nbsp;{<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;<B>:</B>&nbsp;string,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;chunkSize&nbsp;<B>:</B>&nbsp;int,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;writeVec&nbsp;<B>:</B>&nbsp;(vector_slice&nbsp;<B>-&gt;</B>&nbsp;int)&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;writeArr&nbsp;<B>:</B>&nbsp;(array_slice&nbsp;<B>-&gt;</B>&nbsp;int)&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;writeVecNB&nbsp;<B>:</B>&nbsp;(vector_slice&nbsp;<B>-&gt;</B>&nbsp;int&nbsp;option)&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;writeArrNB&nbsp;<B>:</B>&nbsp;(array_slice&nbsp;<B>-&gt;</B>&nbsp;int&nbsp;option)&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;block&nbsp;<B>:</B>&nbsp;(unit&nbsp;<B>-&gt;</B>&nbsp;unit)&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;canOutput&nbsp;<B>:</B>&nbsp;(unit&nbsp;<B>-&gt;</B>&nbsp;bool)&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;getPos&nbsp;<B>:</B>&nbsp;(unit&nbsp;<B>-&gt;</B>&nbsp;pos)&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;setPos&nbsp;<B>:</B>&nbsp;(pos&nbsp;<B>-&gt;</B>&nbsp;unit)&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;endPos&nbsp;<B>:</B>&nbsp;(unit&nbsp;<B>-&gt;</B>&nbsp;pos)&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;verifyPos&nbsp;<B>:</B>&nbsp;(unit&nbsp;<B>-&gt;</B>&nbsp;pos)&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;close&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;unit,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;ioDesc&nbsp;<B>:</B>&nbsp;OS.IO.iodesc&nbsp;option<BR>
+&nbsp;&nbsp;}<BR>
+<B>val</B>&nbsp;<A NAME="SIG:PRIM_IO.openVector:VAL:SPEC" HREF="#SIG:PRIM_IO.openVector:VAL">openVector</A>&nbsp;<B>:</B>&nbsp;vector&nbsp;<B>-&gt;</B>&nbsp;reader<BR>
+<B>val</B>&nbsp;<A NAME="SIG:PRIM_IO.nullRd:VAL:SPEC" HREF="#SIG:PRIM_IO.nullRd:VAL">nullRd</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;reader<BR>
+<B>val</B>&nbsp;<A NAME="SIG:PRIM_IO.nullWr:VAL:SPEC" HREF="#SIG:PRIM_IO.nullWr:VAL">nullWr</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;writer<BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:PRIM_IO.augmentReader:VAL:SPEC" HREF="#SIG:PRIM_IO.augmentReader:VAL">augmentReader</A>&nbsp;<B>:</B>&nbsp;reader&nbsp;<B>-&gt;</B>&nbsp;reader<BR>
+<B>val</B>&nbsp;<A NAME="SIG:PRIM_IO.augmentWriter:VAL:SPEC" HREF="#SIG:PRIM_IO.augmentWriter:VAL">augmentWriter</A>&nbsp;<B>:</B>&nbsp;writer&nbsp;<B>-&gt;</B>&nbsp;writer</CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="SIG:PRIM_IO.elem:TY"></A><CODE><B>type</B>&nbsp;elem</CODE>
+<DD>
+ The <CODE><A HREF="prim-io.html#SIG:PRIM_IO.elem:TY:SPEC">elem</A></CODE> type is an abstraction that represents the ``element'' of a  file (or device, etc.).  Typically, elements are either characters (<CODE><A HREF="char.html#SIG:CHAR.char:TY:SPEC">char</A></CODE>)  or bytes (<CODE><A HREF="word.html#SIG:WORD.word:TY:SPEC">Word8.word</A></CODE>). 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:PRIM_IO.vector:TY"></A><CODE><B>type</B>&nbsp;vector<BR>
+<B>type</B>&nbsp;vector_slice<BR>
+<B>type</B>&nbsp;array<BR>
+<B>type</B>&nbsp;array_slice</CODE>
+<DD>
+ One typically reads or writes a sequence of elements in one operation.  The <CODE><A HREF="prim-io.html#SIG:PRIM_IO.vector:TY:SPEC">vector</A></CODE> type is an immutable vector of elements;  the <CODE><A HREF="prim-io.html#SIG:PRIM_IO.vector_slice:TY:SPEC">vector_slice</A></CODE> type is a slice of a vector;  the <CODE><A HREF="prim-io.html#SIG:PRIM_IO.array:TY:SPEC">array</A></CODE> type is an mutable array of elements; and  the <CODE><A HREF="prim-io.html#SIG:PRIM_IO.array_slice:TY:SPEC">array_slice</A></CODE> type is a slice of an array. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:PRIM_IO.pos:TY"></A><CODE><B>eqtype</B>&nbsp;pos</CODE>
+<DD>
+ This is an abstraction of a position in a file, usually used for random access. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:PRIM_IO.compare:VAL"></A>
+<DT> <CODE>compare (<VAR>pos</VAR>, <VAR>pos'</VAR>) </CODE>
+<DD>
+returns <CODE><A HREF="general.html#SIG:GENERAL.order:TY:SPEC">LESS</A></CODE>, <CODE><A HREF="general.html#SIG:GENERAL.order:TY:SPEC">EQUAL</A></CODE>,  or <CODE><A HREF="general.html#SIG:GENERAL.order:TY:SPEC">GREATER</A></CODE>  when <VAR>pos</VAR> is less than, equal to, or greater than  <VAR>pos'</VAR>, respectively, in some underlying linear ordering on <CODE><A HREF="prim-io.html#SIG:PRIM_IO.pos:TY:SPEC">pos</A></CODE> values. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:PRIM_IO.reader:TY"></A><CODE><B>datatype</B>&nbsp;reader<BR>
+&nbsp;&nbsp;=&nbsp;RD&nbsp;<B>of</B>&nbsp;{<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;<B>:</B>&nbsp;string,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;chunkSize&nbsp;<B>:</B>&nbsp;int,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;readVec&nbsp;<B>:</B>&nbsp;(int&nbsp;<B>-&gt;</B>&nbsp;vector)&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;readArr&nbsp;<B>:</B>&nbsp;(array_slice&nbsp;<B>-&gt;</B>&nbsp;int)&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;readVecNB&nbsp;<B>:</B>&nbsp;(int&nbsp;<B>-&gt;</B>&nbsp;vector&nbsp;option)&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;readArrNB&nbsp;<B>:</B>&nbsp;(array_slice&nbsp;<B>-&gt;</B>&nbsp;int&nbsp;option)&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;block&nbsp;<B>:</B>&nbsp;(unit&nbsp;<B>-&gt;</B>&nbsp;unit)&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;canInput&nbsp;<B>:</B>&nbsp;(unit&nbsp;<B>-&gt;</B>&nbsp;bool)&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;avail&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;int&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;getPos&nbsp;<B>:</B>&nbsp;(unit&nbsp;<B>-&gt;</B>&nbsp;pos)&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;setPos&nbsp;<B>:</B>&nbsp;(pos&nbsp;<B>-&gt;</B>&nbsp;unit)&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;endPos&nbsp;<B>:</B>&nbsp;(unit&nbsp;<B>-&gt;</B>&nbsp;pos)&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;verifyPos&nbsp;<B>:</B>&nbsp;(unit&nbsp;<B>-&gt;</B>&nbsp;pos)&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;close&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;unit,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;ioDesc&nbsp;<B>:</B>&nbsp;OS.IO.iodesc&nbsp;option<BR>
+&nbsp;&nbsp;}</CODE>
+<DD>
+ A <CODE><A HREF="prim-io.html#SIG:PRIM_IO.reader:TY:SPEC">reader</A></CODE> is an abstraction for a source of items of type <CODE><A HREF="prim-io.html#SIG:PRIM_IO.elem:TY:SPEC">elem</A></CODE>. Usually, it will correspond to a file or device opened for reading. It can also represent the output of some algorithm or function, not necessarily connected to the outside world,  that produces elements. The resulting sequence of elements is potentially unbounded. In the description below, we will usually refer to the limit sequence as a ``file,'' as this is the most common instance.  
+<P>
+ 
+<DL>
+<DT>  <CODE>name</CODE>
+<DD>
+is the name associated with this <CODE><A HREF="prim-io.html#SIG:PRIM_IO.reader:TY:SPEC">reader</A></CODE>, used in error messages   shown to the user.   
+<DT>  <CODE>chunkSize</CODE> 
+<DD>
+is the recommended (efficient) size of read operations on   this <CODE><A HREF="prim-io.html#SIG:PRIM_IO.reader:TY:SPEC">reader</A></CODE>. This is typically set to the block size of the operating system's buffers. <CODE>chunkSize</CODE> = 1 strongly recommends unbuffered reads, but since buffering is handled at a higher level, it cannot guarantee it. <CODE>chunkSize</CODE> &lt;= 0 is illegal.   
+<DT>  <CODE>readVec(<VAR>n</VAR>)</CODE> 
+<DD>
+when present, reads upto <VAR>n</VAR> elements   returning a vector of the elements read.   This function returns the empty vector if   end-of-stream is detected (or if <VAR>n</VAR>   is <CODE>0</CODE>).   It blocks, if necessary, until end-of-stream is detected   or at least one element is available. 
+<P>
+  It is recommended that implementations of this function   raise the <CODE><A HREF="general.html#SIG:GENERAL.Size:EXN:SPEC">Size</A></CODE> exception if   <VAR>n</VAR> &lt; 0.   
+<DT>  <CODE>readArr(<VAR>slice</VAR>)</CODE> 
+<DD>
+when present, reads upto <VAR>k</VAR> elements into   the array slice <VAR>slice</VAR>, where   <VAR>k</VAR> is the size of the slice.   This function returns the number of elements actually   read, which will be less than or equal to <VAR>k</VAR>.   If no elements remain before the end-of-stream,   it returns <CODE>0</CODE> (this function also returns   <CODE>0</CODE> when <VAR>slice</VAR> is empty).   It blocks, if necessary, until at least one   element is available.   
+<DT>  <CODE>readVecNB(<VAR>n</VAR>)</CODE> 
+<DD>
+when present, reads <VAR>i</VAR> elements without blocking for 1 &lt;= <VAR>i</VAR> &lt;= <VAR>n</VAR>, creating a vector <VAR>v</VAR>, returning <CODE><CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">SOME</A></CODE>(<VAR>v</VAR>)</CODE>; or if end-of-stream is detected without blocking, returns <CODE><CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">SOME</A></CODE>(<CODE><A HREF="mono-vector.html#SIG:MONO_VECTOR.fromList:VAL:SPEC">fromList</A></CODE>[])</CODE>; or if a read would block, returns <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A></CODE>.    
+<DT>  <CODE>readArrNB(<VAR>slice</VAR>)</CODE> 
+<DD>
+when present, reads, without blocking,   upto <VAR>k</VAR> elements into   the array slice <VAR>slice</VAR>, where   <VAR>k</VAR> is the size of the slice.   If this function would block (<I>i.e.</I> no elements are available   and the end-of-stream has no been detected), then it returns   <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A></CODE>, otherwise   it returns   <CODE><CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">SOME</A></CODE>(<VAR>n</VAR>)</CODE>,   where <VAR>n</VAR> is the number of elements actually   read (<CODE>0</CODE> on end-of-stream)   
+<DT>  <CODE>block()</CODE> 
+<DD>
+when present, blocks until at least one element is available for reading without blocking, or until an end-of-stream condition is detected.     
+<DT>  <CODE>canInput()</CODE> 
+<DD>
+when present, returns <CODE>true</CODE> if and only if the next read can proceed without blocking.   
+<DT>  <CODE>avail()</CODE> 
+<DD>
+returns the number of bytes available on the ``device,'' or <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A></CODE> if it cannot be determined. For files or strings, this is the file or string size minus the current position; for most other input sources, this is probably <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A></CODE>. This can be used as a hint by <CODE><A HREF="stream-io.html#SIG:STREAM_IO.inputAll:VAL:SPEC">inputAll</A></CODE>. Note that this is a byte count, not an element count.  
+<DT>  <CODE>getPos()</CODE> 
+<DD>
+when present, returns the current position in the file. The <CODE>getPos</CODE> function must be non-decreasing (in the absence of <CODE>setPos</CODE> operations or other interference on the underlying object).   
+<DT>  <CODE>setPos(<VAR>i</VAR>)</CODE> 
+<DD>
+when present, moves to position <VAR>i</VAR> in file.   
+<DT>  <CODE>endPos()</CODE> 
+<DD>
+when present, returns the position corresponding to the end of the file without actually changing the current position.   
+<DT>  <CODE>verifyPos()</CODE> 
+<DD>
+when present, returns the true current position in the file. It is similar to <CODE>getPos</CODE>, except that the latter may maintain its own notion of file position for efficiency, whereas <CODE>verifyPos</CODE> will typically perform a system call to obtain the underlying operating system's value of the file position.   
+<DT>  <CODE>close</CODE>
+<DD>
+marks the <CODE><A HREF="prim-io.html#SIG:PRIM_IO.reader:TY:SPEC">reader</A></CODE> closed and, if necessary, performs any cleanup and releases any operating system resources. Further operations on the <CODE><A HREF="prim-io.html#SIG:PRIM_IO.reader:TY:SPEC">reader</A></CODE> (besides <CODE>close</CODE> and <CODE>getPos</CODE>) raise <CODE><A HREF="io.html#SIG:IO.ClosedStream:EXN:SPEC">IO.ClosedStream</A></CODE>.   
+<DT>  <CODE>ioDesc</CODE> 
+<DD>
+when present, is the abstract operating system descriptor associated with this stream.  
+</DL>
+ One of <CODE>readVec</CODE>, <CODE>readVecNB</CODE>, <CODE>readArr</CODE>, or <CODE>readArrNB</CODE> must be provided. Providing more of the optional functions increases functionality and/or efficiency of clients. 
+<UL>
+<LI>
+Absence of all of  <CODE>readVec</CODE>, <CODE>readArr</CODE>, and <CODE>block</CODE> means that blocking input is not possible.
+<LI>
+Absence of all of  <CODE>readVecNB</CODE>, <CODE>readArrNB</CODE>, and <CODE>canInput</CODE> means that non-blocking input is not possible.
+<LI>
+Absence of <CODE>readVecNB</CODE> means that non-blocking input requires two system calls (using <CODE>canInput</CODE> and <CODE>readVec</CODE>).
+<LI>
+Absence of <CODE>readArr</CODE> or <CODE>readArrNB</CODE> means that input into an array requires extra copying. <EM>Note that the ``lazy functional stream'' model does not use arrays at all.</EM>
+<LI>
+Absence of <CODE>setPos</CODE> prevents random access.
+</UL>
+ Having <CODE>avail</CODE> return a value helps the client perform very large input more efficiently, with one system call and no copying.
+<P>
+If the <CODE><A HREF="prim-io.html#SIG:PRIM_IO.reader:TY:SPEC">reader</A></CODE> can provide more than the minimum set of operations <EM>in a way that is more efficient then the obvious synthesis</EM> (see <CODE><A HREF="prim-io.html#SIG:PRIM_IO.augmentReader:VAL:SPEC">augmentReader</A></CODE>), then by all means it should do so. Providing more than the minimum by just doing the obvious synthesis inside the Primitive I/O layer is not recommended because then clients will not get the ``hint'' about which are the efficient (``recommended'') operations. Clients concerned with efficiency will make use of the operations provided natively, and may need to choose algorithms depending on which operations are provided; clients not concerned with efficiency or requiring certain operations can use the reader constructed by  <CODE><A HREF="prim-io.html#SIG:PRIM_IO.augmentReader:VAL:SPEC">augmentReader</A></CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:PRIM_IO.writer:TY"></A><CODE><B>datatype</B>&nbsp;writer<BR>
+&nbsp;&nbsp;=&nbsp;WR&nbsp;<B>of</B>&nbsp;{<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;<B>:</B>&nbsp;string,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;chunkSize&nbsp;<B>:</B>&nbsp;int,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;writeVec&nbsp;<B>:</B>&nbsp;(vector_slice&nbsp;<B>-&gt;</B>&nbsp;int)&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;writeArr&nbsp;<B>:</B>&nbsp;(array_slice&nbsp;<B>-&gt;</B>&nbsp;int)&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;writeVecNB&nbsp;<B>:</B>&nbsp;(vector_slice&nbsp;<B>-&gt;</B>&nbsp;int&nbsp;option)&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;writeArrNB&nbsp;<B>:</B>&nbsp;(array_slice&nbsp;<B>-&gt;</B>&nbsp;int&nbsp;option)&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;block&nbsp;<B>:</B>&nbsp;(unit&nbsp;<B>-&gt;</B>&nbsp;unit)&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;canOutput&nbsp;<B>:</B>&nbsp;(unit&nbsp;<B>-&gt;</B>&nbsp;bool)&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;getPos&nbsp;<B>:</B>&nbsp;(unit&nbsp;<B>-&gt;</B>&nbsp;pos)&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;setPos&nbsp;<B>:</B>&nbsp;(pos&nbsp;<B>-&gt;</B>&nbsp;unit)&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;endPos&nbsp;<B>:</B>&nbsp;(unit&nbsp;<B>-&gt;</B>&nbsp;pos)&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;verifyPos&nbsp;<B>:</B>&nbsp;(unit&nbsp;<B>-&gt;</B>&nbsp;pos)&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;close&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;unit,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;ioDesc&nbsp;<B>:</B>&nbsp;OS.IO.iodesc&nbsp;option<BR>
+&nbsp;&nbsp;}</CODE>
+<DD>
+ A <CODE><A HREF="prim-io.html#SIG:PRIM_IO.writer:TY:SPEC">writer</A></CODE> is a file (device, etc.) opened for writing.  A <CODE><A HREF="prim-io.html#SIG:PRIM_IO.writer:TY:SPEC">writer</A></CODE> is an abstraction for a store of items of type <CODE><A HREF="prim-io.html#SIG:PRIM_IO.elem:TY:SPEC">elem</A></CODE>. Usually, it will correspond to a file or device opened for writing. It can also represent input to some algorithm or function, not necessarily connected to the outside world,  which consumes the output to guide its computations. The resulting store of elements is potentially unbounded. In the description below, we will usually refer to the store as a ``file,'' as this is the most common instance.   
+<P>
+ 
+<DL>
+<DT>  <CODE>name</CODE>
+<DD>
+is the name associated with this file or device, for use in error messages shown to the user.   
+<DT>  <CODE>chunkSize</CODE>
+<DD>
+is the recommended (efficient) size of write operations on this <CODE><A HREF="prim-io.html#SIG:PRIM_IO.writer:TY:SPEC">writer</A></CODE>.   This is typically set to the block size of the operating system's buffers. <CODE>chunkSize</CODE> = 1 strongly recommends unbuffered writes, but since buffering is handled at a higher level, it cannot guarantee it. <CODE>chunkSize</CODE> &lt;= 0 is illegal.   
+<DT>  <CODE>writeVec(<VAR>slice</VAR>)</CODE>
+<DD>
+when present, writes the elements from the   vector slice <VAR>slice</VAR> to the output device   and returns the number of elements actually written.   If necessary, it blocks until the output   device can accept at least one element.   
+<DT>  <CODE>writeArr(<VAR>slice</VAR>)</CODE>
+<DD>
+when present, writes the elements from the   array slice <VAR>slice</VAR> and returns the   number of elements actually written.   If necessary, it blocks until the underlying   device can accept at least one element.   
+<DT>  <CODE>writeVecNB(<VAR>slice</VAR>)</CODE> 
+<DD>
+when present, attempts to write the elements from the   vector slice <VAR>slice</VAR> to the output device   without blocking.   If successful, it returns   <CODE><CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">SOME</A></CODE>(<VAR>n</VAR>)</CODE>,   where <VAR>n</VAR> is the number of elements actually written.   Otherwise, if it would block then it returns   <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A></CODE> without   blocking.   
+<DT>  <CODE>writeVecNB(<VAR>slice</VAR>)</CODE> 
+<DD>
+when present, attempts to write the elements from the   array slice <VAR>slice</VAR> to the output device   without blocking.   If successful, it returns   <CODE><CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">SOME</A></CODE>(<VAR>n</VAR>)</CODE>,   where <VAR>n</VAR> is the number of elements actually written.   Otherwise, if it would block then it returns   <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A></CODE> without   blocking.   
+<DT>  <CODE>block()</CODE>
+<DD>
+when present, blocks until the <CODE><A HREF="prim-io.html#SIG:PRIM_IO.writer:TY:SPEC">writer</A></CODE> is guaranteed to be able to write without blocking.   
+<DT>  <CODE>canOutput()</CODE>
+<DD>
+when present, returns <CODE>true</CODE> if and only if the next write can proceed without blocking.   
+<DT>  <CODE>getPos()</CODE>
+<DD>
+when present, returns the current position within the file.   
+<DT>  <CODE>endPos()</CODE>
+<DD>
+when present, returns the position corresponding to the end of the file, without actually changing the current position.   
+<DT>  <CODE>setPos(<VAR>i</VAR>)</CODE>
+<DD>
+when present, moves to position <VAR>i</VAR> in the file, so future writes occur at this position.   
+<DT>  <CODE>verifyPos()</CODE> 
+<DD>
+when present, returns the true current position in the file. This is similar to <CODE>getPos</CODE>, except that the latter may maintain its own notion of file position for efficiency, whereas <CODE>verifyPos</CODE> will typically perform a system call to obtain the underlying operating system's value of the file position.   
+<DT>  <CODE>close()</CODE>
+<DD>
+marks the <CODE><A HREF="prim-io.html#SIG:PRIM_IO.writer:TY:SPEC">writer</A></CODE> closed and, if necessary, performs any cleanup and releases any operating system resources. Further operations (other than <CODE>close</CODE>) raise <CODE><A HREF="io.html#SIG:IO.ClosedStream:EXN:SPEC">IO.ClosedStream</A></CODE>.   
+<DT>  <CODE>ioDesc</CODE>
+<DD>
+when present, is the abstract operating system descriptor associated with this stream.  
+</DL>
+<P>
+The write operations return the number of full elements that have been written. If the size of an element is greater than 1 byte, it is possible that an additional part of an element might be written. For example, if one tries to write 2 elements, each of size 3 bytes, the underlying system write operation may report that only 4 of the 6 bytes has been written. Thus, one full element has been written, plus part of the second, so the write operation would return 1.
+<P>
+One of <CODE>writeVec</CODE>, <CODE>writeVecNB</CODE>, <CODE>writeArr</CODE>, or <CODE>writeArrNB</CODE> must be provided. Providing more of the optional functions increases functionality and/or efficiency of clients. 
+<UL>
+<LI>
+Absence of all of <CODE>writeVec</CODE>, <CODE>writeArr</CODE>, and <CODE>block</CODE> means that blocking output is not possible.
+<LI>
+Absence of all of  <CODE>writeVecNB</CODE>, <CODE>writeArrNB</CODE>, and <CODE>canOutput</CODE> means that non-blocking output is not possible.
+<LI>
+Absence of <CODE>writeArr</CODE> or <CODE>writeArrNB</CODE> means that extra copying will be required to write from an array.
+<LI>
+Absence of <CODE>setPos</CODE> prevents random access.
+</UL>
+ 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:PRIM_IO.openVector:VAL"></A>
+<DT> <CODE>openVector <VAR>v</VAR> </CODE>
+<DD>
+creates a reader whose content is <VAR>v</VAR>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:PRIM_IO.nullRd:VAL"></A><CODE><B>val</B>&nbsp;nullRd&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;reader<BR>
+<B>val</B>&nbsp;nullWr&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;writer</CODE>
+<DD>
+          These functions create readers and writers for a null device abstraction. The reader <CODE>nullRd</CODE> acts like a reader that is always at end-of-stream. The writer <CODE>nullWr</CODE> serves as a sink; any data written using it is thrown away. Null readers and writers can be closed; if closed, they are expected to behave the same as any other closed reader or writer.  
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:PRIM_IO.augmentReader:VAL"></A>
+<DT> <CODE>augmentReader <VAR>rd</VAR> </CODE>
+<DD>
+produces a reader in which as many as possible of  <CODE>readVec</CODE>, <CODE>readArr</CODE>, <CODE>readVecNB</CODE>, and <CODE>readArrNB</CODE> are  provided, by synthesizing these from the operations of <CODE>rd</CODE>.  
+<P>
+ For example, <CODE>augmentReader</CODE> can synthesize <CODE>readVec</CODE>  from <CODE>readVecNB</CODE> and <CODE>block</CODE>, synthesize vector reads from  array reads, synthesize array reads from vector reads, as needed. The following table indicates how each synthesis can be accomplished.  
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TH ALIGN=LEFT VALIGN=TOP>
+Synthesize:
+<TH ALIGN=LEFT VALIGN=TOP>
+From:
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>readVec</CODE> 
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>readVec</CODE> or <CODE>readArr</CODE> or (<CODE>block</CODE> and (<CODE>readVecNB</CODE> or <CODE>readArrNB</CODE>))  
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>readArr</CODE> 
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>readArr</CODE> or <CODE>readVec</CODE> or (<CODE>block</CODE> and (<CODE>readArrNB</CODE> or <CODE>readVecNB</CODE>))  
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>readVecNB</CODE> 
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>readVecNB</CODE> or <CODE>readArrNB</CODE> or (<CODE>canInput</CODE> and (<CODE>readVec</CODE> or <CODE>readArr</CODE>))  
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>readArrNB</CODE> 
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>readArrNB</CODE> or <CODE>readVecNB</CODE> or (<CODE>canInput</CODE> and (<CODE>readArr</CODE> or <CODE>readVec</CODE>))  
+</TABLE>
+</CENTER>
+<HR>
+  In each case, the synthesized operation may not be as efficient as a more  direct implementation --- for example, it is faster to read data directly  into an array than it is to read it into a vector and then copy it into  the array.  But <CODE>augmentReader</CODE> should do no harm: if  a reader <VAR>rd</VAR> supplies some operation (such as <CODE>readArr</CODE>),  then <CODE><CODE>augmentReader</CODE>(<VAR>rd</VAR>)</CODE> provides the  same implementation of that operation, not a synthesized one. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:PRIM_IO.augmentWriter:VAL"></A>
+<DT> <CODE>augmentWriter <VAR>wr</VAR> </CODE>
+<DD>
+produces a writer in which as many as possible of  <CODE>writeVec</CODE>, <CODE>writeArr</CODE>, <CODE>writeVecNB</CODE>, and <CODE>writeArrNB</CODE>  are provided, by synthesizing these from the operations of <CODE>wr</CODE>. 
+<P>
+      The following table indicates how each synthesis can be accomplished.  
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TH ALIGN=LEFT VALIGN=TOP>
+Synthesize:
+<TH ALIGN=LEFT VALIGN=TOP>
+From:
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>writeVec</CODE> 
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>writeVec</CODE> or <CODE>writeArr</CODE> or (<CODE>block</CODE> and (<CODE>writeVecNB</CODE> or <CODE>writeArrNB</CODE>))  
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>writeArr</CODE> 
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>writeArr</CODE> or <CODE>writeVec</CODE> or (<CODE>block</CODE> and (<CODE>writeArrNB</CODE> or <CODE>writeVecNB</CODE>))  
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>writeVecNB</CODE> 
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>writeVecNB</CODE> or <CODE>writeArrNB</CODE> or (<CODE>canOutput</CODE> and (<CODE>writeVec</CODE> or <CODE>writeArr</CODE>))  
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>writeArrNB</CODE> 
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>writeArrNB</CODE> or <CODE>writeVecNB</CODE> or (<CODE>canOutput</CODE> and (<CODE>writeArr</CODE> or <CODE>writeVec</CODE>))  
+</TABLE>
+</CENTER>
+<HR>
+  The synthesized operation may not be as efficient as a more  direct implementation, but if  a writer supplies some operation, then the augmented writer  provides the same implementation of that operation. 
+<BR>
+<BR>
+
+</DL>
+<H4>See Also</H4>
+<BLOCKQUOTE>
+<CODE><A HREF="bin-io.html#BinIO:STR:SPEC">BinIO</A></CODE>, <CODE><A HREF="imperative-io.html#IMPERATIVE_IO:SIG:SPEC">IMPERATIVE_IO</A></CODE>, <CODE><A HREF="os.html#SIG:OS.IO:STR:SPEC">OS.IO</A></CODE>, <CODE><A HREF="posix.html#SIG:POSIX.IO:STR:SPEC">Posix.IO</A></CODE>, <CODE><A HREF="prim-io-fn.html#PrimIO:FCT:SPEC">PrimIO</A></CODE>, <CODE><A HREF="stream-io.html#STREAM_IO:SIG:SPEC">STREAM_IO</A></CODE>, <CODE><A HREF="text-io.html#TextIO:STR:SPEC">TextIO</A></CODE>
+</BLOCKQUOTE>
+<H4>Discussion</H4>
+<P>
+It may not be possible to use <CODE><A HREF="prim-io.html#SIG:PRIM_IO.augmentReader:VAL:SPEC">augmentReader</A></CODE> or <CODE><A HREF="prim-io.html#SIG:PRIM_IO.augmentWriter:VAL:SPEC">augmentWriter</A></CODE> to synthesize operations in a way that is thread-safe in concurrent systems.
+<P>
+None of the function components in readers and writers should block, except for the obvious ones: <CODE>readVec</CODE>, <CODE>readArray</CODE>, <CODE>writeVec</CODE>, <CODE>writeArray</CODE>, and <CODE>block</CODE>.
+<P>
+The end-of-stream condition at the Stream I/O level is an artifact of a read operation at the Primitive I/O level returning 0 elements. Although this event is maintained in the stream, it is a transient condition at the Primitive I/O level. If a call to <CODE>readVec</CODE> returns an empty vector one time, it is quite possible that another call to <CODE>readVec</CODE> at the same file position will return elements. The value returned by an <CODE>endPos</CODE> function should indicate the position after the last element in the file at the time the function is called. 
+<BLOCKQUOTE>
+<B>Implementation note:</B><BR>
+
+<P>
+The functions <CODE>getPos</CODE>, <CODE>setPos</CODE>, <CODE>endPos</CODE>, and <CODE>verifyPos</CODE> are used to support arbitrary random access on the underlying I/O file or device. On most systems, this is well-supported only on static objects such as strings or regular files. Typical implementations will therefore set <CODE>getPos</CODE> and the rest to <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A></CODE> in both readers and writers for all other file types.
+<P>
+In an implementation where an input stream is represented as a chain of buffers, each buffer may contain, along with its vector of data, a <CODE><A HREF="prim-io.html#SIG:PRIM_IO.pos:TY:SPEC">pos</A></CODE> value indicating where the data came from in the underlying file. As each buffer corresponds to a read operation, the client is likely to call <CODE>getPos</CODE> on each read operation. Thus, the reader should, if possible, maintain its own version of the file position, to be returned by <CODE>getPos</CODE>, to avoid extra system calls.
+<P>
+Unlike readers, which can expect their <CODE>getPos</CODE> functions to be called frequently, writers need not implement <CODE>getPos</CODE> in a highly efficient manner: a system call for each <CODE>getPos</CODE> is acceptable. Indeed, with a file opened for atomic append, the information cannot be obtained reliably except by a system call using <CODE>verifyPos</CODE>.
+</BLOCKQUOTE>
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="manpages.html">Parent</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   | <A HREF="index.html">Root</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Generated April 12, 2004</I><BR>
+<I>Last Modified July 1, 2002</I><BR>
+<I>Comments to <A HREF="http://www.cs.uchicago.edu/people/jhr">John Reppy.</A></I><BR>
+
+<HR>
+<P>
+
+This document may be distributed freely over the internet as long as the
+copyright notice and license terms below are prominently displayed within
+every machine-readable copy.  
+
+<P>
+
+<TABLE ALIGN=CENTER WIDTH="80%" BORDER="2" CELLPADDING="5">
+<TR>
+<TD>
+<P>
+
+Copyright &copy; 2004 AT&amp;T and Lucent Technologies.
+All rights reserved.
+
+<P>
+
+Permission is granted for internet users to make one paper copy for their
+own personal use.  Further hardcopy reproduction is strictly prohibited. 
+Permission to distribute the HTML document electronically on any medium
+other than the internet must be requested from the copyright holders by
+contacting the editors.
+Printed versions of the SML Basis Manual are available from Cambridge
+University Press.
+To order, please visit
+<A HREF="http://www.cup.org">www.cup.org</A> (North America) or
+<A HREF="http://www.cup.cam.ac.uk">www.cup.cam.ac.uk</A> (outside North America).<BR>
+
+</TABLE>
+<P>
+
+<HR>
+</BODY></HTML>

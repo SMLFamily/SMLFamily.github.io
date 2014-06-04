@@ -1,0 +1,332 @@
+<!-- HTML/mono-array.html -->
+
+<!-- COPYRIGHT (c) 1997 Bell Labs, Lucent Technologies. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The MONO_ARRAY signature</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF"><A NAME="top"></A>
+<H1 align=CENTER>The Standard ML Basis Library</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>MONO_ARRAY</CODE> signature</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="MONO_ARRAY:SIG:SPEC"></A><CODE>MONO_ARRAY</CODE><BR>
+<B>structure</B>&nbsp;<A NAME="Word8Array:STR:SPEC"></A><CODE>Word8Array</CODE><B> :> </B>MONO_ARRAY<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;vector&nbsp;=&nbsp;Word8Vector.vector<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;elem&nbsp;=&nbsp;Word8.word<BR>
+<B>structure</B>&nbsp;<A NAME="CharArray:STR:SPEC"></A><CODE>CharArray</CODE><B> :> </B>MONO_ARRAY<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;vector&nbsp;=&nbsp;CharVector.vector<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;elem&nbsp;=&nbsp;char<BR>
+<B>structure</B>&nbsp;<A NAME="WideCharArray:STR:SPEC"></A><CODE>WideCharArray</CODE><B> :> </B>MONO_ARRAY&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;vector&nbsp;=&nbsp;WideCharVector.vector<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;elem&nbsp;=&nbsp;WideChar.char<BR>
+<B>structure</B>&nbsp;<A NAME="BoolArray:STR:SPEC"></A><CODE>BoolArray</CODE><B> :> </B>MONO_ARRAY&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;vector&nbsp;=&nbsp;BoolVector.vector<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;elem&nbsp;=&nbsp;bool<BR>
+<B>structure</B>&nbsp;<A NAME="IntArray:STR:SPEC"></A><CODE>IntArray</CODE><B> :> </B>MONO_ARRAY&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;vector&nbsp;=&nbsp;IntVector.vector<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;elem&nbsp;=&nbsp;int<BR>
+<B>structure</B>&nbsp;<A NAME="WordArray:STR:SPEC"></A><CODE>WordArray</CODE><B> :> </B>MONO_ARRAY&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;vector&nbsp;=&nbsp;WordVector.vector<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;elem&nbsp;=&nbsp;word<BR>
+<B>structure</B>&nbsp;<A NAME="RealArray:STR:SPEC"></A><CODE>RealArray</CODE><B> :> </B>MONO_ARRAY&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;vector&nbsp;=&nbsp;RealVector.vector<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;elem&nbsp;=&nbsp;real<BR>
+<B>structure</B>&nbsp;<A NAME="LargeIntArray:STR:SPEC"></A><CODE>LargeIntArray</CODE><B> :> </B>MONO_ARRAY&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;vector&nbsp;=&nbsp;LargeIntVector.vector<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;elem&nbsp;=&nbsp;LargeInt.int<BR>
+<B>structure</B>&nbsp;<A NAME="LargeWordArray:STR:SPEC"></A><CODE>LargeWordArray</CODE><B> :> </B>MONO_ARRAY&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;vector&nbsp;=&nbsp;LargeWordVector.vector<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;elem&nbsp;=&nbsp;LargeWord.word<BR>
+<B>structure</B>&nbsp;<A NAME="LargeRealArray:STR:SPEC"></A><CODE>LargeRealArray</CODE><B> :> </B>MONO_ARRAY&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;vector&nbsp;=&nbsp;LargeRealVector.vector<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;elem&nbsp;=&nbsp;LargeReal.real<BR>
+<B>structure</B>&nbsp;<A NAME="Int{N}Array:STR:SPEC"></A><CODE>Int<I>&lt;N&gt;</I>Array</CODE><B> :> </B>MONO_ARRAY&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;vector&nbsp;=&nbsp;<A HREF="mono-vector.html#SIG:MONO_VECTOR.vector:TY:SPEC">Int{N}Vector.vector</A><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;elem&nbsp;=&nbsp;<A HREF="integer.html#SIG:INTEGER.int:TY:SPEC">Int{N}.int</A><BR>
+<B>structure</B>&nbsp;<A NAME="Word{N}Array:STR:SPEC"></A><CODE>Word<I>&lt;N&gt;</I>Array</CODE><B> :> </B>MONO_ARRAY&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;vector&nbsp;=&nbsp;<A HREF="mono-vector.html#SIG:MONO_VECTOR.vector:TY:SPEC">Word{N}Vector.vector</A><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;elem&nbsp;=&nbsp;<A HREF="word.html#SIG:WORD.word:TY:SPEC">Word{N}.word</A><BR>
+<B>structure</B>&nbsp;<A NAME="Real{N}Array:STR:SPEC"></A><CODE>Real<I>&lt;N&gt;</I>Array</CODE><B> :> </B>MONO_ARRAY&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;vector&nbsp;=&nbsp;<A HREF="mono-vector.html#SIG:MONO_VECTOR.vector:TY:SPEC">Real{N}Vector.vector</A><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;elem&nbsp;=&nbsp;<A HREF="real.html#SIG:REAL.real:TY:SPEC">Real{N}.real</A><BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+The <CODE>MONO_ARRAY</CODE> signature is a generic interface to monomorphic arrays, mutable sequences with constant-time access and update. Monomorphic arrays allow more compact representations than the analogous polymorphic arrays over the same element type.
+<P>
+Arrays have a special equality property: two arrays are equal if they are the same array, <I>i.e.</I>, created by the same call to a primitive array constructor such as <CODE>array</CODE>, <CODE>fromList</CODE>, etc.; otherwise they are not equal. This also holds for arrays of zero length. 
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>eqtype</B>&nbsp;<A NAME="SIG:MONO_ARRAY.array:TY:SPEC" HREF="#SIG:MONO_ARRAY.array:TY">array</A><BR>
+<B>type</B>&nbsp;<A NAME="SIG:MONO_ARRAY.elem:TY:SPEC" HREF="#SIG:MONO_ARRAY.elem:TY">elem</A><BR>
+<B>type</B>&nbsp;<A NAME="SIG:MONO_ARRAY.vector:TY:SPEC" HREF="#SIG:MONO_ARRAY.vector:TY">vector</A><BR>
+<B>val</B>&nbsp;<A NAME="SIG:MONO_ARRAY.maxLen:VAL:SPEC" HREF="#SIG:MONO_ARRAY.maxLen:VAL">maxLen</A>&nbsp;<B>:</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MONO_ARRAY.array:VAL:SPEC" HREF="#SIG:MONO_ARRAY.array:VAL">array</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;elem&nbsp;<B>-&gt;</B>&nbsp;array<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MONO_ARRAY.fromList:VAL:SPEC" HREF="#SIG:MONO_ARRAY.fromList:VAL">fromList</A>&nbsp;<B>:</B>&nbsp;elem&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;array<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MONO_ARRAY.tabulate:VAL:SPEC" HREF="#SIG:MONO_ARRAY.tabulate:VAL">tabulate</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;(int&nbsp;<B>-&gt;</B>&nbsp;elem)&nbsp;<B>-&gt;</B>&nbsp;array<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MONO_ARRAY.length:VAL:SPEC" HREF="#SIG:MONO_ARRAY.length:VAL">length</A>&nbsp;<B>:</B>&nbsp;array&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MONO_ARRAY.sub:VAL:SPEC" HREF="#SIG:MONO_ARRAY.sub:VAL">sub</A>&nbsp;<B>:</B>&nbsp;array&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;elem<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MONO_ARRAY.update:VAL:SPEC" HREF="#SIG:MONO_ARRAY.update:VAL">update</A>&nbsp;<B>:</B>&nbsp;array&nbsp;<B>*</B>&nbsp;int&nbsp;<B>*</B>&nbsp;elem&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MONO_ARRAY.vector:VAL:SPEC" HREF="#SIG:MONO_ARRAY.vector:VAL">vector</A>&nbsp;<B>:</B>&nbsp;array&nbsp;<B>-&gt;</B>&nbsp;vector<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MONO_ARRAY.copy:VAL:SPEC" HREF="#SIG:MONO_ARRAY.copy:VAL">copy</A>&nbsp;&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;{src&nbsp;<B>:</B>&nbsp;array,&nbsp;dst&nbsp;<B>:</B>&nbsp;array,&nbsp;di&nbsp;<B>:</B>&nbsp;int}&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MONO_ARRAY.copyVec:VAL:SPEC" HREF="#SIG:MONO_ARRAY.copyVec:VAL">copyVec</A>&nbsp;<B>:</B>&nbsp;{src&nbsp;<B>:</B>&nbsp;vector,&nbsp;dst&nbsp;<B>:</B>&nbsp;array,&nbsp;di&nbsp;<B>:</B>&nbsp;int}&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MONO_ARRAY.appi:VAL:SPEC" HREF="#SIG:MONO_ARRAY.appi:VAL">appi</A>&nbsp;<B>:</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;elem&nbsp;<B>-&gt;</B>&nbsp;unit)&nbsp;<B>-&gt;</B>&nbsp;array&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MONO_ARRAY.app:VAL:SPEC" HREF="#SIG:MONO_ARRAY.app:VAL">app</A>&nbsp;&nbsp;<B>:</B>&nbsp;(elem&nbsp;<B>-&gt;</B>&nbsp;unit)&nbsp;<B>-&gt;</B>&nbsp;array&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MONO_ARRAY.modifyi:VAL:SPEC" HREF="#SIG:MONO_ARRAY.modifyi:VAL">modifyi</A>&nbsp;<B>:</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;elem&nbsp;<B>-&gt;</B>&nbsp;elem)&nbsp;<B>-&gt;</B>&nbsp;array&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MONO_ARRAY.modify:VAL:SPEC" HREF="#SIG:MONO_ARRAY.modify:VAL">modify</A>&nbsp;&nbsp;<B>:</B>&nbsp;(elem&nbsp;<B>-&gt;</B>&nbsp;elem)&nbsp;<B>-&gt;</B>&nbsp;array&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MONO_ARRAY.foldli:VAL:SPEC" HREF="#SIG:MONO_ARRAY.foldli:VAL">foldli</A>&nbsp;<B>:</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;elem&nbsp;<B>*</B>&nbsp;<I>'b</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I>)&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I>&nbsp;<B>-&gt;</B>&nbsp;array&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I><BR>
+<B>val</B>&nbsp;<A NAME="SIG:MONO_ARRAY.foldri:VAL:SPEC" HREF="#SIG:MONO_ARRAY.foldri:VAL">foldri</A>&nbsp;<B>:</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;elem&nbsp;<B>*</B>&nbsp;<I>'b</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I>)&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I>&nbsp;<B>-&gt;</B>&nbsp;array&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I><BR>
+<B>val</B>&nbsp;<A NAME="SIG:MONO_ARRAY.foldl:VAL:SPEC" HREF="#SIG:MONO_ARRAY.foldl:VAL">foldl</A>&nbsp;&nbsp;<B>:</B>&nbsp;(elem&nbsp;<B>*</B>&nbsp;<I>'b</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I>)&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I>&nbsp;<B>-&gt;</B>&nbsp;array&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I><BR>
+<B>val</B>&nbsp;<A NAME="SIG:MONO_ARRAY.foldr:VAL:SPEC" HREF="#SIG:MONO_ARRAY.foldr:VAL">foldr</A>&nbsp;&nbsp;<B>:</B>&nbsp;(elem&nbsp;<B>*</B>&nbsp;<I>'b</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I>)&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I>&nbsp;<B>-&gt;</B>&nbsp;array&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I><BR>
+<B>val</B>&nbsp;<A NAME="SIG:MONO_ARRAY.findi:VAL:SPEC" HREF="#SIG:MONO_ARRAY.findi:VAL">findi</A>&nbsp;<B>:</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;elem&nbsp;<B>-&gt;</B>&nbsp;bool)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;array&nbsp;<B>-&gt;</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;elem)&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MONO_ARRAY.find:VAL:SPEC" HREF="#SIG:MONO_ARRAY.find:VAL">find</A>&nbsp;&nbsp;<B>:</B>&nbsp;(elem&nbsp;<B>-&gt;</B>&nbsp;bool)&nbsp;<B>-&gt;</B>&nbsp;array&nbsp;<B>-&gt;</B>&nbsp;elem&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MONO_ARRAY.exists:VAL:SPEC" HREF="#SIG:MONO_ARRAY.exists:VAL">exists</A>&nbsp;<B>:</B>&nbsp;(elem&nbsp;<B>-&gt;</B>&nbsp;bool)&nbsp;<B>-&gt;</B>&nbsp;array&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MONO_ARRAY.all:VAL:SPEC" HREF="#SIG:MONO_ARRAY.all:VAL">all</A>&nbsp;<B>:</B>&nbsp;(elem&nbsp;<B>-&gt;</B>&nbsp;bool)&nbsp;<B>-&gt;</B>&nbsp;array&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MONO_ARRAY.collate:VAL:SPEC" HREF="#SIG:MONO_ARRAY.collate:VAL">collate</A>&nbsp;<B>:</B>&nbsp;(elem&nbsp;<B>*</B>&nbsp;elem&nbsp;<B>-&gt;</B>&nbsp;order)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;array&nbsp;<B>*</B>&nbsp;array&nbsp;<B>-&gt;</B>&nbsp;order</CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="SIG:MONO_ARRAY.vector:TY"></A><CODE><B>type</B>&nbsp;vector</CODE>
+<DD>
+      The corresponding monomorphic vector type. We denote the length of a vector <VAR>vec</VAR> of type <CODE><A HREF="mono-array.html#SIG:MONO_ARRAY.vector:TY:SPEC">vector</A></CODE> by |<VAR>vec</VAR>|. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:MONO_ARRAY.maxLen:VAL"></A><CODE><B>val</B>&nbsp;maxLen&nbsp;<B>:</B>&nbsp;int</CODE>
+<DD>
+          The maximum length of arrays supported by this implementation.  Attempts to create larger arrays will result in the <CODE><A HREF="general.html#SIG:GENERAL.Size:EXN:SPEC">Size</A></CODE>  exception being raised. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:MONO_ARRAY.array:VAL"></A>
+<DT> <CODE>array (<VAR>n</VAR>, <VAR>init</VAR>) </CODE>
+<DD>
+creates a new array of length <VAR>n</VAR>; each element is initialized  to the value <VAR>init</VAR>.  If <VAR>n</VAR> &lt; 0 or  <CODE>maxLen</CODE> &lt; <VAR>n</VAR>, then the <CODE><A HREF="general.html#SIG:GENERAL.Size:EXN:SPEC">Size</A></CODE>  exception is raised. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:MONO_ARRAY.fromList:VAL"></A>
+<DT> <CODE>fromList <VAR>l</VAR> </CODE>
+<DD>
+creates a new array from <VAR>l</VAR>, whose length is <CODE>length <VAR>l</VAR></CODE> and with the <VAR>i</VAR><SUP>(th)</SUP> element of <VAR>l</VAR> used as the <VAR>i</VAR><SUP>(th)</SUP> element of the array. If the length of the  list is greater than <CODE><A HREF="mono-array.html#SIG:MONO_ARRAY.maxLen:VAL:SPEC">maxLen</A></CODE>, then the <CODE><A HREF="general.html#SIG:GENERAL.Size:EXN:SPEC">Size</A></CODE>  exception is raised. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:MONO_ARRAY.tabulate:VAL"></A>
+<DT> <CODE>tabulate (<VAR>n</VAR>, <VAR>f</VAR>) </CODE>
+<DD>
+creates an array of <VAR>n</VAR> elements, where the elements are  defined in order of increasing index by applying <VAR>f</VAR> to  the element's index.  This is equivalent to the expression:  
+<PRE>
+fromList (List.tabulate (<VAR>n</VAR>, <VAR>f</VAR>))
+</PRE>
+  If <VAR>n</VAR> &lt; 0 or  <CODE>maxLen</CODE> &lt; <VAR>n</VAR>, then the <CODE><A HREF="general.html#SIG:GENERAL.Size:EXN:SPEC">Size</A></CODE>  exception is raised. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:MONO_ARRAY.length:VAL"></A>
+<DT> <CODE>length <VAR>arr</VAR> </CODE>
+<DD>
+returns |<VAR>arr</VAR>|, the number of elements in the array <VAR>arr</VAR>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:MONO_ARRAY.sub:VAL"></A>
+<DT> <CODE>sub (<VAR>arr</VAR>, <VAR>i</VAR>) </CODE>
+<DD>
+returns the <VAR>i</VAR><SUP>(th)</SUP> element of the array <VAR>arr</VAR>.  If <VAR>i</VAR> &lt; 0 or  |<VAR>arr</VAR>| &lt;= <VAR>i</VAR>, then  the <CODE><A HREF="general.html#SIG:GENERAL.Subscript:EXN:SPEC">Subscript</A></CODE> exception is raised. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:MONO_ARRAY.update:VAL"></A>
+<DT> <CODE>update (<VAR>arr</VAR>, <VAR>i</VAR>, <VAR>x</VAR>) </CODE>
+<DD>
+sets the <VAR>i</VAR><SUP>(th)</SUP> element of the array <VAR>arr</VAR> to <VAR>x</VAR>.  If <VAR>i</VAR> &lt; 0 or  |<VAR>arr</VAR>| &lt;= <VAR>i</VAR>, then  the <CODE><A HREF="general.html#SIG:GENERAL.Subscript:EXN:SPEC">Subscript</A></CODE> exception is raised. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:MONO_ARRAY.vector:VAL"></A>
+<DT> <CODE>vector <VAR>arr</VAR> </CODE>
+<DD>
+generates a vector from <VAR>arr</VAR>. Specifically, if <VAR>vec</VAR> is the resulting vector, we have |<VAR>vec</VAR>| = |<VAR>arr</VAR>| and, for 0 &lt;= <VAR>i</VAR> &lt; |<VAR>arr</VAR>|, element <VAR>i</VAR> of <VAR>vec</VAR> is <CODE>sub (<VAR>arr</VAR>, i)</CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:MONO_ARRAY.copy:VAL"></A>
+<DT> <CODE>copy {<VAR>src</VAR>, <VAR>dst</VAR>, <VAR>di</VAR>} </CODE>
+<DT> <CODE>          copyVec {<VAR>src</VAR>, <VAR>dst</VAR>, <VAR>di</VAR>} </CODE>
+<DD>
+These functions copy the entire array or vector <VAR>src</VAR>  into the array <VAR>dst</VAR>, with the <VAR>i</VAR><SUP>(th)</SUP> element in <VAR>src</VAR>, for 0 &lt;= <VAR>i</VAR> &lt; |<VAR>src</VAR>|, being copied to  position <VAR>di</VAR> + <VAR>i</VAR> in the destination array.  If <VAR>di</VAR> &lt; 0 or if  |<VAR>dst</VAR>| &lt; <VAR>di</VAR>+|<VAR>src</VAR>|, then the  <CODE><A HREF="general.html#SIG:GENERAL.Subscript:EXN:SPEC">Subscript</A></CODE> exception is raised. 
+<BLOCKQUOTE>
+<B>Implementation note:</B><BR>
+
+<P>
+In <CODE>copy</CODE>, if <VAR>dst</VAR> and <VAR>src</VAR> are equal, we must have <CODE><VAR>di</VAR> = 0</CODE> to avoid an exception, and <CODE>copy</CODE> is then the identity. 
+</BLOCKQUOTE>
+ 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:MONO_ARRAY.appi:VAL"></A>
+<DT> <CODE>appi <VAR>f</VAR> <VAR>arr</VAR> </CODE>
+<DT> <CODE>          app <VAR>f</VAR> <VAR>arr</VAR> </CODE>
+<DD>
+These apply the function <VAR>f</VAR> to the elements of an array in  left to right order (<I>i.e.</I>, increasing indices).  The more general <CODE><A HREF="mono-array.html#SIG:MONO_ARRAY.appi:VAL:SPEC">appi</A></CODE> function  supplies both the element and the element's index to the  function <VAR>f</VAR>.  The expression <CODE>app <VAR>f</VAR> <VAR>arr</VAR></CODE>  is equivalent to:  
+<PRE>
+      appi (<VAR>f</VAR> o #2) <VAR>arr</VAR>
+      
+</PRE>
+ 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:MONO_ARRAY.modifyi:VAL"></A>
+<DT> <CODE>modifyi <VAR>f</VAR> <VAR>arr</VAR>  </CODE>
+<DT> <CODE>            modify <VAR>f</VAR> <VAR>arr</VAR> </CODE>
+<DD>
+These apply the function <VAR>f</VAR> to the elements of an array in  left to right order (<I>i.e.</I>, increasing indices), and replace each  element with the result of applying <VAR>f</VAR>.  The more general <CODE><A HREF="mono-array.html#SIG:MONO_ARRAY.modifyi:VAL:SPEC">modifyi</A></CODE> function  supplies both the element and the element's index to the  function <VAR>f</VAR>.  The expression <CODE>modify <VAR>f</VAR> <VAR>arr</VAR></CODE>  is equivalent to:  
+<PRE>
+      modifyi (<VAR>f</VAR> o #2) <VAR>arr</VAR>
+      
+</PRE>
+ 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:MONO_ARRAY.foldli:VAL"></A>
+<DT> <CODE>foldli <VAR>f</VAR> <VAR>init</VAR> <VAR>arr</VAR>  </CODE>
+<DT> <CODE>            foldri <VAR>f</VAR> <VAR>init</VAR> <VAR>arr</VAR>  </CODE>
+<DT> <CODE>            foldl <VAR>f</VAR> <VAR>init</VAR> <VAR>arr</VAR>  </CODE>
+<DT> <CODE>            foldr <VAR>f</VAR> <VAR>init</VAR> <VAR>arr</VAR> </CODE>
+<DD>
+These fold the function <VAR>f</VAR> over all the elements of an array, using the value <VAR>init</VAR> as the initial value. The functions <CODE><A HREF="mono-array.html#SIG:MONO_ARRAY.foldli:VAL:SPEC">foldli</A></CODE> and <CODE><A HREF="mono-array.html#SIG:MONO_ARRAY.foldl:VAL:SPEC">foldl</A></CODE> apply the function <VAR>f</VAR> from left to right (increasing indices), while the functions <CODE><A HREF="mono-array.html#SIG:MONO_ARRAY.foldri:VAL:SPEC">foldri</A></CODE> and <CODE><A HREF="mono-array.html#SIG:MONO_ARRAY.foldr:VAL:SPEC">foldr</A></CODE> work from right to left (decreasing indices). The more general functions <CODE><A HREF="mono-array.html#SIG:MONO_ARRAY.foldli:VAL:SPEC">foldli</A></CODE> and <CODE><A HREF="mono-array.html#SIG:MONO_ARRAY.foldri:VAL:SPEC">foldri</A></CODE> supply <VAR>f</VAR> with the array index of the corresponding element.  
+<P>
+      The indexed versions could be implemented as: 
+<PRE>
+fun foldli f init seq = let
+      val len = length seq
+      fun loop (i, b) =
+            if i = len then b
+            else loop(i+1,f(i,sub(seq,i),b))
+      in
+        loop(0,init)
+      end
+
+fun foldri f init seq = let
+      val len = length seq
+      fun loop (i, b) =
+            if i = ~1 then b
+            else loop(i-1,f(i,sub(seq,i),b))
+      in
+        loop(len-1,init)
+      end
+</PRE>
+  
+<P>
+ The expression <CODE>foldl <VAR>f</VAR> <VAR>init</VAR> <VAR>arr</VAR></CODE>  is equivalent to:  
+<PRE>
+foldli (fn (_, <VAR>a</VAR>, <VAR>x</VAR>) =&gt; <VAR>f</VAR>(<VAR>a</VAR>, <VAR>x</VAR>)) <VAR>init</VAR> <VAR>arr</VAR>
+</PRE>
+ The analogous equivalences hold for <CODE><A HREF="mono-array.html#SIG:MONO_ARRAY.foldri:VAL:SPEC">foldri</A></CODE> and <CODE><A HREF="mono-array.html#SIG:MONO_ARRAY.foldr:VAL:SPEC">foldr</A></CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:MONO_ARRAY.findi:VAL"></A>
+<DT> <CODE>findi <VAR>f</VAR> <VAR>arr</VAR> </CODE>
+<DT> <CODE>          find <VAR>f</VAR> <VAR>arr</VAR> </CODE>
+<DD>
+These apply <VAR>f</VAR> to each element of the array <VAR>arr</VAR>, from left to right (<I>i.e.</I>, increasing indices), until a <CODE>true</CODE> value is returned. If this occurs, the functions return the element; otherwise, they return <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A></CODE>. The more general version <CODE><A HREF="mono-array.html#SIG:MONO_ARRAY.findi:VAL:SPEC">findi</A></CODE> also supplies <VAR>f</VAR> with the array index of the element and, upon finding an entry satisfying the predicate, returns that index with the element. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:MONO_ARRAY.exists:VAL"></A>
+<DT> <CODE>exists <VAR>f</VAR> <VAR>arr</VAR> </CODE>
+<DD>
+applies <VAR>f</VAR> to each element <VAR>x</VAR> of the array <VAR>arr</VAR>, from left to right (<I>i.e.</I>, increasing indices), until <CODE><VAR>f</VAR> <VAR>x</VAR></CODE> evaluates to <CODE>true</CODE>; it returns <CODE>true</CODE> if such an <VAR>x</VAR> exists and <CODE>false</CODE> otherwise. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:MONO_ARRAY.all:VAL"></A>
+<DT> <CODE>all <VAR>f</VAR> <VAR>arr</VAR> </CODE>
+<DD>
+applies <VAR>f</VAR> to each element <VAR>x</VAR> of the array <VAR>arr</VAR>, from left to right (<I>i.e.</I>, increasing indices), until <CODE><VAR>f</VAR> <VAR>x</VAR></CODE> evaluates to <CODE>false</CODE>; it returns <CODE>false</CODE> if such an <VAR>x</VAR> exists and <CODE>true</CODE> otherwise. It is equivalent to  <CODE><CODE><A HREF="bool.html#SIG:BOOL.not:VAL:SPEC">not</A></CODE>(<CODE><A HREF="mono-array.html#SIG:MONO_ARRAY.exists:VAL:SPEC">exists</A></CODE> (<CODE><A HREF="bool.html#SIG:BOOL.not:VAL:SPEC">not</A></CODE> o <VAR>f</VAR>) <VAR>arr</VAR>))</CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:MONO_ARRAY.collate:VAL"></A>
+<DT> <CODE>collate <VAR>f</VAR> (<VAR>a1</VAR>, <VAR>a2</VAR>) </CODE>
+<DD>
+performs lexicographic comparison of the two arrays using the given ordering <VAR>f</VAR> on elements. 
+<BR>
+<BR>
+
+</DL>
+<H4>See Also</H4>
+<BLOCKQUOTE>
+<CODE><A HREF="array.html#Array:STR:SPEC">Array</A></CODE>, <CODE><A HREF="mono-array-slice.html#MONO_ARRAY_SLICE:SIG:SPEC">MONO_ARRAY_SLICE</A></CODE>, <CODE><A HREF="mono-vector.html#MONO_VECTOR:SIG:SPEC">MONO_VECTOR</A></CODE>, <CODE><A HREF="mono-vector-slice.html#MONO_VECTOR_SLICE:SIG:SPEC">MONO_VECTOR_SLICE</A></CODE>
+</BLOCKQUOTE>
+<H4>Discussion</H4>
+<P>
+If an implementation provides a structure matching <CODE><A HREF="mono-array.html#MONO_ARRAY:SIG:SPEC">MONO_ARRAY</A></CODE> for some element type <CODE>ty</CODE>, it must provide the corresponding monomorphic structure matching <CODE><A HREF="mono-vector.html#MONO_VECTOR:SIG:SPEC">MONO_VECTOR</A></CODE> with the vector types in the two structures identified.
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="manpages.html">Parent</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   | <A HREF="index.html">Root</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Generated April 12, 2004</I><BR>
+<I>Last Modified June 11, 2000</I><BR>
+<I>Comments to <A HREF="http://www.cs.uchicago.edu/people/jhr">John Reppy.</A></I><BR>
+
+<HR>
+<P>
+
+This document may be distributed freely over the internet as long as the
+copyright notice and license terms below are prominently displayed within
+every machine-readable copy.  
+
+<P>
+
+<TABLE ALIGN=CENTER WIDTH="80%" BORDER="2" CELLPADDING="5">
+<TR>
+<TD>
+<P>
+
+Copyright &copy; 2004 AT&amp;T and Lucent Technologies.
+All rights reserved.
+
+<P>
+
+Permission is granted for internet users to make one paper copy for their
+own personal use.  Further hardcopy reproduction is strictly prohibited. 
+Permission to distribute the HTML document electronically on any medium
+other than the internet must be requested from the copyright holders by
+contacting the editors.
+Printed versions of the SML Basis Manual are available from Cambridge
+University Press.
+To order, please visit
+<A HREF="http://www.cup.org">www.cup.org</A> (North America) or
+<A HREF="http://www.cup.cam.ac.uk">www.cup.cam.ac.uk</A> (outside North America).<BR>
+
+</TABLE>
+<P>
+
+<HR>
+</BODY></HTML>

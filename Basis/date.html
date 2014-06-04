@@ -1,0 +1,373 @@
+<!-- HTML/date.html -->
+
+<!-- COPYRIGHT (c) 1997 Bell Labs, Lucent Technologies. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The Date structure</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF"><A NAME="top"></A>
+<H1 align=CENTER>The Standard ML Basis Library</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>Date</CODE> structure</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="DATE:SIG:SPEC"></A><CODE>DATE</CODE><BR>
+<B>structure</B>&nbsp;<A NAME="Date:STR:SPEC"></A><CODE>Date</CODE><B> :> </B>DATE<BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+The <CODE>Date</CODE> structure provides functions for converting between times and dates, and formatting and scanning dates. 
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>datatype</B>&nbsp;<A NAME="SIG:DATE.weekday:TY:SPEC" HREF="#SIG:DATE.weekday:TY">weekday</A>&nbsp;=&nbsp;<A NAME="SIG:DATE.Mon:TY:SPEC" HREF="#SIG:DATE.Mon:TY">Mon</A>&nbsp;|&nbsp;<A NAME="SIG:DATE.Tue:TY:SPEC" HREF="#SIG:DATE.Tue:TY">Tue</A>&nbsp;|&nbsp;<A NAME="SIG:DATE.Wed:TY:SPEC" HREF="#SIG:DATE.Wed:TY">Wed</A>&nbsp;|&nbsp;<A NAME="SIG:DATE.Thu:TY:SPEC" HREF="#SIG:DATE.Thu:TY">Thu</A>&nbsp;|&nbsp;<A NAME="SIG:DATE.Fri:TY:SPEC" HREF="#SIG:DATE.Fri:TY">Fri</A>&nbsp;|&nbsp;<A NAME="SIG:DATE.Sat:TY:SPEC" HREF="#SIG:DATE.Sat:TY">Sat</A>&nbsp;|&nbsp;<A NAME="SIG:DATE.Sun:TY:SPEC" HREF="#SIG:DATE.Sun:TY">Sun</A><BR>
+<B>datatype</B>&nbsp;<A NAME="SIG:DATE.month:TY:SPEC" HREF="#SIG:DATE.month:TY">month</A><BR>
+&nbsp;&nbsp;=&nbsp;<A NAME="SIG:DATE.Jan:TY:SPEC" HREF="#SIG:DATE.Jan:TY">Jan</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="SIG:DATE.Feb:TY:SPEC" HREF="#SIG:DATE.Feb:TY">Feb</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="SIG:DATE.Mar:TY:SPEC" HREF="#SIG:DATE.Mar:TY">Mar</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="SIG:DATE.Apr:TY:SPEC" HREF="#SIG:DATE.Apr:TY">Apr</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="SIG:DATE.May:TY:SPEC" HREF="#SIG:DATE.May:TY">May</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="SIG:DATE.Jun:TY:SPEC" HREF="#SIG:DATE.Jun:TY">Jun</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="SIG:DATE.Jul:TY:SPEC" HREF="#SIG:DATE.Jul:TY">Jul</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="SIG:DATE.Aug:TY:SPEC" HREF="#SIG:DATE.Aug:TY">Aug</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="SIG:DATE.Sep:TY:SPEC" HREF="#SIG:DATE.Sep:TY">Sep</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="SIG:DATE.Oct:TY:SPEC" HREF="#SIG:DATE.Oct:TY">Oct</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="SIG:DATE.Nov:TY:SPEC" HREF="#SIG:DATE.Nov:TY">Nov</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="SIG:DATE.Dec:TY:SPEC" HREF="#SIG:DATE.Dec:TY">Dec</A><BR>
+<B>type</B>&nbsp;<A NAME="SIG:DATE.date:TY:SPEC" HREF="#SIG:DATE.date:TY">date</A><BR>
+<BR>
+<B>exception</B>&nbsp;<A NAME="SIG:DATE.Date:EXN:SPEC" HREF="#SIG:DATE.Date:EXN">Date</A><BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:DATE.date:VAL:SPEC" HREF="#SIG:DATE.date:VAL">date</A>&nbsp;<B>:</B>&nbsp;{<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;year&nbsp;<B>:</B>&nbsp;int,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;month&nbsp;<B>:</B>&nbsp;month,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;day&nbsp;<B>:</B>&nbsp;int,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hour&nbsp;<B>:</B>&nbsp;int,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minute&nbsp;<B>:</B>&nbsp;int,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;second&nbsp;<B>:</B>&nbsp;int,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;offset&nbsp;<B>:</B>&nbsp;Time.time&nbsp;option<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<B>-&gt;</B>&nbsp;date<BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:DATE.year:VAL:SPEC" HREF="#SIG:DATE.year:VAL">year</A>&nbsp;&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;date&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:DATE.month:VAL:SPEC" HREF="#SIG:DATE.month:VAL">month</A>&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;date&nbsp;<B>-&gt;</B>&nbsp;month<BR>
+<B>val</B>&nbsp;<A NAME="SIG:DATE.day:VAL:SPEC" HREF="#SIG:DATE.day:VAL">day</A>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;date&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:DATE.hour:VAL:SPEC" HREF="#SIG:DATE.hour:VAL">hour</A>&nbsp;&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;date&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:DATE.minute:VAL:SPEC" HREF="#SIG:DATE.minute:VAL">minute</A>&nbsp;&nbsp;<B>:</B>&nbsp;date&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:DATE.second:VAL:SPEC" HREF="#SIG:DATE.second:VAL">second</A>&nbsp;&nbsp;<B>:</B>&nbsp;date&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:DATE.weekDay:VAL:SPEC" HREF="#SIG:DATE.weekDay:VAL">weekDay</A>&nbsp;<B>:</B>&nbsp;date&nbsp;<B>-&gt;</B>&nbsp;weekday<BR>
+<B>val</B>&nbsp;<A NAME="SIG:DATE.yearDay:VAL:SPEC" HREF="#SIG:DATE.yearDay:VAL">yearDay</A>&nbsp;<B>:</B>&nbsp;date&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:DATE.offset:VAL:SPEC" HREF="#SIG:DATE.offset:VAL">offset</A>&nbsp;&nbsp;<B>:</B>&nbsp;date&nbsp;<B>-&gt;</B>&nbsp;Time.time&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="SIG:DATE.isDst:VAL:SPEC" HREF="#SIG:DATE.isDst:VAL">isDst</A>&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;date&nbsp;<B>-&gt;</B>&nbsp;bool&nbsp;option<BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:DATE.localOffset:VAL:SPEC" HREF="#SIG:DATE.localOffset:VAL">localOffset</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;Time.time<BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:DATE.fromTimeLocal:VAL:SPEC" HREF="#SIG:DATE.fromTimeLocal:VAL">fromTimeLocal</A>&nbsp;<B>:</B>&nbsp;Time.time&nbsp;<B>-&gt;</B>&nbsp;date<BR>
+<B>val</B>&nbsp;<A NAME="SIG:DATE.fromTimeUniv:VAL:SPEC" HREF="#SIG:DATE.fromTimeUniv:VAL">fromTimeUniv</A>&nbsp;&nbsp;<B>:</B>&nbsp;Time.time&nbsp;<B>-&gt;</B>&nbsp;date<BR>
+<B>val</B>&nbsp;<A NAME="SIG:DATE.toTime:VAL:SPEC" HREF="#SIG:DATE.toTime:VAL">toTime</A>&nbsp;<B>:</B>&nbsp;date&nbsp;<B>-&gt;</B>&nbsp;Time.time<BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:DATE.compare:VAL:SPEC" HREF="#SIG:DATE.compare:VAL">compare</A>&nbsp;<B>:</B>&nbsp;date&nbsp;<B>*</B>&nbsp;date&nbsp;<B>-&gt;</B>&nbsp;order<BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:DATE.fmt:VAL:SPEC" HREF="#SIG:DATE.fmt:VAL">fmt</A>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;date&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="SIG:DATE.toString:VAL:SPEC" HREF="#SIG:DATE.toString:VAL">toString</A>&nbsp;<B>:</B>&nbsp;date&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="SIG:DATE.scan:VAL:SPEC" HREF="#SIG:DATE.scan:VAL">scan</A>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;(char,&nbsp;<I>'a</I>)&nbsp;StringCvt.reader<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;(date,&nbsp;<I>'a</I>)&nbsp;StringCvt.reader<BR>
+<B>val</B>&nbsp;<A NAME="SIG:DATE.fromString:VAL:SPEC" HREF="#SIG:DATE.fromString:VAL">fromString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;date&nbsp;option</CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="SIG:DATE.date:TY"></A><CODE><B>type</B>&nbsp;date</CODE>
+<DD>
+ An abstract type whose values represents an instant in a specific  time zone. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:DATE.date:VAL"></A><CODE><B>val</B>&nbsp;date&nbsp;<B>:</B>&nbsp;{<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;year&nbsp;<B>:</B>&nbsp;int,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;month&nbsp;<B>:</B>&nbsp;month,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;day&nbsp;<B>:</B>&nbsp;int,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hour&nbsp;<B>:</B>&nbsp;int,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minute&nbsp;<B>:</B>&nbsp;int,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;second&nbsp;<B>:</B>&nbsp;int,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;offset&nbsp;<B>:</B>&nbsp;Time.time&nbsp;option<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<B>-&gt;</B>&nbsp;date</CODE>
+<DD>
+creates a canonical date from the given date information. If the resulting date is outside the range supported by the implementation, the <CODE><A HREF="date.html#SIG:DATE.Date:EXN:SPEC">Date</A></CODE> exception is raised.
+<P>
+Seconds outside the range [0,59] are converted to the equivalent minutes and added to the minutes argument. Similar conversions are performed for minutes to hours, hours to days, days to months, and months to years. Negative values are similarly translated into a canonical range, with the extra borrowed from the next larger unit. Thus, <CODE>minute = 10, second = ~140</CODE> becomes <CODE>minute = 7, second = 40</CODE>.
+<P>
+The <CODE>offset</CODE> argument provides time zone information. A value of <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A></CODE> represents the local time zone. A value of <CODE><CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">SOME</A></CODE>(<VAR>t</VAR>)</CODE> corresponds to time <VAR>t</VAR> west of UTC. In particular,  <CODE><CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">SOME</A></CODE>(<CODE><A HREF="time.html#SIG:TIME.zeroTime:VAL:SPEC">Time.zeroTime</A></CODE>)</CODE> is UTC. Negative offsets denote time zones to the east of UTC, as is traditional. Offsets are taken modulo 24 hours. That is, we express <VAR>t</VAR>, in hours, as sgn(<VAR>t</VAR>)(24*<VAR>d</VAR> + <VAR>r</VAR>), where <VAR>d</VAR> and <VAR>r</VAR> are non-negative, <VAR>d</VAR> is integral, and  <VAR>r</VAR> &lt; 24. The offset then becomes  sgn(<VAR>t</VAR>)*<VAR>r</VAR> and  sgn(<VAR>t</VAR>)(24*<VAR>d</VAR>) is added to the hours (before converting hours to days).
+<P>
+Leap years follow the Gregorian calendar. Leap seconds may or may not be ignored. In an implementation that takes account of leap seconds, the <CODE>second</CODE> function may return 60 or 61 in the rare cases that this is appropriate. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:DATE.year:VAL"></A><CODE><B>val</B>&nbsp;year&nbsp;<B>:</B>&nbsp;date&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;month&nbsp;<B>:</B>&nbsp;date&nbsp;<B>-&gt;</B>&nbsp;month<BR>
+<B>val</B>&nbsp;day&nbsp;<B>:</B>&nbsp;date&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;hour&nbsp;<B>:</B>&nbsp;date&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;minute&nbsp;<B>:</B>&nbsp;date&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;second&nbsp;<B>:</B>&nbsp;date&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;weekDay&nbsp;<B>:</B>&nbsp;date&nbsp;<B>-&gt;</B>&nbsp;weekday<BR>
+<B>val</B>&nbsp;yearDay&nbsp;<B>:</B>&nbsp;date&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;offset&nbsp;<B>:</B>&nbsp;date&nbsp;<B>-&gt;</B>&nbsp;Time.time&nbsp;option<BR>
+<B>val</B>&nbsp;isDst&nbsp;<B>:</B>&nbsp;date&nbsp;<B>-&gt;</B>&nbsp;bool&nbsp;option</CODE>
+<DD>
+       These functions extract the attributes of a date value. The year returned by <CODE><A HREF="date.html#SIG:DATE.year:VAL:SPEC">year</A></CODE> uses year 0 as its base. Thus, the date Robin Milnerreceived the Turing award would have year 1991. The function <CODE><A HREF="date.html#SIG:DATE.yearDay:VAL:SPEC">yearDay</A></CODE> returns the day of the year, starting from 0, <I>i.e.</I>, 1 January is day 0. The value returned by <CODE><A HREF="date.html#SIG:DATE.offset:VAL:SPEC">offset</A></CODE> reports time zone information as the amount of time west of UTC. A value of  <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A></CODE> represents the local time zone. The function <CODE><A HREF="date.html#SIG:DATE.isDst:VAL:SPEC">isDst</A></CODE> returns  <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A></CODE> if the system has no information concerning daylight savings time. Otherwise, it returns  <CODE><CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">SOME</A></CODE>(<VAR>dst</VAR>)</CODE> where <VAR>dst</VAR> is  <CODE>true</CODE> if daylight savings time is in effect. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:DATE.localOffset:VAL"></A><CODE><B>val</B>&nbsp;localOffset&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;Time.time</CODE>
+<DD>
+          The offset from UTC for the local time zone. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:DATE.fromTimeLocal:VAL"></A>
+<DT> <CODE>fromTimeLocal <VAR>t</VAR> </CODE>
+<DT> <CODE>          fromTimeUniv <VAR>t</VAR> </CODE>
+<DD>
+These convert the (UTC) time <VAR>t</VAR> into a corresponding date.  <CODE>fromTimeLocal</CODE> represents the date in the local time zone; it is the analogue of the ISO C function <CODE>localtime</CODE>. The returned date will have <CODE>offset=<CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A></CODE></CODE>. <CODE>fromTimeUniv</CODE> returns the date in the UTC time zone; it is the analogue of the ISO C function <CODE>gmtime</CODE>. The returned date will have <CODE>offset=<CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">SOME</A></CODE>(0)</CODE>.
+<P>
+If these functions are applied to the same time value, the resulting dates will differ by the offset of the local time zone from UTC. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:DATE.toTime:VAL"></A>
+<DT> <CODE>toTime <VAR>date</VAR> </CODE>
+<DD>
+returns the (UTC) time corresponding to the date <VAR>date</VAR>. It raises <CODE><A HREF="date.html#SIG:DATE.Date:EXN:SPEC">Date</A></CODE> if the date <VAR>date</VAR> cannot be represented as a <CODE><A HREF="time.html#SIG:TIME.time:TY:SPEC">Time.time</A></CODE> value. It is the analogue of the ISO C function <CODE>mktime</CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:DATE.compare:VAL"></A>
+<DT> <CODE>compare (<VAR>date1</VAR>, <VAR>date2</VAR>) </CODE>
+<DD>
+returns <CODE><A HREF="general.html#SIG:GENERAL.order:TY:SPEC">LESS</A></CODE>, <CODE><A HREF="general.html#SIG:GENERAL.order:TY:SPEC">EQUAL</A></CODE>, or <CODE><A HREF="general.html#SIG:GENERAL.order:TY:SPEC">GREATER</A></CODE>, according as <VAR>date1</VAR> precedes, equals, or follows <VAR>date2</VAR> in time. It lexicographically compares the dates, using the year, month, day, hour, minute, and second information, but ignoring the offset and daylight savings time information. It does not detect invalid dates. 
+<P>
+          In order to compare dates in two different time zones, the user would have to handle the normalization. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:DATE.fmt:VAL"></A>
+<DT> <CODE>fmt <VAR>s</VAR> <VAR>date</VAR> </CODE>
+<DT> <CODE>          toString <VAR>date</VAR> </CODE>
+<DD>
+These return a string representation of the date <VAR>date</VAR>. The result may be wrong if the date is outside the representable <CODE><A HREF="time.html#SIG:TIME.time:TY:SPEC">Time.time</A></CODE> range. They raise <CODE><A HREF="date.html#SIG:DATE.Date:EXN:SPEC">Date</A></CODE> if the given date is invalid. 
+<P>
+          The former formats the date according to the format string <VAR>s</VAR>, following the semantics of the ISO C function <CODE>strftime</CODE>.  In particular, <CODE><A HREF="date.html#SIG:DATE.fmt:VAL:SPEC">fmt</A></CODE> is locale-dependent. The allowed formats are: 
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>%a</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+locale's abbreviated weekday name
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>%A</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+locale's full weekday name
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>%b</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+locale's abbreviated month name
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>%B</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+locale's full month name
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>%c</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+locale's date and time representation (<I>e.g.</I>, <CODE>&quot;Dec 2 06:55:15 1979&quot;</CODE>)
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>%d</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+day of month [01-31]
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>%H</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+hour [00-23]
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>%I</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+hour [01-12]
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>%j</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+day of year [001-366]
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>%m</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+month number [01-12]
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>%M</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+minutes [00-59]
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>%p</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+locale's equivalent of the AM/PM designation
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>%S</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+seconds [00-61]
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>%U</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+week number of year [00-53], with the first Sunday as the first day of week 01
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>%w</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+day of week [0-6], with 0 representing Sunday
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>%W</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+week number of year [00-53], with the first Monday as the first day of week 01
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>%x</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+locale's appropriate date representation
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>%X</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+locale's appropriate time representation
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>%y</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+year of century [00-99]
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>%Y</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+year including century (<I>e.g.</I>, 1997)
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>%Z</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+time zone name or abbreviation, or the empty string if no time zone information exists
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>%%</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+the percent character
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>%<VAR>c</VAR></CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+the character <VAR>c</VAR>, if <VAR>c</VAR> is not one of the format characters listed above
+</TABLE>
+</CENTER>
+<HR>
+  For instance, <CODE><CODE><A HREF="date.html#SIG:DATE.fmt:VAL:SPEC">fmt</A></CODE> &quot;%A&quot; <VAR>date</VAR></CODE> returns the full name of the weekday specified by <VAR>date</VAR> (<I>e.g.</I>,  <CODE>&quot;Monday&quot;</CODE>). For a full description of the format-string syntax, consult a description of <CODE>strftime</CODE>. Note, however, that unlike <CODE>strftime</CODE>, the behavior of <CODE><A HREF="date.html#SIG:DATE.fmt:VAL:SPEC">fmt</A></CODE> is defined for the directive <CODE>%<VAR>c</VAR></CODE> for any character <I>c</I>. 
+<P>
+      <CODE><A HREF="time.html#SIG:TIME.toString:VAL:SPEC">toString</A></CODE> returns a 24-character string representing the date <VAR>date</VAR> in the following format: 
+<PRE>
+&quot;Wed Mar 08 19:06:45 1995&quot;
+</PRE>
+ The function is equivalent to <CODE>Date.fmt &quot;%a %b %d %H:%M:%S %Y&quot;</CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:DATE.scan:VAL"></A>
+<DT> <CODE>scan <VAR>getc</VAR> <VAR>strm</VAR> </CODE>
+<DT> <CODE>          fromString <VAR>s</VAR> </CODE>
+<DD>
+These scan a 24-character date from a character source after ignoring possible initial whitespace. The format of the string must be precisely as produced by <CODE><A HREF="date.html#SIG:DATE.toString:VAL:SPEC">toString</A></CODE>. In particular, the functions do not parse time zone abbreviations. No check of the consistency of the date (weekday, date in the month, ...) is performed. If the scanning fails, <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A></CODE> is returned. 
+<P>
+          The function <CODE>scan</CODE> takes a character stream reader <VAR>getc</VAR> and a stream <VAR>strm</VAR>. In case of success, it returns <CODE><CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">SOME</A></CODE>(<VAR>date</VAR>, <VAR>rest</VAR>)</CODE>, where <VAR>date</VAR> is the scanned date and <VAR>rest</VAR> is the remainder of the stream. 
+<P>
+          The function <CODE>fromString</CODE> takes a string <VAR>s</VAR> as its source of characters. It is equivalent to <CODE><CODE><A HREF="string-cvt.html#SIG:STRING_CVT.scanString:VAL:SPEC">StringCvt.scanString</A></CODE> scan</CODE>. 
+<BR>
+<BR>
+
+</DL>
+<H4>See Also</H4>
+<BLOCKQUOTE>
+<CODE><A HREF="string-cvt.html#StringCvt:STR:SPEC">StringCvt</A></CODE>, <CODE><A HREF="time.html#Time:STR:SPEC">Time</A></CODE>
+</BLOCKQUOTE>
+<H4>Discussion</H4>
+<P>
+In the <CODE>Date</CODE> structure, the <CODE><A HREF="time.html#SIG:TIME.time:TY:SPEC">time</A></CODE> type is used to represent intervals starting from a fixed reference point.  These times are always measured in Coordinated Universal Time (UTC), also known as Greenwich Mean Time. The implementation of time values, however, is system dependent, so time values are not portable across implementations.
+<P>
+A conforming <CODE>Date</CODE> structure should support date values ranging from around 1900 to 2200, although they may be inaccurate with respect to daylight savings time outside the range of dates supported by time values. 
+<BLOCKQUOTE>
+<B>Implementation note:</B><BR>
+
+<P>
+Implementations of this structure might use the ISO C <CODE>mktime</CODE> function. Some implementations of this function, when given dates that are out of range, wrap around instead of returning -1. Thus, implementations using <CODE>mktime</CODE> need to check the validity of a date before invoking the function.
+</BLOCKQUOTE>
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="manpages.html">Parent</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   | <A HREF="index.html">Root</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Generated April 12, 2004</I><BR>
+<I>Last Modified October 5, 1997</I><BR>
+<I>Comments to <A HREF="http://www.cs.uchicago.edu/people/jhr">John Reppy.</A></I><BR>
+
+<HR>
+<P>
+
+This document may be distributed freely over the internet as long as the
+copyright notice and license terms below are prominently displayed within
+every machine-readable copy.  
+
+<P>
+
+<TABLE ALIGN=CENTER WIDTH="80%" BORDER="2" CELLPADDING="5">
+<TR>
+<TD>
+<P>
+
+Copyright &copy; 2004 AT&amp;T and Lucent Technologies.
+All rights reserved.
+
+<P>
+
+Permission is granted for internet users to make one paper copy for their
+own personal use.  Further hardcopy reproduction is strictly prohibited. 
+Permission to distribute the HTML document electronically on any medium
+other than the internet must be requested from the copyright holders by
+contacting the editors.
+Printed versions of the SML Basis Manual are available from Cambridge
+University Press.
+To order, please visit
+<A HREF="http://www.cup.org">www.cup.org</A> (North America) or
+<A HREF="http://www.cup.cam.ac.uk">www.cup.cam.ac.uk</A> (outside North America).<BR>
+
+</TABLE>
+<P>
+
+<HR>
+</BODY></HTML>

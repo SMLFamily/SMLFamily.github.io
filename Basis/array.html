@@ -1,0 +1,260 @@
+<!-- HTML/array.html -->
+
+<!-- COPYRIGHT (c) 1997 Bell Labs, Lucent Technologies. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The Array structure</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF"><A NAME="top"></A>
+<H1 align=CENTER>The Standard ML Basis Library</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>Array</CODE> structure</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="ARRAY:SIG:SPEC"></A><CODE>ARRAY</CODE><BR>
+<B>structure</B>&nbsp;<A NAME="Array:STR:SPEC"></A><CODE>Array</CODE><B> :> </B>ARRAY<BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+The <CODE>Array</CODE> structure defines polymorphic arrays, mutable sequences with constant-time access and update.
+<P>
+Arrays have a special equality property: two arrays are equal if they are the same array, <I>i.e.</I>, created by the same call to a primitive array constructor such as <CODE>array</CODE>, <CODE>fromList</CODE>, etc.; otherwise they are not equal. This also holds for arrays of zero length. Thus, the type <CODE>ty array</CODE> admits equality even if <CODE>ty</CODE> does not. 
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>eqtype</B>&nbsp;<I>'a</I>&nbsp;<A NAME="SIG:ARRAY.array:TY:SPEC" HREF="#SIG:ARRAY.array:TY">array</A>&nbsp;=&nbsp;<I>'a</I>&nbsp;array <BR>
+<B>type</B>&nbsp;<I>'a</I>&nbsp;<A NAME="SIG:ARRAY.vector:TY:SPEC" HREF="#SIG:ARRAY.vector:TY">vector</A>&nbsp;=&nbsp;<I>'a</I>&nbsp;<A HREF="vector.html#SIG:VECTOR.vector:TY:SPEC">Vector.vector</A><BR>
+<B>val</B>&nbsp;<A NAME="SIG:ARRAY.maxLen:VAL:SPEC" HREF="#SIG:ARRAY.maxLen:VAL">maxLen</A>&nbsp;<B>:</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:ARRAY.array:VAL:SPEC" HREF="#SIG:ARRAY.array:VAL">array</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;array<BR>
+<B>val</B>&nbsp;<A NAME="SIG:ARRAY.fromList:VAL:SPEC" HREF="#SIG:ARRAY.fromList:VAL">fromList</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;array<BR>
+<B>val</B>&nbsp;<A NAME="SIG:ARRAY.tabulate:VAL:SPEC" HREF="#SIG:ARRAY.tabulate:VAL">tabulate</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;(int&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;array<BR>
+<B>val</B>&nbsp;<A NAME="SIG:ARRAY.length:VAL:SPEC" HREF="#SIG:ARRAY.length:VAL">length</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;array&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:ARRAY.sub:VAL:SPEC" HREF="#SIG:ARRAY.sub:VAL">sub</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;array&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I><BR>
+<B>val</B>&nbsp;<A NAME="SIG:ARRAY.update:VAL:SPEC" HREF="#SIG:ARRAY.update:VAL">update</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;array&nbsp;<B>*</B>&nbsp;int&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="SIG:ARRAY.vector:VAL:SPEC" HREF="#SIG:ARRAY.vector:VAL">vector</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;array&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;vector<BR>
+<B>val</B>&nbsp;<A NAME="SIG:ARRAY.copy:VAL:SPEC" HREF="#SIG:ARRAY.copy:VAL">copy</A>&nbsp;&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;{src&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;array,&nbsp;dst&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;array,&nbsp;di&nbsp;<B>:</B>&nbsp;int}<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="SIG:ARRAY.copyVec:VAL:SPEC" HREF="#SIG:ARRAY.copyVec:VAL">copyVec</A>&nbsp;<B>:</B>&nbsp;{src&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;vector,&nbsp;dst&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;array,&nbsp;di&nbsp;<B>:</B>&nbsp;int}<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="SIG:ARRAY.appi:VAL:SPEC" HREF="#SIG:ARRAY.appi:VAL">appi</A>&nbsp;<B>:</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;unit)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;array&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="SIG:ARRAY.app:VAL:SPEC" HREF="#SIG:ARRAY.app:VAL">app</A>&nbsp;&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;unit)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;array&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="SIG:ARRAY.modifyi:VAL:SPEC" HREF="#SIG:ARRAY.modifyi:VAL">modifyi</A>&nbsp;<B>:</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;array&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="SIG:ARRAY.modify:VAL:SPEC" HREF="#SIG:ARRAY.modify:VAL">modify</A>&nbsp;&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;array&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="SIG:ARRAY.foldli:VAL:SPEC" HREF="#SIG:ARRAY.foldli:VAL">foldli</A>&nbsp;<B>:</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'b</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I>)&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;array&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I><BR>
+<B>val</B>&nbsp;<A NAME="SIG:ARRAY.foldri:VAL:SPEC" HREF="#SIG:ARRAY.foldri:VAL">foldri</A>&nbsp;<B>:</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'b</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I>)&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;array&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I><BR>
+<B>val</B>&nbsp;<A NAME="SIG:ARRAY.foldl:VAL:SPEC" HREF="#SIG:ARRAY.foldl:VAL">foldl</A>&nbsp;&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'b</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I>)&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;array&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I><BR>
+<B>val</B>&nbsp;<A NAME="SIG:ARRAY.foldr:VAL:SPEC" HREF="#SIG:ARRAY.foldr:VAL">foldr</A>&nbsp;&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'b</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I>)&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;array&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I><BR>
+<B>val</B>&nbsp;<A NAME="SIG:ARRAY.findi:VAL:SPEC" HREF="#SIG:ARRAY.findi:VAL">findi</A>&nbsp;<B>:</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;bool)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;array&nbsp;<B>-&gt;</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;<I>'a</I>)&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="SIG:ARRAY.find:VAL:SPEC" HREF="#SIG:ARRAY.find:VAL">find</A>&nbsp;&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;bool)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;array&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="SIG:ARRAY.exists:VAL:SPEC" HREF="#SIG:ARRAY.exists:VAL">exists</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;bool)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;array&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="SIG:ARRAY.all:VAL:SPEC" HREF="#SIG:ARRAY.all:VAL">all</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;bool)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;array&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="SIG:ARRAY.collate:VAL:SPEC" HREF="#SIG:ARRAY.collate:VAL">collate</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;order)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;array&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;array&nbsp;<B>-&gt;</B>&nbsp;order</CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="SIG:ARRAY.maxLen:VAL"></A><CODE><B>val</B>&nbsp;maxLen&nbsp;<B>:</B>&nbsp;int</CODE>
+<DD>
+ The maximum length of arrays supported by this implementation.  Attempts to create larger arrays will result in the <CODE><A HREF="general.html#SIG:GENERAL.Size:EXN:SPEC">Size</A></CODE>  exception being raised. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:ARRAY.array:VAL"></A>
+<DT> <CODE>array (<VAR>n</VAR>, <VAR>init</VAR>) </CODE>
+<DD>
+creates a new array of length <VAR>n</VAR>; each element is initialized  to the value <VAR>init</VAR>.  If <VAR>n</VAR> &lt; 0 or  <CODE><A HREF="array.html#SIG:ARRAY.maxLen:VAL:SPEC">maxLen</A></CODE> &lt; <VAR>n</VAR>, then the <CODE><A HREF="general.html#SIG:GENERAL.Size:EXN:SPEC">Size</A></CODE>  exception is raised. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:ARRAY.fromList:VAL"></A>
+<DT> <CODE>fromList <VAR>l</VAR> </CODE>
+<DD>
+creates a new array from <VAR>l</VAR>. The length of the array is  <CODE><CODE><A HREF="list.html#SIG:LIST.length:VAL:SPEC">length</A></CODE> <VAR>l</VAR></CODE> and the <VAR>i</VAR><SUP>(th)</SUP> element of the array is the <VAR>i</VAR><SUP>(th)</SUP> element of the the list. If the length of the  list is greater than <CODE><A HREF="array.html#SIG:ARRAY.maxLen:VAL:SPEC">maxLen</A></CODE>, then the <CODE><A HREF="general.html#SIG:GENERAL.Size:EXN:SPEC">Size</A></CODE>  exception is raised. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:ARRAY.tabulate:VAL"></A>
+<DT> <CODE>tabulate (<VAR>n</VAR>, <VAR>f</VAR>) </CODE>
+<DD>
+creates an array of <VAR>n</VAR> elements, where the elements are  defined in order of increasing index by applying <VAR>f</VAR> to  the element's index.  This is equivalent to the expression:  
+<PRE>
+fromList (List.tabulate (<VAR>n</VAR>, <VAR>f</VAR>))
+</PRE>
+  If <VAR>n</VAR> &lt; 0 or  <CODE><A HREF="array.html#SIG:ARRAY.maxLen:VAL:SPEC">maxLen</A></CODE> &lt; <VAR>n</VAR>, then the <CODE><A HREF="general.html#SIG:GENERAL.Size:EXN:SPEC">Size</A></CODE>  exception is raised. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:ARRAY.length:VAL"></A>
+<DT> <CODE>length <VAR>arr</VAR> </CODE>
+<DD>
+returns |<VAR>arr</VAR>|, the length of the array <VAR>arr</VAR>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:ARRAY.sub:VAL"></A>
+<DT> <CODE>sub (<VAR>arr</VAR>, <VAR>i</VAR>) </CODE>
+<DD>
+returns the <VAR>i</VAR><SUP>(th)</SUP> element of the array <VAR>arr</VAR>.  If <VAR>i</VAR> &lt; 0 or  |<VAR>arr</VAR>| &lt;= <VAR>i</VAR>, then  the <CODE><A HREF="general.html#SIG:GENERAL.Subscript:EXN:SPEC">Subscript</A></CODE> exception is raised. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:ARRAY.update:VAL"></A>
+<DT> <CODE>update (<VAR>arr</VAR>, <VAR>i</VAR>, <VAR>x</VAR>) </CODE>
+<DD>
+sets the <VAR>i</VAR><SUP>(th)</SUP> element of the array <VAR>arr</VAR> to <VAR>x</VAR>.  If <VAR>i</VAR> &lt; 0 or  |<VAR>arr</VAR>| &lt;= <VAR>i</VAR>, then  the <CODE><A HREF="general.html#SIG:GENERAL.Subscript:EXN:SPEC">Subscript</A></CODE> exception is raised. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:ARRAY.vector:VAL"></A>
+<DT> <CODE>vector <VAR>arr</VAR> </CODE>
+<DD>
+generates a vector from <VAR>arr</VAR>. Specifically, the result is equivalent to 
+<PRE>
+          Vector.tabulate (length <VAR>arr</VAR>, fn i =&gt; sub (<VAR>arr</VAR>, i))
+          
+</PRE>
+ 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:ARRAY.copy:VAL"></A>
+<DT> <CODE>copy {<VAR>src</VAR>, <VAR>dst</VAR>, <VAR>di</VAR>} </CODE>
+<DT> <CODE>          copyVec {<VAR>src</VAR>, <VAR>dst</VAR>, <VAR>di</VAR>} </CODE>
+<DD>
+These functions copy the entire array or vector <VAR>src</VAR>  into the array <VAR>dst</VAR>, with the <VAR>i</VAR><SUP>(th)</SUP> element in <VAR>src</VAR>, for 0 &lt;= <VAR>i</VAR> &lt; |<VAR>src</VAR>|, being copied to  position <VAR>di</VAR> + <VAR>i</VAR> in the destination array.  If <VAR>di</VAR> &lt; 0 or if  |<VAR>dst</VAR>| &lt; <VAR>di</VAR>+|<VAR>src</VAR>|, then the  <CODE><A HREF="general.html#SIG:GENERAL.Subscript:EXN:SPEC">Subscript</A></CODE> exception is raised. 
+<BLOCKQUOTE>
+<B>Implementation note:</B><BR>
+
+<P>
+In <CODE>copy</CODE>, if <VAR>dst</VAR> and <VAR>src</VAR> are equal, we must have <CODE><VAR>di</VAR> = 0</CODE> to avoid an exception, and <CODE>copy</CODE> is then the identity. 
+</BLOCKQUOTE>
+ 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:ARRAY.appi:VAL"></A>
+<DT> <CODE>appi <VAR>f</VAR> <VAR>arr</VAR> </CODE>
+<DT> <CODE>          app <VAR>f</VAR> <VAR>arr</VAR> </CODE>
+<DD>
+These apply the function <VAR>f</VAR> to the elements of the array <VAR>arr</VAR> in  order of increasing indices. The more general form <CODE><A HREF="array.html#SIG:ARRAY.appi:VAL:SPEC">appi</A></CODE> supplies <VAR>f</VAR> with the array index of the corresponding element. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:ARRAY.modifyi:VAL"></A>
+<DT> <CODE>modifyi <VAR>f</VAR> <VAR>arr</VAR>  </CODE>
+<DT> <CODE>            modify <VAR>f</VAR> <VAR>arr</VAR> </CODE>
+<DD>
+These apply the function <VAR>f</VAR> to the elements of the array <VAR>arr</VAR> in  order of increasing indices, and replace each  element with the result.  The more general <CODE><A HREF="array.html#SIG:ARRAY.modifyi:VAL:SPEC">modifyi</A></CODE> supplies <VAR>f</VAR> with the array index of the corresponding element.  The expression <CODE>modify <VAR>f</VAR> <VAR>arr</VAR></CODE>  is equivalent to <CODE>modifyi (<VAR>f</VAR> o #2) <VAR>arr</VAR></CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:ARRAY.foldli:VAL"></A>
+<DT> <CODE>foldli <VAR>f</VAR> <VAR>init</VAR> <VAR>arr</VAR> </CODE>
+<DT> <CODE>            foldri <VAR>f</VAR> <VAR>init</VAR> <VAR>arr</VAR> </CODE>
+<DT> <CODE>            foldl <VAR>f</VAR> <VAR>init</VAR> <VAR>arr</VAR> </CODE>
+<DT> <CODE>            foldr <VAR>f</VAR> <VAR>init</VAR> <VAR>arr</VAR> </CODE>
+<DD>
+These fold the function <VAR>f</VAR> over all the elements of the array <VAR>arr</VAR>, using the value <VAR>init</VAR> as the initial value. The functions <CODE><A HREF="array.html#SIG:ARRAY.foldli:VAL:SPEC">foldli</A></CODE> and <CODE><A HREF="array.html#SIG:ARRAY.foldl:VAL:SPEC">foldl</A></CODE> apply the function <VAR>f</VAR> from left to right (increasing indices), while the functions <CODE><A HREF="array.html#SIG:ARRAY.foldri:VAL:SPEC">foldri</A></CODE> and <CODE><A HREF="array.html#SIG:ARRAY.foldr:VAL:SPEC">foldr</A></CODE> work from right to left (decreasing indices). The more general functions <CODE><A HREF="array.html#SIG:ARRAY.foldli:VAL:SPEC">foldli</A></CODE> and <CODE><A HREF="array.html#SIG:ARRAY.foldri:VAL:SPEC">foldri</A></CODE> supply <VAR>f</VAR> with the array index of the corresponding element. 
+<P>
+      Refer to the <CODE><A HREF="mono-array.html#MONO_ARRAY:SIG:SPEC">MONO_ARRAY</A></CODE> manual pages for reference implementations of the indexed versions.  
+<P>
+ The expression <CODE>foldl <VAR>f</VAR> <VAR>init</VAR> <VAR>arr</VAR></CODE>  is equivalent to:  
+<PRE>
+foldli (fn (_, <VAR>a</VAR>, <VAR>x</VAR>) =&gt; <VAR>f</VAR>(<VAR>a</VAR>, <VAR>x</VAR>)) <VAR>init</VAR> <VAR>arr</VAR>
+</PRE>
+ The analogous equivalences hold for <CODE><A HREF="array.html#SIG:ARRAY.foldri:VAL:SPEC">foldri</A></CODE> and <CODE><A HREF="array.html#SIG:ARRAY.foldr:VAL:SPEC">foldr</A></CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:ARRAY.findi:VAL"></A>
+<DT> <CODE>findi <VAR>f</VAR> <VAR>arr</VAR> </CODE>
+<DT> <CODE>          find <VAR>f</VAR> <VAR>arr</VAR> </CODE>
+<DD>
+These functions apply <VAR>f</VAR> to each element of the array <VAR>arr</VAR>, from left to right (<I>i.e.</I>, increasing indices), until a <CODE>true</CODE> value is returned. If this occurs, the functions return the element; otherwise, they return <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A></CODE>. The more general version <CODE><A HREF="array.html#SIG:ARRAY.findi:VAL:SPEC">findi</A></CODE> also supplies <VAR>f</VAR> with the array index of the element and, upon finding an entry satisfying the predicate, returns that index with the element. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:ARRAY.exists:VAL"></A>
+<DT> <CODE>exists <VAR>f</VAR> <VAR>arr</VAR> </CODE>
+<DD>
+applies <VAR>f</VAR> to each element <VAR>x</VAR> of the array <VAR>arr</VAR>, from left to right (<I>i.e.</I>, increasing indices), until <CODE><VAR>f</VAR> <VAR>x</VAR></CODE> evaluates to <CODE>true</CODE>; it returns <CODE>true</CODE> if such an <VAR>x</VAR> exists and <CODE>false</CODE> otherwise. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:ARRAY.all:VAL"></A>
+<DT> <CODE>all <VAR>f</VAR> <VAR>arr</VAR> </CODE>
+<DD>
+applies <VAR>f</VAR> to each element <VAR>x</VAR> of the array <VAR>arr</VAR>, from left to right (<I>i.e.</I>, increasing indices), until <CODE><VAR>f</VAR> <VAR>x</VAR></CODE> evaluates to <CODE>false</CODE>; it returns <CODE>false</CODE> if such an <VAR>x</VAR> exists and <CODE>true</CODE> otherwise. It is equivalent to  <CODE><CODE><A HREF="bool.html#SIG:BOOL.not:VAL:SPEC">not</A></CODE>(<CODE><A HREF="array.html#SIG:ARRAY.exists:VAL:SPEC">exists</A></CODE> (<CODE><A HREF="bool.html#SIG:BOOL.not:VAL:SPEC">not</A></CODE> o <VAR>f</VAR>) <VAR>arr</VAR>))</CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:ARRAY.collate:VAL"></A>
+<DT> <CODE>collate <VAR>f</VAR> (<VAR>a1</VAR>, <VAR>a2</VAR>) </CODE>
+<DD>
+performs lexicographic comparison of the two arrays using the given ordering <VAR>f</VAR> on elements.
+<BR>
+<BR>
+
+</DL>
+<H4>See Also</H4>
+<BLOCKQUOTE>
+<CODE><A HREF="array-slice.html#ArraySlice:STR:SPEC">ArraySlice</A></CODE>, <CODE><A HREF="mono-array.html#MONO_ARRAY:SIG:SPEC">MONO_ARRAY</A></CODE>, <CODE><A HREF="vector.html#Vector:STR:SPEC">Vector</A></CODE>
+</BLOCKQUOTE>
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="manpages.html">Parent</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   | <A HREF="index.html">Root</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Generated April 12, 2004</I><BR>
+<I>Last Modified May 26, 2000</I><BR>
+<I>Comments to <A HREF="http://www.cs.uchicago.edu/people/jhr">John Reppy.</A></I><BR>
+
+<HR>
+<P>
+
+This document may be distributed freely over the internet as long as the
+copyright notice and license terms below are prominently displayed within
+every machine-readable copy.  
+
+<P>
+
+<TABLE ALIGN=CENTER WIDTH="80%" BORDER="2" CELLPADDING="5">
+<TR>
+<TD>
+<P>
+
+Copyright &copy; 2004 AT&amp;T and Lucent Technologies.
+All rights reserved.
+
+<P>
+
+Permission is granted for internet users to make one paper copy for their
+own personal use.  Further hardcopy reproduction is strictly prohibited. 
+Permission to distribute the HTML document electronically on any medium
+other than the internet must be requested from the copyright holders by
+contacting the editors.
+Printed versions of the SML Basis Manual are available from Cambridge
+University Press.
+To order, please visit
+<A HREF="http://www.cup.org">www.cup.org</A> (North America) or
+<A HREF="http://www.cup.cam.ac.uk">www.cup.cam.ac.uk</A> (outside North America).<BR>
+
+</TABLE>
+<P>
+
+<HR>
+</BODY></HTML>

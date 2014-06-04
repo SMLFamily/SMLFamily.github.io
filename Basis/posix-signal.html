@@ -1,0 +1,240 @@
+<!-- HTML/posix-signal.html -->
+
+<!-- COPYRIGHT (c) 1997 Bell Labs, Lucent Technologies. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The Posix.Signal structure</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF"><A NAME="top"></A>
+<H1 align=CENTER>The Standard ML Basis Library</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>Posix.Signal</CODE> structure</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="POSIX_SIGNAL:SIG:SPEC"></A><CODE>POSIX_SIGNAL</CODE><BR>
+<B>structure</B>&nbsp;<A NAME="Signal:STR:SPEC"></A><CODE>Signal</CODE><B> : </B>POSIX_SIGNAL<BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+The structure <CODE>Posix.Signal</CODE> defines the symbolic names of all the POSIX signals (see Section 3.3 of the POSIX standard 1003.1,1996<B>[CITE]</B>), and provides conversion functions between them and their underlying representations. 
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>eqtype</B>&nbsp;<A NAME="SIG:POSIX_SIGNAL.signal:TY:SPEC" HREF="#SIG:POSIX_SIGNAL.signal:TY">signal</A><BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:POSIX_SIGNAL.toWord:VAL:SPEC" HREF="#SIG:POSIX_SIGNAL.toWord:VAL">toWord</A>&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;signal&nbsp;<B>-&gt;</B>&nbsp;SysWord.word<BR>
+<B>val</B>&nbsp;<A NAME="SIG:POSIX_SIGNAL.fromWord:VAL:SPEC" HREF="#SIG:POSIX_SIGNAL.fromWord:VAL">fromWord</A>&nbsp;<B>:</B>&nbsp;SysWord.word&nbsp;<B>-&gt;</B>&nbsp;signal<BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:POSIX_SIGNAL.abrt:VAL:SPEC" HREF="#SIG:POSIX_SIGNAL.abrt:VAL">abrt</A>&nbsp;<B>:</B>&nbsp;signal<BR>
+<B>val</B>&nbsp;<A NAME="SIG:POSIX_SIGNAL.alrm:VAL:SPEC" HREF="#SIG:POSIX_SIGNAL.alrm:VAL">alrm</A>&nbsp;<B>:</B>&nbsp;signal<BR>
+<B>val</B>&nbsp;<A NAME="SIG:POSIX_SIGNAL.bus:VAL:SPEC" HREF="#SIG:POSIX_SIGNAL.bus:VAL">bus</A>&nbsp;&nbsp;<B>:</B>&nbsp;signal<BR>
+<B>val</B>&nbsp;<A NAME="SIG:POSIX_SIGNAL.fpe:VAL:SPEC" HREF="#SIG:POSIX_SIGNAL.fpe:VAL">fpe</A>&nbsp;&nbsp;<B>:</B>&nbsp;signal<BR>
+<B>val</B>&nbsp;<A NAME="SIG:POSIX_SIGNAL.hup:VAL:SPEC" HREF="#SIG:POSIX_SIGNAL.hup:VAL">hup</A>&nbsp;&nbsp;<B>:</B>&nbsp;signal<BR>
+<B>val</B>&nbsp;<A NAME="SIG:POSIX_SIGNAL.ill:VAL:SPEC" HREF="#SIG:POSIX_SIGNAL.ill:VAL">ill</A>&nbsp;&nbsp;<B>:</B>&nbsp;signal<BR>
+<B>val</B>&nbsp;<A NAME="SIG:POSIX_SIGNAL.int:VAL:SPEC" HREF="#SIG:POSIX_SIGNAL.int:VAL">int</A>&nbsp;&nbsp;<B>:</B>&nbsp;signal<BR>
+<B>val</B>&nbsp;<A NAME="SIG:POSIX_SIGNAL.kill:VAL:SPEC" HREF="#SIG:POSIX_SIGNAL.kill:VAL">kill</A>&nbsp;<B>:</B>&nbsp;signal<BR>
+<B>val</B>&nbsp;<A NAME="SIG:POSIX_SIGNAL.pipe:VAL:SPEC" HREF="#SIG:POSIX_SIGNAL.pipe:VAL">pipe</A>&nbsp;<B>:</B>&nbsp;signal<BR>
+<B>val</B>&nbsp;<A NAME="SIG:POSIX_SIGNAL.quit:VAL:SPEC" HREF="#SIG:POSIX_SIGNAL.quit:VAL">quit</A>&nbsp;<B>:</B>&nbsp;signal<BR>
+<B>val</B>&nbsp;<A NAME="SIG:POSIX_SIGNAL.segv:VAL:SPEC" HREF="#SIG:POSIX_SIGNAL.segv:VAL">segv</A>&nbsp;<B>:</B>&nbsp;signal<BR>
+<B>val</B>&nbsp;<A NAME="SIG:POSIX_SIGNAL.term:VAL:SPEC" HREF="#SIG:POSIX_SIGNAL.term:VAL">term</A>&nbsp;<B>:</B>&nbsp;signal<BR>
+<B>val</B>&nbsp;<A NAME="SIG:POSIX_SIGNAL.usr1:VAL:SPEC" HREF="#SIG:POSIX_SIGNAL.usr1:VAL">usr1</A>&nbsp;<B>:</B>&nbsp;signal<BR>
+<B>val</B>&nbsp;<A NAME="SIG:POSIX_SIGNAL.usr2:VAL:SPEC" HREF="#SIG:POSIX_SIGNAL.usr2:VAL">usr2</A>&nbsp;<B>:</B>&nbsp;signal<BR>
+<B>val</B>&nbsp;<A NAME="SIG:POSIX_SIGNAL.chld:VAL:SPEC" HREF="#SIG:POSIX_SIGNAL.chld:VAL">chld</A>&nbsp;<B>:</B>&nbsp;signal<BR>
+<B>val</B>&nbsp;<A NAME="SIG:POSIX_SIGNAL.cont:VAL:SPEC" HREF="#SIG:POSIX_SIGNAL.cont:VAL">cont</A>&nbsp;<B>:</B>&nbsp;signal<BR>
+<B>val</B>&nbsp;<A NAME="SIG:POSIX_SIGNAL.stop:VAL:SPEC" HREF="#SIG:POSIX_SIGNAL.stop:VAL">stop</A>&nbsp;<B>:</B>&nbsp;signal<BR>
+<B>val</B>&nbsp;<A NAME="SIG:POSIX_SIGNAL.tstp:VAL:SPEC" HREF="#SIG:POSIX_SIGNAL.tstp:VAL">tstp</A>&nbsp;<B>:</B>&nbsp;signal<BR>
+<B>val</B>&nbsp;<A NAME="SIG:POSIX_SIGNAL.ttin:VAL:SPEC" HREF="#SIG:POSIX_SIGNAL.ttin:VAL">ttin</A>&nbsp;<B>:</B>&nbsp;signal<BR>
+<B>val</B>&nbsp;<A NAME="SIG:POSIX_SIGNAL.ttou:VAL:SPEC" HREF="#SIG:POSIX_SIGNAL.ttou:VAL">ttou</A>&nbsp;<B>:</B>&nbsp;signal</CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="SIG:POSIX_SIGNAL.signal:TY"></A><CODE><B>eqtype</B>&nbsp;signal</CODE>
+<DD>
+ A POSIX signal, an asynchronous notification of an event. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:POSIX_SIGNAL.toWord:VAL"></A><CODE><B>val</B>&nbsp;toWord&nbsp;<B>:</B>&nbsp;signal&nbsp;<B>-&gt;</B>&nbsp;SysWord.word<BR>
+<B>val</B>&nbsp;fromWord&nbsp;<B>:</B>&nbsp;SysWord.word&nbsp;<B>-&gt;</B>&nbsp;signal</CODE>
+<DD>
+          These convert between a signal identifier and its underlying integer representation. Note that <CODE><A HREF="posix-signal.html#SIG:POSIX_SIGNAL.fromWord:VAL:SPEC">fromWord</A></CODE> does not check that  the result corresponds to a valid POSIX signal. 
+<BR>
+<BR>
+
+</DL>
+<H4>See Also</H4>
+<BLOCKQUOTE>
+<CODE><A HREF="posix.html#Posix:STR:SPEC">Posix</A></CODE>, <CODE><A HREF="posix.html#SIG:POSIX.Process:STR:SPEC">Posix.Process</A></CODE>
+</BLOCKQUOTE>
+<H4>Discussion</H4>
+<P>
+        The values defined in this structure represent the standard POSIX signals. The following table provides a brief description of their meanings. 
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TH ALIGN=LEFT VALIGN=TOP>
+<B>SML name</B>
+<TH ALIGN=LEFT VALIGN=TOP>
+<B>Description</B>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><A HREF="posix-signal.html#SIG:POSIX_SIGNAL.abrt:VAL:SPEC">abrt</A></CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+End process (abort).
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><A HREF="posix-signal.html#SIG:POSIX_SIGNAL.alrm:VAL:SPEC">alrm</A></CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+Alarm clock.
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><A HREF="posix-signal.html#SIG:POSIX_SIGNAL.bus:VAL:SPEC">bus</A></CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+Bus error.
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><A HREF="posix-signal.html#SIG:POSIX_SIGNAL.fpe:VAL:SPEC">fpe</A></CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+Floating-point exception.
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><A HREF="posix-signal.html#SIG:POSIX_SIGNAL.hup:VAL:SPEC">hup</A></CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+Hangup.
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><A HREF="posix-signal.html#SIG:POSIX_SIGNAL.ill:VAL:SPEC">ill</A></CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+Illegal instruction.
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><A HREF="posix-signal.html#SIG:POSIX_SIGNAL.int:VAL:SPEC">int</A></CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+Interrupt.
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><A HREF="posix-signal.html#SIG:POSIX_SIGNAL.kill:VAL:SPEC">kill</A></CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+Kill. (It cannot be caught or ignored.)
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><A HREF="posix-signal.html#SIG:POSIX_SIGNAL.pipe:VAL:SPEC">pipe</A></CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+Write on a pipe when there is no process to read it.
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><A HREF="posix-signal.html#SIG:POSIX_SIGNAL.quit:VAL:SPEC">quit</A></CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+Quit.
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><A HREF="posix-signal.html#SIG:POSIX_SIGNAL.segv:VAL:SPEC">segv</A></CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+Segmentation violation.
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><A HREF="posix-signal.html#SIG:POSIX_SIGNAL.term:VAL:SPEC">term</A></CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+Software termination signal.
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><A HREF="posix-signal.html#SIG:POSIX_SIGNAL.usr1:VAL:SPEC">usr1</A></CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+User-defined signal 1.
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><A HREF="posix-signal.html#SIG:POSIX_SIGNAL.usr2:VAL:SPEC">usr2</A></CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+User-defined signal 2.
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><A HREF="posix-signal.html#SIG:POSIX_SIGNAL.chld:VAL:SPEC">chld</A></CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+Sent to parent on child stop or exit.
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><A HREF="posix-signal.html#SIG:POSIX_SIGNAL.cont:VAL:SPEC">cont</A></CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+Continue if stopped. (It cannot be caught or ignored.)
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><A HREF="posix-signal.html#SIG:POSIX_SIGNAL.stop:VAL:SPEC">stop</A></CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+Stop. (It cannot be caught or ignored.)
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><A HREF="posix-signal.html#SIG:POSIX_SIGNAL.tstp:VAL:SPEC">tstp</A></CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+Interactive stop.
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><A HREF="posix-signal.html#SIG:POSIX_SIGNAL.ttin:VAL:SPEC">ttin</A></CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+Background read attempted from control terminal.
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><A HREF="posix-signal.html#SIG:POSIX_SIGNAL.ttou:VAL:SPEC">ttou</A></CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+Background write attempted from control terminal.
+</TABLE>
+</CENTER>
+<HR>
+ The name of the corresponding POSIX signal can be derived by capitalizing all letters and adding the string ``SIG'' as a prefix. For example, the POSIX signal associated with <CODE>usr2</CODE> is <CODE>SIGUSR2</CODE>.
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="manpages.html">Parent</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   | <A HREF="index.html">Root</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Generated April 12, 2004</I><BR>
+<I>Last Modified May 3, 2003</I><BR>
+<I>Comments to <A HREF="http://www.cs.uchicago.edu/people/jhr">John Reppy.</A></I><BR>
+
+<HR>
+<P>
+
+This document may be distributed freely over the internet as long as the
+copyright notice and license terms below are prominently displayed within
+every machine-readable copy.  
+
+<P>
+
+<TABLE ALIGN=CENTER WIDTH="80%" BORDER="2" CELLPADDING="5">
+<TR>
+<TD>
+<P>
+
+Copyright &copy; 2004 AT&amp;T and Lucent Technologies.
+All rights reserved.
+
+<P>
+
+Permission is granted for internet users to make one paper copy for their
+own personal use.  Further hardcopy reproduction is strictly prohibited. 
+Permission to distribute the HTML document electronically on any medium
+other than the internet must be requested from the copyright holders by
+contacting the editors.
+Printed versions of the SML Basis Manual are available from Cambridge
+University Press.
+To order, please visit
+<A HREF="http://www.cup.org">www.cup.org</A> (North America) or
+<A HREF="http://www.cup.cam.ac.uk">www.cup.cam.ac.uk</A> (outside North America).<BR>
+
+</TABLE>
+<P>
+
+<HR>
+</BODY></HTML>

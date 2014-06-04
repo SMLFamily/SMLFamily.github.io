@@ -1,0 +1,216 @@
+<!-- HTML/int-inf.html -->
+
+<!-- COPYRIGHT (c) 1997 Bell Labs, Lucent Technologies. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The IntInf structure</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF"><A NAME="top"></A>
+<H1 align=CENTER>The Standard ML Basis Library</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>IntInf</CODE> structure</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="INT_INF:SIG:SPEC"></A><CODE>INT_INF</CODE>&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+<B>structure</B>&nbsp;<A NAME="IntInf:STR:SPEC"></A><CODE>IntInf</CODE><B> :> </B>INT_INF&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+ The optional <CODE>IntInf</CODE> structure is one of the possible implementations of the <CODE><A HREF="integer.html#INTEGER:SIG:SPEC">INTEGER</A></CODE> interface.  In addition to the <CODE><A HREF="integer.html#INTEGER:SIG:SPEC">INTEGER</A></CODE> operations, it provides some operations useful for programming with arbitrarily large integers. Operations in <CODE>IntInf</CODE> that return a value of type <CODE><A HREF="integer.html#SIG:INTEGER.int:TY:SPEC">IntInf.int</A></CODE> should never raise the <CODE><A HREF="general.html#SIG:GENERAL.Overflow:EXN:SPEC">Overflow</A></CODE> exception. Note that, as it extends the <CODE><A HREF="integer.html#INTEGER:SIG:SPEC">INTEGER</A></CODE> interface,  <CODE>IntInf</CODE> defines a type <CODE>int</CODE>. Any use of this type below, unmodified by a structure, refers to the local type <CODE>int</CODE> defined in <CODE>IntInf</CODE>. 
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>include</B>&nbsp;<A HREF="integer.html#INTEGER:SIG:SPEC">INTEGER</A><BR>
+<B>val</B>&nbsp;<A NAME="SIG:INT_INF.divMod:VAL:SPEC" HREF="#SIG:INT_INF.divMod:VAL">divMod</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INT_INF.quotRem:VAL:SPEC" HREF="#SIG:INT_INF.quotRem:VAL">quotRem</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INT_INF.pow:VAL:SPEC" HREF="#SIG:INT_INF.pow:VAL">pow</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;Int.int&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INT_INF.log2:VAL:SPEC" HREF="#SIG:INT_INF.log2:VAL">log2</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;Int.int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INT_INF.orb:VAL:SPEC" HREF="#SIG:INT_INF.orb:VAL">orb</A>&nbsp;&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INT_INF.xorb:VAL:SPEC" HREF="#SIG:INT_INF.xorb:VAL">xorb</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INT_INF.andb:VAL:SPEC" HREF="#SIG:INT_INF.andb:VAL">andb</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INT_INF.notb:VAL:SPEC" HREF="#SIG:INT_INF.notb:VAL">notb</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INT_INF.\|@LT\|\|@LT\|:VAL:SPEC" HREF="#SIG:INT_INF.\|@LT\|\|@LT\|:VAL">&lt;&lt;</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;Word.word&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INT_INF.~\|@GT\|\|@GT\|:VAL:SPEC" HREF="#SIG:INT_INF.~\|@GT\|\|@GT\|:VAL">~&gt;&gt;</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;Word.word&nbsp;<B>-&gt;</B>&nbsp;int</CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="SIG:INT_INF.divMod:VAL"></A>
+<DT> <CODE>divMod (<VAR>i</VAR>, <VAR>j</VAR>) </CODE>
+<DD>
+returns the pair <CODE>(<VAR>i</VAR> <CODE><A HREF="integer.html#SIG:INTEGER.div:VAL:SPEC">div</A></CODE> <VAR>j</VAR>,
+<VAR>i</VAR> <CODE><A HREF="integer.html#SIG:INTEGER.mod:VAL:SPEC">mod</A></CODE> <VAR>j</VAR>)</CODE>, but is likely to be more efficient than computing both components separately.  It raises <CODE><A HREF="general.html#SIG:GENERAL.Div:EXN:SPEC">Div</A></CODE> if <VAR>j</VAR> = 0.  
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:INT_INF.quotRem:VAL"></A>
+<DT> <CODE>quotRem (<VAR>i</VAR>, <VAR>j</VAR>) </CODE>
+<DD>
+returns the pair <CODE>(<VAR>i</VAR> <CODE><A HREF="integer.html#SIG:INTEGER.quot:VAL:SPEC">quot</A></CODE> <VAR>j</VAR>,
+<VAR>i</VAR> <CODE><A HREF="integer.html#SIG:INTEGER.rem:VAL:SPEC">rem</A></CODE> <VAR>j</VAR>)</CODE>, but is likely to be more efficient than computing both components separately. It raises <CODE><A HREF="general.html#SIG:GENERAL.Div:EXN:SPEC">Div</A></CODE> if <VAR>j</VAR> = 0.  
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:INT_INF.pow:VAL"></A>
+<DT> <CODE>pow (<VAR>i</VAR>, <VAR>j</VAR>) </CODE>
+<DD>
+returns the result of raising <VAR>i</VAR> to the <VAR>j</VAR><SUP>(th)</SUP> power. This is well-defined when <VAR>j</VAR> &gt; 0. When <VAR>j</VAR> = 0,  <CODE><CODE><A HREF="int-inf.html#SIG:INT_INF.pow:VAL:SPEC">pow</A></CODE>(<VAR>i</VAR>, <VAR>j</VAR>)</CODE> is 1; in particular, <CODE><CODE><A HREF="int-inf.html#SIG:INT_INF.pow:VAL:SPEC">pow</A></CODE>(0, 0)</CODE> is 1. When <VAR>j</VAR> &lt; 0, we define the following exceptional cases: 
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TH ALIGN=CENTER VALIGN=TOP>
+<VAR>i</VAR>
+<TH ALIGN=CENTER VALIGN=TOP>
+<TT>pow(</TT><VAR>i</VAR><TT>,</TT><VAR>j</VAR><TT>)</TT>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+0
+<TD ALIGN=CENTER VALIGN=TOP>
+Raise <CODE><A HREF="general.html#SIG:GENERAL.Div:EXN:SPEC">Div</A></CODE>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+|<VAR>i</VAR>| = 1
+<TD ALIGN=CENTER VALIGN=TOP>
+<VAR>i</VAR><SUP>(<VAR>j</VAR>)</SUP>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+|<VAR>i</VAR>| &gt; 1
+<TD ALIGN=CENTER VALIGN=TOP>
+0
+</TABLE>
+</CENTER>
+<HR>
+ 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:INT_INF.log2:VAL"></A>
+<DT> <CODE>log2 <VAR>i</VAR> </CODE>
+<DD>
+returns the truncated base-2 logarithm of its argument, <I>i.e.</I>, the largest integer <VAR>k</VAR> for which <CODE>pow</CODE>(2, <VAR>k</VAR>) &lt;= <VAR>i</VAR>.  It raises <CODE><A HREF="general.html#SIG:GENERAL.Domain:EXN:SPEC">Domain</A></CODE> if <VAR>i</VAR> &lt;= 0 and <CODE><A HREF="general.html#SIG:GENERAL.Overflow:EXN:SPEC">Overflow</A></CODE> if the result is not representable as an <CODE><A HREF="integer.html#SIG:INTEGER.int:TY:SPEC">Int.int</A></CODE>.  
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:INT_INF.orb:VAL"></A><CODE><B>val</B>&nbsp;orb&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;xorb&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;andb&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;int</CODE>
+<DD>
+          These functions return the bit-wise OR, bit-wise exclusive OR, and bit-wise AND, respectively, of the arguments. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:INT_INF.notb:VAL"></A>
+<DT> <CODE>notb <VAR>i</VAR> </CODE>
+<DD>
+returns the bit-wise complement (NOT) of <VAR>i</VAR>. It is equivalent to <CODE>~(<VAR>i</VAR> + 1)</CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:INT_INF.\|@LT\|\|@LT\|:VAL"></A>
+<DT> <CODE>&lt;&lt; (<VAR>i</VAR>, <VAR>n</VAR>) </CODE>
+<DD>
+shifts <VAR>i</VAR> to the left by <VAR>n</VAR> bit positions, filling  in zeros from the right. When <VAR>i</VAR> and <VAR>n</VAR> are interpreted as integers, the latter non-negative, this returns (<VAR>i</VAR> * 2<SUP>(<VAR>n</VAR>)</SUP>). 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:INT_INF.~\|@GT\|\|@GT\|:VAL"></A>
+<DT> <CODE>~&gt;&gt; (<VAR>i</VAR>, <VAR>n</VAR>) </CODE>
+<DD>
+shifts <VAR>i</VAR> to the right by <VAR>n</VAR> bit positions.  When <VAR>i</VAR> and <VAR>n</VAR> are interpreted as integers, the latter non-negative, this returns <B>floor</B>(((<VAR>i</VAR> / 2<SUP>(<VAR>n</VAR>)</SUP>))).
+<BR>
+<BR>
+
+</DL>
+<H4>See Also</H4>
+<BLOCKQUOTE>
+<CODE><A HREF="integer.html#INTEGER:SIG:SPEC">INTEGER</A></CODE>, <CODE><A HREF="integer.html#LargeInt:STR:SPEC">LargeInt</A></CODE>
+</BLOCKQUOTE>
+<H4>Discussion</H4>
+<P>
+  If an implementation provides the <CODE><A HREF="int-inf.html#IntInf:STR:SPEC">IntInf</A></CODE> structure, then the type <CODE><A HREF="integer.html#SIG:INTEGER.int:TY:SPEC">LargeInt.int</A></CODE> must be the same as the type <CODE><A HREF="integer.html#SIG:INTEGER.int:TY:SPEC">IntInf.int</A></CODE>. 
+<P>
+  The bit-wise operations (<CODE>andb</CODE>, <CODE>orb</CODE>, <CODE>notb</CODE>, <CODE>&lt;&lt;</CODE>, etc.) treat the integer arguments as having 2's complement representation. In particular, if we let bit = 2<SUP>(n)</SUP>, we have, for all sufficiently large values of n, 
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><A HREF="int-inf.html#SIG:INT_INF.andb:VAL:SPEC">andb</A></CODE>(i, bit) = 0 if i &gt;= 0
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><A HREF="int-inf.html#SIG:INT_INF.andb:VAL:SPEC">andb</A></CODE>(i, bit) = bit if i &lt; 0
+</TABLE>
+</CENTER>
+<HR>
+ 
+<BLOCKQUOTE>
+<B>Rationale:</B><BR>
+
+<P>
+It is useful to have a module providing bit-wise operations on an unbounded domain. Such a module can serve as the basis for implementing sets or bit-vectors. These operations seemed to naturally fit into the specification of the <CODE>IntInf</CODE> module, rather than require an additional <CODE>WordInf</CODE> structure. 
+</BLOCKQUOTE>
+ 
+<BLOCKQUOTE>
+<B>Implementation note:</B><BR>
+
+<P>
+Having this structure as part of the basis allows implementations to provide compiler or runtime support to optimize integer representation and operations. 
+</BLOCKQUOTE>
+ 
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="manpages.html">Parent</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   | <A HREF="index.html">Root</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Generated April 12, 2004</I><BR>
+<I>Last Modified May 26, 2000</I><BR>
+<I>Comments to <A HREF="http://www.cs.uchicago.edu/people/jhr">John Reppy.</A></I><BR>
+
+<HR>
+<P>
+
+This document may be distributed freely over the internet as long as the
+copyright notice and license terms below are prominently displayed within
+every machine-readable copy.  
+
+<P>
+
+<TABLE ALIGN=CENTER WIDTH="80%" BORDER="2" CELLPADDING="5">
+<TR>
+<TD>
+<P>
+
+Copyright &copy; 2004 AT&amp;T and Lucent Technologies.
+All rights reserved.
+
+<P>
+
+Permission is granted for internet users to make one paper copy for their
+own personal use.  Further hardcopy reproduction is strictly prohibited. 
+Permission to distribute the HTML document electronically on any medium
+other than the internet must be requested from the copyright holders by
+contacting the editors.
+Printed versions of the SML Basis Manual are available from Cambridge
+University Press.
+To order, please visit
+<A HREF="http://www.cup.org">www.cup.org</A> (North America) or
+<A HREF="http://www.cup.cam.ac.uk">www.cup.cam.ac.uk</A> (outside North America).<BR>
+
+</TABLE>
+<P>
+
+<HR>
+</BODY></HTML>

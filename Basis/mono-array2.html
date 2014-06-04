@@ -1,0 +1,336 @@
+<!-- HTML/mono-array2.html -->
+
+<!-- COPYRIGHT (c) 1997 Bell Labs, Lucent Technologies. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The MONO_ARRAY2 signature</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF"><A NAME="top"></A>
+<H1 align=CENTER>The Standard ML Basis Library</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>MONO_ARRAY2</CODE> signature</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="MONO_ARRAY2:SIG:SPEC"></A><CODE>MONO_ARRAY2</CODE>&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+<B>structure</B>&nbsp;<A NAME="Word8Array2:STR:SPEC"></A><CODE>Word8Array2</CODE><B> :> </B>MONO_ARRAY2&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;vector&nbsp;=&nbsp;Word8Vector.vector<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;elem&nbsp;=&nbsp;Word8.word<BR>
+<B>structure</B>&nbsp;<A NAME="CharArray2:STR:SPEC"></A><CODE>CharArray2</CODE><B> :> </B>MONO_ARRAY2&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;vector&nbsp;=&nbsp;CharVector.vector<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;elem&nbsp;=&nbsp;char<BR>
+<B>structure</B>&nbsp;<A NAME="WideCharArray2:STR:SPEC"></A><CODE>WideCharArray2</CODE><B> :> </B>MONO_ARRAY2&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;vector&nbsp;=&nbsp;WideCharVector.vector<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;elem&nbsp;=&nbsp;WideChar.char<BR>
+<B>structure</B>&nbsp;<A NAME="BoolArray2:STR:SPEC"></A><CODE>BoolArray2</CODE><B> :> </B>MONO_ARRAY2&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;vector&nbsp;=&nbsp;BoolVector.vector<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;elem&nbsp;=&nbsp;bool<BR>
+<B>structure</B>&nbsp;<A NAME="IntArray2:STR:SPEC"></A><CODE>IntArray2</CODE><B> :> </B>MONO_ARRAY2&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;vector&nbsp;=&nbsp;IntVector.vector<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;elem&nbsp;=&nbsp;int<BR>
+<B>structure</B>&nbsp;<A NAME="WordArray2:STR:SPEC"></A><CODE>WordArray2</CODE><B> :> </B>MONO_ARRAY2&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;vector&nbsp;=&nbsp;WordVector.vector<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;elem&nbsp;=&nbsp;word<BR>
+<B>structure</B>&nbsp;<A NAME="RealArray2:STR:SPEC"></A><CODE>RealArray2</CODE><B> :> </B>MONO_ARRAY2&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;vector&nbsp;=&nbsp;RealVector.vector<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;elem&nbsp;=&nbsp;real<BR>
+<B>structure</B>&nbsp;<A NAME="LargeIntArray2:STR:SPEC"></A><CODE>LargeIntArray2</CODE><B> :> </B>MONO_ARRAY2&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;vector&nbsp;=&nbsp;<A HREF="mono-vector.html#SIG:MONO_VECTOR.vector:TY:SPEC">LargeIntVector.vector</A><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;elem&nbsp;=&nbsp;<A HREF="integer.html#SIG:INTEGER.int:TY:SPEC">LargeInt.int</A><BR>
+<B>structure</B>&nbsp;<A NAME="LargeWordArray2:STR:SPEC"></A><CODE>LargeWordArray2</CODE><B> :> </B>MONO_ARRAY2&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;vector&nbsp;=&nbsp;<A HREF="mono-vector.html#SIG:MONO_VECTOR.vector:TY:SPEC">LargeWordVector.vector</A><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;elem&nbsp;=&nbsp;<A HREF="word.html#SIG:WORD.word:TY:SPEC">LargeWord.word</A><BR>
+<B>structure</B>&nbsp;<A NAME="LargeRealArray2:STR:SPEC"></A><CODE>LargeRealArray2</CODE><B> :> </B>MONO_ARRAY2&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;vector&nbsp;=&nbsp;<A HREF="mono-vector.html#SIG:MONO_VECTOR.vector:TY:SPEC">LargeRealVector.vector</A><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;elem&nbsp;=&nbsp;<A HREF="real.html#SIG:REAL.real:TY:SPEC">LargeReal.real</A><BR>
+<B>structure</B>&nbsp;<A NAME="Int{N}Array2:STR:SPEC"></A><CODE>Int<I>&lt;N&gt;</I>Array2</CODE><B> :> </B>MONO_ARRAY2&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;vector&nbsp;=&nbsp;<A HREF="mono-vector.html#SIG:MONO_VECTOR.vector:TY:SPEC">Int{N}Vector.vector</A><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;elem&nbsp;=&nbsp;<A HREF="integer.html#SIG:INTEGER.int:TY:SPEC">Int{N}.int</A><BR>
+<B>structure</B>&nbsp;<A NAME="Word{N}Array2:STR:SPEC"></A><CODE>Word<I>&lt;N&gt;</I>Array2</CODE><B> :> </B>MONO_ARRAY2&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;vector&nbsp;=&nbsp;<A HREF="mono-vector.html#SIG:MONO_VECTOR.vector:TY:SPEC">Word{N}Vector.vector</A><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;elem&nbsp;=&nbsp;<A HREF="word.html#SIG:WORD.word:TY:SPEC">Word{N}.word</A><BR>
+<B>structure</B>&nbsp;<A NAME="Real{N}Array2:STR:SPEC"></A><CODE>Real<I>&lt;N&gt;</I>Array2</CODE><B> :> </B>MONO_ARRAY2&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;vector&nbsp;=&nbsp;<A HREF="mono-vector.html#SIG:MONO_VECTOR.vector:TY:SPEC">Real{N}Vector.vector</A><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;elem&nbsp;=&nbsp;<A HREF="real.html#SIG:REAL.real:TY:SPEC">Real{N}.real</A><BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+The <CODE>MONO_ARRAY2</CODE> signature is a generic interface to mutable 2-dimensional arrays. As usual, arrays have the equality property that two arrays are equal only if they are the same array, <I>i.e.</I>, created by the same call to a primitive array constructor such as <CODE>array</CODE>, <CODE>fromList</CODE>, etc.; otherwise they are not equal. This also holds for arrays of zero length.
+<P>
+The elements of 2-dimensional arrays are indexed by pair of integers <CODE>(i,j)</CODE> where <CODE>i</CODE> gives the row index, and <CODE>i</CODE> gives the column index. As usual, indices start at 0, with increasing indices going from left to right and, in the case of rows, from top to bottom. 
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>eqtype</B>&nbsp;<A NAME="SIG:MONO_ARRAY2.array:TY:SPEC" HREF="#SIG:MONO_ARRAY2.array:TY">array</A><BR>
+<B>type</B>&nbsp;<A NAME="SIG:MONO_ARRAY2.elem:TY:SPEC" HREF="#SIG:MONO_ARRAY2.elem:TY">elem</A><BR>
+<B>type</B>&nbsp;<A NAME="SIG:MONO_ARRAY2.vector:TY:SPEC" HREF="#SIG:MONO_ARRAY2.vector:TY">vector</A><BR>
+<B>type</B>&nbsp;<A NAME="SIG:MONO_ARRAY2.region:TY:SPEC" HREF="#SIG:MONO_ARRAY2.region:TY">region</A>&nbsp;=&nbsp;{<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;base&nbsp;<B>:</B>&nbsp;array,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;row&nbsp;<B>:</B>&nbsp;int,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;col&nbsp;<B>:</B>&nbsp;int,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nrows&nbsp;<B>:</B>&nbsp;int&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ncols&nbsp;<B>:</B>&nbsp;int&nbsp;option<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<BR>
+<B>datatype</B>&nbsp;<A NAME="SIG:MONO_ARRAY2.traversal:TY:SPEC" HREF="#SIG:MONO_ARRAY2.traversal:TY">traversal</A>&nbsp;=&nbsp;<B>datatype</B>&nbsp;<A HREF="array2.html#SIG:ARRAY2.traversal:TY:SPEC">Array2.traversal</A><BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MONO_ARRAY2.array:VAL:SPEC" HREF="#SIG:MONO_ARRAY2.array:VAL">array</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>*</B>&nbsp;elem&nbsp;<B>-&gt;</B>&nbsp;array<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MONO_ARRAY2.fromList:VAL:SPEC" HREF="#SIG:MONO_ARRAY2.fromList:VAL">fromList</A>&nbsp;<B>:</B>&nbsp;elem&nbsp;list&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;array<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MONO_ARRAY2.tabulate:VAL:SPEC" HREF="#SIG:MONO_ARRAY2.tabulate:VAL">tabulate</A>&nbsp;<B>:</B>&nbsp;traversal<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>*</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;elem)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;array<BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MONO_ARRAY2.sub:VAL:SPEC" HREF="#SIG:MONO_ARRAY2.sub:VAL">sub</A>&nbsp;<B>:</B>&nbsp;array&nbsp;<B>*</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;elem<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MONO_ARRAY2.update:VAL:SPEC" HREF="#SIG:MONO_ARRAY2.update:VAL">update</A>&nbsp;<B>:</B>&nbsp;array&nbsp;<B>*</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>*</B>&nbsp;elem&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MONO_ARRAY2.dimensions:VAL:SPEC" HREF="#SIG:MONO_ARRAY2.dimensions:VAL">dimensions</A>&nbsp;<B>:</B>&nbsp;array&nbsp;<B>-&gt;</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MONO_ARRAY2.nCols:VAL:SPEC" HREF="#SIG:MONO_ARRAY2.nCols:VAL">nCols</A>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;array&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MONO_ARRAY2.nRows:VAL:SPEC" HREF="#SIG:MONO_ARRAY2.nRows:VAL">nRows</A>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;array&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MONO_ARRAY2.row:VAL:SPEC" HREF="#SIG:MONO_ARRAY2.row:VAL">row</A>&nbsp;<B>:</B>&nbsp;array&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;vector<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MONO_ARRAY2.column:VAL:SPEC" HREF="#SIG:MONO_ARRAY2.column:VAL">column</A>&nbsp;<B>:</B>&nbsp;array&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;vector<BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MONO_ARRAY2.copy:VAL:SPEC" HREF="#SIG:MONO_ARRAY2.copy:VAL">copy</A>&nbsp;<B>:</B>&nbsp;{<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;src&nbsp;<B>:</B>&nbsp;region,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dst&nbsp;<B>:</B>&nbsp;array,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dst_row&nbsp;<B>:</B>&nbsp;int,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dst_col&nbsp;<B>:</B>&nbsp;int<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MONO_ARRAY2.appi:VAL:SPEC" HREF="#SIG:MONO_ARRAY2.appi:VAL">appi</A>&nbsp;<B>:</B>&nbsp;traversal<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>*</B>&nbsp;elem&nbsp;<B>-&gt;</B>&nbsp;unit)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;region&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MONO_ARRAY2.app:VAL:SPEC" HREF="#SIG:MONO_ARRAY2.app:VAL">app</A>&nbsp;&nbsp;<B>:</B>&nbsp;traversal&nbsp;<B>-&gt;</B>&nbsp;(elem&nbsp;<B>-&gt;</B>&nbsp;unit)&nbsp;<B>-&gt;</B>&nbsp;array&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MONO_ARRAY2.foldi:VAL:SPEC" HREF="#SIG:MONO_ARRAY2.foldi:VAL">foldi</A>&nbsp;<B>:</B>&nbsp;traversal<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>*</B>&nbsp;elem&nbsp;<B>*</B>&nbsp;<I>'b</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I>)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I>&nbsp;<B>-&gt;</B>&nbsp;region&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I><BR>
+<B>val</B>&nbsp;<A NAME="SIG:MONO_ARRAY2.fold:VAL:SPEC" HREF="#SIG:MONO_ARRAY2.fold:VAL">fold</A>&nbsp;&nbsp;<B>:</B>&nbsp;traversal<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;(elem&nbsp;<B>*</B>&nbsp;<I>'b</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I>)&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I>&nbsp;<B>-&gt;</B>&nbsp;array&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I><BR>
+<B>val</B>&nbsp;<A NAME="SIG:MONO_ARRAY2.modifyi:VAL:SPEC" HREF="#SIG:MONO_ARRAY2.modifyi:VAL">modifyi</A>&nbsp;<B>:</B>&nbsp;traversal<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;(int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>*</B>&nbsp;elem&nbsp;<B>-&gt;</B>&nbsp;elem)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;region&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MONO_ARRAY2.modify:VAL:SPEC" HREF="#SIG:MONO_ARRAY2.modify:VAL">modify</A>&nbsp;&nbsp;<B>:</B>&nbsp;traversal&nbsp;<B>-&gt;</B>&nbsp;(elem&nbsp;<B>-&gt;</B>&nbsp;elem)&nbsp;<B>-&gt;</B>&nbsp;array&nbsp;<B>-&gt;</B>&nbsp;unit</CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="SIG:MONO_ARRAY2.vector:TY"></A><CODE><B>type</B>&nbsp;vector</CODE>
+<DD>
+      The type of one-dimensional immutable vectors of the underlying element type. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:MONO_ARRAY2.region:TY"></A><CODE><B>type</B>&nbsp;region&nbsp;=&nbsp;{<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;base&nbsp;<B>:</B>&nbsp;array,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;row&nbsp;<B>:</B>&nbsp;int,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;col&nbsp;<B>:</B>&nbsp;int,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nrows&nbsp;<B>:</B>&nbsp;int&nbsp;option,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ncols&nbsp;<B>:</B>&nbsp;int&nbsp;option<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</CODE>
+<DD>
+      This type specifies a rectangular subregion of a 2-dimensional array. If <CODE>ncols = <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">SOME</A></CODE>(<VAR>w</VAR>)</CODE>, the region includes only those elements in columns with indices in the range from <VAR>w</VAR> to <VAR>col</VAR> + (<VAR>w</VAR> - 1), inclusively. If <CODE>ncols = <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A></CODE></CODE>, the region includes only those elements lying on or to the right of column <VAR>col</VAR>. A similar interpretation holds for the <CODE>row</CODE> and <CODE>nrows</CODE> fields. Thus, the region corresponds to all those elements with position (i,j) such that i lies in the specified range of rows and j lies in the specified range of columns. 
+<P>
+      A region <VAR>reg</VAR> is said to be <EM>valid</EM> if it denotes a legal subarray of its base array. More specifically, <VAR>reg</VAR> is <EM>valid</EM> if 
+<BLOCKQUOTE>
+0 &lt;= <CODE>#row</CODE> <VAR>reg</VAR> &lt;= <CODE>nRows</CODE> (#base <VAR>reg</VAR>) 
+</BLOCKQUOTE>
+ when <CODE>#nrows <VAR>reg</VAR> = NONE</CODE>, or 
+<BLOCKQUOTE>
+0 &lt;= <CODE>#row</CODE> <VAR>reg</VAR> &lt;= (<CODE>#row</CODE> <VAR>reg</VAR>)+<VAR>nr</VAR> &lt;= <CODE>nRows</CODE> (#base <VAR>reg</VAR>) 
+</BLOCKQUOTE>
+ when <CODE>#nrows <VAR>reg</VAR> = SOME(<VAR>nr</VAR>)</CODE>, and the analogous conditions hold for columns. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:MONO_ARRAY2.traversal:TY"></A><CODE><B>datatype</B>&nbsp;traversal&nbsp;=&nbsp;<B>datatype</B>&nbsp;<A HREF="array2.html#SIG:ARRAY2.traversal:TY:SPEC">Array2.traversal</A></CODE>
+<DD>
+      This type specifies ways of traversing an array or region. For more complete information, see the entry for <CODE><A HREF="array2.html#SIG:ARRAY2.traversal:TY:SPEC">Array2.traversal</A></CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:MONO_ARRAY2.array:VAL"></A>
+<DT> <CODE>array (<VAR>r</VAR>, <VAR>c</VAR>, <VAR>init</VAR>) </CODE>
+<DD>
+creates a new array with <VAR>r</VAR> rows and <VAR>c</VAR> columns, with each element initialized to the value <VAR>init</VAR>.  If <VAR>r</VAR> &lt; 0, <VAR>c</VAR> &lt; 0 or the resulting array size is too large, the <CODE><A HREF="general.html#SIG:GENERAL.Size:EXN:SPEC">Size</A></CODE> exception is raised. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:MONO_ARRAY2.fromList:VAL"></A>
+<DT> <CODE>fromList <VAR>l</VAR> </CODE>
+<DD>
+creates a new array from a list of a list of elements. The elements should be presented in row major form, <I>i.e.</I>, <CODE>hd <VAR>l</VAR></CODE> gives the first row, <CODE>hd (tl <VAR>l</VAR>)</CODE> gives the second row, etc. It raises the <CODE><A HREF="general.html#SIG:GENERAL.Size:EXN:SPEC">Size</A></CODE> exception if the the resulting array size is too large, or if the lists in <VAR>l</VAR> do not all have the same length. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:MONO_ARRAY2.tabulate:VAL"></A>
+<DT> <CODE>tabulate tr (<VAR>r</VAR>, <VAR>c</VAR>, <VAR>f</VAR>) </CODE>
+<DD>
+creates a new array with <VAR>r</VAR> rows and <VAR>c</VAR> columns, with the (<VAR>i</VAR>,<VAR>j</VAR>)<SUP>(th)</SUP> element initialized to <CODE><VAR>f</VAR> (<VAR>i</VAR>,<VAR>j</VAR>)</CODE>. The elements are initialized in the traversal order specified by <VAR>tr</VAR>.  If <VAR>r</VAR> &lt; 0, <VAR>c</VAR> &lt; 0 or the resulting array size is too large, the <CODE><A HREF="general.html#SIG:GENERAL.Size:EXN:SPEC">Size</A></CODE> exception is raised. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:MONO_ARRAY2.sub:VAL"></A>
+<DT> <CODE>sub (<VAR>arr</VAR>, <VAR>i</VAR>, <VAR>j</VAR>) </CODE>
+<DD>
+returns the (<VAR>i</VAR>,<VAR>j</VAR>)<SUP>(th)</SUP> element of the array <VAR>arr</VAR>.  If <VAR>i</VAR> &lt; 0, <VAR>j</VAR> &lt; 0, <CODE>nRows</CODE> <VAR>arr</VAR> &lt;= <VAR>i</VAR> or <CODE>nCols</CODE> <VAR>arr</VAR> &lt;= <VAR>j</VAR>, then  the <CODE><A HREF="general.html#SIG:GENERAL.Subscript:EXN:SPEC">Subscript</A></CODE> exception is raised. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:MONO_ARRAY2.update:VAL"></A>
+<DT> <CODE>update (<VAR>arr</VAR>, <VAR>i</VAR>, <VAR>j</VAR>, <VAR>a</VAR>) </CODE>
+<DD>
+sets the (<VAR>i</VAR>,<VAR>j</VAR>)<SUP>(th)</SUP> element of the array <VAR>arr</VAR> to <VAR>a</VAR>.  If <VAR>i</VAR> &lt; 0, <VAR>j</VAR> &lt; 0, <CODE>nRows</CODE> <VAR>arr</VAR> &lt;= <VAR>i</VAR> or <CODE>nCols</CODE> <VAR>arr</VAR> &lt;= <VAR>j</VAR>, then  the <CODE><A HREF="general.html#SIG:GENERAL.Subscript:EXN:SPEC">Subscript</A></CODE> exception is raised. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:MONO_ARRAY2.dimensions:VAL"></A>
+<DT> <CODE>dimensions <VAR>arr</VAR> </CODE>
+<DT> <CODE>          nCols <VAR>arr</VAR> </CODE>
+<DT> <CODE>          nRows <VAR>arr</VAR> </CODE>
+<DD>
+These return size information concerning the array <VAR>arr</VAR>. <CODE>nCols</CODE> returns the number of columns, <CODE>nRows</CODE> returns the number of rows and <CODE>dimension</CODE> returns a pair containing the number of rows and columns of the array. The functions <CODE>nRows</CODE> and <CODE>nCols</CODE> are respectively equivalent to <CODE>#1 o dimensions</CODE> and <CODE>#2 o dimensions</CODE> 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:MONO_ARRAY2.row:VAL"></A>
+<DT> <CODE>row (<VAR>arr</VAR>, <VAR>i</VAR>) </CODE>
+<DD>
+returns row <VAR>i</VAR> of <VAR>arr</VAR>. It raises <CODE><A HREF="general.html#SIG:GENERAL.Subscript:EXN:SPEC">Subscript</A></CODE> if <VAR>i</VAR> &lt; 0 or <CODE>nRows</CODE> <VAR>arr</VAR> &lt;= <VAR>i</VAR>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:MONO_ARRAY2.column:VAL"></A>
+<DT> <CODE>column (<VAR>arr</VAR>, <VAR>j</VAR>) </CODE>
+<DD>
+returns column <VAR>j</VAR> of <VAR>arr</VAR>. It raises <CODE><A HREF="general.html#SIG:GENERAL.Subscript:EXN:SPEC">Subscript</A></CODE> if <VAR>j</VAR> &lt; 0 or <CODE>nCols</CODE> <VAR>arr</VAR> &lt;= <VAR>j</VAR>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:MONO_ARRAY2.copy:VAL"></A>
+<DT> <CODE>copy {<VAR>src</VAR>, <VAR>dst</VAR>, <VAR>dst_row</VAR>, <VAR>dst_col</VAR>} </CODE>
+<DD>
+copies the region <VAR>src</VAR> into the array <VAR>dst</VAR>, with the  (<CODE>#row</CODE> <VAR>src</VAR>,<CODE>#col</CODE> <VAR>src</VAR>)<SUP>(th)</SUP> element being copied into the destination array at position (<VAR>dst_row</VAR>,<VAR>dst_col</VAR>).  If the source region is not valid,  then the <CODE><A HREF="general.html#SIG:GENERAL.Subscript:EXN:SPEC">Subscript</A></CODE> exception is raised. Similarly, if the derived destination region (the source region <VAR>src</VAR> translated to (<VAR>dst_row</VAR>,<VAR>dst_col</VAR>)) is not valid in <VAR>dst</VAR>,  then the <CODE><A HREF="general.html#SIG:GENERAL.Subscript:EXN:SPEC">Subscript</A></CODE> exception is raised. 
+<BLOCKQUOTE>
+<B>Implementation note:</B><BR>
+
+<P>
+The <CODE>copy</CODE> function must correctly handle the case in which <VAR>src</VAR> and <VAR>dst</VAR> are equal, and the source and destination regions overlap. 
+</BLOCKQUOTE>
+ 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:MONO_ARRAY2.appi:VAL"></A>
+<DT> <CODE>appi <VAR>tr</VAR> <VAR>f</VAR> <VAR>reg</VAR> </CODE>
+<DT> <CODE>          app <VAR>tr</VAR> <VAR>f</VAR> <VAR>arr</VAR> </CODE>
+<DD>
+These apply the function <VAR>f</VAR> to the elements of an array in the order specified by <VAR>tr</VAR>.  The more general <CODE><A HREF="mono-array2.html#SIG:MONO_ARRAY2.appi:VAL:SPEC">appi</A></CODE> function applies <VAR>f</VAR>  to the elements of the region  <VAR>reg</VAR> and supplies both the element and the element's coordinates in the base array to the function <VAR>f</VAR>.  If <VAR>reg</VAR> is not valid, then  the exception <CODE><A HREF="general.html#SIG:GENERAL.Subscript:EXN:SPEC">Subscript</A></CODE> is raised.  
+<P>
+ The function <CODE>app</CODE> applies <VAR>f</VAR> to the whole array and  does not supply the element's coordinates to <VAR>f</VAR>.  Thus the expression <CODE>app <VAR>tr</VAR> <VAR>f</VAR> <VAR>arr</VAR></CODE>  is equivalent to: 
+<PRE>
+appi <VAR>tr</VAR> (<VAR>f</VAR> o #3) (<VAR>arr</VAR>, {row=0,col=0,nrows=NONE,ncols=NONE})
+</PRE>
+ 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:MONO_ARRAY2.foldi:VAL"></A>
+<DT> <CODE>foldi <VAR>tr</VAR> <VAR>f</VAR> <VAR>init</VAR> <VAR>reg</VAR> </CODE>
+<DT> <CODE>          fold <VAR>tr</VAR> <VAR>f</VAR> <VAR>init</VAR> <VAR>arr</VAR> </CODE>
+<DD>
+These fold the function <VAR>f</VAR> over the elements of an array <VAR>arr</VAR>, traversing the elements in <VAR>tr</VAR> order, and using  the value <VAR>init</VAR> as the initial value.  The more general <CODE><A HREF="mono-array2.html#SIG:MONO_ARRAY2.foldi:VAL:SPEC">foldi</A></CODE> function applies <VAR>f</VAR>  to the elements of the region  <VAR>reg</VAR> and supplies both the element and the element's coordinates in the base array to the function <VAR>f</VAR>.  If <VAR>reg</VAR> is not valid, then  the exception <CODE><A HREF="general.html#SIG:GENERAL.Subscript:EXN:SPEC">Subscript</A></CODE> is raised.  
+<P>
+ The function <CODE>fold</CODE> applies <VAR>f</VAR> to the whole array and  does not supply the element's coordinates to <VAR>f</VAR>.  Thus the expression <CODE>fold <VAR>tr</VAR> <VAR>f</VAR> <VAR>init</VAR> <VAR>arr</VAR></CODE>  is equivalent to:  
+<PRE>
+	  foldi <VAR>tr</VAR> (fn (_,_,a,b) =&gt; <VAR>f</VAR> (a,b)) <VAR>init</VAR> 
+            (<VAR>arr</VAR>, {row=0, col=0, nrows=NONE, ncols=NONE})
+	  
+</PRE>
+ 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:MONO_ARRAY2.modifyi:VAL"></A>
+<DT> <CODE>modifyi <VAR>tr</VAR> <VAR>f</VAR> <VAR>reg</VAR> </CODE>
+<DT> <CODE>          modify <VAR>tr</VAR> <VAR>f</VAR> <VAR>arr</VAR> </CODE>
+<DD>
+These apply the function <VAR>f</VAR> to the elements of an array in the order specified by <VAR>tr</VAR>, and replace each element with the result of <VAR>f</VAR>.  The more general <CODE><A HREF="mono-array2.html#SIG:MONO_ARRAY2.modifyi:VAL:SPEC">modifyi</A></CODE> function applies <VAR>f</VAR>  to the elements of the region  <VAR>reg</VAR> and supplies both the element and the element's coordinates in the base array to the function <VAR>f</VAR>.  If <VAR>reg</VAR> is not valid, then  the exception <CODE><A HREF="general.html#SIG:GENERAL.Subscript:EXN:SPEC">Subscript</A></CODE> is raised.  
+<P>
+ The function <CODE>modify</CODE> applies <VAR>f</VAR> to the whole array and  does not supply the element's coordinates to <VAR>f</VAR>.  Thus the expression <CODE>modify <VAR>f</VAR> <VAR>arr</VAR></CODE>  is equivalent to: 
+<PRE>
+modifyi (<VAR>f</VAR> o #3) (<VAR>arr</VAR>, {row=0,col=0,nrows=NONE,ncols=NONE})
+</PRE>
+ 
+<BR>
+<BR>
+
+</DL>
+<H4>See Also</H4>
+<BLOCKQUOTE>
+<CODE><A HREF="array2.html#Array2:STR:SPEC">Array2</A></CODE>
+</BLOCKQUOTE>
+<H4>Discussion</H4>
+<P>
+If an implementation provides any structure matching  <CODE>MONO_ARRAY2</CODE>, it must also supply the structure  <CODE><A HREF="array2.html#Array2:STR:SPEC">Array2</A></CODE> and its signature <CODE><A HREF="array2.html#ARRAY2:SIG:SPEC">ARRAY2</A></CODE>.
+<P>
+Note that the indices passed to argument functions in  <CODE><A HREF="array2.html#SIG:ARRAY2.appi:VAL:SPEC">appi</A></CODE>, <CODE><A HREF="array2.html#SIG:ARRAY2.foldi:VAL:SPEC">foldi</A></CODE>, and <CODE><A HREF="array2.html#SIG:ARRAY2.modifyi:VAL:SPEC">modifyi</A></CODE> are with respect to the underlying matrix and not based on the region. This is different from the convention for the analogous functions on 1-dimensional slices. 
+<BLOCKQUOTE>
+<B>Implementation note:</B><BR>
+
+<P>
+Unlike one-dimensional types, the signature for 2-dimensional arrays does not specify any bounds on possible arrays. Implementations should support a total number of elements that is at least as large as the total number of elements in the corresponding single dimension array type.
+</BLOCKQUOTE>
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="manpages.html">Parent</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   | <A HREF="index.html">Root</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Generated April 12, 2004</I><BR>
+<I>Last Modified May 21, 2000</I><BR>
+<I>Comments to <A HREF="http://www.cs.uchicago.edu/people/jhr">John Reppy.</A></I><BR>
+
+<HR>
+<P>
+
+This document may be distributed freely over the internet as long as the
+copyright notice and license terms below are prominently displayed within
+every machine-readable copy.  
+
+<P>
+
+<TABLE ALIGN=CENTER WIDTH="80%" BORDER="2" CELLPADDING="5">
+<TR>
+<TD>
+<P>
+
+Copyright &copy; 2004 AT&amp;T and Lucent Technologies.
+All rights reserved.
+
+<P>
+
+Permission is granted for internet users to make one paper copy for their
+own personal use.  Further hardcopy reproduction is strictly prohibited. 
+Permission to distribute the HTML document electronically on any medium
+other than the internet must be requested from the copyright holders by
+contacting the editors.
+Printed versions of the SML Basis Manual are available from Cambridge
+University Press.
+To order, please visit
+<A HREF="http://www.cup.org">www.cup.org</A> (North America) or
+<A HREF="http://www.cup.cam.ac.uk">www.cup.cam.ac.uk</A> (outside North America).<BR>
+
+</TABLE>
+<P>
+
+<HR>
+</BODY></HTML>

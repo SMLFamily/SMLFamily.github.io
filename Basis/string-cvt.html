@@ -1,0 +1,294 @@
+<!-- HTML/string-cvt.html -->
+
+<!-- COPYRIGHT (c) 1997 Bell Labs, Lucent Technologies. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The StringCvt structure</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF"><A NAME="top"></A>
+<H1 align=CENTER>The Standard ML Basis Library</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>StringCvt</CODE> structure</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="STRING_CVT:SIG:SPEC"></A><CODE>STRING_CVT</CODE><BR>
+<B>structure</B>&nbsp;<A NAME="StringCvt:STR:SPEC"></A><CODE>StringCvt</CODE><B> :> </B>STRING_CVT<BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+The <CODE>StringCvt</CODE> structure provides types and functions for handling the conversion between strings and values of various basic types. 
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>datatype</B>&nbsp;<A NAME="SIG:STRING_CVT.radix:TY:SPEC" HREF="#SIG:STRING_CVT.radix:TY">radix</A>&nbsp;=&nbsp;<A NAME="SIG:STRING_CVT.BIN:TY:SPEC" HREF="#SIG:STRING_CVT.BIN:TY">BIN</A>&nbsp;|&nbsp;<A NAME="SIG:STRING_CVT.OCT:TY:SPEC" HREF="#SIG:STRING_CVT.OCT:TY">OCT</A>&nbsp;|&nbsp;<A NAME="SIG:STRING_CVT.DEC:TY:SPEC" HREF="#SIG:STRING_CVT.DEC:TY">DEC</A>&nbsp;|&nbsp;<A NAME="SIG:STRING_CVT.HEX:TY:SPEC" HREF="#SIG:STRING_CVT.HEX:TY">HEX</A><BR>
+<B>datatype</B>&nbsp;<A NAME="SIG:STRING_CVT.realfmt:TY:SPEC" HREF="#SIG:STRING_CVT.realfmt:TY">realfmt</A><BR>
+&nbsp;&nbsp;=&nbsp;<A NAME="SIG:STRING_CVT.SCI:TY:SPEC" HREF="#SIG:STRING_CVT.SCI:TY">SCI</A>&nbsp;<B>of</B>&nbsp;int&nbsp;option<BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="SIG:STRING_CVT.FIX:TY:SPEC" HREF="#SIG:STRING_CVT.FIX:TY">FIX</A>&nbsp;<B>of</B>&nbsp;int&nbsp;option<BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="SIG:STRING_CVT.GEN:TY:SPEC" HREF="#SIG:STRING_CVT.GEN:TY">GEN</A>&nbsp;<B>of</B>&nbsp;int&nbsp;option<BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="SIG:STRING_CVT.EXACT:TY:SPEC" HREF="#SIG:STRING_CVT.EXACT:TY">EXACT</A><BR>
+<B>type</B>&nbsp;(<I>'a</I>,<I>'b</I>)&nbsp;<A NAME="SIG:STRING_CVT.reader:TY:SPEC" HREF="#SIG:STRING_CVT.reader:TY">reader</A>&nbsp;=&nbsp;<I>'b</I>&nbsp;<B>-&gt;</B>&nbsp;(<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'b</I>)&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="SIG:STRING_CVT.padLeft:VAL:SPEC" HREF="#SIG:STRING_CVT.padLeft:VAL">padLeft</A>&nbsp;&nbsp;<B>:</B>&nbsp;char&nbsp;<B>-&gt;</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="SIG:STRING_CVT.padRight:VAL:SPEC" HREF="#SIG:STRING_CVT.padRight:VAL">padRight</A>&nbsp;<B>:</B>&nbsp;char&nbsp;<B>-&gt;</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="SIG:STRING_CVT.splitl:VAL:SPEC" HREF="#SIG:STRING_CVT.splitl:VAL">splitl</A>&nbsp;<B>:</B>&nbsp;(char&nbsp;<B>-&gt;</B>&nbsp;bool)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;(char,&nbsp;<I>'a</I>)&nbsp;reader&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;string&nbsp;<B>*</B>&nbsp;<I>'a</I><BR>
+<B>val</B>&nbsp;<A NAME="SIG:STRING_CVT.takel:VAL:SPEC" HREF="#SIG:STRING_CVT.takel:VAL">takel</A>&nbsp;<B>:</B>&nbsp;(char&nbsp;<B>-&gt;</B>&nbsp;bool)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;(char,&nbsp;<I>'a</I>)&nbsp;reader&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="SIG:STRING_CVT.dropl:VAL:SPEC" HREF="#SIG:STRING_CVT.dropl:VAL">dropl</A>&nbsp;<B>:</B>&nbsp;(char&nbsp;<B>-&gt;</B>&nbsp;bool)&nbsp;<B>-&gt;</B>&nbsp;(char,&nbsp;<I>'a</I>)&nbsp;reader&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I><BR>
+<B>val</B>&nbsp;<A NAME="SIG:STRING_CVT.skipWS:VAL:SPEC" HREF="#SIG:STRING_CVT.skipWS:VAL">skipWS</A>&nbsp;<B>:</B>&nbsp;(char,&nbsp;<I>'a</I>)&nbsp;reader&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I><BR>
+<B>type</B>&nbsp;<A NAME="SIG:STRING_CVT.cs:TY:SPEC" HREF="#SIG:STRING_CVT.cs:TY">cs</A><BR>
+<B>val</B>&nbsp;<A NAME="SIG:STRING_CVT.scanString:VAL:SPEC" HREF="#SIG:STRING_CVT.scanString:VAL">scanString</A>&nbsp;<B>:</B>&nbsp;((char,&nbsp;cs)&nbsp;reader&nbsp;<B>-&gt;</B>&nbsp;(<I>'a</I>,&nbsp;cs)&nbsp;reader)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;option</CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="SIG:STRING_CVT.radix:TY"></A><CODE><B>datatype</B>&nbsp;radix&nbsp;=&nbsp;BIN&nbsp;|&nbsp;OCT&nbsp;|&nbsp;DEC&nbsp;|&nbsp;HEX</CODE>
+<DD>
+      The values of type <CODE>radix</CODE> are used to specify the radix of a representation of an integer, corresponding to the bases 2, 8, 10, and 16, respectively. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:STRING_CVT.realfmt:TY"></A><CODE><B>datatype</B>&nbsp;realfmt<BR>
+&nbsp;&nbsp;=&nbsp;SCI&nbsp;<B>of</B>&nbsp;int&nbsp;option<BR>
+&nbsp;&nbsp;|&nbsp;FIX&nbsp;<B>of</B>&nbsp;int&nbsp;option<BR>
+&nbsp;&nbsp;|&nbsp;GEN&nbsp;<B>of</B>&nbsp;int&nbsp;option<BR>
+&nbsp;&nbsp;|&nbsp;EXACT</CODE>
+<DD>
+      Values of type <CODE>realfmt</CODE> are used to specify the format of a string representation for a real or floating-point number. 
+<P>
+      The first corresponds to scientific representation: 
+<BLOCKQUOTE>
+[<TT>~</TT>]<SUP>?</SUP>[<TT>0</TT>-<TT>9</TT>]<TT>.</TT>[<TT>0</TT>-<TT>9</TT>]<SUP>+</SUP><SUP>?</SUP><TT>E</TT>[<TT>0</TT>-<TT>9</TT>]<SUP>+</SUP>
+</BLOCKQUOTE>
+ where there is always one digit before the decimal point, nonzero if the number is nonzero. The optional integer value specifies the number of decimal digits to appear after the decimal point, with 6 being the default. In particular, if 0 is specified, there should be no fractional part. The exponent is zero if the value is zero. 
+<P>
+      The second corresponds to a fixed-point representation: 
+<BLOCKQUOTE>
+[<TT>~</TT>]<SUP>?</SUP>[<TT>0</TT>-<TT>9</TT>]<SUP>+</SUP><TT>.</TT>[<TT>0</TT>-<TT>9</TT>]<SUP>+</SUP><SUP>?</SUP>
+</BLOCKQUOTE>
+ where there is always at least one digit before the decimal point. The optional integer value specifies the number of decimal digits to appear after the decimal point, with 6 being the default. In particular, if 0 is specified, there should be no fractional part. 
+<P>
+      The third constructor <CODE><A HREF="string-cvt.html#SIG:STRING_CVT.realfmt:TY:SPEC">GEN</A></CODE> allows a formatting function to use either the scientific or fixed-point notation, whichever is shorter, breaking ties in favor of fixed-point. The optional integer value specifies the maximum number of significant digits used, with 12 the default. The string should display as many significant digits as possible, subject to this maximum. There should not be any trailing zeros after the decimal point. There should not be a decimal point unless a fractional part is included. 
+<P>
+      <B>[FLOAT]</B> provides a reference implementation for this conversion. 
+<P>
+      The fourth constructor <CODE><A HREF="string-cvt.html#SIG:STRING_CVT.realfmt:TY:SPEC">EXACT</A></CODE> specifies that the string should represent the real using an exact decimal representation. The string contains enough information in order to reconstruct a semantically equivalent real value using <CODE>REAL.fromDecimal o valOf o IEEEReal.fromString</CODE>. Refer to the description of <CODE><A HREF="ieee-float.html#SIG:IEEE_REAL.toString:VAL:SPEC">IEEEReal.toString</A></CODE> for more precise information concerning this format. 
+<P>
+      In all cases, positive and negative infinities are converted to <CODE>&quot;inf&quot;</CODE> and <CODE>&quot;~inf&quot;</CODE>, respectively, and NaN values are converted to the string <CODE>&quot;nan&quot;</CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:STRING_CVT.reader:TY"></A><CODE><B>type</B>&nbsp;(<I>'a</I>,<I>'b</I>)&nbsp;reader&nbsp;=&nbsp;<I>'b</I>&nbsp;<B>-&gt;</B>&nbsp;(<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'b</I>)&nbsp;option</CODE>
+<DD>
+        The type of a reader producing values of type <VAR>'a</VAR> from a stream of type <VAR>'b</VAR>. A return value of <CODE><CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">SOME</A></CODE>(<VAR>a</VAR>,<VAR>b</VAR>)</CODE> corresponds to a value <VAR>a</VAR> scanned from the stream, plus the remainder <VAR>b</VAR> of the stream. A return value of <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A></CODE> indicates that no value of the correct type could be scanned from the prefix of the stream.
+<P>
+The <CODE><A HREF="string-cvt.html#SIG:STRING_CVT.reader:TY:SPEC">reader</A></CODE> type is designed for use with a stream or functional view of I/O. Scanning functions using the <CODE><A HREF="string-cvt.html#SIG:STRING_CVT.reader:TY:SPEC">reader</A></CODE> type, such as <CODE><A HREF="string-cvt.html#SIG:STRING_CVT.skipWS:VAL:SPEC">skipWS</A></CODE>, <CODE><A HREF="string-cvt.html#SIG:STRING_CVT.splitl:VAL:SPEC">splitl</A></CODE>, and <CODE><A HREF="integer.html#SIG:INTEGER.scan:VAL:SPEC">Int.scan</A></CODE>, will often use lookahead characters to determine when to stop scanning. If the character source (<CODE>'b</CODE> in an <CODE>('a,'b) reader</CODE>) is imperative, the lookahead characters will be lost to any subsequent scanning of the source. One mechanism for combining imperative I/O with the standard scanning functions is provided by the <CODE><A HREF="text-io.html#SIG:TEXT_IO.scanStream:VAL:SPEC">TextIO.scanStream</A></CODE> function. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:STRING_CVT.padLeft:VAL"></A>
+<DT> <CODE>padLeft <VAR>c</VAR> <VAR>i</VAR> <VAR>s</VAR> </CODE>
+<DT> <CODE>          padRight <VAR>c</VAR> <VAR>i</VAR> <VAR>s</VAR> </CODE>
+<DD>
+These return <VAR>s</VAR> padded, on the left or right, respectively, with <VAR>i</VAR> - |<VAR>s</VAR>| copies of the character <VAR>c</VAR>. If |<VAR>s</VAR>| &gt;= <VAR>i</VAR>, they just return the string <VAR>s</VAR>. In other words, these functions right and left-justify <VAR>s</VAR> in a field <VAR>i</VAR> characters wide, never trimming off any part of <VAR>s</VAR>. Note that if <VAR>i</VAR> &lt;= 0, <VAR>s</VAR> is returned. These functions raise <CODE><A HREF="general.html#SIG:GENERAL.Size:EXN:SPEC">Size</A></CODE> if the size of the resulting string would be greater than <CODE><A HREF="string.html#SIG:STRING.maxSize:VAL:SPEC">String.maxSize</A></CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:STRING_CVT.splitl:VAL"></A>
+<DT> <CODE>splitl <VAR>f</VAR> <VAR>rdr</VAR> <VAR>src</VAR> </CODE>
+<DD>
+returns <CODE>(<VAR>pref</VAR>, <VAR>src'</VAR>)</CODE> where <VAR>pref</VAR> is the longest prefix (left substring) of <VAR>src</VAR>, as produced by the character reader <VAR>rdr</VAR>, all of whose characters satisfy <VAR>f</VAR>, and <VAR>src'</VAR> is the remainder of <VAR>src</VAR>. Thus, the first character retrievable from <VAR>src'</VAR> is the leftmost character not satisfying <VAR>f</VAR>.
+<P>
+<CODE><A HREF="string-cvt.html#SIG:STRING_CVT.splitl:VAL:SPEC">splitl</A></CODE> can be used with scanning functions such as <CODE><A HREF="string-cvt.html#SIG:STRING_CVT.scanString:VAL:SPEC">scanString</A></CODE> by composing it with <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">SOME</A></CODE>; <I>e.g.</I>, <CODE>scanString (fn rdr =&gt; SOME o (splitl f rdr))</CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:STRING_CVT.takel:VAL"></A>
+<DT> <CODE>takel <VAR>f</VAR> <VAR>rdr</VAR> <VAR>src</VAR> </CODE>
+<DT> <CODE>          dropl <VAR>f</VAR> <VAR>rdr</VAR> <VAR>src</VAR> </CODE>
+<DD>
+These routines scan the source <VAR>src</VAR> for the first character not satisfying the predicate <VAR>f</VAR>. The function <CODE><A HREF="string-cvt.html#SIG:STRING_CVT.dropl:VAL:SPEC">dropl</A></CODE> drops the maximal prefix consisting of characters satisfying the predicate, returning the rest of the source, while <CODE><A HREF="string-cvt.html#SIG:STRING_CVT.takel:VAL:SPEC">takel</A></CODE> returns the maximal prefix consisting of characters satisfying the predicate. These can be defined in terms of <CODE><A HREF="string-cvt.html#SIG:STRING_CVT.splitl:VAL:SPEC">splitl</A></CODE>: 
+<PRE>
+<A HREF="string-cvt.html#SIG:STRING_CVT.takel:VAL:SPEC">takel</A> <VAR>f</VAR> <VAR>rdr</VAR> <VAR>s</VAR> = #1(<A HREF="string-cvt.html#SIG:STRING_CVT.splitl:VAL:SPEC">splitl</A> <VAR>f</VAR> <VAR>rdr</VAR> <VAR>s</VAR>)
+<A HREF="string-cvt.html#SIG:STRING_CVT.dropl:VAL:SPEC">dropl</A> <VAR>f</VAR> <VAR>rdr</VAR> <VAR>s</VAR> = #2(<A HREF="string-cvt.html#SIG:STRING_CVT.splitl:VAL:SPEC">splitl</A> <VAR>f</VAR> <VAR>rdr</VAR> <VAR>s</VAR>)
+</PRE>
+ 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:STRING_CVT.skipWS:VAL"></A>
+<DT> <CODE>skipWS <VAR>rdr</VAR> <VAR>src</VAR> </CODE>
+<DD>
+strips whitespace characters from a stream <VAR>src</VAR> using the reader <VAR>rdr</VAR>. It returns the remaining stream. A whitespace character is one that satisfies the predicate <CODE><A HREF="char.html#SIG:CHAR.isSpace:VAL:SPEC">Char.isSpace</A></CODE>. It is equivalent to <CODE><CODE><A HREF="string-cvt.html#SIG:STRING_CVT.dropl:VAL:SPEC">dropl</A></CODE> <CODE><A HREF="char.html#SIG:CHAR.isSpace:VAL:SPEC">Char.isSpace</A></CODE></CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:STRING_CVT.cs:TY"></A><CODE><B>type</B>&nbsp;cs</CODE>
+<DD>
+        The abstract type of the character stream used by <CODE><A HREF="string-cvt.html#SIG:STRING_CVT.scanString:VAL:SPEC">scanString</A></CODE>. A value of this type represents the state of a character stream. The concrete type is left unspecified to allow implementations a choice of representations. Typically, <CODE>cs</CODE> will be an integer index into a string. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:STRING_CVT.scanString:VAL"></A><CODE><B>val</B>&nbsp;scanString&nbsp;<B>:</B>&nbsp;((char,&nbsp;cs)&nbsp;reader&nbsp;<B>-&gt;</B>&nbsp;(<I>'a</I>,&nbsp;cs)&nbsp;reader)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;option</CODE>
+<DD>
+          The function <CODE><A HREF="string-cvt.html#SIG:STRING_CVT.scanString:VAL:SPEC">scanString</A></CODE> provides a general framework for converting a string into some value. The user supplies a scanning function and a string. <CODE><A HREF="string-cvt.html#SIG:STRING_CVT.scanString:VAL:SPEC">scanString</A></CODE> converts the string into a character source (type <CODE><A HREF="string-cvt.html#SIG:STRING_CVT.cs:TY:SPEC">cs</A></CODE>) and applies the scanning function. A scanning function converts a reader of characters into a reader of values of the desired type. Typical scanning functions are <CODE><A HREF="bool.html#SIG:BOOL.scan:VAL:SPEC">Bool.scan</A></CODE> and <CODE><A HREF="date.html#SIG:DATE.scan:VAL:SPEC">Date.scan</A></CODE>.
+<BR>
+<BR>
+
+</DL>
+<H4>See Also</H4>
+<BLOCKQUOTE>
+<CODE><A HREF="string.html#String:STR:SPEC">String</A></CODE>, <CODE><A HREF="char.html#Char:STR:SPEC">Char</A></CODE>
+</BLOCKQUOTE>
+<H4>Discussion</H4>
+<PRE>
+local
+  structure S = String
+  structure SS = Substring
+  structure SC = StringCvt
+  datatype z = datatype IEEEReal.float_class
+
+  fun cvt (x,n) = let
+        val (prefix, x) = if x &lt; 0.0 then (&quot;~&quot;, ~ x)
+		                  else (&quot;&quot;, x)
+        val ss = SS.full (Real.fmt (SC.SCI (SOME (n - 1))) x)
+        fun isE c = c = #&quot;E&quot;
+        fun isZero c = c = #&quot;0&quot;
+        val expS = SS.string (SS.taker (not o isE) ss)
+        val exp = valOf (Int.fromString expS)
+        val manS = SS.string (SS.dropr isZero
+                     (SS.takel (not o isE) ss))
+        fun transf #&quot;.&quot; = &quot;&quot; 
+          | transf c = str c
+        val man = S.translate transf manS
+        val manSize = S.size man
+        fun zeros i = CharVector.tabulate (i, fn _ =&gt; #&quot;0&quot;)
+        fun dotAt i =
+              concat [S.substring (man, 0, i),
+                &quot;.&quot;, S.extract (man, i, NONE)]
+        fun sci () = 
+              concat [prefix, 
+                      if manSize = 1 then man else dotAt 1,
+                      &quot;E&quot;, expS]
+        in
+          if exp &gt;= (if manSize = 1 then 3 else manSize + 3)
+            then sci ()
+          else if exp &gt;= manSize - 1
+            then concat [prefix, man, zeros (exp - (manSize - 1))]
+          else if exp &gt;= 0
+            then concat [prefix, dotAt (exp + 1)]
+          else if exp &gt;= (if manSize = 1 then ~2 else ~3)
+            then concat [prefix, &quot;0.&quot;, zeros (~exp - 1), man]
+          else sci ()
+        end
+in
+  fun gcvt (x: real, n: int): string =
+        case Real.class x of
+          INF =&gt; if x &gt; 0.0 then &quot;inf&quot; else &quot;~inf&quot;
+        | NAN =&gt; &quot;nan&quot;
+        | _ =&gt; cvt (x, n)
+end
+</PRE>
+<P>
+The SML Basis Library emphasizes a functional view for scanning values from text. This provides a natural and elegant way to write simple scanners and parsers, especially as these typically involve some form of reading ahead and backtracking. The model involves two types of components: ways to produce character readers and functions to convert character readers into value readers. For the latter, most types <CODE>ty</CODE> have a corresponding scanning function of type 
+<PRE>
+(char, 'a) reader -&gt; (ty, 'a) reader
+</PRE>
+ Character readers are provided for the common sources of characters, either explicitly, such as the <CODE><A HREF="substring.html#SIG:SUBSTRING.getc:VAL:SPEC">SUBSTRING.getc</A></CODE> and <CODE><A HREF="stream-io.html#SIG:STREAM_IO.input1:VAL:SPEC">STREAM_IO.input1</A></CODE> functions, or implicitly, such as the <CODE><A HREF="text-io.html#SIG:TEXT_IO.scanStream:VAL:SPEC">TEXT_IO.scanStream</A></CODE>. As an example, suppose we expect to read a decimal integer followed by a date from <CODE><A HREF="text-io.html#SIG:TEXT_IO.stdIn:VAL:SPEC">TextIO.stdIn</A></CODE>. This could be handled by the following code: 
+<PRE>
+local
+  structure TIO = TextIO
+  structure SIO = TextIO.StreamIO
+  val scanInt = Int.scan StringCvt.DEC SIO.input1
+  val scanDate = Date.scan SIO.input1
+in
+  fun scanID () =
+        case scanInt (TIO.getInstream TIO.stdIn) of
+          NONE =&gt; raise Fail &quot;No integer&quot;
+        | SOME (intVal, ins') =&gt; 
+            case scanDate ins' of
+              NONE =&gt; raise Fail &quot;No date&quot;
+            | SOME (dateVal, _) =&gt;  (intVal,dateVal)
+end
+</PRE>
+ In this example, we used the underlying stream I/O component of <CODE><A HREF="text-io.html#SIG:TEXT_IO.stdIn:VAL:SPEC">TextIO.stdIn</A></CODE>, which is cleaner and more efficient. If, at some later point, we wish to return to the imperative model and do input directly using <CODE><A HREF="text-io.html#SIG:TEXT_IO.stdIn:VAL:SPEC">TextIO.stdIn</A></CODE>, we need to reset it with the current stream I/O value using <CODE><A HREF="imperative-io.html#SIG:IMPERATIVE_IO.setInstream:VAL:SPEC">TextIO.setInstream</A></CODE>. Alternatively, we could rewrite the code using imperative I/O: 
+<PRE>
+local
+  structure TIO = TextIO
+  val scanInt = TIO.scanStream (Int.scan StringCvt.DEC)
+  val scanDate = TIO.scanStream Date.scan
+in
+  fun scanID () =
+        case scanInt TIO.stdIn of
+          NONE =&gt; raise Fail &quot;No integer&quot;
+        | SOME intVal =&gt; 
+            case scanDate TIO.stdIn of
+              NONE =&gt; raise Fail &quot;No date&quot;
+            | SOME dateVal =&gt;  (intVal,dateVal)
+end
+</PRE>
+<P>
+The <CODE><A HREF="string-cvt.html#SIG:STRING_CVT.scanString:VAL:SPEC">scanString</A></CODE> function was designed specifically to be combined with the <CODE>scan</CODE> function of some type <CODE>T</CODE>, producing a function <CODE>val fromString : string -&gt; T option</CODE> for the type. For this reason, <CODE><A HREF="string-cvt.html#SIG:STRING_CVT.scanString:VAL:SPEC">scanString</A></CODE> only returns a scanned value, and not some indication of where scanning stopped in the string. For the user who wants to receive a scanned value and the unscanned portion of a string, the recommended technique is to convert the string into a substring and combine scanning functions with <CODE><A HREF="substring.html#SIG:SUBSTRING.getc:VAL:SPEC">Substring.getc</A></CODE>, <I>e.g.</I>, <CODE>Bool.scan Substring.getc</CODE>. Or, the user can create an input stream with  <CODE><A HREF="text-io.html#SIG:TEXT_IO.openString:VAL:SPEC">TextIO.openString</A></CODE> using the string as the source.
+<P>
+When the input source is a list of characters, scanning values can be accomplished by applying the appropriate scan function to the function <CODE><A HREF="list.html#SIG:LIST.getItem:VAL:SPEC">List.getItem</A></CODE>. Thus, <CODE>Bool.scan List.getItem</CODE> has the type  
+<PRE>
+(bool, char list) reader
+</PRE>
+ which will scan a boolean value and return that value and the remainder of the list.
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="manpages.html">Parent</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   | <A HREF="index.html">Root</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Generated April 12, 2004</I><BR>
+<I>Last Modified October 4, 1997</I><BR>
+<I>Comments to <A HREF="http://www.cs.uchicago.edu/people/jhr">John Reppy.</A></I><BR>
+
+<HR>
+<P>
+
+This document may be distributed freely over the internet as long as the
+copyright notice and license terms below are prominently displayed within
+every machine-readable copy.  
+
+<P>
+
+<TABLE ALIGN=CENTER WIDTH="80%" BORDER="2" CELLPADDING="5">
+<TR>
+<TD>
+<P>
+
+Copyright &copy; 2004 AT&amp;T and Lucent Technologies.
+All rights reserved.
+
+<P>
+
+Permission is granted for internet users to make one paper copy for their
+own personal use.  Further hardcopy reproduction is strictly prohibited. 
+Permission to distribute the HTML document electronically on any medium
+other than the internet must be requested from the copyright holders by
+contacting the editors.
+Printed versions of the SML Basis Manual are available from Cambridge
+University Press.
+To order, please visit
+<A HREF="http://www.cup.org">www.cup.org</A> (North America) or
+<A HREF="http://www.cup.cam.ac.uk">www.cup.cam.ac.uk</A> (outside North America).<BR>
+
+</TABLE>
+<P>
+
+<HR>
+</BODY></HTML>

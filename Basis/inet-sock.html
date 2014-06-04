@@ -1,0 +1,205 @@
+<!-- HTML/inet-sock.html -->
+
+<!-- COPYRIGHT (c) 1998 Bell Labs, Lucent Technologies. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The INetSock structure</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF"><A NAME="top"></A>
+<H1 align=CENTER>The Standard ML Basis Library</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>INetSock</CODE> structure</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="INET_SOCK:SIG:SPEC"></A><CODE>INET_SOCK</CODE>&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+<B>structure</B>&nbsp;<A NAME="INetSock:STR:SPEC"></A><CODE>INetSock</CODE><B> :> </B>INET_SOCK&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+This structure provides operations for creating and manipulating Internet-domain addresses and sockets. 
+<P>
+ 
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>type</B>&nbsp;<A NAME="SIG:INET_SOCK.inet:TY:SPEC" HREF="#SIG:INET_SOCK.inet:TY">inet</A><BR>
+<B>type</B>&nbsp;<I>'sock_type</I>&nbsp;<A NAME="SIG:INET_SOCK.sock:TY:SPEC" HREF="#SIG:INET_SOCK.sock:TY">sock</A>&nbsp;=&nbsp;(inet,&nbsp;<I>'sock_type</I>)&nbsp;Socket.sock<BR>
+<B>type</B>&nbsp;<I>'mode</I>&nbsp;<A NAME="SIG:INET_SOCK.stream_sock:TY:SPEC" HREF="#SIG:INET_SOCK.stream_sock:TY">stream_sock</A>&nbsp;=&nbsp;<I>'mode</I>&nbsp;Socket.stream&nbsp;sock<BR>
+<B>type</B>&nbsp;<A NAME="SIG:INET_SOCK.dgram_sock:TY:SPEC" HREF="#SIG:INET_SOCK.dgram_sock:TY">dgram_sock</A>&nbsp;=&nbsp;Socket.dgram&nbsp;sock<BR>
+<B>type</B>&nbsp;<A NAME="SIG:INET_SOCK.sock_addr:TY:SPEC" HREF="#SIG:INET_SOCK.sock_addr:TY">sock_addr</A>&nbsp;=&nbsp;inet&nbsp;Socket.sock_addr<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INET_SOCK.inetAF:VAL:SPEC" HREF="#SIG:INET_SOCK.inetAF:VAL">inetAF</A>&nbsp;<B>:</B>&nbsp;Socket.AF.addr_family<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INET_SOCK.toAddr:VAL:SPEC" HREF="#SIG:INET_SOCK.toAddr:VAL">toAddr</A>&nbsp;<B>:</B>&nbsp;NetHostDB.in_addr&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;sock_addr<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INET_SOCK.fromAddr:VAL:SPEC" HREF="#SIG:INET_SOCK.fromAddr:VAL">fromAddr</A>&nbsp;<B>:</B>&nbsp;sock_addr&nbsp;<B>-&gt;</B>&nbsp;NetHostDB.in_addr&nbsp;<B>*</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:INET_SOCK.any:VAL:SPEC" HREF="#SIG:INET_SOCK.any:VAL">any</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;sock_addr<BR>
+<B>structure</B>&nbsp;UDP&nbsp;<B>:</B>&nbsp;<B>sig</B><BR>
+&nbsp;&nbsp;&nbsp;&nbsp;<B>val</B>&nbsp;<A NAME="SIG:INET_SOCK.socket:VAL:SPEC" HREF="#SIG:INET_SOCK.socket:VAL">socket</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;dgram_sock<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;<B>val</B>&nbsp;<A NAME="SIG:INET_SOCK.socket':VAL:SPEC" HREF="#SIG:INET_SOCK.socket':VAL">socket'</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;dgram_sock<BR>
+&nbsp;&nbsp;<B>end</B><BR>
+<B>structure</B>&nbsp;TCP&nbsp;<B>:</B>&nbsp;<B>sig</B><BR>
+&nbsp;&nbsp;&nbsp;&nbsp;<B>val</B>&nbsp;<A NAME="SIG:INET_SOCK.socket:VAL:SPEC" HREF="#SIG:INET_SOCK.socket:VAL">socket</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;<I>'mode</I>&nbsp;stream_sock<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;<B>val</B>&nbsp;<A NAME="SIG:INET_SOCK.socket':VAL:SPEC" HREF="#SIG:INET_SOCK.socket':VAL">socket'</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;<I>'mode</I>&nbsp;stream_sock<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;<B>val</B>&nbsp;<A NAME="SIG:INET_SOCK.getNODELAY:VAL:SPEC" HREF="#SIG:INET_SOCK.getNODELAY:VAL">getNODELAY</A>&nbsp;<B>:</B>&nbsp;<I>'mode</I>&nbsp;stream_sock&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;<B>val</B>&nbsp;<A NAME="SIG:INET_SOCK.setNODELAY:VAL:SPEC" HREF="#SIG:INET_SOCK.setNODELAY:VAL">setNODELAY</A>&nbsp;<B>:</B>&nbsp;<I>'mode</I>&nbsp;stream_sock&nbsp;<B>*</B>&nbsp;bool&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+&nbsp;&nbsp;<B>end</B></CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="SIG:INET_SOCK.inet:TY"></A><CODE><B>type</B>&nbsp;inet</CODE>
+<DD>
+The witness type of the INet address family. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:INET_SOCK.stream_sock:TY"></A><CODE><B>type</B>&nbsp;<I>'mode</I>&nbsp;stream_sock&nbsp;=&nbsp;<I>'mode</I>&nbsp;Socket.stream&nbsp;sock</CODE>
+<DD>
+ The type-scheme of Internet-domain stream sockets;  The type parameter <VAR>'mode</VAR>  can be instantiated to either  <CODE><A HREF="socket.html#SIG:SOCKET.active:TY:SPEC">Socket.active</A></CODE> or  <CODE><A HREF="socket.html#SIG:SOCKET.passive:TY:SPEC">Socket.passive</A></CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:INET_SOCK.dgram_sock:TY"></A><CODE><B>type</B>&nbsp;dgram_sock&nbsp;=&nbsp;Socket.dgram&nbsp;sock</CODE>
+<DD>
+ The type of Internet-domain datagram sockets. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:INET_SOCK.sock_addr:TY"></A><CODE><B>type</B>&nbsp;sock_addr&nbsp;=&nbsp;inet&nbsp;Socket.sock_addr</CODE>
+<DD>
+ The type of Internet-domain socket addresses. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:INET_SOCK.inetAF:VAL"></A><CODE><B>val</B>&nbsp;inetAF&nbsp;<B>:</B>&nbsp;Socket.AF.addr_family</CODE>
+<DD>
+The address family value that represents the Internet domain. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:INET_SOCK.toAddr:VAL"></A>
+<DT> <CODE>toAddr (<VAR>ia</VAR>, <VAR>i</VAR>) </CODE>
+<DD>
+converts an Internet address <VAR>ia</VAR> and a port number <VAR>i</VAR> into a socket address (in the INet address family). 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:INET_SOCK.fromAddr:VAL"></A><CODE><B>val</B>&nbsp;fromAddr&nbsp;<B>:</B>&nbsp;sock_addr&nbsp;<B>-&gt;</B>&nbsp;NetHostDB.in_addr&nbsp;<B>*</B>&nbsp;int</CODE>
+<DD>
+This function converts a socket address (in the INet address family) into a pair <CODE>(ia,i)</CODE> of an Internet address <CODE>ia</CODE> and a port number <CODE>i</CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:INET_SOCK.any:VAL"></A>
+<DT> <CODE>any <VAR>port</VAR> </CODE>
+<DD>
+creates a socket address that fixes the port to <VAR>port</VAR>,  but leaves the Internet address unspecified. This function corresponds  to the <CODE>INADDR_ANY</CODE> constant in the C Sockets  API.  The values created by this function are used to  <CODE><A HREF="socket.html#SIG:SOCKET.bind:VAL:SPEC">bind</A></CODE> a socket to a specific  port. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:INET_SOCK.UDP:STR"></A>
+<DT> <CODE><B>structure</B>&nbsp;UDP</CODE>
+<DD>
+<BR>
+
+<DL>
+<DT> <A NAME="SIG:INET_SOCK.UDP.socket:VAL"></A><CODE><B>val</B>&nbsp;socket&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;dgram_sock</CODE>
+<DD>
+This creates a datagram socket in the INet address family with the default protocol.  It raises <CODE><A HREF="os.html#SIG:OS.SysErr:EXN:SPEC">SysErr</A></CODE> if there are  too many sockets in use. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:INET_SOCK.UDP.socket':VAL"></A>
+<DT> <CODE>socket' <VAR>prot</VAR> </CODE>
+<DD>
+creates a datagram socket in the INet address family with the protocol number <VAR>prot</VAR>.  The interpretation of <VAR>prot</VAR> is system dependent,  but a value of <CODE>0</CODE> is equivalent to <CODE><CODE><A HREF="inet-sock.html#SIG:INET_SOCK.UDP.socket:VAL:SPEC">socket</A></CODE>()</CODE>.  It raises <CODE><A HREF="os.html#SIG:OS.SysErr:EXN:SPEC">SysErr</A></CODE> if there are  too many sockets in use. 
+<BR>
+<BR>
+
+</DL>
+<DT> <A NAME="SIG:INET_SOCK.TCP:STR"></A>
+<DT> <CODE><B>structure</B>&nbsp;TCP</CODE>
+<DD>
+<BR>
+
+<DL>
+<DT> <A NAME="SIG:INET_SOCK.TCP.socket:VAL"></A><CODE><B>val</B>&nbsp;socket&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;<I>'mode</I>&nbsp;stream_sock</CODE>
+<DD>
+This creates a stream socket in the INet address family with the default protocol.  It raises <CODE><A HREF="os.html#SIG:OS.SysErr:EXN:SPEC">SysErr</A></CODE> if there are  too many sockets in use. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:INET_SOCK.TCP.socket':VAL"></A>
+<DT> <CODE>socket' <VAR>prot</VAR> </CODE>
+<DD>
+creates a stream socket in the INet address family with the protocol number <VAR>prot</VAR>.  The interpretation of <VAR>prot</VAR> is system dependent,  but a value of <CODE>0</CODE> is equivalent to <CODE><CODE><A HREF="inet-sock.html#SIG:INET_SOCK.TCP.socket:VAL:SPEC">socket</A></CODE>()</CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:INET_SOCK.TCP.getNODELAY:VAL"></A><CODE><B>val</B>&nbsp;getNODELAY&nbsp;<B>:</B>&nbsp;<I>'mode</I>&nbsp;stream_sock&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;setNODELAY&nbsp;<B>:</B>&nbsp;<I>'mode</I>&nbsp;stream_sock&nbsp;<B>*</B>&nbsp;bool&nbsp;<B>-&gt;</B>&nbsp;unit</CODE>
+<DD>
+These functions query and set the <CODE>TCP_NODELAY</CODE> flag on the socket. When set to <CODE>false</CODE> (the default), there is only a single small packet allowed to be outstanding on a given TCP connection at any time, thereby reducing small packet traffic on slower WANs. When set to <CODE>true</CODE>, packets are sent as fast as possible. [[Refer to Stevens, p.316.]]         
+<BR>
+<BR>
+
+</DL>
+</DL>
+<H4>See Also</H4>
+<BLOCKQUOTE>
+<CODE><A HREF="generic-sock.html#GenericSock:STR:SPEC">GenericSock</A></CODE>, <CODE><A HREF="net-host-db.html#NetHostDB:STR:SPEC">NetHostDB</A></CODE>, <CODE><A HREF="socket.html#Socket:STR:SPEC">Socket</A></CODE>, <CODE><A HREF="unix-sock.html#UnixSock:STR:SPEC">UnixSock</A></CODE>
+</BLOCKQUOTE>
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="manpages.html">Parent</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   | <A HREF="index.html">Root</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Generated April 12, 2004</I><BR>
+<I>Last Modified June 5, 1998</I><BR>
+<I>Comments to <A HREF="http://www.cs.uchicago.edu/people/jhr">John Reppy.</A></I><BR>
+
+<HR>
+<P>
+
+This document may be distributed freely over the internet as long as the
+copyright notice and license terms below are prominently displayed within
+every machine-readable copy.  
+
+<P>
+
+<TABLE ALIGN=CENTER WIDTH="80%" BORDER="2" CELLPADDING="5">
+<TR>
+<TD>
+<P>
+
+Copyright &copy; 2004 AT&amp;T and Lucent Technologies.
+All rights reserved.
+
+<P>
+
+Permission is granted for internet users to make one paper copy for their
+own personal use.  Further hardcopy reproduction is strictly prohibited. 
+Permission to distribute the HTML document electronically on any medium
+other than the internet must be requested from the copyright holders by
+contacting the editors.
+Printed versions of the SML Basis Manual are available from Cambridge
+University Press.
+To order, please visit
+<A HREF="http://www.cup.org">www.cup.org</A> (North America) or
+<A HREF="http://www.cup.cam.ac.uk">www.cup.cam.ac.uk</A> (outside North America).<BR>
+
+</TABLE>
+<P>
+
+<HR>
+</BODY></HTML>

@@ -1,0 +1,179 @@
+<!-- HTML/io.html -->
+
+<!-- COPYRIGHT (c) 1997 Bell Labs, Lucent Technologies. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The IO structure</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF"><A NAME="top"></A>
+<H1 align=CENTER>The Standard ML Basis Library</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>IO</CODE> structure</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="IO:SIG:SPEC"></A><CODE>IO</CODE><BR>
+<B>structure</B>&nbsp;<A NAME="IO:STR:SPEC"></A><CODE>IO</CODE><B> :> </B>IO<BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+The <CODE>IO</CODE> structure contains types and values common to all the input/output structures and functors. In particular, it defines the <CODE><A HREF="io.html#SIG:IO.Io:EXN:SPEC">Io</A></CODE> exception, which is used to provide structured information for any errors occurring during I/O. 
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>exception</B>&nbsp;<A NAME="SIG:IO.Io:EXN:SPEC" HREF="#SIG:IO.Io:EXN">Io</A>&nbsp;<B>of</B>&nbsp;{<BR>
+&nbsp;&nbsp;name&nbsp;<B>:</B>&nbsp;string,<BR>
+&nbsp;&nbsp;function&nbsp;<B>:</B>&nbsp;string,<BR>
+&nbsp;&nbsp;cause&nbsp;<B>:</B>&nbsp;exn<BR>
+}<BR>
+<B>exception</B>&nbsp;<A NAME="SIG:IO.BlockingNotSupported:EXN:SPEC" HREF="#SIG:IO.BlockingNotSupported:EXN">BlockingNotSupported</A><BR>
+<B>exception</B>&nbsp;<A NAME="SIG:IO.NonblockingNotSupported:EXN:SPEC" HREF="#SIG:IO.NonblockingNotSupported:EXN">NonblockingNotSupported</A><BR>
+<B>exception</B>&nbsp;<A NAME="SIG:IO.RandomAccessNotSupported:EXN:SPEC" HREF="#SIG:IO.RandomAccessNotSupported:EXN">RandomAccessNotSupported</A><BR>
+<B>exception</B>&nbsp;<A NAME="SIG:IO.ClosedStream:EXN:SPEC" HREF="#SIG:IO.ClosedStream:EXN">ClosedStream</A><BR>
+<B>datatype</B>&nbsp;<A NAME="SIG:IO.buffer_mode:TY:SPEC" HREF="#SIG:IO.buffer_mode:TY">buffer_mode</A>&nbsp;=&nbsp;<A NAME="SIG:IO.NO_BUF:TY:SPEC" HREF="#SIG:IO.NO_BUF:TY">NO_BUF</A>&nbsp;|&nbsp;<A NAME="SIG:IO.LINE_BUF:TY:SPEC" HREF="#SIG:IO.LINE_BUF:TY">LINE_BUF</A>&nbsp;|&nbsp;<A NAME="SIG:IO.BLOCK_BUF:TY:SPEC" HREF="#SIG:IO.BLOCK_BUF:TY">BLOCK_BUF</A></CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="SIG:IO.Io:EXN"></A><CODE><B>exception</B>&nbsp;Io&nbsp;<B>of</B>&nbsp;{<BR>
+&nbsp;&nbsp;name&nbsp;<B>:</B>&nbsp;string,<BR>
+&nbsp;&nbsp;function&nbsp;<B>:</B>&nbsp;string,<BR>
+&nbsp;&nbsp;cause&nbsp;<B>:</B>&nbsp;exn<BR>
+}</CODE>
+<DD>
+          This is the principal exception raised when an error occurs  in the I/O subsystem.  The components of <CODE><A HREF="io.html#SIG:IO.Io:EXN:SPEC">Io</A></CODE> are:  
+<DL>
+<DT>  <CODE>name</CODE>
+<DD>
+The <CODE>name</CODE> component of the reader or writer.  
+<DT>  <CODE>function</CODE>
+<DD>
+The name of the function raising the exception.  
+<DT>  <CODE>cause</CODE>
+<DD>
+The underlying exception raised by the reader or writer, or detected  at the stream I/O level.  
+</DL>
+ 
+<P>
+ Some of the standard causes are:  
+<UL>
+<LI>
+<CODE><A HREF="os.html#SIG:OS.SysErr:EXN:SPEC">OS.SysErr</A></CODE> if an actual system call was done  and failed.  
+<LI>
+<CODE><A HREF="general.html#SIG:GENERAL.Subscript:EXN:SPEC">Subscript</A></CODE> if ill-formed arguments are given.  
+<LI>
+<CODE><A HREF="io.html#SIG:IO.BlockingNotSupported:EXN:SPEC">BlockingNotSupported</A></CODE>  
+<LI>
+<CODE><A HREF="io.html#SIG:IO.NonblockingNotSupported:EXN:SPEC">NonblockingNotSupported</A></CODE>  
+<LI>
+<CODE><A HREF="io.html#SIG:IO.ClosedStream:EXN:SPEC">ClosedStream</A></CODE>  
+</UL>
+  The <CODE>cause</CODE> field of <CODE><A HREF="io.html#SIG:IO.Io:EXN:SPEC">Io</A></CODE> is not limited to these  particular exceptions.  Users who create their own readers or writers may raise  any exception they like, which will be reported as the <CODE>cause</CODE>  field of the resulting <CODE><A HREF="io.html#SIG:IO.Io:EXN:SPEC">Io</A></CODE> exception. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:IO.BlockingNotSupported:EXN"></A><CODE><B>exception</B>&nbsp;BlockingNotSupported</CODE>
+<DD>
+          The exception used in the <CODE><A HREF="stream-io.html#SIG:STREAM_IO.output:VAL:SPEC">output</A></CODE>,  <CODE><A HREF="text-stream-io.html#SIG:TEXT_STREAM_IO.outputSubstr:VAL:SPEC">outputSubstr</A></CODE>,  <CODE><A HREF="stream-io.html#SIG:STREAM_IO.output1:VAL:SPEC">output1</A></CODE>, and <CODE><A HREF="stream-io.html#SIG:STREAM_IO.flushOut:VAL:SPEC">flushOut</A></CODE> I/O operations if the underlying writer does not support blocking writes; or in the <CODE><A HREF="stream-io.html#SIG:STREAM_IO.input:VAL:SPEC">input</A></CODE>, <CODE><A HREF="stream-io.html#SIG:STREAM_IO.inputN:VAL:SPEC">inputN</A></CODE>,  and <CODE><A HREF="stream-io.html#SIG:STREAM_IO.input1:VAL:SPEC">input1</A></CODE> I/O operations if the underlying reader does not support blocking reads. It should never be raised within the I/O system; it should only be used in the <CODE>cause</CODE> field of an <CODE><A HREF="io.html#SIG:IO.Io:EXN:SPEC">Io</A></CODE> exception. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:IO.NonblockingNotSupported:EXN"></A><CODE><B>exception</B>&nbsp;NonblockingNotSupported</CODE>
+<DD>
+          The exception used by the <CODE><A HREF="stream-io.html#SIG:STREAM_IO.canInput:VAL:SPEC">canInput</A></CODE> I/O operation if the  underlying stream does not support non-blocking input. It should never be raised within the I/O system; it should only be used in the <CODE>cause</CODE> field of an <CODE><A HREF="io.html#SIG:IO.Io:EXN:SPEC">Io</A></CODE> exception. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:IO.RandomAccessNotSupported:EXN"></A><CODE><B>exception</B>&nbsp;RandomAccessNotSupported</CODE>
+<DD>
+          The exception used by the <CODE><A HREF="stream-io.html#STREAM_IO:SIG:SPEC">STREAM_IO</A></CODE> position operations to indicate that  random access operations are not supported by the underlying device. It should never be raised within the I/O system; it should only be used in the <CODE>cause</CODE> field of an <CODE><A HREF="io.html#SIG:IO.Io:EXN:SPEC">Io</A></CODE> exception.     
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:IO.ClosedStream:EXN"></A><CODE><B>exception</B>&nbsp;ClosedStream</CODE>
+<DD>
+         This exception is used by the output I/O operations if the underlying object is closed or terminated. It should never be raised within the I/O system; it should only be used in the <CODE>cause</CODE> field of an <CODE><A HREF="io.html#SIG:IO.Io:EXN:SPEC">Io</A></CODE> exception. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:IO.buffer_mode:TY"></A><CODE><B>datatype</B>&nbsp;buffer_mode&nbsp;=&nbsp;NO_BUF&nbsp;|&nbsp;LINE_BUF&nbsp;|&nbsp;BLOCK_BUF</CODE>
+<DD>
+        These values specify the type of buffering used on output streams. If an output stream has mode <CODE><A HREF="io.html#SIG:IO.buffer_mode:TY:SPEC">BLOCK_BUF</A></CODE>, the implementation should store output in a buffer, actually writing the buffer's content to the device only when the buffer is full. If an output stream has mode <CODE><A HREF="io.html#SIG:IO.buffer_mode:TY:SPEC">NO_BUF</A></CODE>, the implementation should write the argument bytes of any output function directly to the corresponding device. If an output stream has mode <CODE><A HREF="io.html#SIG:IO.buffer_mode:TY:SPEC">LINE_BUF</A></CODE>, output bytes should be buffered until a newline character (<CODE>#&quot;\n&quot;</CODE>) is seen, at which point the buffer should be flushed, including the newline character. For binary streams, <CODE><A HREF="io.html#SIG:IO.buffer_mode:TY:SPEC">LINE_BUF</A></CODE> mode should be treated as a synonym for <CODE><A HREF="io.html#SIG:IO.buffer_mode:TY:SPEC">BLOCK_BUF</A></CODE>. 
+<BLOCKQUOTE>
+<B>Implementation note:</B><BR>
+
+<P>
+Output buffering is provided for efficiency, to reduce the number of writes to the underlying device, which may be an expensive operation. The I/O subsystem should select the initial buffer mode based on the output device. By default, output should be buffered. The optimum buffer size is specified by the <CODE>chunkSize</CODE> field in the underlying <CODE><A HREF="prim-io.html#SIG:PRIM_IO.writer:TY:SPEC">writer</A></CODE> value. Output to <CODE><A HREF="text-io.html#SIG:TEXT_IO.stdErr:VAL:SPEC">TextIO.stdErr</A></CODE> should be unbuffered. Output to a terminal-like device should be line-buffered. A simple test for this is 
+<PRE>
+<A HREF="os-io.html#SIG:OS_IO.kind:VAL:SPEC">OS.IO.kind</A> iod = <A HREF="os-io.html#SIG:OS_IO.Kind.tty:VAL:SPEC">OS.IO.Kind.tty</A>
+</PRE>
+ where <CODE>iod</CODE> is the I/O descriptor associated with the open stream. 
+</BLOCKQUOTE>
+<BR>
+<BR>
+
+</DL>
+<H4>See Also</H4>
+<BLOCKQUOTE>
+<CODE><A HREF="bin-io.html#BinIO:STR:SPEC">BinIO</A></CODE>, <CODE><A HREF="imperative-io.html#IMPERATIVE_IO:SIG:SPEC">IMPERATIVE_IO</A></CODE>, <CODE><A HREF="prim-io.html#PRIM_IO:SIG:SPEC">PRIM_IO</A></CODE>, <CODE><A HREF="stream-io.html#STREAM_IO:SIG:SPEC">STREAM_IO</A></CODE>, <CODE><A HREF="text-io.html#TextIO:STR:SPEC">TextIO</A></CODE>
+</BLOCKQUOTE>
+<H4>Discussion</H4>
+<P>
+The imperative, stream, and primitive I/O modules will never raise a bare <CODE><A HREF="io.html#SIG:IO.BlockingNotSupported:EXN:SPEC">BlockingNotSupported</A></CODE>, <CODE><A HREF="io.html#SIG:IO.NonblockingNotSupported:EXN:SPEC">NonblockingNotSupported</A></CODE>, or  <CODE><A HREF="io.html#SIG:IO.ClosedStream:EXN:SPEC">ClosedStream</A></CODE> exception; these exceptions are only used in the <CODE>cause</CODE> field of the <CODE><A HREF="io.html#SIG:IO.Io:EXN:SPEC">Io</A></CODE> exception. Any module, however, may raise <CODE><A HREF="general.html#SIG:GENERAL.Subscript:EXN:SPEC">Subscript</A></CODE> directly if given ill-formed arguments, or may raise <CODE><A HREF="io.html#SIG:IO.Io:EXN:SPEC">Io</A></CODE> with <CODE><A HREF="general.html#SIG:GENERAL.Subscript:EXN:SPEC">Subscript</A></CODE> as the <CODE>cause</CODE>.
+<P>
+It is possible that multiple error conditions hold when an I/O function is called. For example, a random access call may be made on a closed stream corresponding to a device that does not support random access. The <CODE>cause</CODE> reported in the generated <CODE><A HREF="io.html#SIG:IO.Io:EXN:SPEC">Io</A></CODE> exception is implementation-dependent.
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="manpages.html">Parent</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   | <A HREF="index.html">Root</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Generated April 12, 2004</I><BR>
+<I>Last Modified January 21, 1997</I><BR>
+<I>Comments to <A HREF="http://www.cs.uchicago.edu/people/jhr">John Reppy.</A></I><BR>
+
+<HR>
+<P>
+
+This document may be distributed freely over the internet as long as the
+copyright notice and license terms below are prominently displayed within
+every machine-readable copy.  
+
+<P>
+
+<TABLE ALIGN=CENTER WIDTH="80%" BORDER="2" CELLPADDING="5">
+<TR>
+<TD>
+<P>
+
+Copyright &copy; 2004 AT&amp;T and Lucent Technologies.
+All rights reserved.
+
+<P>
+
+Permission is granted for internet users to make one paper copy for their
+own personal use.  Further hardcopy reproduction is strictly prohibited. 
+Permission to distribute the HTML document electronically on any medium
+other than the internet must be requested from the copyright holders by
+contacting the editors.
+Printed versions of the SML Basis Manual are available from Cambridge
+University Press.
+To order, please visit
+<A HREF="http://www.cup.org">www.cup.org</A> (North America) or
+<A HREF="http://www.cup.cam.ac.uk">www.cup.cam.ac.uk</A> (outside North America).<BR>
+
+</TABLE>
+<P>
+
+<HR>
+</BODY></HTML>

@@ -1,0 +1,109 @@
+<!-- HTML/text-stream-io.html -->
+
+<!-- COPYRIGHT (c) 1997 Bell Labs, Lucent Technologies. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The TEXT_STREAM_IO signature</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF"><A NAME="top"></A>
+<H1 align=CENTER>The Standard ML Basis Library</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>TEXT_STREAM_IO</CODE> signature</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="TEXT_STREAM_IO:SIG:SPEC"></A><CODE>TEXT_STREAM_IO</CODE><BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+The signature <CODE>TEXT_STREAM_IO</CODE> extends the <CODE>STREAM_IO</CODE> signature to accommodate text I/O. In particular, it binds the I/O element to <CODE><A HREF="char.html#SIG:CHAR.char:TY:SPEC">Char.char</A></CODE>, and provides several text-based I/O operations. 
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>include</B>&nbsp;<A HREF="stream-io.html#STREAM_IO:SIG:SPEC">STREAM_IO</A><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;vector&nbsp;=&nbsp;CharVector.vector<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;elem&nbsp;=&nbsp;Char.char<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TEXT_STREAM_IO.inputLine:VAL:SPEC" HREF="#SIG:TEXT_STREAM_IO.inputLine:VAL">inputLine</A>&nbsp;<B>:</B>&nbsp;instream&nbsp;<B>-&gt;</B>&nbsp;(string&nbsp;<B>*</B>&nbsp;instream)&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TEXT_STREAM_IO.outputSubstr:VAL:SPEC" HREF="#SIG:TEXT_STREAM_IO.outputSubstr:VAL">outputSubstr</A>&nbsp;<B>:</B>&nbsp;outstream&nbsp;<B>*</B>&nbsp;substring&nbsp;<B>-&gt;</B>&nbsp;unit</CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="SIG:TEXT_STREAM_IO.inputLine:VAL"></A>
+<DT> <CODE>inputLine <VAR>strm</VAR>  </CODE>
+<DD>
+returns  <CODE><CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">SOME</A></CODE>(<VAR>ln</VAR>, <VAR>strm'</VAR>)</CODE>,  where <VAR>ln</VAR> is the next line of input in the stream  <VAR>strm</VAR> and <VAR>strm'</VAR> is the residual stream.  Specifically, <VAR>ln</VAR> returns all characters from the current position up to and including the next newline (<CODE>#&quot;\n&quot;</CODE>) character.  If it detects an end-of-stream before the next newline, it returns the characters read appended with a newline.  Thus, <VAR>ln</VAR> is guaranteed to always be new-line  terminated (and thus nonempty).  If the current stream position is the end-of-stream, then  it returns <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A></CODE>. It raises <CODE><A HREF="general.html#SIG:GENERAL.Size:EXN:SPEC">Size</A></CODE> if the length of the line exceeds the length of the longest string. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:TEXT_STREAM_IO.outputSubstr:VAL"></A>
+<DT> <CODE>outputSubstr (<VAR>strm</VAR>, <VAR>ss</VAR>) </CODE>
+<DD>
+outputs the substring <VAR>ss</VAR> to the text stream <VAR>strm</VAR>. This is equivalent to: 
+<PRE>
+output (<VAR>strm</VAR>, <A HREF="substring.html#SIG:SUBSTRING.string:VAL:SPEC">Substring.string</A> <VAR>ss</VAR>)
+</PRE>
+ 
+<BR>
+<BR>
+
+</DL>
+<H4>See Also</H4>
+<BLOCKQUOTE>
+<CODE><A HREF="bin-io.html#BinIO:STR:SPEC">BinIO</A></CODE>, <CODE><A HREF="imperative-io.html#IMPERATIVE_IO:SIG:SPEC">IMPERATIVE_IO</A></CODE>, <CODE><A HREF="os.html#SIG:OS.Path:STR:SPEC">OS.Path</A></CODE>
+</BLOCKQUOTE>
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="manpages.html">Parent</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   | <A HREF="index.html">Root</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Generated April 12, 2004</I><BR>
+<I>Last Modified July 1, 2002</I><BR>
+<I>Comments to <A HREF="http://www.cs.uchicago.edu/people/jhr">John Reppy.</A></I><BR>
+
+<HR>
+<P>
+
+This document may be distributed freely over the internet as long as the
+copyright notice and license terms below are prominently displayed within
+every machine-readable copy.  
+
+<P>
+
+<TABLE ALIGN=CENTER WIDTH="80%" BORDER="2" CELLPADDING="5">
+<TR>
+<TD>
+<P>
+
+Copyright &copy; 2004 AT&amp;T and Lucent Technologies.
+All rights reserved.
+
+<P>
+
+Permission is granted for internet users to make one paper copy for their
+own personal use.  Further hardcopy reproduction is strictly prohibited. 
+Permission to distribute the HTML document electronically on any medium
+other than the internet must be requested from the copyright holders by
+contacting the editors.
+Printed versions of the SML Basis Manual are available from Cambridge
+University Press.
+To order, please visit
+<A HREF="http://www.cup.org">www.cup.org</A> (North America) or
+<A HREF="http://www.cup.cam.ac.uk">www.cup.cam.ac.uk</A> (outside North America).<BR>
+
+</TABLE>
+<P>
+
+<HR>
+</BODY></HTML>

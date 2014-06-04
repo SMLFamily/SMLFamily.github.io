@@ -1,0 +1,207 @@
+<!-- HTML/text-io.html -->
+
+<!-- COPYRIGHT (c) 1997 Bell Labs, Lucent Technologies. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The TEXT_IO signature</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF"><A NAME="top"></A>
+<H1 align=CENTER>The Standard ML Basis Library</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>TEXT_IO</CODE> signature</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="TEXT_IO:SIG:SPEC"></A><CODE>TEXT_IO</CODE><BR>
+<B>structure</B>&nbsp;<A NAME="TextIO:STR:SPEC"></A><CODE>TextIO</CODE><B> :> </B>TEXT_IO<BR>
+<B>structure</B>&nbsp;<A NAME="WideTextIO:STR:SPEC"></A><CODE>WideTextIO</CODE><B> :> </B>TEXT_IO&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+The <CODE>TEXT_IO</CODE> interface provides input/output of characters and strings. Most of the operations themselves are defined in the <CODE><A HREF="imperative-io.html#IMPERATIVE_IO:SIG:SPEC">IMPERATIVE_IO</A></CODE> signature.
+<P>
+The <CODE><A HREF="text-io.html#TEXT_IO:SIG:SPEC">TEXT_IO</A></CODE> signature is matched by two structures, the required <CODE><A HREF="text-io.html#TextIO:STR:SPEC">TextIO</A></CODE> and the optional <CODE><A HREF="text-io.html#WideTextIO:STR:SPEC">WideTextIO</A></CODE>. The former implements strings based on the extended ASCII 8-bit characters. The latter provides strings of characters of some size greater than or equal to 8 bits.
+<P>
+The signature given below for <CODE><A HREF="text-io.html#TEXT_IO:SIG:SPEC">TEXT_IO</A></CODE> is not valid SML, in that the substructure <CODE>StreamIO</CODE> is respecified. (It is initially specified as a substructure having signature <CODE><A HREF="stream-io.html#STREAM_IO:SIG:SPEC">STREAM_IO</A></CODE> in the included signature <CODE><A HREF="imperative-io.html#IMPERATIVE_IO:SIG:SPEC">IMPERATIVE_IO</A></CODE>.) This abuse of notation seems acceptable in that the intended meaning is clear (a structure matching <CODE><A HREF="text-io.html#TEXT_IO:SIG:SPEC">TEXT_IO</A></CODE> also matches  <CODE><A HREF="imperative-io.html#IMPERATIVE_IO:SIG:SPEC">IMPERATIVE_IO</A></CODE> and has a substructure <CODE>StreamIO</CODE> that matches <CODE><A HREF="text-stream-io.html#TEXT_STREAM_IO:SIG:SPEC">TEXT_STREAM_IO</A></CODE>) while avoiding a textual inclusion of the whole signature of <CODE><A HREF="imperative-io.html#IMPERATIVE_IO:SIG:SPEC">IMPERATIVE_IO</A></CODE> except its <CODE>StreamIO</CODE> substructure. 
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>include</B>&nbsp;<A HREF="imperative-io.html#IMPERATIVE_IO:SIG:SPEC">IMPERATIVE_IO</A><BR>
+<B>structure</B>&nbsp;StreamIO&nbsp;<B>:</B>&nbsp;<A HREF="text-stream-io.html#TEXT_STREAM_IO:SIG:SPEC">TEXT_STREAM_IO</A><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;reader&nbsp;=&nbsp;TextPrimIO.reader<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;writer&nbsp;=&nbsp;TextPrimIO.writer<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;pos&nbsp;=&nbsp;TextPrimIO.pos<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TEXT_IO.inputLine:VAL:SPEC" HREF="#SIG:TEXT_IO.inputLine:VAL">inputLine</A>&nbsp;<B>:</B>&nbsp;instream&nbsp;<B>-&gt;</B>&nbsp;string&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TEXT_IO.outputSubstr:VAL:SPEC" HREF="#SIG:TEXT_IO.outputSubstr:VAL">outputSubstr</A>&nbsp;<B>:</B>&nbsp;outstream&nbsp;<B>*</B>&nbsp;substring&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TEXT_IO.openIn:VAL:SPEC" HREF="#SIG:TEXT_IO.openIn:VAL">openIn</A>&nbsp;&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;instream<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TEXT_IO.openOut:VAL:SPEC" HREF="#SIG:TEXT_IO.openOut:VAL">openOut</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;outstream<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TEXT_IO.openAppend:VAL:SPEC" HREF="#SIG:TEXT_IO.openAppend:VAL">openAppend</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;outstream<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TEXT_IO.openString:VAL:SPEC" HREF="#SIG:TEXT_IO.openString:VAL">openString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;instream<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TEXT_IO.stdIn:VAL:SPEC" HREF="#SIG:TEXT_IO.stdIn:VAL">stdIn</A>&nbsp;&nbsp;<B>:</B>&nbsp;instream<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TEXT_IO.stdOut:VAL:SPEC" HREF="#SIG:TEXT_IO.stdOut:VAL">stdOut</A>&nbsp;<B>:</B>&nbsp;outstream<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TEXT_IO.stdErr:VAL:SPEC" HREF="#SIG:TEXT_IO.stdErr:VAL">stdErr</A>&nbsp;<B>:</B>&nbsp;outstream<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TEXT_IO.print:VAL:SPEC" HREF="#SIG:TEXT_IO.print:VAL">print</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TEXT_IO.scanStream:VAL:SPEC" HREF="#SIG:TEXT_IO.scanStream:VAL">scanStream</A>&nbsp;<B>:</B>&nbsp;((Char.char,&nbsp;StreamIO.instream)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;StringCvt.reader<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;(<I>'a</I>,&nbsp;StreamIO.instream)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;StringCvt.reader)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;instream&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;option</CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="SIG:TEXT_IO.inputLine:VAL"></A>
+<DT> <CODE>inputLine <VAR>strm</VAR>  </CODE>
+<DD>
+returns <CODE><CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">SOME</A></CODE>(<VAR>ln</VAR>)</CODE>,  where <VAR>ln</VAR> is the next line of input in the stream  <VAR>strm</VAR>.  Specifically, <VAR>ln</VAR> returns all characters from the current position up to and including the next newline (<CODE>#&quot;\n&quot;</CODE>) character.  If it detects an end-of-stream before the next newline, it returns the characters read appended with a newline.  Thus, <VAR>ln</VAR> is guaranteed to always be new-line  terminated (and thus nonempty).  If the current stream position is the end-of-stream, then  it returns <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A></CODE>. It raises <CODE><A HREF="general.html#SIG:GENERAL.Size:EXN:SPEC">Size</A></CODE> if the length of the line exceeds the length of the longest string. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:TEXT_IO.outputSubstr:VAL"></A>
+<DT> <CODE>outputSubstr (<VAR>strm</VAR>, <VAR>ss</VAR>) </CODE>
+<DD>
+outputs the substring <VAR>ss</VAR> to the text stream <VAR>strm</VAR>. This is equivalent to: 
+<PRE>
+output (<VAR>strm</VAR>, <A HREF="substring.html#SIG:SUBSTRING.string:VAL:SPEC">Substring.string</A> <VAR>ss</VAR>)
+</PRE>
+ 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:TEXT_IO.openIn:VAL"></A>
+<DT> <CODE>openIn <VAR>name</VAR> </CODE>
+<DT> <CODE>        openOut <VAR>name</VAR> </CODE>
+<DD>
+These open the file named <VAR>name</VAR> for input and output, respectively. If <VAR>name</VAR> is a relative pathname, the file opened depends on the current working directory. On <CODE><A HREF="text-io.html#SIG:TEXT_IO.openOut:VAL:SPEC">openOut</A></CODE>, the file is created if it does not already exist and truncated to length zero otherwise. It raises <CODE><A HREF="io.html#SIG:IO.Io:EXN:SPEC">Io</A></CODE> if a stream cannot be opened on the given file, or in the case of <CODE><A HREF="text-io.html#SIG:TEXT_IO.openIn:VAL:SPEC">openIn</A></CODE>, the file <VAR>name</VAR> does not exist. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:TEXT_IO.openAppend:VAL"></A>
+<DT> <CODE>openAppend <VAR>name</VAR></CODE>
+<DD>
+opens the file named <VAR>name</VAR> for output in append mode, creating it if it does not already exist.  If the file already exists, the file pointer is positioned at the end of the file. It raises <CODE><A HREF="io.html#SIG:IO.Io:EXN:SPEC">Io</A></CODE> if a stream cannot be opened on the given file. 
+<P>
+        Beyond having the initial file position be at the end of the file, any additional properties are system and implementation dependent. On operating systems (<I>e.g.</I>, Unix) that support ``atomic append mode,'' each (flushed) output operation to the file will be appended to the end, even if there are other processes writing to the file simultaneously. Due to buffering, however, these writes need not be atomic, <I>i.e.</I>, output from a different process may interleave the output of a single write using the stream library. On certain other operating systems, having the file open for writing prevents any other process from opening the file for writing. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:TEXT_IO.openString:VAL"></A>
+<DT> <CODE>openString <VAR>s</VAR> </CODE>
+<DD>
+creates an input stream whose content is <VAR>s</VAR>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:TEXT_IO.stdIn:VAL"></A><CODE><B>val</B>&nbsp;stdIn&nbsp;<B>:</B>&nbsp;instream<BR>
+<B>val</B>&nbsp;stdOut&nbsp;<B>:</B>&nbsp;outstream<BR>
+<B>val</B>&nbsp;stdErr&nbsp;<B>:</B>&nbsp;outstream</CODE>
+<DD>
+ These correspond to the standard input, output, and error streams, respectively. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:TEXT_IO.print:VAL"></A>
+<DT> <CODE>print <VAR>s</VAR> </CODE>
+<DD>
+prints the string <VAR>s</VAR> to the standard output stream and flushes the stream. No newline character is appended. 
+<P>
+        This is available in the top-level environment as <CODE>print</CODE>. This is equivalent to: 
+<PRE>
+(output (<A HREF="text-io.html#SIG:TEXT_IO.stdOut:VAL:SPEC">stdOut</A>, <VAR>s</VAR>); flushOut <A HREF="text-io.html#SIG:TEXT_IO.stdOut:VAL:SPEC">stdOut</A>)
+</PRE>
+ 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:TEXT_IO.scanStream:VAL"></A>
+<DT> <CODE>scanStream <VAR>scanFn</VAR> <VAR>strm</VAR> </CODE>
+<DD>
+converts a stream-based scan function into one that works on Imperative I/O streams. For example, to attempt to scan a decimal integer from <CODE>stdIn</CODE>, one could use 
+<PRE>
+scanStream (Int.scan StringCvt.DEC) stdIn
+</PRE>
+ 
+<P>
+        The function can be implemented as: 
+<PRE>
+fun scanStream scanFn strm = let
+      val instrm = getInstream strm
+      in
+	case (scanFn StreamIO.input1 instrm)
+	 of NONE =&gt; NONE
+	  | SOME(v, instrm') =&gt; (
+	      setInstream (strm, instrm');
+	      SOME v)
+      end
+</PRE>
+ In addition to providing a convenient way to use Stream I/O scanning functions with Imperative I/O, the <CODE><A HREF="text-io.html#SIG:TEXT_IO.scanStream:VAL:SPEC">scanStream</A></CODE> assures that input is not inadvertently lost due to lookahead during scanning. 
+<BR>
+<BR>
+
+</DL>
+<H4>See Also</H4>
+<BLOCKQUOTE>
+<CODE><A HREF="imperative-io.html#IMPERATIVE_IO:SIG:SPEC">IMPERATIVE_IO</A></CODE>, <CODE><A HREF="os.html#SIG:OS.Path:STR:SPEC">OS.Path</A></CODE>, <CODE><A HREF="stream-io.html#STREAM_IO:SIG:SPEC">STREAM_IO</A></CODE>, <CODE><A HREF="text.html#TEXT:SIG:SPEC">TEXT</A></CODE>, <CODE><A HREF="text-stream-io.html#TEXT_STREAM_IO:SIG:SPEC">TEXT_STREAM_IO</A></CODE>, <CODE><A HREF="prim-io.html#TextPrimIO:STR:SPEC">TextPrimIO</A></CODE>
+</BLOCKQUOTE>
+<H4>Discussion</H4>
+<P>
+All streams created by <CODE><A HREF="imperative-io.html#SIG:IMPERATIVE_IO.mkInstream:VAL:SPEC">mkInstream</A></CODE>, <CODE><A HREF="imperative-io.html#SIG:IMPERATIVE_IO.mkOutstream:VAL:SPEC">mkOutstream</A></CODE>, and the open functions in <CODE><A HREF="text-io.html#TextIO:STR:SPEC">TextIO</A></CODE> will be closed (and the output streams among them flushed) when the SML program exits. The output streams  <CODE><A HREF="text-io.html#SIG:TEXT_IO.stdOut:VAL:SPEC">TextIO.stdOut</A></CODE> and <CODE><A HREF="text-io.html#SIG:TEXT_IO.stdErr:VAL:SPEC">TextIO.stdErr</A></CODE> will be flushed, but not closed, on program exit.
+<P>
+When opening a stream for writing, the stream will be block buffered by default, unless the underlying file is associated with an interactive or terminal device (<I>i.e.</I>, the kind of the underlying <CODE>iodesc</CODE> is <CODE>OS.IO.Kind.tty</CODE>), in which case the stream will be line buffered. Similarly, <CODE><A HREF="text-io.html#SIG:TEXT_IO.stdOut:VAL:SPEC">stdOut</A></CODE> will be line buffered in the interactive case, but may be block buffered otherwise. <CODE><A HREF="text-io.html#SIG:TEXT_IO.stdErr:VAL:SPEC">stdErr</A></CODE> is initially unbuffered.
+<P>
+The <CODE><A HREF="text-io.html#SIG:TEXT_IO.openIn:VAL:SPEC">openIn</A></CODE>, <CODE><A HREF="text-io.html#SIG:TEXT_IO.openOut:VAL:SPEC">openOut</A></CODE>, and <CODE><A HREF="text-io.html#SIG:TEXT_IO.openAppend:VAL:SPEC">openAppend</A></CODE> functions allow creation of text streams. Certain implementations may provide other ways to open files in structures specific to an operating system. In such cases, there should be related functions for converting the open file into a value compatible with the Basis I/O subsystem. For example, the <CODE><A HREF="posix.html#SIG:POSIX.IO:STR:SPEC">Posix.IO</A></CODE> defines the function <CODE><A HREF="posix-io.html#SIG:POSIX_IO.mkTextWriter:VAL:SPEC">mkTextWriter</A></CODE>, which generates a <CODE><A HREF="prim-io.html#SIG:PRIM_IO.writer:TY:SPEC">TextPrimIO.writer</A></CODE> value from a POSIX file descriptor. The  <CODE><A HREF="stream-io.html#SIG:STREAM_IO.mkOutstream:VAL:SPEC">TextIO.StreamIO.mkOutstream</A></CODE> function can use that value to produces an output stream.
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="manpages.html">Parent</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   | <A HREF="index.html">Root</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Generated April 12, 2004</I><BR>
+<I>Last Modified July 1, 2002</I><BR>
+<I>Comments to <A HREF="http://www.cs.uchicago.edu/people/jhr">John Reppy.</A></I><BR>
+
+<HR>
+<P>
+
+This document may be distributed freely over the internet as long as the
+copyright notice and license terms below are prominently displayed within
+every machine-readable copy.  
+
+<P>
+
+<TABLE ALIGN=CENTER WIDTH="80%" BORDER="2" CELLPADDING="5">
+<TR>
+<TD>
+<P>
+
+Copyright &copy; 2004 AT&amp;T and Lucent Technologies.
+All rights reserved.
+
+<P>
+
+Permission is granted for internet users to make one paper copy for their
+own personal use.  Further hardcopy reproduction is strictly prohibited. 
+Permission to distribute the HTML document electronically on any medium
+other than the internet must be requested from the copyright holders by
+contacting the editors.
+Printed versions of the SML Basis Manual are available from Cambridge
+University Press.
+To order, please visit
+<A HREF="http://www.cup.org">www.cup.org</A> (North America) or
+<A HREF="http://www.cup.cam.ac.uk">www.cup.cam.ac.uk</A> (outside North America).<BR>
+
+</TABLE>
+<P>
+
+<HR>
+</BODY></HTML>

@@ -1,0 +1,144 @@
+<!-- HTML/stream-io-fn.html -->
+
+<!-- COPYRIGHT (c) 1997 Bell Labs, Lucent Technologies. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The StreamIO functor</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF"><A NAME="top"></A>
+<H1 align=CENTER>The Standard ML Basis Library</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>StreamIO</CODE> functor</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>functor</B>&nbsp;<A NAME="StreamIO:FCT:SPEC"></A><CODE>StreamIO</CODE><B> (</B> ... <B>)</B><B> : </B>STREAM_IO&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+The optional <CODE>StreamIO</CODE> functor provides a way to build a Stream I/O layer on top of an arbitrary Primitive I/O implementation. For example, given an implementation of readers and writers for pairs of integers, one can define streams of pairs of integers. 
+<HR>
+<H4>Functor argument interface</H4>
+<BLOCKQUOTE>
+<CODE><B>structure</B>&nbsp;PrimIO&nbsp;<B>:</B>&nbsp;<A HREF="prim-io.html#PRIM_IO:SIG:SPEC">PRIM_IO</A><BR>
+<B>structure</B>&nbsp;Vector&nbsp;<B>:</B>&nbsp;<A HREF="mono-vector.html#MONO_VECTOR:SIG:SPEC">MONO_VECTOR</A><BR>
+<B>structure</B>&nbsp;Array&nbsp;<B>:</B>&nbsp;<A HREF="mono-array.html#MONO_ARRAY:SIG:SPEC">MONO_ARRAY</A><BR>
+<B>sharing</B>&nbsp;<B>type</B>&nbsp;PrimIO.elem&nbsp;=&nbsp;Vector.elem&nbsp;=&nbsp;Array.elem<BR>
+<B>sharing</B>&nbsp;<B>type</B>&nbsp;PrimIO.vector&nbsp;=&nbsp;Vector.vector&nbsp;=&nbsp;Array.vector<BR>
+<B>sharing</B>&nbsp;<B>type</B>&nbsp;PrimIO.array&nbsp;=&nbsp;Array.array<BR>
+<B>val</B>&nbsp;<A NAME="ARG:StreamIO.someElem:VAL:SPEC" HREF="#ARG:StreamIO.someElem:VAL">someElem</A>&nbsp;<B>:</B>&nbsp;PrimIO.elem</CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="ARG:StreamIO.PrimIO:STR"></A><CODE><B>structure</B>&nbsp;PrimIO&nbsp;<B>:</B>&nbsp;<A HREF="prim-io.html#PRIM_IO:SIG:SPEC">PRIM_IO</A></CODE>
+<DD>
+ The underlying primitive I/O structure. 
+<BR>
+<BR>
+
+<DT> <A NAME="ARG:StreamIO.someElem:VAL"></A><CODE><B>val</B>&nbsp;someElem&nbsp;<B>:</B>&nbsp;PrimIO.elem</CODE>
+<DD>
+ Some arbitrary element used to initialize buffer arrays. 
+<BR>
+<BR>
+
+</DL>
+<H4>See Also</H4>
+<BLOCKQUOTE>
+<CODE><A HREF="imperative-io-fn.html#ImperativeIO:FCT:SPEC">ImperativeIO</A></CODE>, <CODE><A HREF="mono-array.html#MONO_ARRAY:SIG:SPEC">MONO_ARRAY</A></CODE>, <CODE><A HREF="mono-vector.html#MONO_VECTOR:SIG:SPEC">MONO_VECTOR</A></CODE>, <CODE><A HREF="prim-io-fn.html#PrimIO:FCT:SPEC">PrimIO</A></CODE>, <CODE><A HREF="prim-io.html#PRIM_IO:SIG:SPEC">PRIM_IO</A></CODE>, <CODE><A HREF="stream-io.html#STREAM_IO:SIG:SPEC">STREAM_IO</A></CODE>
+</BLOCKQUOTE>
+<H4>Discussion</H4>
+<P>
+The <CODE>Vector</CODE> and <CODE>Array</CODE> structures provide vector and array operations for manipulating the vectors and arrays used in <CODE>PrimIO</CODE> and <CODE>StreamIO</CODE>. The element <VAR>someElem</VAR> is used to initialize buffer arrays; any element will do.
+<P>
+The types <CODE>instream</CODE> and <CODE>outstream</CODE> in the result of the <CODE><A HREF="stream-io-fn.html#StreamIO:FCT:SPEC">StreamIO</A></CODE> functor must be abstract. 
+<BLOCKQUOTE>
+<B>Implementation note:</B><BR>
+
+<P>
+Here are some suggestions for efficient performance:  
+<UL>
+<LI>
+Operations on the underlying readers and writers (<CODE>readVec</CODE>, etc.) are expected to be expensive (involving a system call, with context switch). 
+<LI>
+Small input operations can be done from a buffer; the <CODE>readVec</CODE> or <CODE>readVecNB</CODE> operation of the underlying reader can replenish the buffer when necessary. 
+<LI>
+Each reader may provide only a subset of <CODE>readVec</CODE>, <CODE>readVecNB</CODE>, <CODE>block</CODE>, <CODE>canInput</CODE>, etc.  An augmented reader that provides more operations can be constructed using <CODE>PrimIO.augmentReader</CODE>, but it may be more efficient to use the functions directly provided by the reader, instead of relying on the constructed ones.  The same applies to augmented writers. 
+<LI>
+Keep the position of the beginning of the buffer on a multiple-of-<CODE>chunkSize</CODE> boundary, and do <B>read</B> or  <B>write</B> operations with a multiple-of-<CODE>chunkSize</CODE> number of elements. 
+<LI>
+For very large <CODE>inputAll</CODE> or <CODE>inputN</CODE> operations, it is (somewhat) inefficient to read one <CODE>chunkSize</CODE> at a time and then concatenate all the results together. Instead, it is good to try to do the read all in one large system call; that is, <CODE>readVec(<VAR>n</VAR>)</CODE>. In a typical implementation of <CODE>readVec</CODE>, this requires pre-allocating a vector of size <VAR>n</VAR>. In <CODE>inputAll</CODE>, however, the size of the vector is not known <I>a priori</I> and if the argument to <CODE>inputN</CODE> is large, the allocation of a much-too-large buffer is wasteful.  Therefore, for large input operations, query the remaining size of the reader using <CODE>avail</CODE>, and try to read that much. But one should also keep things rounded to the nearest <CODE>chunkSize</CODE>. 
+<LI>
+The use of <CODE>avail</CODE> to try to do (large) read operations of just the right size will be inaccurate on translated readers. But this inaccuracy can be tolerated: if the translation is anything close to 1-1,  <CODE>avail</CODE> will still provide a very good hint about the order-of-magnitude size of what remains to be read. 
+<LI>
+Similar suggestions apply to very large output operations. Small outputs go through a buffer; the buffer is written with <CODE>writeArr</CODE>. Very large outputs can be written directly from the argument string using <CODE>writeVec</CODE>. 
+<LI>
+A lazy functional input stream can (should) be implemented as a sequence of immutable (vector) buffers, each with a mutable <CODE><B>ref</B></CODE> to the next ``thing,'' which is either another buffer, the underlying reader, or an indication that the stream has been truncated. 
+<LI>
+The <CODE>input</CODE> function should return the largest sequence that is most convenient. Usually this means ``the remaining contents of the current buffer.'' 
+<LI>
+To support non-blocking input, use <CODE>readVecNB</CODE> if it exists, otherwise do <CODE>canInput</CODE> followed (if appropriate) by <CODE>readVec</CODE>. 
+<LI>
+To support blocking input, use <CODE>readVec</CODE> if it exists, otherwise do <CODE>readVecNB</CODE> followed (if it would block) by <CODE>block</CODE>. and then another <CODE>readVecNB</CODE>. 
+<LI>
+To support lazy functional streams, <CODE>readArr</CODE> and <CODE>readArrNB</CODE> are not useful. If necessary, <CODE>readVec</CODE> should be synthesized from <CODE>readArr</CODE> and <CODE>readVecNB</CODE> from <CODE>readArrNB</CODE>. 
+<LI>
+<CODE>writeArr</CODE> should, if necessary, be synthesized from <CODE>writeVec</CODE> and vice versa.  Similarly for <CODE>writeArrNB</CODE> and <CODE>writeVecNB</CODE>. 
+</UL>
+</BLOCKQUOTE>
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="manpages.html">Parent</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   | <A HREF="index.html">Root</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Generated April 12, 2004</I><BR>
+<I>Last Modified May 10, 1996</I><BR>
+<I>Comments to <A HREF="http://www.cs.uchicago.edu/people/jhr">John Reppy.</A></I><BR>
+
+<HR>
+<P>
+
+This document may be distributed freely over the internet as long as the
+copyright notice and license terms below are prominently displayed within
+every machine-readable copy.  
+
+<P>
+
+<TABLE ALIGN=CENTER WIDTH="80%" BORDER="2" CELLPADDING="5">
+<TR>
+<TD>
+<P>
+
+Copyright &copy; 2004 AT&amp;T and Lucent Technologies.
+All rights reserved.
+
+<P>
+
+Permission is granted for internet users to make one paper copy for their
+own personal use.  Further hardcopy reproduction is strictly prohibited. 
+Permission to distribute the HTML document electronically on any medium
+other than the internet must be requested from the copyright holders by
+contacting the editors.
+Printed versions of the SML Basis Manual are available from Cambridge
+University Press.
+To order, please visit
+<A HREF="http://www.cup.org">www.cup.org</A> (North America) or
+<A HREF="http://www.cup.cam.ac.uk">www.cup.cam.ac.uk</A> (outside North America).<BR>
+
+</TABLE>
+<P>
+
+<HR>
+</BODY></HTML>

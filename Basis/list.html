@@ -1,0 +1,331 @@
+<!-- HTML/list.html -->
+
+<!-- COPYRIGHT (c) 1997 Bell Labs, Lucent Technologies. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The List structure</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF"><A NAME="top"></A>
+<H1 align=CENTER>The Standard ML Basis Library</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>List</CODE> structure</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="LIST:SIG:SPEC"></A><CODE>LIST</CODE><BR>
+<B>structure</B>&nbsp;<A NAME="List:STR:SPEC"></A><CODE>List</CODE><B> :> </B>LIST<BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+The <CODE>List</CODE> structure provides a collection of utility functions for manipulating polymorphic lists, traditionally an important datatype in functional programming.
+<P>
+Following the concrete syntax provided by the list <CODE><B>::</B></CODE> operator, the head of a list appears leftmost. Thus, a traversal of a list from left to right starts with the head, then recurses on the tail. In addition, as a sequence type, a list has an indexing of its elements, with the head having index 0, the second element having index 1, etc. 
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>datatype</B>&nbsp;<I>'a</I>&nbsp;<A NAME="SIG:LIST.list:TY:SPEC" HREF="#SIG:LIST.list:TY">list</A>&nbsp;=&nbsp;<A NAME="SIG:LIST.nil:TY:SPEC" HREF="#SIG:LIST.nil:TY">nil</A>&nbsp;|&nbsp;<A NAME="SIG:LIST.:::TY:SPEC" HREF="#SIG:LIST.:::TY">::</A>&nbsp;<B>of</B>&nbsp;<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;list<BR>
+<B>exception</B>&nbsp;<A NAME="SIG:LIST.Empty:EXN:SPEC" HREF="#SIG:LIST.Empty:EXN">Empty</A><BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:LIST.null:VAL:SPEC" HREF="#SIG:LIST.null:VAL">null</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="SIG:LIST.length:VAL:SPEC" HREF="#SIG:LIST.length:VAL">length</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:LIST.@:VAL:SPEC" HREF="#SIG:LIST.@:VAL">@</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="SIG:LIST.hd:VAL:SPEC" HREF="#SIG:LIST.hd:VAL">hd</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I><BR>
+<B>val</B>&nbsp;<A NAME="SIG:LIST.tl:VAL:SPEC" HREF="#SIG:LIST.tl:VAL">tl</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="SIG:LIST.last:VAL:SPEC" HREF="#SIG:LIST.last:VAL">last</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I><BR>
+<B>val</B>&nbsp;<A NAME="SIG:LIST.getItem:VAL:SPEC" HREF="#SIG:LIST.getItem:VAL">getItem</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;(<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;list)&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="SIG:LIST.nth:VAL:SPEC" HREF="#SIG:LIST.nth:VAL">nth</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I><BR>
+<B>val</B>&nbsp;<A NAME="SIG:LIST.take:VAL:SPEC" HREF="#SIG:LIST.take:VAL">take</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="SIG:LIST.drop:VAL:SPEC" HREF="#SIG:LIST.drop:VAL">drop</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="SIG:LIST.rev:VAL:SPEC" HREF="#SIG:LIST.rev:VAL">rev</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="SIG:LIST.concat:VAL:SPEC" HREF="#SIG:LIST.concat:VAL">concat</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="SIG:LIST.revAppend:VAL:SPEC" HREF="#SIG:LIST.revAppend:VAL">revAppend</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="SIG:LIST.app:VAL:SPEC" HREF="#SIG:LIST.app:VAL">app</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;unit)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="SIG:LIST.map:VAL:SPEC" HREF="#SIG:LIST.map:VAL">map</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I>)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I>&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="SIG:LIST.mapPartial:VAL:SPEC" HREF="#SIG:LIST.mapPartial:VAL">mapPartial</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I>&nbsp;option)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I>&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="SIG:LIST.find:VAL:SPEC" HREF="#SIG:LIST.find:VAL">find</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;bool)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="SIG:LIST.filter:VAL:SPEC" HREF="#SIG:LIST.filter:VAL">filter</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;bool)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="SIG:LIST.partition:VAL:SPEC" HREF="#SIG:LIST.partition:VAL">partition</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;bool)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="SIG:LIST.foldl:VAL:SPEC" HREF="#SIG:LIST.foldl:VAL">foldl</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'b</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I>)&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I><BR>
+<B>val</B>&nbsp;<A NAME="SIG:LIST.foldr:VAL:SPEC" HREF="#SIG:LIST.foldr:VAL">foldr</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'b</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I>)&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I><BR>
+<B>val</B>&nbsp;<A NAME="SIG:LIST.exists:VAL:SPEC" HREF="#SIG:LIST.exists:VAL">exists</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;bool)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="SIG:LIST.all:VAL:SPEC" HREF="#SIG:LIST.all:VAL">all</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;bool)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="SIG:LIST.tabulate:VAL:SPEC" HREF="#SIG:LIST.tabulate:VAL">tabulate</A>&nbsp;<B>:</B>&nbsp;int&nbsp;<B>*</B>&nbsp;(int&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="SIG:LIST.collate:VAL:SPEC" HREF="#SIG:LIST.collate:VAL">collate</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;order)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;order</CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="SIG:LIST.Empty:EXN"></A><CODE><B>exception</B>&nbsp;Empty</CODE>
+<DD>
+        This exception indicates that an empty list was given as an argument to a function requiring a non-empty list. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:LIST.null:VAL"></A>
+<DT> <CODE>null <VAR>l</VAR> </CODE>
+<DD>
+returns <CODE>true</CODE> if the list <VAR>l</VAR> is empty. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:LIST.length:VAL"></A>
+<DT> <CODE>length <VAR>l</VAR> </CODE>
+<DD>
+returns the number of elements in the list <VAR>l</VAR>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:LIST.@:VAL"></A>
+<DT> <CODE><VAR>l1</VAR> @ <VAR>l2</VAR> </CODE>
+<DD>
+returns the list that is the concatenation of <VAR>l1</VAR> and <VAR>l2</VAR>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:LIST.hd:VAL"></A>
+<DT> <CODE>hd <VAR>l</VAR> </CODE>
+<DD>
+returns the first element of <VAR>l</VAR>.   It raises <CODE><A HREF="list.html#SIG:LIST.Empty:EXN:SPEC">Empty</A></CODE> if <VAR>l</VAR> is <CODE>nil</CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:LIST.tl:VAL"></A>
+<DT> <CODE>tl <VAR>l</VAR> </CODE>
+<DD>
+returns all but the first element of <VAR>l</VAR>.   It raises <CODE><A HREF="list.html#SIG:LIST.Empty:EXN:SPEC">Empty</A></CODE> if <VAR>l</VAR> is <CODE>nil</CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:LIST.last:VAL"></A>
+<DT> <CODE>last <VAR>l</VAR> </CODE>
+<DD>
+returns the last element of <VAR>l</VAR>.   It raises <CODE><A HREF="list.html#SIG:LIST.Empty:EXN:SPEC">Empty</A></CODE> if <VAR>l</VAR> is <CODE>nil</CODE>.  
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:LIST.getItem:VAL"></A>
+<DT> <CODE>getItem <VAR>l</VAR> </CODE>
+<DD>
+returns <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A></CODE> if the list is empty, and <CODE><CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">SOME</A></CODE>(hd <VAR>l</VAR>,tl <VAR>l</VAR>)</CODE> otherwise. This function is particularly useful for creating value readers from lists of characters. For example, <CODE>Int.scan StringCvt.DEC getItem</CODE> has the type 
+<PRE>
+(int,char list) StringCvt.reader
+</PRE>
+ and can be used to scan decimal integers from lists of characters. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:LIST.nth:VAL"></A>
+<DT> <CODE>nth (<VAR>l</VAR>, <VAR>i</VAR>) </CODE>
+<DD>
+returns the <VAR>i</VAR><SUP>(th)</SUP> element of the list <VAR>l</VAR>,  counting from 0. It raises <CODE><A HREF="general.html#SIG:GENERAL.Subscript:EXN:SPEC">Subscript</A></CODE>  if <VAR>i</VAR> &lt; 0 or <VAR>i</VAR> &gt;= <CODE>length</CODE> <VAR>l</VAR>. We have <CODE>nth(<VAR>l</VAR>,0) = hd <VAR>l</VAR></CODE>, ignoring exceptions. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:LIST.take:VAL"></A>
+<DT> <CODE>take (<VAR>l</VAR>, <VAR>i</VAR>) </CODE>
+<DD>
+returns the first <VAR>i</VAR> elements of the list <VAR>l</VAR>. It raises <CODE><A HREF="general.html#SIG:GENERAL.Subscript:EXN:SPEC">Subscript</A></CODE> if <VAR>i</VAR> &lt; 0 or <VAR>i</VAR> &gt; <CODE>length</CODE> <VAR>l</VAR>. We have <CODE><CODE><A HREF="list.html#SIG:LIST.take:VAL:SPEC">take</A></CODE>(<VAR>l</VAR>, <CODE><A HREF="list.html#SIG:LIST.length:VAL:SPEC">length</A></CODE> <VAR>l</VAR>) = <VAR>l</VAR></CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:LIST.drop:VAL"></A>
+<DT> <CODE>drop (<VAR>l</VAR>, <VAR>i</VAR>) </CODE>
+<DD>
+returns what is left after dropping the first <VAR>i</VAR> elements of the list <VAR>l</VAR>. It raises <CODE><A HREF="general.html#SIG:GENERAL.Subscript:EXN:SPEC">Subscript</A></CODE> if <VAR>i</VAR> &lt; 0 or <VAR>i</VAR> &gt; <CODE>length</CODE> <VAR>l</VAR>. It holds that <CODE><CODE><A HREF="list.html#SIG:LIST.take:VAL:SPEC">take</A></CODE>(<VAR>l</VAR>, <VAR>i</VAR>) <CODE><A HREF="list.html#SIG:LIST.@:VAL:SPEC">@</A></CODE> <CODE><A HREF="list.html#SIG:LIST.drop:VAL:SPEC">drop</A></CODE>(<VAR>l</VAR>, <VAR>i</VAR>) = <VAR>l</VAR></CODE> when 0 &lt;= <VAR>i</VAR> &lt;= <CODE>length</CODE> <VAR>l</VAR>. We also have <CODE><CODE><A HREF="list.html#SIG:LIST.drop:VAL:SPEC">drop</A></CODE>(<VAR>l</VAR>, <CODE><A HREF="list.html#SIG:LIST.length:VAL:SPEC">length</A></CODE> <VAR>l</VAR>) = []</CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:LIST.rev:VAL"></A>
+<DT> <CODE>rev <VAR>l</VAR> </CODE>
+<DD>
+returns a list consisting of <VAR>l</VAR>'s elements in reverse order. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:LIST.concat:VAL"></A>
+<DT> <CODE>concat <VAR>l</VAR> </CODE>
+<DD>
+returns the list that is the concatenation of all the   lists in <VAR>l</VAR> in order. 
+<PRE>
+concat[<VAR>l1</VAR>,<VAR>l2</VAR>,...<VAR>ln</VAR>] = <VAR>l1</VAR> @ <VAR>l2</VAR> @ ... @ <VAR>ln</VAR>
+</PRE>
+ 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:LIST.revAppend:VAL"></A>
+<DT> <CODE>revAppend (<VAR>l1</VAR>, <VAR>l2</VAR>) </CODE>
+<DD>
+returns <CODE>(rev l1) @ l2</CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:LIST.app:VAL"></A>
+<DT> <CODE>app <VAR>f</VAR> <VAR>l</VAR> </CODE>
+<DD>
+applies <VAR>f</VAR> to the elements of <VAR>l</VAR>, from left to right. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:LIST.map:VAL"></A>
+<DT> <CODE>map <VAR>f</VAR> <VAR>l</VAR> </CODE>
+<DD>
+applies <VAR>f</VAR> to each element of <VAR>l</VAR> from left to right, returning the list of results.  
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:LIST.mapPartial:VAL"></A>
+<DT> <CODE>mapPartial <VAR>f</VAR> <VAR>l</VAR> </CODE>
+<DD>
+applies <VAR>f</VAR> to each element of <VAR>l</VAR> from left to right, returning a list of results, with  <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">SOME</A></CODE> stripped, where <VAR>f</VAR> was defined. <VAR>f</VAR> is not defined for an element of <VAR>l</VAR> if <VAR>f</VAR> applied to the element returns <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A></CODE>. The above expression is equivalent to: 
+<PRE>
+((map valOf) o (filter isSome) o (map <VAR>f</VAR>)) <VAR>l</VAR>
+</PRE>
+  
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:LIST.find:VAL"></A>
+<DT> <CODE>find <VAR>f</VAR> <VAR>l</VAR> </CODE>
+<DD>
+applies <VAR>f</VAR> to each element <VAR>x</VAR> of the list <VAR>l</VAR>, from left to right, until <CODE><VAR>f</VAR> <VAR>x</VAR></CODE> evaluates to <CODE>true</CODE>. It returns <CODE><CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">SOME</A></CODE>(<VAR>x</VAR>)</CODE> if such an <VAR>x</VAR> exists; otherwise it returns <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A></CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:LIST.filter:VAL"></A>
+<DT> <CODE>filter <VAR>f</VAR> <VAR>l</VAR> </CODE>
+<DD>
+applies <VAR>f</VAR> to each element <VAR>x</VAR> of <VAR>l</VAR>, from left to right, and returns the list of those <VAR>x</VAR> for which  <CODE><VAR>f</VAR> <VAR>x</VAR></CODE> evaluated to <CODE>true</CODE>, in the same order as they occurred in the argument list. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:LIST.partition:VAL"></A>
+<DT> <CODE>partition <VAR>f</VAR> <VAR>l</VAR> </CODE>
+<DD>
+applies <VAR>f</VAR> to each element <VAR>x</VAR> of <VAR>l</VAR>, from left  to right, and returns a pair <CODE>(<VAR>pos</VAR>, <VAR>neg</VAR>)</CODE> where <VAR>pos</VAR> is the list of those <VAR>x</VAR> for which <CODE><VAR>f</VAR> <VAR>x</VAR></CODE> evaluated to <CODE>true</CODE>, and <VAR>neg</VAR> is the list of those for which <CODE><VAR>f</VAR> <VAR>x</VAR></CODE> evaluated to <CODE>false</CODE>. The elements of <VAR>pos</VAR> and <VAR>neg</VAR> retain the same relative order they possessed in <VAR>l</VAR>.  
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:LIST.foldl:VAL"></A>
+<DT> <CODE>foldl <VAR>f</VAR> <VAR>init</VAR> [<VAR>x1</VAR>, <VAR>x2</VAR>, ..., <VAR>xn</VAR>] </CODE>
+<DD>
+returns 
+<PRE>
+<VAR>f</VAR>(<VAR>xn</VAR>,...,<VAR>f</VAR>(<VAR>x2</VAR>, <VAR>f</VAR>(<VAR>x1</VAR>, <VAR>init</VAR>))...)
+</PRE>
+ or <VAR>init</VAR> if the list is empty. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:LIST.foldr:VAL"></A>
+<DT> <CODE>foldr <VAR>f</VAR> <VAR>init</VAR> [<VAR>x1</VAR>, <VAR>x2</VAR>, ..., <VAR>xn</VAR>] </CODE>
+<DD>
+returns 
+<PRE>
+<VAR>f</VAR>(<VAR>x1</VAR>, <VAR>f</VAR>(<VAR>x2</VAR>, ..., <VAR>f</VAR>(<VAR>xn</VAR>, <VAR>init</VAR>)...))
+</PRE>
+ or <VAR>init</VAR> if the list is empty.  
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:LIST.exists:VAL"></A>
+<DT> <CODE>exists <VAR>f</VAR> <VAR>l</VAR> </CODE>
+<DD>
+applies <VAR>f</VAR> to each element <VAR>x</VAR> of the list <VAR>l</VAR>, from left to right, until <CODE><VAR>f</VAR> <VAR>x</VAR></CODE> evaluates to <CODE>true</CODE>; it returns <CODE>true</CODE> if such an <VAR>x</VAR> exists and <CODE>false</CODE> otherwise.  
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:LIST.all:VAL"></A>
+<DT> <CODE>all <VAR>f</VAR> <VAR>l</VAR> </CODE>
+<DD>
+applies <VAR>f</VAR> to each element <VAR>x</VAR> of the list <VAR>l</VAR>, from left to right, until <CODE><VAR>f</VAR> <VAR>x</VAR></CODE> evaluates to <CODE>false</CODE>; it returns <CODE>false</CODE> if such an <VAR>x</VAR> exists and <CODE>true</CODE> otherwise. It is equivalent to  <CODE><CODE><A HREF="bool.html#SIG:BOOL.not:VAL:SPEC">not</A></CODE>(<CODE><A HREF="list.html#SIG:LIST.exists:VAL:SPEC">exists</A></CODE> (<CODE><A HREF="bool.html#SIG:BOOL.not:VAL:SPEC">not</A></CODE> o <VAR>f</VAR>) <VAR>l</VAR>))</CODE>.  
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:LIST.tabulate:VAL"></A>
+<DT> <CODE>tabulate (<VAR>n</VAR>, <VAR>f</VAR>) </CODE>
+<DD>
+returns a list of length <VAR>n</VAR> equal to  <CODE>[<VAR>f</VAR>(0), <VAR>f</VAR>(1), ..., <VAR>f</VAR>(<VAR>n</VAR>-1)]</CODE>, created from left to right. It raises <CODE><A HREF="general.html#SIG:GENERAL.Size:EXN:SPEC">Size</A></CODE> if <VAR>n</VAR> &lt; 0.  
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:LIST.collate:VAL"></A>
+<DT> <CODE>collate <VAR>f</VAR> (<VAR>l1</VAR>, <VAR>l2</VAR>) </CODE>
+<DD>
+performs lexicographic comparison of the two lists using the given ordering <VAR>f</VAR> on the list elements.
+<BR>
+<BR>
+
+</DL>
+<H4>See Also</H4>
+<BLOCKQUOTE>
+<CODE><A HREF="general.html#General:STR:SPEC">General</A></CODE>, <CODE><A HREF="list-pair.html#ListPair:STR:SPEC">ListPair</A></CODE>
+</BLOCKQUOTE>
+<H4>Discussion</H4>
+<P>
+The <CODE><A HREF="">list</A></CODE> type is considered primitive and is defined in the top-level environment. It is rebound here for consistency.
+<BLOCKQUOTE>
+<B>Rationale:</B><BR>
+
+<P>
+Lists are usually supported with a large collection of library functions. Here, we provide a somewhat smaller collection of operations that reflect common usage. We feel the collection is moderately complete, in that most programs will not need to define additional list operations. We have tried to adopt names that reflect a consensus from various existing libraries and texts. We have avoided functions relying on equality types.
+<P>
+Different SML implementations may still desire to provide list utility library modules, though if the design of <CODE>List</CODE> is right, they should be small.
+</BLOCKQUOTE>
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="manpages.html">Parent</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   | <A HREF="index.html">Root</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Generated April 12, 2004</I><BR>
+<I>Last Modified May 24, 2000</I><BR>
+<I>Comments to <A HREF="http://www.cs.uchicago.edu/people/jhr">John Reppy.</A></I><BR>
+
+<HR>
+<P>
+
+This document may be distributed freely over the internet as long as the
+copyright notice and license terms below are prominently displayed within
+every machine-readable copy.  
+
+<P>
+
+<TABLE ALIGN=CENTER WIDTH="80%" BORDER="2" CELLPADDING="5">
+<TR>
+<TD>
+<P>
+
+Copyright &copy; 2004 AT&amp;T and Lucent Technologies.
+All rights reserved.
+
+<P>
+
+Permission is granted for internet users to make one paper copy for their
+own personal use.  Further hardcopy reproduction is strictly prohibited. 
+Permission to distribute the HTML document electronically on any medium
+other than the internet must be requested from the copyright holders by
+contacting the editors.
+Printed versions of the SML Basis Manual are available from Cambridge
+University Press.
+To order, please visit
+<A HREF="http://www.cup.org">www.cup.org</A> (North America) or
+<A HREF="http://www.cup.cam.ac.uk">www.cup.cam.ac.uk</A> (outside North America).<BR>
+
+</TABLE>
+<P>
+
+<HR>
+</BODY></HTML>

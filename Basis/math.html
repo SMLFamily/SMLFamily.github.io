@@ -1,0 +1,490 @@
+<!-- HTML/math.html -->
+
+<!-- COPYRIGHT (c) 1997 Bell Labs, Lucent Technologies. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The MATH signature</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF"><A NAME="top"></A>
+<H1 align=CENTER>The Standard ML Basis Library</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>MATH</CODE> signature</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="MATH:SIG:SPEC"></A><CODE>MATH</CODE><BR>
+<B>structure</B>&nbsp;<A NAME="Math:STR:SPEC"></A><CODE>Math</CODE><B> :> </B>MATH<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;real&nbsp;=&nbsp;Real.real<BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+The signature <CODE>MATH</CODE> specifies basic mathematical constants, the square root function, and trigonometric, hyperbolic, exponential, and logarithmic functions based on a real type. The functions defined here have roughly the same semantics as their counterparts in ISO C's <CODE>math.h</CODE>.
+<P>
+The top-level structure <CODE>Math</CODE> provides these functions for the default real type <CODE><A HREF="real.html#SIG:REAL.real:TY:SPEC">Real.real</A></CODE>. 
+<P>
+In the functions below, unless specified otherwise, if any argument is a NaN, the return value is a NaN. In a list of rules specifying the behavior of a function in special cases, the first matching rule defines the semantics. 
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>type</B>&nbsp;<A NAME="SIG:MATH.real:TY:SPEC" HREF="#SIG:MATH.real:TY">real</A><BR>
+<B>val</B>&nbsp;<A NAME="SIG:MATH.pi:VAL:SPEC" HREF="#SIG:MATH.pi:VAL">pi</A>&nbsp;<B>:</B>&nbsp;real<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MATH.e:VAL:SPEC" HREF="#SIG:MATH.e:VAL">e</A>&nbsp;<B>:</B>&nbsp;real<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MATH.sqrt:VAL:SPEC" HREF="#SIG:MATH.sqrt:VAL">sqrt</A>&nbsp;<B>:</B>&nbsp;real&nbsp;<B>-&gt;</B>&nbsp;real<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MATH.sin:VAL:SPEC" HREF="#SIG:MATH.sin:VAL">sin</A>&nbsp;<B>:</B>&nbsp;real&nbsp;<B>-&gt;</B>&nbsp;real<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MATH.cos:VAL:SPEC" HREF="#SIG:MATH.cos:VAL">cos</A>&nbsp;<B>:</B>&nbsp;real&nbsp;<B>-&gt;</B>&nbsp;real<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MATH.tan:VAL:SPEC" HREF="#SIG:MATH.tan:VAL">tan</A>&nbsp;<B>:</B>&nbsp;real&nbsp;<B>-&gt;</B>&nbsp;real<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MATH.asin:VAL:SPEC" HREF="#SIG:MATH.asin:VAL">asin</A>&nbsp;<B>:</B>&nbsp;real&nbsp;<B>-&gt;</B>&nbsp;real<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MATH.acos:VAL:SPEC" HREF="#SIG:MATH.acos:VAL">acos</A>&nbsp;<B>:</B>&nbsp;real&nbsp;<B>-&gt;</B>&nbsp;real<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MATH.atan:VAL:SPEC" HREF="#SIG:MATH.atan:VAL">atan</A>&nbsp;<B>:</B>&nbsp;real&nbsp;<B>-&gt;</B>&nbsp;real<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MATH.atan2:VAL:SPEC" HREF="#SIG:MATH.atan2:VAL">atan2</A>&nbsp;<B>:</B>&nbsp;real&nbsp;<B>*</B>&nbsp;real&nbsp;<B>-&gt;</B>&nbsp;real<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MATH.exp:VAL:SPEC" HREF="#SIG:MATH.exp:VAL">exp</A>&nbsp;<B>:</B>&nbsp;real&nbsp;<B>-&gt;</B>&nbsp;real<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MATH.pow:VAL:SPEC" HREF="#SIG:MATH.pow:VAL">pow</A>&nbsp;<B>:</B>&nbsp;real&nbsp;<B>*</B>&nbsp;real&nbsp;<B>-&gt;</B>&nbsp;real<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MATH.ln:VAL:SPEC" HREF="#SIG:MATH.ln:VAL">ln</A>&nbsp;&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;real&nbsp;<B>-&gt;</B>&nbsp;real<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MATH.log10:VAL:SPEC" HREF="#SIG:MATH.log10:VAL">log10</A>&nbsp;<B>:</B>&nbsp;real&nbsp;<B>-&gt;</B>&nbsp;real<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MATH.sinh:VAL:SPEC" HREF="#SIG:MATH.sinh:VAL">sinh</A>&nbsp;<B>:</B>&nbsp;real&nbsp;<B>-&gt;</B>&nbsp;real<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MATH.cosh:VAL:SPEC" HREF="#SIG:MATH.cosh:VAL">cosh</A>&nbsp;<B>:</B>&nbsp;real&nbsp;<B>-&gt;</B>&nbsp;real<BR>
+<B>val</B>&nbsp;<A NAME="SIG:MATH.tanh:VAL:SPEC" HREF="#SIG:MATH.tanh:VAL">tanh</A>&nbsp;<B>:</B>&nbsp;real&nbsp;<B>-&gt;</B>&nbsp;real</CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="SIG:MATH.pi:VAL"></A><CODE><B>val</B>&nbsp;pi&nbsp;<B>:</B>&nbsp;real</CODE>
+<DD>
+          The constant pi (3.141592653...). 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:MATH.e:VAL"></A><CODE><B>val</B>&nbsp;e&nbsp;<B>:</B>&nbsp;real</CODE>
+<DD>
+          The base <TT>e</TT> (2.718281828...) of the natural logarithm. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:MATH.sqrt:VAL"></A>
+<DT> <CODE>sqrt <VAR>x</VAR> </CODE>
+<DD>
+returns the square root of <VAR>x</VAR>. <CODE><CODE><A HREF="math.html#SIG:MATH.sqrt:VAL:SPEC">sqrt</A></CODE> (~0.0) = ~0.0</CODE>. If <VAR>x</VAR> &lt; 0, it returns NaN. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:MATH.sin:VAL"></A>
+<DT> <CODE>sin <VAR>x</VAR> </CODE>
+<DT> <CODE>          cos <VAR>x</VAR> </CODE>
+<DT> <CODE>          tan <VAR>x</VAR> </CODE>
+<DD>
+These return the sine, cosine, and tangent, respectively, of <VAR>x</VAR>, measured in radians. If <VAR>x</VAR> is an infinity, these functions return NaN. Note that <CODE><A HREF="math.html#SIG:MATH.tan:VAL:SPEC">tan</A></CODE> will produce infinities at various finite values, roughly corresponding to the singularities of the tangent function. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:MATH.asin:VAL"></A>
+<DT> <CODE>asin <VAR>x</VAR> </CODE>
+<DT> <CODE>          acos <VAR>x</VAR> </CODE>
+<DD>
+These return the arc sine and arc cosine, respectively, of <VAR>x</VAR>. <CODE><A HREF="math.html#SIG:MATH.asin:VAL:SPEC">asin</A></CODE> is the  inverse of <CODE><A HREF="math.html#SIG:MATH.sin:VAL:SPEC">sin</A></CODE>. Its result is guaranteed to be in the  closed interval [-pi/2,pi/2].  <CODE><A HREF="math.html#SIG:MATH.acos:VAL:SPEC">acos</A></CODE> is the  inverse of <CODE><A HREF="math.html#SIG:MATH.cos:VAL:SPEC">cos</A></CODE>. Its result is guaranteed to be in the closed interval [0,pi]. If the magnitude of <VAR>x</VAR> exceeds 1.0, they return NaN. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:MATH.atan:VAL"></A>
+<DT> <CODE>atan <VAR>x</VAR> </CODE>
+<DD>
+returns the arc tangent of <VAR>x</VAR>.  <CODE><A HREF="math.html#SIG:MATH.atan:VAL:SPEC">atan</A></CODE> is the inverse  of <CODE><A HREF="math.html#SIG:MATH.tan:VAL:SPEC">tan</A></CODE>. For finite arguments, the result is guaranteed to be in the open interval (-pi/2,pi/2). If <VAR>x</VAR> is +infinity, it returns pi/2; if <VAR>x</VAR> is -infinity, it returns -pi/2. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:MATH.atan2:VAL"></A>
+<DT> <CODE>atan2 (<VAR>y</VAR>, <VAR>x</VAR>) </CODE>
+<DD>
+returns the arc tangent of <CODE>(<VAR>y</VAR>/<VAR>x</VAR>)</CODE> in the  closed interval [-pi,pi], corresponding to angles within  +-180 degrees. The quadrant of the resulting angle is  determined using the signs of both <VAR>x</VAR> and <VAR>y</VAR>, and  is the same as the quadrant of the point (<VAR>x</VAR>,<VAR>y</VAR>).  When <VAR>x</VAR> = 0, this corresponds to an angle of 90 degrees,  and the result is <CODE>(real (sign <VAR>y</VAR>)) * pi/2.0</CODE>.  It holds that  
+<BLOCKQUOTE>
+ <CODE>sign</CODE> (  <CODE>cos</CODE> (   <CODE>atan2</CODE> (<VAR>y</VAR>,<VAR>x</VAR>)))  = <CODE>sign</CODE>(<VAR>x</VAR>) 
+</BLOCKQUOTE>
+ and  
+<BLOCKQUOTE>
+ <CODE>sign</CODE> (  <CODE>sin</CODE> (   <CODE>atan2</CODE> (<VAR>y</VAR>,<VAR>x</VAR>)))  = <CODE>sign</CODE>(<VAR>y</VAR>)  
+</BLOCKQUOTE>
+  except for inaccuracies incurred by the finite precision of  <CODE><A HREF="math.html#SIG:MATH.real:TY:SPEC">real</A></CODE> and the approximation algorithms used to  compute the mathematical functions. 
+<P>
+          Rules for exceptional cases are specified in the following table. 
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TH ALIGN=CENTER VALIGN=TOP>
+<VAR>y</VAR>
+<TH ALIGN=CENTER VALIGN=TOP>
+<VAR>x</VAR>
+<TH ALIGN=CENTER VALIGN=TOP>
+<TT>atan2(</TT><VAR>y</VAR><TT>,</TT><VAR>x</VAR><TT>)</TT>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
++-0
+<TD ALIGN=CENTER VALIGN=TOP>
+0 &lt; <VAR>x</VAR>
+<TD ALIGN=CENTER VALIGN=TOP>
++-0
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
++-0
+<TD ALIGN=CENTER VALIGN=TOP>
++0
+<TD ALIGN=CENTER VALIGN=TOP>
++-0
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
++-0
+<TD ALIGN=CENTER VALIGN=TOP>
+<VAR>x</VAR> &lt; 0
+<TD ALIGN=CENTER VALIGN=TOP>
++-pi
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
++-0
+<TD ALIGN=CENTER VALIGN=TOP>
+-0
+<TD ALIGN=CENTER VALIGN=TOP>
++-pi
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<VAR>y</VAR>, 0 &lt; <VAR>y</VAR>
+<TD ALIGN=CENTER VALIGN=TOP>
++-0
+<TD ALIGN=CENTER VALIGN=TOP>
+pi/2
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<VAR>y</VAR>, <VAR>y</VAR> &lt; 0
+<TD ALIGN=CENTER VALIGN=TOP>
++-0
+<TD ALIGN=CENTER VALIGN=TOP>
+-pi/2
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
++-<VAR>y</VAR>, finite <VAR>y</VAR> &gt; 0
+<TD ALIGN=CENTER VALIGN=TOP>
++infinity
+<TD ALIGN=CENTER VALIGN=TOP>
++-0
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
++-<VAR>y</VAR>, finite <VAR>y</VAR> &gt; 0
+<TD ALIGN=CENTER VALIGN=TOP>
+-infinity
+<TD ALIGN=CENTER VALIGN=TOP>
++-pi
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
++-infinity
+<TD ALIGN=CENTER VALIGN=TOP>
+finite <VAR>x</VAR>
+<TD ALIGN=CENTER VALIGN=TOP>
++-pi/2
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
++-infinity
+<TD ALIGN=CENTER VALIGN=TOP>
++infinity
+<TD ALIGN=CENTER VALIGN=TOP>
++-pi/4
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
++-infinity
+<TD ALIGN=CENTER VALIGN=TOP>
+-infinity
+<TD ALIGN=CENTER VALIGN=TOP>
++-3pi/4
+</TABLE>
+</CENTER>
+<HR>
+ 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:MATH.exp:VAL"></A>
+<DT> <CODE>exp <VAR>x</VAR> </CODE>
+<DD>
+returns e<SUP>(<VAR>x</VAR>)</SUP>, <I>i.e.</I>, e raised to the  <VAR>x</VAR><SUP>(th)</SUP> power. If <VAR>x</VAR> is +infinity, it returns +infinity; if <VAR>x</VAR> is -infinity, it returns 0. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:MATH.pow:VAL"></A>
+<DT> <CODE>pow (<VAR>x</VAR>, <VAR>y</VAR>) </CODE>
+<DD>
+returns <VAR>x</VAR><SUP>(<VAR>y</VAR>)</SUP>, <I>i.e.</I>, <VAR>x</VAR> raised to the  <VAR>y</VAR><SUP>(th)</SUP> power. For finite <VAR>x</VAR> and <VAR>y</VAR>, this is well-defined when <VAR>x</VAR> &gt; 0,  or when <VAR>x</VAR> &lt; 0 and <VAR>y</VAR> is integral. Rules for exceptional cases are specified below. 
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TH ALIGN=CENTER VALIGN=TOP>
+<VAR>x</VAR>
+<TH ALIGN=CENTER VALIGN=TOP>
+<VAR>y</VAR>
+<TH ALIGN=CENTER VALIGN=TOP>
+<TT>pow(</TT><VAR>x</VAR><TT>,</TT><VAR>y</VAR><TT>)</TT>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<VAR>x</VAR>, including NaN
+<TD ALIGN=CENTER VALIGN=TOP>
+0
+<TD ALIGN=CENTER VALIGN=TOP>
+1
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+|<VAR>x</VAR>| &gt; 1
+<TD ALIGN=CENTER VALIGN=TOP>
++infinity
+<TD ALIGN=CENTER VALIGN=TOP>
++infinity
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+|<VAR>x</VAR>| &lt; 1
+<TD ALIGN=CENTER VALIGN=TOP>
++infinity
+<TD ALIGN=CENTER VALIGN=TOP>
++0
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+|<VAR>x</VAR>| &gt; 1
+<TD ALIGN=CENTER VALIGN=TOP>
+-infinity
+<TD ALIGN=CENTER VALIGN=TOP>
++0
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+|<VAR>x</VAR>| &lt; 1
+<TD ALIGN=CENTER VALIGN=TOP>
+-infinity
+<TD ALIGN=CENTER VALIGN=TOP>
++infinity
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
++infinity
+<TD ALIGN=CENTER VALIGN=TOP>
+<VAR>y</VAR> &gt; 0
+<TD ALIGN=CENTER VALIGN=TOP>
++infinity
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
++infinity
+<TD ALIGN=CENTER VALIGN=TOP>
+<VAR>y</VAR> &lt; 0
+<TD ALIGN=CENTER VALIGN=TOP>
++0
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+-infinity
+<TD ALIGN=CENTER VALIGN=TOP>
+<VAR>y</VAR> &gt; 0, odd integer
+<TD ALIGN=CENTER VALIGN=TOP>
+-infinity
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+-infinity
+<TD ALIGN=CENTER VALIGN=TOP>
+<VAR>y</VAR> &gt; 0, not odd integer
+<TD ALIGN=CENTER VALIGN=TOP>
++infinity
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+-infinity
+<TD ALIGN=CENTER VALIGN=TOP>
+<VAR>y</VAR> &lt; 0, odd integer
+<TD ALIGN=CENTER VALIGN=TOP>
+-0
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+-infinity
+<TD ALIGN=CENTER VALIGN=TOP>
+<VAR>y</VAR> &lt; 0, not odd integer
+<TD ALIGN=CENTER VALIGN=TOP>
++0
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<VAR>x</VAR>
+<TD ALIGN=CENTER VALIGN=TOP>
+NaN
+<TD ALIGN=CENTER VALIGN=TOP>
+NaN
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+NaN
+<TD ALIGN=CENTER VALIGN=TOP>
+<VAR>y</VAR> &lt;&gt; 0
+<TD ALIGN=CENTER VALIGN=TOP>
+NaN
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
++-1
+<TD ALIGN=CENTER VALIGN=TOP>
++-infinity
+<TD ALIGN=CENTER VALIGN=TOP>
+NaN
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+finite <VAR>x</VAR> &lt; 0
+<TD ALIGN=CENTER VALIGN=TOP>
+finite non-integer <VAR>y</VAR>
+<TD ALIGN=CENTER VALIGN=TOP>
+NaN
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
++-0
+<TD ALIGN=CENTER VALIGN=TOP>
+<VAR>y</VAR> &lt; 0, odd integer
+<TD ALIGN=CENTER VALIGN=TOP>
++-infinity
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
++-0
+<TD ALIGN=CENTER VALIGN=TOP>
+finite <VAR>y</VAR> &lt; 0, not odd integer
+<TD ALIGN=CENTER VALIGN=TOP>
++infinity
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
++-0
+<TD ALIGN=CENTER VALIGN=TOP>
+<VAR>y</VAR> &gt; 0, odd integer
+<TD ALIGN=CENTER VALIGN=TOP>
++-0
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
++-0
+<TD ALIGN=CENTER VALIGN=TOP>
+<VAR>y</VAR> &gt; 0, not odd integer
+<TD ALIGN=CENTER VALIGN=TOP>
++0
+</TABLE>
+</CENTER>
+<HR>
+ 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:MATH.ln:VAL"></A>
+<DT> <CODE>ln <VAR>x</VAR> </CODE>
+<DT> <CODE>          log10 <VAR>r</VAR> </CODE>
+<DD>
+These return the natural logarithm (base e) and decimal logarithm (base 10), respectively, of <VAR>x</VAR>. If <VAR>x</VAR> &lt; 0, they return NaN; if <VAR>x</VAR> = 0, they return -infinity; if <VAR>x</VAR> is infinity, they return infinity. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:MATH.sinh:VAL"></A>
+<DT> <CODE>sinh <VAR>x</VAR> </CODE>
+<DT> <CODE>          cosh <VAR>x</VAR> </CODE>
+<DT> <CODE>          tanh <VAR>x</VAR> </CODE>
+<DD>
+These return the hyperbolic sine, hyperbolic cosine, and hyperbolic tangent, respectively, of <VAR>x</VAR>, that is, the values  (e<SUP>(<VAR>x</VAR>)</SUP> - e<SUP>(-<VAR>x</VAR>)</SUP>) / 2,  (e<SUP>(<VAR>x</VAR>)</SUP> + e<SUP>(-<VAR>x</VAR>)</SUP>) / 2, and  <CODE>(<CODE><A HREF="math.html#SIG:MATH.sinh:VAL:SPEC">sinh</A></CODE> x)/(<CODE><A HREF="math.html#SIG:MATH.cosh:VAL:SPEC">cosh</A></CODE> x)</CODE>. 
+<P>
+ These functions have the following properties:  
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TD ALIGN=RIGHT VALIGN=TOP>
+<CODE><A HREF="math.html#SIG:MATH.sinh:VAL:SPEC">sinh</A></CODE> +-0
+<TD ALIGN=CENTER VALIGN=TOP>
+=
+<TD ALIGN=LEFT VALIGN=TOP>
++-0
+<TR>
+<TD ALIGN=RIGHT VALIGN=TOP>
+<CODE><A HREF="math.html#SIG:MATH.sinh:VAL:SPEC">sinh</A></CODE> +-infinity
+<TD ALIGN=CENTER VALIGN=TOP>
+=
+<TD ALIGN=LEFT VALIGN=TOP>
++-infinity
+<TR>
+<TD ALIGN=RIGHT VALIGN=TOP>
+<CODE><A HREF="math.html#SIG:MATH.cosh:VAL:SPEC">cosh</A></CODE> +-0
+<TD ALIGN=CENTER VALIGN=TOP>
+=
+<TD ALIGN=LEFT VALIGN=TOP>
+1
+<TR>
+<TD ALIGN=RIGHT VALIGN=TOP>
+<CODE><A HREF="math.html#SIG:MATH.cosh:VAL:SPEC">cosh</A></CODE> +-infinity
+<TD ALIGN=CENTER VALIGN=TOP>
+=
+<TD ALIGN=LEFT VALIGN=TOP>
++-infinity
+<TR>
+<TD ALIGN=RIGHT VALIGN=TOP>
+<CODE><A HREF="math.html#SIG:MATH.tanh:VAL:SPEC">tanh</A></CODE> +-0
+<TD ALIGN=CENTER VALIGN=TOP>
+=
+<TD ALIGN=LEFT VALIGN=TOP>
++-0
+<TR>
+<TD ALIGN=RIGHT VALIGN=TOP>
+<CODE><A HREF="math.html#SIG:MATH.tanh:VAL:SPEC">tanh</A></CODE> +-infinity
+<TD ALIGN=CENTER VALIGN=TOP>
+=
+<TD ALIGN=LEFT VALIGN=TOP>
++-1
+</TABLE>
+</CENTER>
+<HR>
+ 
+<BR>
+<BR>
+
+</DL>
+<H4>See Also</H4>
+<BLOCKQUOTE>
+<CODE><A HREF="real.html#REAL:SIG:SPEC">REAL</A></CODE>
+</BLOCKQUOTE>
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="manpages.html">Parent</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   | <A HREF="index.html">Root</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Generated April 12, 2004</I><BR>
+<I>Last Modified May 25, 2000</I><BR>
+<I>Comments to <A HREF="http://www.cs.uchicago.edu/people/jhr">John Reppy.</A></I><BR>
+
+<HR>
+<P>
+
+This document may be distributed freely over the internet as long as the
+copyright notice and license terms below are prominently displayed within
+every machine-readable copy.  
+
+<P>
+
+<TABLE ALIGN=CENTER WIDTH="80%" BORDER="2" CELLPADDING="5">
+<TR>
+<TD>
+<P>
+
+Copyright &copy; 2004 AT&amp;T and Lucent Technologies.
+All rights reserved.
+
+<P>
+
+Permission is granted for internet users to make one paper copy for their
+own personal use.  Further hardcopy reproduction is strictly prohibited. 
+Permission to distribute the HTML document electronically on any medium
+other than the internet must be requested from the copyright holders by
+contacting the editors.
+Printed versions of the SML Basis Manual are available from Cambridge
+University Press.
+To order, please visit
+<A HREF="http://www.cup.org">www.cup.org</A> (North America) or
+<A HREF="http://www.cup.cam.ac.uk">www.cup.cam.ac.uk</A> (outside North America).<BR>
+
+</TABLE>
+<P>
+
+<HR>
+</BODY></HTML>

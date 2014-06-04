@@ -1,0 +1,232 @@
+<!-- HTML/unix.html -->
+
+<!-- COPYRIGHT (c) 1997 Bell Labs, Lucent Technologies. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The Unix structure</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF"><A NAME="top"></A>
+<H1 align=CENTER>The Standard ML Basis Library</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>Unix</CODE> structure</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="UNIX:SIG:SPEC"></A><CODE>UNIX</CODE>&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+<B>structure</B>&nbsp;<A NAME="Unix:STR:SPEC"></A><CODE>Unix</CODE><B> :> </B>UNIX&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+The <CODE>Unix</CODE> structure provides several high-level functions for creating and communicating with separate processes, in analogy with the <CODE>popen</CODE> interface provided in the Unix operating system. This module provides a more flexible interface than that provided by the <CODE><A HREF="os-process.html#SIG:OS_PROCESS.system:VAL:SPEC">OS.Process.system</A></CODE> function. Using this module, a program can invoke a separate process and obtain input and output streams connected to the standard output and input streams, respectively, of the other process. 
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>type</B>&nbsp;(<I>'a</I>,<I>'b</I>)&nbsp;<A NAME="SIG:UNIX.proc:TY:SPEC" HREF="#SIG:UNIX.proc:TY">proc</A><BR>
+<B>type</B>&nbsp;<A NAME="SIG:UNIX.signal:TY:SPEC" HREF="#SIG:UNIX.signal:TY">signal</A><BR>
+<B>datatype</B>&nbsp;<A NAME="SIG:UNIX.exit_status:TY:SPEC" HREF="#SIG:UNIX.exit_status:TY">exit_status</A><BR>
+&nbsp;&nbsp;=&nbsp;<A NAME="SIG:UNIX.W_EXITED:TY:SPEC" HREF="#SIG:UNIX.W_EXITED:TY">W_EXITED</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="SIG:UNIX.W_EXITSTATUS:TY:SPEC" HREF="#SIG:UNIX.W_EXITSTATUS:TY">W_EXITSTATUS</A>&nbsp;<B>of</B>&nbsp;Word8.word<BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="SIG:UNIX.W_SIGNALED:TY:SPEC" HREF="#SIG:UNIX.W_SIGNALED:TY">W_SIGNALED</A>&nbsp;<B>of</B>&nbsp;signal<BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="SIG:UNIX.W_STOPPED:TY:SPEC" HREF="#SIG:UNIX.W_STOPPED:TY">W_STOPPED</A>&nbsp;<B>of</B>&nbsp;signal<BR>
+<B>val</B>&nbsp;<A NAME="SIG:UNIX.fromStatus:VAL:SPEC" HREF="#SIG:UNIX.fromStatus:VAL">fromStatus</A>&nbsp;<B>:</B>&nbsp;OS.Process.status&nbsp;<B>-&gt;</B>&nbsp;exit_status<BR>
+<B>val</B>&nbsp;<A NAME="SIG:UNIX.executeInEnv:VAL:SPEC" HREF="#SIG:UNIX.executeInEnv:VAL">executeInEnv</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;string&nbsp;list&nbsp;<B>*</B>&nbsp;string&nbsp;list<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;(<I>'a</I>,&nbsp;<I>'b</I>)&nbsp;proc<BR>
+<B>val</B>&nbsp;<A NAME="SIG:UNIX.execute:VAL:SPEC" HREF="#SIG:UNIX.execute:VAL">execute</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;string&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;(<I>'a</I>,&nbsp;<I>'b</I>)&nbsp;proc<BR>
+<B>val</B>&nbsp;<A NAME="SIG:UNIX.textInstreamOf:VAL:SPEC" HREF="#SIG:UNIX.textInstreamOf:VAL">textInstreamOf</A>&nbsp;<B>:</B>&nbsp;(TextIO.instream,&nbsp;<I>'a</I>)&nbsp;proc<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;TextIO.instream<BR>
+<B>val</B>&nbsp;<A NAME="SIG:UNIX.binInstreamOf:VAL:SPEC" HREF="#SIG:UNIX.binInstreamOf:VAL">binInstreamOf</A>&nbsp;&nbsp;<B>:</B>&nbsp;(BinIO.instream,&nbsp;<I>'a</I>)&nbsp;proc<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;BinIO.instream<BR>
+<B>val</B>&nbsp;<A NAME="SIG:UNIX.textOutstreamOf:VAL:SPEC" HREF="#SIG:UNIX.textOutstreamOf:VAL">textOutstreamOf</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>,&nbsp;TextIO.outstream)&nbsp;proc<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;TextIO.outstream<BR>
+<B>val</B>&nbsp;<A NAME="SIG:UNIX.binOutstreamOf:VAL:SPEC" HREF="#SIG:UNIX.binOutstreamOf:VAL">binOutstreamOf</A>&nbsp;&nbsp;<B>:</B>&nbsp;(<I>'a</I>,&nbsp;BinIO.outstream)&nbsp;proc<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;BinIO.outstream<BR>
+<B>val</B>&nbsp;<A NAME="SIG:UNIX.streamsOf:VAL:SPEC" HREF="#SIG:UNIX.streamsOf:VAL">streamsOf</A>&nbsp;<B>:</B>&nbsp;(TextIO.instream,&nbsp;TextIO.outstream)&nbsp;proc<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;TextIO.instream&nbsp;<B>*</B>&nbsp;TextIO.outstream<BR>
+<B>val</B>&nbsp;<A NAME="SIG:UNIX.reap:VAL:SPEC" HREF="#SIG:UNIX.reap:VAL">reap</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>,&nbsp;<I>'b</I>)&nbsp;proc&nbsp;<B>-&gt;</B>&nbsp;OS.Process.status<BR>
+<B>val</B>&nbsp;<A NAME="SIG:UNIX.kill:VAL:SPEC" HREF="#SIG:UNIX.kill:VAL">kill</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>,&nbsp;<I>'b</I>)&nbsp;proc&nbsp;<B>*</B>&nbsp;signal&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="SIG:UNIX.exit:VAL:SPEC" HREF="#SIG:UNIX.exit:VAL">exit</A>&nbsp;<B>:</B>&nbsp;Word8.word&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I></CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="SIG:UNIX.proc:TY"></A><CODE><B>type</B>&nbsp;(<I>'a</I>,<I>'b</I>)&nbsp;proc</CODE>
+<DD>
+        A type representing a handle for an operating system process. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:UNIX.signal:TY"></A><CODE><B>type</B>&nbsp;signal</CODE>
+<DD>
+        A Unix-like signal which can be sent to another process. Note that signal values must be obtained from some other structure. For example, an implementation providing the <CODE><A HREF="posix.html#Posix:STR:SPEC">Posix</A></CODE> module would probably equate the  <CODE><A HREF="unix.html#SIG:UNIX.signal:TY:SPEC">signal</A></CODE> and <CODE><A HREF="posix-signal.html#SIG:POSIX_SIGNAL.signal:TY:SPEC">Posix.Signal.signal</A></CODE> types. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:UNIX.exit_status:TY"></A><CODE><B>datatype</B>&nbsp;exit_status<BR>
+&nbsp;&nbsp;=&nbsp;W_EXITED<BR>
+&nbsp;&nbsp;|&nbsp;W_EXITSTATUS&nbsp;<B>of</B>&nbsp;Word8.word<BR>
+&nbsp;&nbsp;|&nbsp;W_SIGNALED&nbsp;<B>of</B>&nbsp;signal<BR>
+&nbsp;&nbsp;|&nbsp;W_STOPPED&nbsp;<B>of</B>&nbsp;signal</CODE>
+<DD>
+       These values represent the ways in which a Unix process might stop. They correspond to, respectively, successful termination, termination with the given exit value, termination upon receipt of the given signal, and stopping upon receipt of the given signal. The value carried by <CODE><A HREF="unix.html#SIG:UNIX.exit_status:TY:SPEC">W_EXITSTATUS</A></CODE> will be non-zero. 
+<P>
+ If an implementation provides both the <CODE><A HREF="posix.html#Posix:STR:SPEC">Posix</A></CODE>  and <CODE><A HREF="unix.html#Unix:STR:SPEC">Unix</A></CODE> structures, then  <CODE><A HREF="posix-process.html#SIG:POSIX_PROCESS.exit_status:TY:SPEC">Posix.Process.exit_status</A></CODE>  and <CODE><A HREF="unix.html#SIG:UNIX.exit_status:TY:SPEC">exit_status</A></CODE> must be the same type. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:UNIX.fromStatus:VAL"></A>
+<DT> <CODE>fromStatus <VAR>sts</VAR> </CODE>
+<DD>
+returns a concrete view of the given status. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:UNIX.executeInEnv:VAL"></A>
+<DT> <CODE>executeInEnv (<VAR>cmd</VAR>, <VAR>args</VAR>, <VAR>env</VAR>) </CODE>
+<DD>
+asks the operating system to execute the program named by the string <VAR>cmd</VAR> with the argument list <VAR>args</VAR> and the environment <VAR>env</VAR>. The program is run as a child process of the calling program; the return value  of this function is an abstract <CODE><A HREF="unix.html#SIG:UNIX.proc:TY:SPEC">proc</A></CODE> value naming the child process. Strings in the <VAR>env</VAR> list typically have the form <CODE>&quot;name=value&quot;</CODE> (see <CODE><A HREF="os-process.html#SIG:OS_PROCESS.getEnv:VAL:SPEC">OS.Process.getEnv</A></CODE>).  
+<P>
+ The <CODE>executeInEnv</CODE> function raises the  <CODE><A HREF="os.html#SIG:OS.SysErr:EXN:SPEC">OS.SysErr</A></CODE> exception if it fails.  Reasons for failure include insufficient memory, too many processes, and  the case where <VAR>cmd</VAR> does not name an executable file.  If the child process fails to execute the command (<I>i.e.</I>, the  <CODE>execve</CODE> call fails), then it should exit with a  status code of 126. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:UNIX.execute:VAL"></A>
+<DT> <CODE>execute (<VAR>cmd</VAR>, <VAR>args</VAR>) </CODE>
+<DD>
+asks the operating system to execute the program named by the string <VAR>cmd</VAR> with the argument list <VAR>args</VAR>. The program is run as a child process of the calling program and it inherits the  calling process's environment; the return value  of this function is an abstract <CODE><A HREF="unix.html#SIG:UNIX.proc:TY:SPEC">proc</A></CODE> value naming the child process.  The failure semantics of this function are the same as for <CODE><A HREF="unix.html#SIG:UNIX.executeInEnv:VAL:SPEC">executeInEnv</A></CODE>. 
+<P>
+          For implementations providing the <CODE><A HREF="posix.html#Posix:STR:SPEC">Posix</A></CODE> modules, this function is equivalent to 
+<PRE>
+          fun execute (cmd, args) =
+	        executeInEnv (<VAR>cmd</VAR>, <VAR>args</VAR>, <A HREF="posix-proc-env.html#SIG:POSIX_PROC_ENV.environ:VAL:SPEC">Posix.ProcEnv.environ</A> ())
+          
+</PRE>
+ 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:UNIX.textInstreamOf:VAL"></A>
+<DT> <CODE>textInstreamOf <VAR>pr</VAR> </CODE>
+<DT> <CODE>          binInstreamOf <VAR>pr</VAR> </CODE>
+<DD>
+These return a text or binary <CODE><A HREF="imperative-io.html#SIG:IMPERATIVE_IO.instream:TY:SPEC">instream</A></CODE>  connected to the standard output stream  of the process <VAR>pr</VAR>. 
+<P>
+ Note that multiple calls to these functions on the same <CODE><A HREF="unix.html#SIG:UNIX.proc:TY:SPEC">proc</A></CODE> value  will result in multiple streams that all share the same underlying  open file descriptor, which can lead to unpredictable effects because of the state inherent in file descriptors. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:UNIX.textOutstreamOf:VAL"></A>
+<DT> <CODE>textOutstreamOf <VAR>pr</VAR> </CODE>
+<DT> <CODE>          binOutstreamOf <VAR>pr</VAR> </CODE>
+<DD>
+These return a text or binary <CODE><A HREF="imperative-io.html#SIG:IMPERATIVE_IO.outstream:TY:SPEC">outstream</A></CODE>  connected to the standard input stream of the process <VAR>pr</VAR>. 
+<P>
+ Note that multiple calls to these functions on the same <CODE><A HREF="unix.html#SIG:UNIX.proc:TY:SPEC">proc</A></CODE> value  will result in multiple streams that all share the same underlying  open file descriptor, which can lead to unpredictable effects due to buffering. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:UNIX.streamsOf:VAL"></A>
+<DT> <CODE>streamsOf <VAR>pr</VAR> </CODE>
+<DD>
+returns a pair of input and output text streams associated with <VAR>pr</VAR>.  This function is equivalent to <CODE>(textInstream <VAR>pr</VAR>, textOutstream <VAR>pr</VAR>)</CODE>  and is provided for backward compatibility. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:UNIX.reap:VAL"></A>
+<DT> <CODE>reap <VAR>pr</VAR> </CODE>
+<DD>
+closes the input and output streams associated with <VAR>pr</VAR>, and then suspends the current process until the system process corresponding to <VAR>pr</VAR> terminates. It returns the exit status given by <VAR>pr</VAR> when it terminated. If <CODE>reap</CODE> is applied again to <VAR>pr</VAR>, it should immediately return the previous exit status. 
+<BLOCKQUOTE>
+<B>Implementation note:</B><BR>
+
+<P>
+Typically, one cannot rely on the underlying operating system to provide the exit status of a terminated process after it has done so once. Thus, the exit status probably needs to be cached. Also note that <CODE>reap</CODE> should not return until the process being monitored has terminated.  In particular, implementations should be careful not to return if the process has only been suspended. 
+</BLOCKQUOTE>
+ 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:UNIX.kill:VAL"></A>
+<DT> <CODE>kill (<VAR>pr</VAR>,<VAR>s</VAR>) </CODE>
+<DD>
+sends the signal <VAR>s</VAR> to the process <VAR>pr</VAR>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:UNIX.exit:VAL"></A>
+<DT> <CODE>exit <VAR>st</VAR> </CODE>
+<DD>
+executes all actions registered with <CODE><A HREF="os-process.html#SIG:OS_PROCESS.atExit:VAL:SPEC">OS.Process.atExit</A></CODE>, flushes and closes all I/O streams opened using the Library, then terminates the SML process with termination status <VAR>st</VAR>. 
+<BR>
+<BR>
+
+</DL>
+<H4>See Also</H4>
+<BLOCKQUOTE>
+<CODE><A HREF="bin-io.html#BinIO:STR:SPEC">BinIO</A></CODE>, <CODE><A HREF="os.html#SIG:OS.Process:STR:SPEC">OS.Process</A></CODE>, <CODE><A HREF="posix.html#Posix:STR:SPEC">Posix</A></CODE>, <CODE><A HREF="posix.html#SIG:POSIX.ProcEnv:STR:SPEC">Posix.ProcEnv</A></CODE>, <CODE><A HREF="posix.html#SIG:POSIX.Process:STR:SPEC">Posix.Process</A></CODE>, <CODE><A HREF="posix.html#SIG:POSIX.Signal:STR:SPEC">Posix.Signal</A></CODE>, <CODE><A HREF="text-io.html#TextIO:STR:SPEC">TextIO</A></CODE>
+</BLOCKQUOTE>
+<H4>Discussion</H4>
+<P>
+Note that the interpretation of the string <VAR>cmd</VAR> in the <CODE><A HREF="unix.html#SIG:UNIX.execute:VAL:SPEC">execute</A></CODE> and <CODE><A HREF="unix.html#SIG:UNIX.executeInEnv:VAL:SPEC">executeInEnv</A></CODE> functions depends very much on the underlying operating system. Typically, the <VAR>cmd</VAR> argument will be a full pathname.
+<P>
+The semantics of Unix necessitates that processes that have terminated need to be reaped. If this is not done, information concerning the dead process continues to reside in system tables. Thus, a program using <CODE><A HREF="unix.html#SIG:UNIX.execute:VAL:SPEC">execute</A></CODE> or <CODE><A HREF="unix.html#SIG:UNIX.executeInEnv:VAL:SPEC">executeInEnv</A></CODE> should invoke <CODE><A HREF="unix.html#SIG:UNIX.reap:VAL:SPEC">reap</A></CODE> on any subprocess it creates. 
+<BLOCKQUOTE>
+<B>Implementation note:</B><BR>
+
+<P>
+Although the flavor of this module is heavily influenced by Unix, and the module is simple to implement given the <CODE><A HREF="posix.html#Posix:STR:SPEC">Posix</A></CODE> subsystem, the functions are specified at a sufficiently high-level that implementations, including non-Unix ones, could provide this module without having to supply all of the <CODE><A HREF="posix.html#Posix:STR:SPEC">Posix</A></CODE> modules.
+</BLOCKQUOTE>
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="manpages.html">Parent</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   | <A HREF="index.html">Root</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Generated April 12, 2004</I><BR>
+<I>Last Modified May 9, 2003</I><BR>
+<I>Comments to <A HREF="http://www.cs.uchicago.edu/people/jhr">John Reppy.</A></I><BR>
+
+<HR>
+<P>
+
+This document may be distributed freely over the internet as long as the
+copyright notice and license terms below are prominently displayed within
+every machine-readable copy.  
+
+<P>
+
+<TABLE ALIGN=CENTER WIDTH="80%" BORDER="2" CELLPADDING="5">
+<TR>
+<TD>
+<P>
+
+Copyright &copy; 2004 AT&amp;T and Lucent Technologies.
+All rights reserved.
+
+<P>
+
+Permission is granted for internet users to make one paper copy for their
+own personal use.  Further hardcopy reproduction is strictly prohibited. 
+Permission to distribute the HTML document electronically on any medium
+other than the internet must be requested from the copyright holders by
+contacting the editors.
+Printed versions of the SML Basis Manual are available from Cambridge
+University Press.
+To order, please visit
+<A HREF="http://www.cup.org">www.cup.org</A> (North America) or
+<A HREF="http://www.cup.cam.ac.uk">www.cup.cam.ac.uk</A> (outside North America).<BR>
+
+</TABLE>
+<P>
+
+<HR>
+</BODY></HTML>

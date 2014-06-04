@@ -1,0 +1,160 @@
+<!-- HTML/posix.html -->
+
+<!-- COPYRIGHT (c) 1997 Bell Labs, Lucent Technologies. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The Posix structure</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF"><A NAME="top"></A>
+<H1 align=CENTER>The Standard ML Basis Library</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>Posix</CODE> structure</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="POSIX:SIG:SPEC"></A><CODE>POSIX</CODE>&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+<B>structure</B>&nbsp;<A NAME="Posix:STR:SPEC"></A><CODE>Posix</CODE><B> :> </B>POSIX&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+This optional structure contains several substructures that are useful for interfacing to POSIX operating systems. For more complete information on the semantics of the types and functions provided in <CODE>Posix</CODE>, see the POSIX standard 1003.1,1996 document<B>[CITE]</B>. 
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>structure</B>&nbsp;Error&nbsp;<B>:</B>&nbsp;<A HREF="posix-error.html#POSIX_ERROR:SIG:SPEC">POSIX_ERROR</A><BR>
+<B>structure</B>&nbsp;Signal&nbsp;<B>:</B>&nbsp;<A HREF="posix-signal.html#POSIX_SIGNAL:SIG:SPEC">POSIX_SIGNAL</A><BR>
+<B>structure</B>&nbsp;Process&nbsp;<B>:</B>&nbsp;<A HREF="posix-process.html#POSIX_PROCESS:SIG:SPEC">POSIX_PROCESS</A><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;signal&nbsp;=&nbsp;Signal.signal<BR>
+<B>structure</B>&nbsp;ProcEnv&nbsp;<B>:</B>&nbsp;<A HREF="posix-proc-env.html#POSIX_PROC_ENV:SIG:SPEC">POSIX_PROC_ENV</A><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;pid&nbsp;=&nbsp;Process.pid<BR>
+<B>structure</B>&nbsp;FileSys&nbsp;<B>:</B>&nbsp;<A HREF="posix-file-sys.html#POSIX_FILE_SYS:SIG:SPEC">POSIX_FILE_SYS</A><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;file_desc&nbsp;=&nbsp;ProcEnv.file_desc<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;uid&nbsp;=&nbsp;ProcEnv.uid<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;gid&nbsp;=&nbsp;ProcEnv.gid<BR>
+<B>structure</B>&nbsp;IO&nbsp;<B>:</B>&nbsp;<A HREF="posix-io.html#POSIX_IO:SIG:SPEC">POSIX_IO</A><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;pid&nbsp;=&nbsp;Process.pid<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;file_desc&nbsp;=&nbsp;ProcEnv.file_desc<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;open_mode&nbsp;=&nbsp;FileSys.open_mode<BR>
+<B>structure</B>&nbsp;SysDB&nbsp;<B>:</B>&nbsp;<A HREF="posix-sys-db.html#POSIX_SYS_DB:SIG:SPEC">POSIX_SYS_DB</A><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;uid&nbsp;=&nbsp;ProcEnv.uid<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;gid&nbsp;=&nbsp;ProcEnv.gid<BR>
+<B>structure</B>&nbsp;TTY&nbsp;<B>:</B>&nbsp;<A HREF="posix-tty.html#POSIX_TTY:SIG:SPEC">POSIX_TTY</A><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;pid&nbsp;=&nbsp;Process.pid<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;file_desc&nbsp;=&nbsp;ProcEnv.file_desc</CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="SIG:POSIX.Error:STR"></A><CODE><B>structure</B>&nbsp;Error&nbsp;<B>:</B>&nbsp;<A HREF="posix-error.html#POSIX_ERROR:SIG:SPEC">POSIX_ERROR</A></CODE>
+<DD>
+ Errors and their descriptions. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:POSIX.Signal:STR"></A><CODE><B>structure</B>&nbsp;Signal&nbsp;<B>:</B>&nbsp;<A HREF="posix-signal.html#POSIX_SIGNAL:SIG:SPEC">POSIX_SIGNAL</A></CODE>
+<DD>
+ Signal values and their associated numbers. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:POSIX.Process:STR"></A><CODE><B>structure</B>&nbsp;Process&nbsp;<B>:</B>&nbsp;<A HREF="posix-process.html#POSIX_PROCESS:SIG:SPEC">POSIX_PROCESS</A></CODE>
+<DD>
+ Processes: fork, exec, wait, exit, kill, alarm, pause, sleep. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:POSIX.ProcEnv:STR"></A><CODE><B>structure</B>&nbsp;ProcEnv&nbsp;<B>:</B>&nbsp;<A HREF="posix-proc-env.html#POSIX_PROC_ENV:SIG:SPEC">POSIX_PROC_ENV</A></CODE>
+<DD>
+ User and group IDs, process times, environment, etc. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:POSIX.FileSys:STR"></A><CODE><B>structure</B>&nbsp;FileSys&nbsp;<B>:</B>&nbsp;<A HREF="posix-file-sys.html#POSIX_FILE_SYS:SIG:SPEC">POSIX_FILE_SYS</A></CODE>
+<DD>
+ File system: open, chdir, chmod, directories, etc. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:POSIX.IO:STR"></A><CODE><B>structure</B>&nbsp;IO&nbsp;<B>:</B>&nbsp;<A HREF="posix-io.html#POSIX_IO:SIG:SPEC">POSIX_IO</A></CODE>
+<DD>
+ Input/output: read, write, pipe, dup, close,  lock, seek, sync, etc. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:POSIX.SysDB:STR"></A><CODE><B>structure</B>&nbsp;SysDB&nbsp;<B>:</B>&nbsp;<A HREF="posix-sys-db.html#POSIX_SYS_DB:SIG:SPEC">POSIX_SYS_DB</A></CODE>
+<DD>
+ Password database, group database, etc. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:POSIX.TTY:STR"></A><CODE><B>structure</B>&nbsp;TTY&nbsp;<B>:</B>&nbsp;<A HREF="posix-tty.html#POSIX_TTY:SIG:SPEC">POSIX_TTY</A></CODE>
+<DD>
+ Terminal (TTY) control: speed, attributes, drain, flush, etc.
+<BR>
+<BR>
+
+</DL>
+<H4>See Also</H4>
+<BLOCKQUOTE>
+<CODE><A HREF="posix.html#SIG:POSIX.Error:STR:SPEC">Posix.Error</A></CODE>, <CODE><A HREF="posix.html#SIG:POSIX.FileSys:STR:SPEC">Posix.FileSys</A></CODE>, <CODE><A HREF="posix.html#SIG:POSIX.IO:STR:SPEC">Posix.IO</A></CODE>, <CODE><A HREF="posix.html#SIG:POSIX.ProcEnv:STR:SPEC">Posix.ProcEnv</A></CODE>, <CODE><A HREF="posix.html#SIG:POSIX.Process:STR:SPEC">Posix.Process</A></CODE>, <CODE><A HREF="posix.html#SIG:POSIX.Signal:STR:SPEC">Posix.Signal</A></CODE>, <CODE><A HREF="posix.html#SIG:POSIX.SysDB:STR:SPEC">Posix.SysDB</A></CODE>, <CODE><A HREF="posix.html#SIG:POSIX.TTY:STR:SPEC">Posix.TTY</A></CODE>
+</BLOCKQUOTE>
+<H4>Discussion</H4>
+<P>
+The <CODE><A HREF="posix.html#Posix:STR:SPEC">Posix</A></CODE> structure and signatures are optional as a group; <I>i.e.</I>, they are either all present or all absent. Furthermore, if they are present, then the <CODE><A HREF="word.html#SysWord:STR:SPEC">SysWord</A></CODE> structure must also be provided by the implementation, but note that an implementation may provide the <CODE><A HREF="word.html#SysWord:STR:SPEC">SysWord</A></CODE> structure without providing the <CODE><A HREF="posix.html#Posix:STR:SPEC">Posix</A></CODE> structure.
+<P>
+Many functions in the <CODE><A HREF="posix.html#Posix:STR:SPEC">Posix</A></CODE> structure can raise  <CODE><A HREF="os.html#SIG:OS.SysErr:EXN:SPEC">OS.SysErr</A></CODE> for many reasons. The description of an individual function will usually not describe all of the causes for the exception, or all of the system errors (see <CODE><A HREF="os.html#SIG:OS.syserror:TY:SPEC">OS.syserror</A></CODE> and  <CODE><A HREF="posix-error.html#SIG:POSIX_ERROR.syserror:TY:SPEC">Posix.Error.syserror</A></CODE>) carried by the exception. The programmer will need to consult more detailed POSIX documentation.
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="manpages.html">Parent</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   | <A HREF="index.html">Root</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Generated April 12, 2004</I><BR>
+<I>Last Modified July 1, 2002</I><BR>
+<I>Comments to <A HREF="http://www.cs.uchicago.edu/people/jhr">John Reppy.</A></I><BR>
+
+<HR>
+<P>
+
+This document may be distributed freely over the internet as long as the
+copyright notice and license terms below are prominently displayed within
+every machine-readable copy.  
+
+<P>
+
+<TABLE ALIGN=CENTER WIDTH="80%" BORDER="2" CELLPADDING="5">
+<TR>
+<TD>
+<P>
+
+Copyright &copy; 2004 AT&amp;T and Lucent Technologies.
+All rights reserved.
+
+<P>
+
+Permission is granted for internet users to make one paper copy for their
+own personal use.  Further hardcopy reproduction is strictly prohibited. 
+Permission to distribute the HTML document electronically on any medium
+other than the internet must be requested from the copyright holders by
+contacting the editors.
+Printed versions of the SML Basis Manual are available from Cambridge
+University Press.
+To order, please visit
+<A HREF="http://www.cup.org">www.cup.org</A> (North America) or
+<A HREF="http://www.cup.cam.ac.uk">www.cup.cam.ac.uk</A> (outside North America).<BR>
+
+</TABLE>
+<P>
+
+<HR>
+</BODY></HTML>

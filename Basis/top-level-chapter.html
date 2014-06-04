@@ -1,0 +1,549 @@
+<!-- HTML/top-level-chapter.html -->
+
+<!-- COPYRIGHT (c) 1997 Bell Labs, Lucent Technologies. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>Top-level Environment</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF"><A NAME="top"></A>
+<H1 align=CENTER>The Standard ML Basis Library</H1>
+<HR>
+
+
+<H2><A NAME="section:sec:top-level-env"></A>Top-level environment</H2>
+<P>
+This chapter describes the standard initial top-level environment, that is, those identifiers available unqualified before the user introduces additional top-level bindings. As special aspects of this environment, infix identifiers and overloading are also discussed.
+<P>
+There are two reasons for including (non-module) identifiers in the top-level environment. The first is convenience. Certain types and values are used so frequently that it would be perverse to force the programmer to always open the containing structures or to use the qualified names. This is particularly true for interactive interfaces, in which notational simplicity and fewer keystrokes are desirable. The second reason is to allow operator overloading.
+<H3><A NAME="section:1"></A>Modules in the top-level environment</H3>
+<P>
+There are no default requirements on which modules will be initially available at top-level for either interactive or batch-oriented sessions. Each implementation may provide its own mechanism for making its various modules available to the user's code. Even the presence of a top-level identifier that is logically defined in a structure (<I>e.g.</I>, the type <CODE><A HREF="integer.html#SIG:INTEGER.int:TY:SPEC">int</A></CODE> is defined in the <CODE><A HREF="integer.html#Int:STR:SPEC">Int</A></CODE> structure) is no guarantee that the structure name is in the environment.
+<H3><A NAME="section:2"></A>Top-level type, exception, and value identifiers</H3>
+<P>
+Various types, exceptions, and values are available in the top-level environment without qualification. In particular, everything in the <CODE><A HREF="general.html#General:STR:SPEC">General</A></CODE> structure is available.
+<P>
+We note that the special identifiers <CODE>=</CODE> and <CODE>&lt;&gt;</CODE>, corresponding to polymorphic equality and inequality, are available in the top-level environment but are not bound in any module.
+<P>
+<B>[FLOAT]</B> presents the top-level types and their defining structures, if any.
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<CAPTION ALIGN=TOP>
+<B>Top-level types</B></CAPTION>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>eqtype unit</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><A HREF="general.html#General:STR:SPEC">General</A></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>eqtype int</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><A HREF="integer.html#Int:STR:SPEC">Int</A></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>eqtype word</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><A HREF="word.html#Word:STR:SPEC">Word</A></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>type real</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><A HREF="real.html#Real:STR:SPEC">Real</A></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>eqtype char</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><A HREF="char.html#Char:STR:SPEC">Char</A></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>eqtype string</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><A HREF="string.html#String:STR:SPEC">String</A></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>type substring</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><A HREF="substring.html#Substring:STR:SPEC">Substring</A></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>type exn</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><A HREF="general.html#General:STR:SPEC">General</A></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>eqtype 'a array</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><A HREF="array.html#Array:STR:SPEC">Array</A></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>eqtype 'a vector</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><A HREF="vector.html#Vector:STR:SPEC">Vector</A></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>eqtype 'a ref</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<I>primitive</I>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>datatype bool = false | true</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<I>primitive</I>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>datatype 'a option = NONE | SOME of 'a</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><A HREF="option.html#Option:STR:SPEC">Option</A></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>datatype order = LESS | EQUAL | GREATER</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE><A HREF="general.html#General:STR:SPEC">General</A></CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>datatype 'a list = nil | :: of ('a * 'a list)</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<I>primitive</I>
+</TABLE>
+</CENTER>
+<HR>
+<P>
+Although the types <CODE><A HREF="bool.html#SIG:BOOL.bool:TY:SPEC">bool</A></CODE> and <CODE><A HREF="list.html#SIG:LIST.list:TY:SPEC">list</A></CODE> are considered primitive and defined in the top-level environment, for consistency they are also bound in the structures <CODE><A HREF="bool.html#Bool:STR:SPEC">Bool</A></CODE> and <CODE><A HREF="list.html#List:STR:SPEC">List</A></CODE>, respectively. 
+<P>
+The next list presents the exception constructors available at top-level. All of these are defined in the <CODE><A HREF="general.html#General:STR:SPEC">General</A></CODE> structure, except for <CODE><A HREF="option.html#SIG:OPTION.Option:EXN:SPEC">Option</A></CODE>, which is defined in the <CODE><A HREF="option.html#Option:STR:SPEC">Option</A></CODE> structure, and <CODE><A HREF="list.html#SIG:LIST.Empty:EXN:SPEC">Empty</A></CODE>, which is defined in the <CODE><A HREF="list.html#List:STR:SPEC">List</A></CODE> structure. 
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>exception Bind</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>exception Chr</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>exception Div</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>exception Domain</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>exception Empty</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>exception Fail of string</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>exception Match</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>exception Option</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>exception Overflow</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>exception Size</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>exception Span</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>exception Subscript</CODE>
+</TABLE>
+</CENTER>
+<HR>
+ 
+<P>
+The next table presents the non-overloaded functions available at top-level, plus the structure value to which each is bound. Note that the <CODE>use</CODE> function is special. Although not defined precisely, its intended purpose is to take the pathname of a file and treat the contents of the file as SML source code typed in by the user. It can be used as a simple build mechanism, especially for interactive sessions. Most implementations will provide a more sophisticated build mechanism for larger collections of source files. Implementations are not required to supply a <CODE>use</CODE> function. 
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val ! : 'a ref -&gt; 'a</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>General.!</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val := : 'a ref * 'a -&gt; unit</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>General.:=</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val @ : ('a list * 'a list) -&gt; 'a list</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>List.@</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val ^ : string * string -&gt; string</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>String.^</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val app : ('a -&gt; unit) -&gt; 'a list -&gt; unit</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>List.app</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val before : 'a * unit -&gt; 'a</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>General.before</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val ceil : real -&gt; int</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>Real.ceil</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val chr : int -&gt; char</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>Char.chr</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val concat : string list -&gt; string</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>String.concat</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val exnMessage : exn -&gt; string</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>General.exnMessage</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val exnName : exn -&gt; string</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>General.exnName</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val explode : string -&gt; char list</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>String.explode</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val floor : real -&gt; int</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>Real.floor</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val foldl : ('a*'b-&gt;'b)-&gt; 'b -&gt; 'a list -&gt; 'b</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>List.foldl</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val foldr : ('a*'b-&gt;'b)-&gt; 'b -&gt; 'a list -&gt; 'b</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>List.foldr</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val getOpt : ('a option * 'a) -&gt; 'a</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>Option.getOpt</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val hd : 'a list -&gt; 'a</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>List.hd</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val ignore : 'a -&gt; unit</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>General.ignore</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val implode : char list -&gt; string</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>String.implode</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val isSome : 'a option -&gt; bool</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>Option.isSome</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val length : 'a list -&gt; int</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>List.length</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val map : ('a -&gt; 'b) -&gt; 'a list -&gt; 'b list</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>List.map</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val not : bool -&gt; bool</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>Bool.not</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val null : 'a list -&gt; bool</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>List.null</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val o : ('a-&gt;'b) * ('c-&gt;'a) -&gt; 'c-&gt;'b</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>General.o</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val ord : char -&gt; int</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>Char.ord</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val print : string -&gt; unit</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>TextIO.print</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val real : int -&gt; real</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>Real.fromInt</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val ref : 'a -&gt; 'a ref</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<I>primitive</I>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val rev  : 'a list -&gt; 'a list</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>List.rev</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val round : real -&gt; int</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>Real.round</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val size : string -&gt; int</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>String.size</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val str : char -&gt; string</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>String.str</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val substring : string * int * int -&gt; string</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>String.substring</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val tl : 'a list -&gt; 'a list</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>List.tl</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val trunc : real -&gt; int</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>Real.trunc</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val use : string -&gt; unit</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<I>implementation dependent</I>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val valOf : 'a option -&gt; 'a</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>Option.valOf</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val vector : 'a list -&gt; 'a vector</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>Vector.fromList</CODE>
+</TABLE>
+</CENTER>
+<HR>
+<H3><A NAME="section:3"></A>Overloaded identifiers</H3>
+<P>
+The SML Standard Basis includes a fixed set of overloaded identifiers; programmers may not define new overloadings. These identifiers, with their type schemas and default types, are: 
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val + : <VAR>num</VAR> * <VAR>num</VAR> -&gt; <VAR>num</VAR></CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>int * int -&gt; int</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val - : <VAR>num</VAR> * <VAR>num</VAR> -&gt; <VAR>num</VAR></CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>int * int -&gt; int</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val * : <VAR>num</VAR> * <VAR>num</VAR> -&gt; <VAR>num</VAR></CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>int * int -&gt; int</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val div : <VAR>wordint</VAR> * <VAR>wordint</VAR> -&gt; <VAR>wordint</VAR></CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>int * int -&gt; int</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val mod : <VAR>wordint</VAR> * <VAR>wordint</VAR> -&gt; <VAR>wordint</VAR></CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>int * int -&gt; int</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val / : <VAR>real</VAR> * <VAR>real</VAR> -&gt; <VAR>real</VAR></CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>real * real -&gt; real</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val ~ : <VAR>num</VAR> -&gt; <VAR>num</VAR></CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>int -&gt; int</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val abs : <VAR>realint</VAR> -&gt; <VAR>realint</VAR></CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>int -&gt; int</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val &lt; : <VAR>numtext</VAR> * <VAR>numtext</VAR> -&gt; bool</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>int * int -&gt; bool</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val &gt; : <VAR>numtext</VAR> * <VAR>numtext</VAR> -&gt; bool</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>int * int -&gt; bool</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val &lt;= : <VAR>numtext</VAR> * <VAR>numtext</VAR> -&gt; bool</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>int * int -&gt; bool</CODE>
+<TR>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>val &gt;= : <VAR>numtext</VAR> * <VAR>numtext</VAR> -&gt; bool</CODE>
+<TD ALIGN=LEFT VALIGN=TOP>
+<CODE>int * int -&gt; bool</CODE>
+</TABLE>
+</CENTER>
+<HR>
+ where 
+<UL>
+<LI>
+<I>int </I><CODE> = {FixedInt.int, Int.int, <CODE><A HREF="integer.html#SIG:INTEGER.int:TY:SPEC">Int<I>&lt;N&gt;</I>.int</A></CODE>, IntInf.int, LargeInt.int, Position.int}</CODE> 
+<LI>
+<I>word </I><CODE> = {LargeWord.word, Word.word, Word8.word, <CODE><A HREF="word.html#SIG:WORD.word:TY:SPEC">Word<I>&lt;N&gt;</I>.word</A></CODE>, SysWord.word}</CODE> 
+<LI>
+<I>real </I><CODE> = {LargeReal.real, Real.real, <CODE><A HREF="real.html#SIG:REAL.real:TY:SPEC">Real<I>&lt;N&gt;</I>.real</A></CODE>}</CODE> 
+<LI>
+<I>text </I><CODE> = {String.string, Char.char, WideString.string, WideChar.char}</CODE> 
+<LI>
+<I>wordint <CODE>=</CODE> word <B>union</B> int</I> 
+<LI>
+<I>realint <CODE>=</CODE> real <B>union</B> int</I> 
+<LI>
+<I>num <CODE>=</CODE> word <B>union</B> int <B>union</B> real</I> 
+<LI>
+<I>numtext <CODE>=</CODE> num <B>union</B> text</I>
+</UL>
+ The same type must be chosen throughout the entire type schema of an overloaded operator. For example, the function <CODE>abs</CODE> cannot have type <CODE>int -&gt; real</CODE>, but only a type like <CODE>int -&gt; int</CODE>. In addition, we note that <CODE><A HREF="integer.html#SIG:INTEGER.int:TY:SPEC">Int<I>&lt;N&gt;</I>.int</A></CODE>, <CODE><A HREF="integer.html#SIG:INTEGER.int:TY:SPEC">IntInf.int</A></CODE>,  <CODE><A HREF="word.html#SIG:WORD.word:TY:SPEC">Word<I>&lt;N&gt;</I>.word</A></CODE>, <CODE><A HREF="real.html#SIG:REAL.real:TY:SPEC">Real<I>&lt;N&gt;</I>.real</A></CODE>, <CODE><A HREF="string.html#SIG:STRING.string:TY:SPEC">WideString.string</A></CODE>, and <CODE><A HREF="char.html#SIG:CHAR.char:TY:SPEC">WideChar.char</A></CODE> are optional types.
+<P>
+The function identifiers have a default type that is adopted in lieu of any type information supplied by the surrounding context. All overloaded value identifiers default to an <CODE>int</CODE>-based type except for the operator <CODE>/</CODE>, whose default type is <CODE>real * real -&gt; real</CODE>. Thus, the following code would typecheck: 
+<PRE>
+fun f(x,y) = x &lt;= y
+
+val x = (1 : LargeInt.int)
+val y = x + 1
+
+fun g x = x + x before ignore (x + 0w0)
+</PRE>
+ with <CODE>f</CODE>, <CODE>y</CODE>, and <CODE>g</CODE> having types <CODE>int * int -&gt; bool</CODE>, <CODE>LargeInt.int</CODE>, and <CODE>word -&gt; word</CODE>, respectively. 
+<H3><A NAME="section:4"></A>Infix identifiers</H3>
+<P>
+The top-level environment has the following infix identifiers: 
+<PRE>
+infix  7  * / div mod
+infix  6  + - ^
+infixr 5  :: @
+infix  4  = &lt;&gt; &gt; &gt;= &lt; &lt;=
+infix  3  := o
+infix  0  before
+</PRE>
+ The digit in each row gives the precedence (binding power) of each identifier, so that <CODE>+</CODE> and <CODE>-</CODE> bind equally tightly, and both bind more tightly than <CODE>::</CODE> and <CODE>@</CODE>. All these identifiers are left-associative (bind more tightly to the left) except  <CODE>::</CODE> and <CODE>@</CODE>, which are right-associative.
+<H3><A NAME="section:5"></A>The operating environment</H3>
+<P>
+The Basis Library specifies very little about the operating system environment in which SML programs are executed. This gives implementations the widest possible freedom. Programs may be executed as part of an interactive session, as stand-alone executables, or as server processes.
+<P>
+There are a few points, however, where the surrounding environment does impinge on the Basis Library. We summarize these points here.
+<P>
+The <CODE><A HREF="command-line.html#CommandLine:STR:SPEC">CommandLine</A></CODE> structure defines functions that return the name and arguments with which a program was invoked. The method for setting these values is entirely up to the implementation.  We would expect that if a stand-alone executable is run from a command line, then these values would be determined from the name and arguments specified on that command line.
+<P>
+Implementations may provide a mechanism for taking a function and producing a stand-alone executable. If such a mechanism is provided, the type of the function being exported must be 
+<PRE>
+(string * string list) -&gt; OS.Process.status
+</PRE>
+ When the stand-alone executable is invoked, the function should be called with a first argument equal to <CODE>CommandLine.name ()</CODE> and a second argument equal to <CODE>CommandLine.arguments ()</CODE>.
+<P>
+The <CODE><A HREF="os-process.html#SIG:OS_PROCESS.getEnv:VAL:SPEC">OS.Process.getEnv</A></CODE> function assumes that the environment associates a set of <VAR>name-value</VAR> pairs with the invocation of a program, where both <VAR>name</VAR> and <VAR>value</VAR> are strings. This function returns the value associated with the given name. This is essentially a mechanism for providing global variables, by which the user can provide values that can be used deep within a program. The method for specifying this set is OS-dependent. The set may be empty.
+<P>
+The <CODE><A HREF="os-process.html#SIG:OS_PROCESS.exit:VAL:SPEC">OS.Process.exit</A></CODE> and <CODE><A HREF="os-process.html#SIG:OS_PROCESS.terminate:VAL:SPEC">OS.Process.terminate</A></CODE> functions return a status value to the environment. The type of this value, and how the environment interprets it, is OS-dependent.
+<P>
+The <CODE><A HREF="os-process.html#SIG:OS_PROCESS.atExit:VAL:SPEC">OS.Process.atExit</A></CODE> function adds an argument function to the actions that are executed when the program reaches a normal termination. A normal termination is a call to <CODE><A HREF="os-process.html#SIG:OS_PROCESS.exit:VAL:SPEC">OS.Process.exit</A></CODE>, or as defined by the implementation. If a stand-alone executable is created from a function as above, then normal termination occurs when that function returns.  We would expect other methods for creating stand-alone executables to behave similarly.
+<P>
+Abnormal terminations include calls to  <CODE><A HREF="os-process.html#SIG:OS_PROCESS.terminate:VAL:SPEC">OS.Process.terminate</A></CODE>, or when a stand-alone executable does not handle a raised exception. The functions registered by <CODE><A HREF="os-process.html#SIG:OS_PROCESS.atExit:VAL:SPEC">OS.Process.atExit</A></CODE> are not evaluated in the event of an abnormal program termination.
+<P>
+Some actions are implicitly registered with <CODE><A HREF="os-process.html#SIG:OS_PROCESS.atExit:VAL:SPEC">OS.Process.atExit</A></CODE>, so that they always occur on a normal program termination. These must include the flushing and closing of all open output streams created by the open functions in <CODE><A HREF="bin-io.html#BinIO:STR:SPEC">BinIO</A></CODE> and  <CODE><A HREF="text-io.html#TextIO:STR:SPEC">TextIO</A></CODE>, and the flushing (but not closing) of <CODE><A HREF="text-io.html#SIG:TEXT_IO.stdOut:VAL:SPEC">TextIO.stdOut</A></CODE> and  <CODE><A HREF="text-io.html#SIG:TEXT_IO.stdErr:VAL:SPEC">TextIO.stdErr</A></CODE>. Although this covers most usual cases, for maximum portability and robustness, code should flush streams explicitly. 
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="index.html">Parent</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   | <A HREF="index.html">Root</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Generated April 12, 2004</I><BR>
+<I>Last Modified October 4, 1997</I><BR>
+<I>Comments to <A HREF="http://www.cs.uchicago.edu/people/jhr">John Reppy.</A></I><BR>
+
+<HR>
+<P>
+
+This document may be distributed freely over the internet as long as the
+copyright notice and license terms below are prominently displayed within
+every machine-readable copy.  
+
+<P>
+
+<TABLE ALIGN=CENTER WIDTH="80%" BORDER="2" CELLPADDING="5">
+<TR>
+<TD>
+<P>
+
+Copyright &copy; 2004 AT&amp;T and Lucent Technologies.
+All rights reserved.
+
+<P>
+
+Permission is granted for internet users to make one paper copy for their
+own personal use.  Further hardcopy reproduction is strictly prohibited. 
+Permission to distribute the HTML document electronically on any medium
+other than the internet must be requested from the copyright holders by
+contacting the editors.
+Printed versions of the SML Basis Manual are available from Cambridge
+University Press.
+To order, please visit
+<A HREF="http://www.cup.org">www.cup.org</A> (North America) or
+<A HREF="http://www.cup.cam.ac.uk">www.cup.cam.ac.uk</A> (outside North America).<BR>
+
+</TABLE>
+<P>
+
+<HR>
+</BODY></HTML>

@@ -1,0 +1,82 @@
+<!-- HTML/index.html -->
+
+<!-- COPYRIGHT (c) 2002 Bell Labs, Lucent Technologies. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>Standard ML Basis Library</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF"><A NAME="top"></A>
+<H1 align=CENTER>The Standard ML Basis Library</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>Introduction</H2>
+<P>
+These web pages contain the interface specifications for the modules of the <B>SML Basis Library</B>, which is a standard library for the 1997 Revision of SML<B>[CITE]</B>. The SML Basis Library provides interfaces and operations for basic types, such as integers and strings, support for input and output (I/O), interfaces to basic operating system interfaces, and support for standard datatypes, such as options and lists. The Library does <EM>not</EM> attempt to define higher-level APIs, such as collection types or graphical user-interface components. These APIs are left for other libraries.
+<P>
+This document may be distributed freely over the internet as long as the copyright notice and license terms below are prominently displayed within every machine-readable copy. The SML Basis Library is also published as a book by <EM><A HREF="http://www.cup.org">Cambridge University Press</A></EM>. In addition to the manual pages, the book also contains tutorial descriptions of programming techniques and idioms for effective use of the Library's interfaces.
+<P>
+The design philosophy of the SML Basis Library is to use the SML module system as an organizing tool. All type, exception, and value identifiers are bound in some module. A small number of these, which are called <EM>pervasive identifiers</EM>, are also bound at top-level (<I>i.e.</I>, without qualification). In addition, the top-level environment defines overloading of some identifiers.
+<P>
+The components (<I>i.e.</I>, signatures, structures, and functors) of the SML Basis Library are divided into <EM>required</EM> and <EM>optional</EM> components. Required components must be provided by all SML implementations, while optional components are just that. In some cases, support for one optional component entails providing support for others.
+<P>
+These webpages are organized as follows: the overview page describes the different kinds of interfaces provided by the SML Basis Library as well as which components are required and optional. The bulk of this document is a collection of <EM>manual pages</EM>, each of which describes an interface (<I>i.e.</I>, signature) and its implementations.
+<H3><A HREF="overview.html">SML Basis Library Overview</A></H3>
+<H3><A HREF="top-level-chapter.html">Top-level Environment</A></H3>
+<H3><A HREF="manpages.html">SML Basis Manual Pages</A></H3>
+<H3><A HREF="credits.html">Contributors</A></H3>
+<H3><A HREF="history.html">Change history</A></H3>
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="">Parent</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   | <A HREF="">Root</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Generated April 12, 2004</I><BR>
+<I>Last Modified June 6, 2002</I><BR>
+<I>Comments to <A HREF="http://www.cs.uchicago.edu/people/jhr">John Reppy.</A></I><BR>
+
+<HR>
+<P>
+
+This document may be distributed freely over the internet as long as the
+copyright notice and license terms below are prominently displayed within
+every machine-readable copy.  
+
+<P>
+
+<TABLE ALIGN=CENTER WIDTH="80%" BORDER="2" CELLPADDING="5">
+<TR>
+<TD>
+<P>
+
+Copyright &copy; 2004 AT&amp;T and Lucent Technologies.
+All rights reserved.
+
+<P>
+
+Permission is granted for internet users to make one paper copy for their
+own personal use.  Further hardcopy reproduction is strictly prohibited. 
+Permission to distribute the HTML document electronically on any medium
+other than the internet must be requested from the copyright holders by
+contacting the editors.
+Printed versions of the SML Basis Manual are available from Cambridge
+University Press.
+To order, please visit
+<A HREF="http://www.cup.org">www.cup.org</A> (North America) or
+<A HREF="http://www.cup.cam.ac.uk">www.cup.cam.ac.uk</A> (outside North America).<BR>
+
+</TABLE>
+<P>
+
+<HR>
+</BODY></HTML>

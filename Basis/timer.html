@@ -1,0 +1,193 @@
+<!-- HTML/timer.html -->
+
+<!-- COPYRIGHT (c) 1997 Bell Labs, Lucent Technologies. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The Timer structure</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF"><A NAME="top"></A>
+<H1 align=CENTER>The Standard ML Basis Library</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>Timer</CODE> structure</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="TIMER:SIG:SPEC"></A><CODE>TIMER</CODE><BR>
+<B>structure</B>&nbsp;<A NAME="Timer:STR:SPEC"></A><CODE>Timer</CODE><B> :> </B>TIMER<BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+The <CODE>Timer</CODE> structure provides facilities for measuring the passing of wall clock (real) time and the amount of time the running process has had the CPU (user time), has been active in the OS kernel (system time), and has spent on garbage collection (GC time). 
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>type</B>&nbsp;<A NAME="SIG:TIMER.cpu_timer:TY:SPEC" HREF="#SIG:TIMER.cpu_timer:TY">cpu_timer</A><BR>
+<B>type</B>&nbsp;<A NAME="SIG:TIMER.real_timer:TY:SPEC" HREF="#SIG:TIMER.real_timer:TY">real_timer</A><BR>
+<B>val</B>&nbsp;<A NAME="SIG:TIMER.startCPUTimer:VAL:SPEC" HREF="#SIG:TIMER.startCPUTimer:VAL">startCPUTimer</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;cpu_timer<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TIMER.checkCPUTimes:VAL:SPEC" HREF="#SIG:TIMER.checkCPUTimes:VAL">checkCPUTimes</A>&nbsp;<B>:</B>&nbsp;cpu_timer<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;{<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nongc&nbsp;<B>:</B>&nbsp;{<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;usr&nbsp;<B>:</B>&nbsp;Time.time,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sys&nbsp;<B>:</B>&nbsp;Time.time<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gc&nbsp;<B>:</B>&nbsp;{<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;usr&nbsp;<B>:</B>&nbsp;Time.time,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sys&nbsp;<B>:</B>&nbsp;Time.time<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TIMER.checkCPUTimer:VAL:SPEC" HREF="#SIG:TIMER.checkCPUTimer:VAL">checkCPUTimer</A>&nbsp;<B>:</B>&nbsp;cpu_timer<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;{usr&nbsp;<B>:</B>&nbsp;Time.time,&nbsp;sys&nbsp;<B>:</B>&nbsp;Time.time}<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TIMER.checkGCTime:VAL:SPEC" HREF="#SIG:TIMER.checkGCTime:VAL">checkGCTime</A>&nbsp;<B>:</B>&nbsp;cpu_timer&nbsp;<B>-&gt;</B>&nbsp;Time.time<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TIMER.totalCPUTimer:VAL:SPEC" HREF="#SIG:TIMER.totalCPUTimer:VAL">totalCPUTimer</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;cpu_timer<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TIMER.startRealTimer:VAL:SPEC" HREF="#SIG:TIMER.startRealTimer:VAL">startRealTimer</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;real_timer<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TIMER.checkRealTimer:VAL:SPEC" HREF="#SIG:TIMER.checkRealTimer:VAL">checkRealTimer</A>&nbsp;<B>:</B>&nbsp;real_timer&nbsp;<B>-&gt;</B>&nbsp;Time.time<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TIMER.totalRealTimer:VAL:SPEC" HREF="#SIG:TIMER.totalRealTimer:VAL">totalRealTimer</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;real_timer</CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="SIG:TIMER.cpu_timer:TY"></A><CODE><B>type</B>&nbsp;cpu_timer<BR>
+<B>type</B>&nbsp;real_timer</CODE>
+<DD>
+ Type <CODE>real_timer</CODE> is the type of wall clock (real) timers, and <CODE>cpu_timer</CODE> is the type of CPU timers. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:TIMER.startCPUTimer:VAL"></A><CODE><B>val</B>&nbsp;startCPUTimer&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;cpu_timer</CODE>
+<DD>
+ This returns a CPU timer that measures the time the process is  computing (has control of the CPU) starting at this call. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:TIMER.checkCPUTimes:VAL"></A>
+<DT> <CODE>checkCPUTimes <VAR>timer</VAR> </CODE>
+<DD>
+returns the CPU time used by the program since the <VAR>timer</VAR>  was started.  The time is split into time spent in the  program (<CODE>nongc</CODE>) and time spent in the garbage collector (<CODE>gc</CODE>).  For each of these categories, the time is further split into time spent  by code in <EM>user space</EM> (<CODE>usr</CODE>) and time spent in the operating  system on behalf of the program (<CODE>sys</CODE>).  The total CPU time used by the program will be the sum of these four values. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:TIMER.checkCPUTimer:VAL"></A>
+<DT> <CODE>checkCPUTimer <VAR>timer</VAR> </CODE>
+<DD>
+returns the user time (<CODE>usr</CODE>) and system time (<CODE>sys</CODE>)  that have accumulated since the timer <VAR>timer</VAR> was started.  This function is equivalent to  
+<PRE>
+	    fun checkCPUTimer ct = let
+                  val {nongc, gc} = checkCPUTimes ct
+                  in {
+                    usr = Time.+(#usr nongc, #usr gc),
+                    sys = Time.+(#sys nongc, #sys gc)
+		  } end
+	  
+</PRE>
+ 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:TIMER.checkGCTime:VAL"></A>
+<DT> <CODE>checkGCTime <VAR>timer</VAR> </CODE>
+<DD>
+returns the user time spent in garbage collection since the  timer <VAR>timer</VAR> was started.  This function is equivalent to  
+<PRE>
+	    fun checkGCTime ct = #usr(#gc(checkCPUTimes ct))
+	  
+</PRE>
+ 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:TIMER.totalCPUTimer:VAL"></A><CODE><B>val</B>&nbsp;totalCPUTimer&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;cpu_timer</CODE>
+<DD>
+ This returns a CPU timer that measures the time the process is  computing (has control of the CPU) starting at some system-dependent initialization time. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:TIMER.startRealTimer:VAL"></A><CODE><B>val</B>&nbsp;startRealTimer&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;real_timer</CODE>
+<DD>
+ This returns a wall clock (real) timer that measures how much time  passes, starting from the time of this call. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:TIMER.checkRealTimer:VAL"></A>
+<DT> <CODE>checkRealTimer <VAR>rt</VAR> </CODE>
+<DD>
+returns the amount of (real) time that has passed since the  timer <VAR>rt</VAR> was started. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:TIMER.totalRealTimer:VAL"></A><CODE><B>val</B>&nbsp;totalRealTimer&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;real_timer</CODE>
+<DD>
+ This returns a wall clock (real) timer that measures how much time  passes, starting from some system-dependent initialization time.
+<BR>
+<BR>
+
+</DL>
+<H4>See Also</H4>
+<BLOCKQUOTE>
+<CODE><A HREF="time.html#Time:STR:SPEC">Time</A></CODE>
+</BLOCKQUOTE>
+<H4>Discussion</H4>
+<P>
+The accuracy of the user, system, and GC times depends on the resolution of the system timer and the function call overhead in the OS interface. In particular, very small intervals might not be reported accurately.
+<P>
+On a Unix system, the user and system time reported by a CPU timer do not include the time spent in child processes.   
+<BLOCKQUOTE>
+<B>Implementation note:</B><BR>
+
+<P>
+Some operating systems may lack the ability to measure CPU time consumption, in which case the real time should be returned instead.
+</BLOCKQUOTE>
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="manpages.html">Parent</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   | <A HREF="index.html">Root</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Generated April 12, 2004</I><BR>
+<I>Last Modified October 31, 1997</I><BR>
+<I>Comments to <A HREF="http://www.cs.uchicago.edu/people/jhr">John Reppy.</A></I><BR>
+
+<HR>
+<P>
+
+This document may be distributed freely over the internet as long as the
+copyright notice and license terms below are prominently displayed within
+every machine-readable copy.  
+
+<P>
+
+<TABLE ALIGN=CENTER WIDTH="80%" BORDER="2" CELLPADDING="5">
+<TR>
+<TD>
+<P>
+
+Copyright &copy; 2004 AT&amp;T and Lucent Technologies.
+All rights reserved.
+
+<P>
+
+Permission is granted for internet users to make one paper copy for their
+own personal use.  Further hardcopy reproduction is strictly prohibited. 
+Permission to distribute the HTML document electronically on any medium
+other than the internet must be requested from the copyright holders by
+contacting the editors.
+Printed versions of the SML Basis Manual are available from Cambridge
+University Press.
+To order, please visit
+<A HREF="http://www.cup.org">www.cup.org</A> (North America) or
+<A HREF="http://www.cup.cam.ac.uk">www.cup.cam.ac.uk</A> (outside North America).<BR>
+
+</TABLE>
+<P>
+
+<HR>
+</BODY></HTML>

@@ -1,0 +1,360 @@
+<!-- HTML/string.html -->
+
+<!-- COPYRIGHT (c) 1997 Bell Labs, Lucent Technologies. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The STRING signature</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF"><A NAME="top"></A>
+<H1 align=CENTER>The Standard ML Basis Library</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>STRING</CODE> signature</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="STRING:SIG:SPEC"></A><CODE>STRING</CODE><BR>
+<B>structure</B>&nbsp;<A NAME="String:STR:SPEC"></A><CODE>String</CODE><B> :> </B>STRING<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;string&nbsp;=&nbsp;string<BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;string&nbsp;=&nbsp;<A HREF="mono-vector.html#SIG:MONO_VECTOR.vector:TY:SPEC">CharVector.vector</A><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;char&nbsp;=&nbsp;<A HREF="char.html#SIG:CHAR.char:TY:SPEC">Char.char</A><BR>
+<B>structure</B>&nbsp;<A NAME="WideString:STR:SPEC"></A><CODE>WideString</CODE><B> :> </B>STRING&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;string&nbsp;=&nbsp;<A HREF="mono-vector.html#SIG:MONO_VECTOR.vector:TY:SPEC">WideCharVector.vector</A><BR>
+&nbsp;&nbsp;<B>where</B>&nbsp;<B>type</B>&nbsp;char&nbsp;=&nbsp;<A HREF="char.html#SIG:CHAR.char:TY:SPEC">WideChar.char</A><BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+The <CODE>STRING</CODE> signature specifies the basic operations on a string type, which is a vector of the underlying character type <CODE><A HREF="char.html#SIG:CHAR.char:TY:SPEC">char</A></CODE> as defined in the structure.
+<P>
+The <CODE><A HREF="string.html#STRING:SIG:SPEC">STRING</A></CODE> signature is matched by two structures, the required <CODE><A HREF="string.html#String:STR:SPEC">String</A></CODE> and the optional <CODE><A HREF="string.html#WideString:STR:SPEC">WideString</A></CODE>. The former implements strings based on the extended ASCII 8-bit characters, and is a companion structure to the <CODE><A HREF="char.html#Char:STR:SPEC">Char</A></CODE> structure. The latter provides strings of characters of some size greater than or equal to 8 bits, and is related to the structure <CODE><A HREF="char.html#WideChar:STR:SPEC">WideChar</A></CODE>. In particular, the type <CODE>String.char</CODE> is identical to the type <CODE>Char.char</CODE> and, when <CODE><A HREF="string.html#WideString:STR:SPEC">WideString</A></CODE> is defined, the type <CODE>WideString.char</CODE> is identical to the type <CODE>WideChar.char</CODE>. These connections are made explicit in the <CODE><A HREF="text.html#Text:STR:SPEC">Text</A></CODE> and <CODE><A HREF="text.html#WideText:STR:SPEC">WideText</A></CODE> structures, which match the <CODE><A HREF="text.html#TEXT:SIG:SPEC">TEXT</A></CODE> signature. 
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>eqtype</B>&nbsp;<A NAME="SIG:STRING.string:TY:SPEC" HREF="#SIG:STRING.string:TY">string</A><BR>
+<B>eqtype</B>&nbsp;<A NAME="SIG:STRING.char:TY:SPEC" HREF="#SIG:STRING.char:TY">char</A><BR>
+<B>val</B>&nbsp;<A NAME="SIG:STRING.maxSize:VAL:SPEC" HREF="#SIG:STRING.maxSize:VAL">maxSize</A>&nbsp;<B>:</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:STRING.size:VAL:SPEC" HREF="#SIG:STRING.size:VAL">size</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:STRING.sub:VAL:SPEC" HREF="#SIG:STRING.sub:VAL">sub</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;char<BR>
+<B>val</B>&nbsp;<A NAME="SIG:STRING.extract:VAL:SPEC" HREF="#SIG:STRING.extract:VAL">extract</A>&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;option&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="SIG:STRING.substring:VAL:SPEC" HREF="#SIG:STRING.substring:VAL">substring</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;int&nbsp;<B>*</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="SIG:STRING.^:VAL:SPEC" HREF="#SIG:STRING.^:VAL">^</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="SIG:STRING.concat:VAL:SPEC" HREF="#SIG:STRING.concat:VAL">concat</A>&nbsp;<B>:</B>&nbsp;string&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="SIG:STRING.concatWith:VAL:SPEC" HREF="#SIG:STRING.concatWith:VAL">concatWith</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;string&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="SIG:STRING.str:VAL:SPEC" HREF="#SIG:STRING.str:VAL">str</A>&nbsp;<B>:</B>&nbsp;char&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="SIG:STRING.implode:VAL:SPEC" HREF="#SIG:STRING.implode:VAL">implode</A>&nbsp;<B>:</B>&nbsp;char&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="SIG:STRING.explode:VAL:SPEC" HREF="#SIG:STRING.explode:VAL">explode</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;char&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="SIG:STRING.map:VAL:SPEC" HREF="#SIG:STRING.map:VAL">map</A>&nbsp;<B>:</B>&nbsp;(char&nbsp;<B>-&gt;</B>&nbsp;char)&nbsp;<B>-&gt;</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="SIG:STRING.translate:VAL:SPEC" HREF="#SIG:STRING.translate:VAL">translate</A>&nbsp;<B>:</B>&nbsp;(char&nbsp;<B>-&gt;</B>&nbsp;string)&nbsp;<B>-&gt;</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="SIG:STRING.tokens:VAL:SPEC" HREF="#SIG:STRING.tokens:VAL">tokens</A>&nbsp;<B>:</B>&nbsp;(char&nbsp;<B>-&gt;</B>&nbsp;bool)&nbsp;<B>-&gt;</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;string&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="SIG:STRING.fields:VAL:SPEC" HREF="#SIG:STRING.fields:VAL">fields</A>&nbsp;<B>:</B>&nbsp;(char&nbsp;<B>-&gt;</B>&nbsp;bool)&nbsp;<B>-&gt;</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;string&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="SIG:STRING.isPrefix:VAL:SPEC" HREF="#SIG:STRING.isPrefix:VAL">isPrefix</A>&nbsp;&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="SIG:STRING.isSubstring:VAL:SPEC" HREF="#SIG:STRING.isSubstring:VAL">isSubstring</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="SIG:STRING.isSuffix:VAL:SPEC" HREF="#SIG:STRING.isSuffix:VAL">isSuffix</A>&nbsp;&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="SIG:STRING.compare:VAL:SPEC" HREF="#SIG:STRING.compare:VAL">compare</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;order<BR>
+<B>val</B>&nbsp;<A NAME="SIG:STRING.collate:VAL:SPEC" HREF="#SIG:STRING.collate:VAL">collate</A>&nbsp;<B>:</B>&nbsp;(char&nbsp;<B>*</B>&nbsp;char&nbsp;<B>-&gt;</B>&nbsp;order)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;string&nbsp;<B>*</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;order<BR>
+<B>val</B>&nbsp;<A NAME="SIG:STRING.\|@LT\|:VAL:SPEC" HREF="#SIG:STRING.\|@LT\|:VAL">&lt;</A>&nbsp;&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="SIG:STRING.\|@LTE\|:VAL:SPEC" HREF="#SIG:STRING.\|@LTE\|:VAL">&lt;=</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="SIG:STRING.\|@GT\|:VAL:SPEC" HREF="#SIG:STRING.\|@GT\|:VAL">&gt;</A>&nbsp;&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="SIG:STRING.\|@GTE\|:VAL:SPEC" HREF="#SIG:STRING.\|@GTE\|:VAL">&gt;=</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:STRING.toString:VAL:SPEC" HREF="#SIG:STRING.toString:VAL">toString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;String.string<BR>
+<B>val</B>&nbsp;<A NAME="SIG:STRING.scan:VAL:SPEC" HREF="#SIG:STRING.scan:VAL">scan</A>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;(char,&nbsp;<I>'a</I>)&nbsp;StringCvt.reader<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;(string,&nbsp;<I>'a</I>)&nbsp;StringCvt.reader<BR>
+<B>val</B>&nbsp;<A NAME="SIG:STRING.fromString:VAL:SPEC" HREF="#SIG:STRING.fromString:VAL">fromString</A>&nbsp;<B>:</B>&nbsp;String.string&nbsp;<B>-&gt;</B>&nbsp;string&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="SIG:STRING.toCString:VAL:SPEC" HREF="#SIG:STRING.toCString:VAL">toCString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;String.string<BR>
+<B>val</B>&nbsp;<A NAME="SIG:STRING.fromCString:VAL:SPEC" HREF="#SIG:STRING.fromCString:VAL">fromCString</A>&nbsp;<B>:</B>&nbsp;String.string&nbsp;<B>-&gt;</B>&nbsp;string&nbsp;option</CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="SIG:STRING.maxSize:VAL"></A><CODE><B>val</B>&nbsp;maxSize&nbsp;<B>:</B>&nbsp;int</CODE>
+<DD>
+          The longest allowed size of a string. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:STRING.size:VAL"></A>
+<DT> <CODE>size <VAR>s</VAR> </CODE>
+<DD>
+returns |<VAR>s</VAR>|, the number of characters in string <VAR>s</VAR>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:STRING.sub:VAL"></A>
+<DT> <CODE>sub (<VAR>s</VAR>, <VAR>i</VAR>) </CODE>
+<DD>
+returns the <VAR>i</VAR><SUP>(th)</SUP> character of <VAR>s</VAR>, counting from zero. This raises <CODE><A HREF="general.html#SIG:GENERAL.Subscript:EXN:SPEC">Subscript</A></CODE> if <VAR>i</VAR> &lt; 0 or |<VAR>s</VAR>| &lt;= <VAR>i</VAR>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:STRING.extract:VAL"></A>
+<DT> <CODE>extract (<VAR>s</VAR>, <VAR>i</VAR>, <A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A>) </CODE>
+<DT> <CODE>          extract (<VAR>s</VAR>, <VAR>i</VAR>, <A HREF="option.html#SIG:OPTION.option:TY:SPEC">SOME</A> <VAR>j</VAR>) </CODE>
+<DT> <CODE>          substring (<VAR>s</VAR>, <VAR>i</VAR>, <VAR>j</VAR>) </CODE>
+<DD>
+These return substrings of <VAR>s</VAR>. The first returns the substring of <VAR>s</VAR> from the <VAR>i</VAR><SUP>(th)</SUP> character to the end of the string, <I>i.e.</I>, the string <VAR>s</VAR>[<VAR>i</VAR>..|<VAR>s</VAR>|-1]. This raises <CODE><A HREF="general.html#SIG:GENERAL.Subscript:EXN:SPEC">Subscript</A></CODE> if <CODE><VAR>i</VAR> &lt; 0</CODE> or |<VAR>s</VAR>| &lt; <VAR>i</VAR>. The second form returns the substring of size <VAR>j</VAR> starting at index <VAR>i</VAR>, <I>i.e.</I>, the string <CODE><VAR>s</VAR>[<VAR>i</VAR>..<VAR>i</VAR>+<VAR>j</VAR>-1]</CODE>. It raises <CODE><A HREF="general.html#SIG:GENERAL.Subscript:EXN:SPEC">Subscript</A></CODE> if <VAR>i</VAR> &lt; 0 or <VAR>j</VAR> &lt; 0 or |<VAR>s</VAR>| &lt; <VAR>i</VAR> + <VAR>j</VAR>. Note that, if defined, <CODE><A HREF="string.html#SIG:STRING.extract:VAL:SPEC">extract</A></CODE> returns the empty string when <VAR>i</VAR> = |<VAR>s</VAR>|. 
+<P>
+          The third form returns the substring <CODE><VAR>s</VAR>[<VAR>i</VAR>..<VAR>i</VAR>+<VAR>j</VAR>-1]</CODE>, <I>i.e.</I>, the substring of size <VAR>j</VAR> starting at index <VAR>i</VAR>. This is equivalent to <CODE><CODE><A HREF="string.html#SIG:STRING.extract:VAL:SPEC">extract</A></CODE>(<VAR>s</VAR>, <VAR>i</VAR>, <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">SOME</A></CODE> <VAR>j</VAR>)</CODE>. 
+<BLOCKQUOTE>
+<B>Implementation note:</B><BR>
+
+<P>
+Implementations of these functions must perform bounds checking in such a way that the <CODE><A HREF="general.html#SIG:GENERAL.Overflow:EXN:SPEC">Overflow</A></CODE> exception is not raised. 
+</BLOCKQUOTE>
+ 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:STRING.^:VAL"></A>
+<DT> <CODE><VAR>s</VAR> ^ <VAR>t</VAR> </CODE>
+<DD>
+is the concatenation of the strings <VAR>s</VAR> and <VAR>t</VAR>. This raises <CODE><A HREF="general.html#SIG:GENERAL.Size:EXN:SPEC">Size</A></CODE> if |<VAR>s</VAR>| + |<VAR>t</VAR>| &gt; <CODE><A HREF="string.html#SIG:STRING.maxSize:VAL:SPEC">maxSize</A></CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:STRING.concat:VAL"></A>
+<DT> <CODE>concat <VAR>l</VAR> </CODE>
+<DD>
+is the concatenation of all the strings in <VAR>l</VAR>. This raises <CODE><A HREF="general.html#SIG:GENERAL.Size:EXN:SPEC">Size</A></CODE> if the sum of all the sizes is greater than <CODE><A HREF="string.html#SIG:STRING.maxSize:VAL:SPEC">maxSize</A></CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:STRING.concatWith:VAL"></A>
+<DT> <CODE>concatWith <VAR>s</VAR> <VAR>l</VAR> </CODE>
+<DD>
+returns the concatenation of the strings in the list <VAR>l</VAR> using  the string <VAR>s</VAR> as a separator. This raises <CODE><A HREF="general.html#SIG:GENERAL.Size:EXN:SPEC">Size</A></CODE> if the size of the resulting string would be greater than <CODE><A HREF="string.html#SIG:STRING.maxSize:VAL:SPEC">maxSize</A></CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:STRING.str:VAL"></A>
+<DT> <CODE>str <VAR>c</VAR> </CODE>
+<DD>
+is the string of size one containing the character <VAR>c</VAR>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:STRING.implode:VAL"></A>
+<DT> <CODE>implode <VAR>l</VAR> </CODE>
+<DD>
+generates the string containing the characters in the list <VAR>l</VAR>. This is equivalent to <CODE><CODE><A HREF="string.html#SIG:STRING.concat:VAL:SPEC">concat</A></CODE> (<CODE><A HREF="list.html#SIG:LIST.map:VAL:SPEC">List.map</A></CODE> <CODE><A HREF="string.html#SIG:STRING.str:VAL:SPEC">str</A></CODE> <VAR>l</VAR>)</CODE>. This raises <CODE><A HREF="general.html#SIG:GENERAL.Size:EXN:SPEC">Size</A></CODE> if the resulting string would have size greater than <CODE><A HREF="string.html#SIG:STRING.maxSize:VAL:SPEC">maxSize</A></CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:STRING.explode:VAL"></A>
+<DT> <CODE>explode <VAR>s</VAR> </CODE>
+<DD>
+is the list of characters in the string <VAR>s</VAR>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:STRING.map:VAL"></A>
+<DT> <CODE>map <VAR>f</VAR> <VAR>s</VAR> </CODE>
+<DD>
+applies <VAR>f</VAR> to each element of <VAR>s</VAR> from left to right, returning the resulting string. It is equivalent to <CODE><CODE><A HREF="string.html#SIG:STRING.implode:VAL:SPEC">implode</A></CODE>(<CODE><A HREF="list.html#SIG:LIST.map:VAL:SPEC">List.map</A></CODE> <VAR>f</VAR> (<CODE><A HREF="string.html#SIG:STRING.explode:VAL:SPEC">explode</A></CODE> <VAR>s</VAR>))</CODE>.  
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:STRING.translate:VAL"></A>
+<DT> <CODE>translate <VAR>f</VAR> <VAR>s</VAR> </CODE>
+<DD>
+returns the string generated from <VAR>s</VAR> by mapping each character in <VAR>s</VAR> by <VAR>f</VAR>. It is equivalent to <CODE><CODE><A HREF="string.html#SIG:STRING.concat:VAL:SPEC">concat</A></CODE>(<CODE><A HREF="list.html#SIG:LIST.map:VAL:SPEC">List.map</A></CODE> <VAR>f</VAR> (<CODE><A HREF="string.html#SIG:STRING.explode:VAL:SPEC">explode</A></CODE> <VAR>s</VAR>))</CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:STRING.tokens:VAL"></A>
+<DT> <CODE>tokens <VAR>f</VAR> <VAR>s</VAR> </CODE>
+<DT> <CODE>          fields <VAR>f</VAR> <VAR>s</VAR> </CODE>
+<DD>
+These functions return a list of tokens or fields, respectively, derived from <VAR>s</VAR> from left to right. A token is a non-empty maximal substring of <VAR>s</VAR> not containing any delimiter. A field is a (possibly empty) maximal substring of <VAR>s</VAR> not containing any delimiter. In both cases, a delimiter is a character satisfying the predicate <VAR>f</VAR>. 
+<P>
+          Two tokens may be separated by more than one delimiter, whereas two fields are separated by exactly one delimiter. For example, if the only delimiter is the character <CODE>#&quot;|&quot;</CODE>, then the string <CODE>&quot;|abc||def&quot;</CODE> contains two tokens <CODE>&quot;abc&quot;</CODE> and <CODE>&quot;def&quot;</CODE>, whereas it contains the four fields <CODE>&quot;&quot;</CODE>, <CODE>&quot;abc&quot;</CODE>, <CODE>&quot;&quot;</CODE> and <CODE>&quot;def&quot;</CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:STRING.isPrefix:VAL"></A>
+<DT> <CODE>isPrefix <VAR>s1</VAR> <VAR>s2</VAR> </CODE>
+<DT> <CODE>            isSubstring <VAR>s1</VAR> <VAR>s2</VAR> </CODE>
+<DT> <CODE>            isSuffix <VAR>s1</VAR> <VAR>s2</VAR> </CODE>
+<DD>
+These functions return <CODE>true</CODE> if the string <VAR>s1</VAR> is a prefix, substring, or suffix (respectively) of the string <VAR>s2</VAR>. Note that the empty string is a prefix, substring, and suffix of any string, and that a string is a prefix, substring, and  suffix of itself. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:STRING.compare:VAL"></A>
+<DT> <CODE>compare (<VAR>s</VAR>, <VAR>t</VAR>) </CODE>
+<DD>
+does a lexicographic comparison of the two strings using the ordering <CODE><A HREF="char.html#SIG:CHAR.compare:VAL:SPEC">Char.compare</A></CODE> on the characters. It returns <CODE><A HREF="general.html#SIG:GENERAL.order:TY:SPEC">LESS</A></CODE>, <CODE><A HREF="general.html#SIG:GENERAL.order:TY:SPEC">EQUAL</A></CODE>,  or <CODE><A HREF="general.html#SIG:GENERAL.order:TY:SPEC">GREATER</A></CODE>, if <VAR>s</VAR> is less than, equal to, or greater than <VAR>t</VAR>, respectively. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:STRING.collate:VAL"></A>
+<DT> <CODE>collate <VAR>f</VAR> (<VAR>s</VAR>, <VAR>t</VAR>) </CODE>
+<DD>
+performs lexicographic comparison of the two strings using the given ordering <VAR>f</VAR> on characters. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:STRING.\|@LT\|:VAL"></A><CODE><B>val</B>&nbsp;&lt;&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;&lt;=&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;&gt;&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;&gt;=&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;bool</CODE>
+<DD>
+          These functions compare two strings lexicographically, using the underlying ordering on the <CODE><A HREF="char.html#SIG:CHAR.char:TY:SPEC">char</A></CODE> type. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:STRING.toString:VAL"></A>
+<DT> <CODE>toString <VAR>s</VAR> </CODE>
+<DD>
+returns a string corresponding to <VAR>s</VAR>, with non-printable characters replaced by SML escape sequences. This is equivalent to 
+<P>
+          <CODE><CODE><A HREF="string.html#SIG:STRING.translate:VAL:SPEC">translate</A></CODE> <CODE><A HREF="char.html#SIG:CHAR.toString:VAL:SPEC">Char.toString</A></CODE> <VAR>s</VAR></CODE> 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:STRING.scan:VAL"></A>
+<DT> <CODE>scan <VAR>getc</VAR> <VAR>strm</VAR> </CODE>
+<DT> <CODE>          fromString <VAR>s</VAR> </CODE>
+<DD>
+These functions scan their character source as a sequence of printable characters, converting SML escape sequences into the appropriate characters. They do not skip leading whitespace. They return as many characters as can successfully be scanned, stopping when they reach the end of the source or a non-printing character (<I>i.e.</I>, one not satisfying <CODE><A HREF="char.html#SIG:CHAR.isPrint:VAL:SPEC">isPrint</A></CODE>), or if they encounter an improper escape sequence. <CODE><A HREF="string.html#SIG:STRING.fromString:VAL:SPEC">fromString</A></CODE> ignores the remaining characters, while <CODE><A HREF="string.html#SIG:STRING.scan:VAL:SPEC">scan</A></CODE> returns the remaining characters as the rest of the stream. 
+<P>
+ The function <CODE><A HREF="string.html#SIG:STRING.fromString:VAL:SPEC">fromString</A></CODE> is equivalent to the  <CODE><CODE><A HREF="string-cvt.html#SIG:STRING_CVT.scanString:VAL:SPEC">StringCvt.scanString</A></CODE> scan</CODE>. 
+<P>
+          If no conversion is possible, <I>e.g.</I>, if the first character is non-printable or begins an illegal escape sequence, <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A></CODE> is returned. Note, however, that <CODE><CODE><A HREF="string.html#SIG:STRING.fromString:VAL:SPEC">fromString</A></CODE> &quot;&quot;</CODE> returns <CODE><CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">SOME</A></CODE>(&quot;&quot;)</CODE>. 
+<P>
+          For more information on the allowed escape sequences, see the entry for <CODE><A HREF="char.html#SIG:CHAR.fromString:VAL:SPEC">CHAR.fromString</A></CODE>. SML source also allows escaped formatting sequences, which are ignored during conversion. The rule is that if any prefix of the input is successfully scanned, including an escaped formatting sequence, the functions returns some string. They only return <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A></CODE> in the case where the prefix of the input cannot be scanned at all. Here are some sample conversions: 
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TH ALIGN=CENTER VALIGN=TOP>
+Input string <VAR>s</VAR>
+<TH ALIGN=CENTER VALIGN=TOP>
+<CODE>fromString <VAR>s</VAR></CODE>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;\\q&quot;</CODE>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>NONE</CODE>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;a\^D&quot;</CODE>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>SOME &quot;a&quot;</CODE>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;a\\ \\\\q&quot;</CODE>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>SOME &quot;a&quot;</CODE>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;\\ \\&quot;</CODE>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>SOME &quot;&quot;</CODE>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;&quot;</CODE>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>SOME &quot;&quot;</CODE>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;\\ \\\^D&quot;</CODE>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>SOME &quot;&quot;</CODE>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;\\ a&quot;</CODE>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>NONE</CODE>
+</TABLE>
+</CENTER>
+<HR>
+ 
+<BLOCKQUOTE>
+<B>Implementation note:</B><BR>
+
+<P>
+Because of the special cases, such as <CODE>fromString &quot;&quot; = SOME &quot;&quot;</CODE>, <CODE>fromString &quot;\\ \\\^D&quot; = SOME &quot;&quot;</CODE>, and <CODE>fromString &quot;\^D&quot; = NONE</CODE>, the functions cannot be implemented as a simple iterative application of <CODE><A HREF="char.html#SIG:CHAR.scan:VAL:SPEC">CHAR.scan</A></CODE>.
+</BLOCKQUOTE>
+ 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:STRING.toCString:VAL"></A>
+<DT> <CODE>toCString <VAR>s</VAR> </CODE>
+<DD>
+returns a string corresponding to <VAR>s</VAR>, with non-printable characters replaced by C escape sequences. This is equivalent to 
+<P>
+          <CODE><CODE><A HREF="string.html#SIG:STRING.translate:VAL:SPEC">translate</A></CODE> <CODE><A HREF="char.html#SIG:CHAR.toCString:VAL:SPEC">Char.toCString</A></CODE> <VAR>s</VAR></CODE> 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:STRING.fromCString:VAL"></A>
+<DT> <CODE>fromCString <VAR>s</VAR> </CODE>
+<DD>
+scans the string <VAR>s</VAR> as a string in the C language, converting C escape sequences into the appropriate characters. The semantics are identical to <CODE><A HREF="string.html#SIG:STRING.fromString:VAL:SPEC">fromString</A></CODE> above, except that C escape sequences are used (see ISO C standard ISO/IEC 9899:1990<B>[CITE]</B>). 
+<P>
+          For more information on the allowed escape sequences, see the entry for <CODE><A HREF="char.html#SIG:CHAR.fromCString:VAL:SPEC">CHAR.fromCString</A></CODE>. Note that <CODE><A HREF="string.html#SIG:STRING.fromCString:VAL:SPEC">fromCString</A></CODE> accepts an unescaped single quote character, but does not accept an unescaped double quote character. 
+<BR>
+<BR>
+
+</DL>
+<H4>See Also</H4>
+<BLOCKQUOTE>
+<CODE><A HREF="char.html#CHAR:SIG:SPEC">CHAR</A></CODE>, <CODE><A HREF="mono-array.html#CharArray:STR:SPEC">CharArray</A></CODE>, <CODE><A HREF="mono-vector.html#CharVector:STR:SPEC">CharVector</A></CODE>, <CODE><A HREF="string-cvt.html#StringCvt:STR:SPEC">StringCvt</A></CODE>, <CODE><A HREF="substring.html#SUBSTRING:SIG:SPEC">SUBSTRING</A></CODE>, <CODE><A HREF="text.html#TEXT:SIG:SPEC">TEXT</A></CODE>, <CODE><A HREF="mono-vector.html#WideCharVector:STR:SPEC">WideCharVector</A></CODE>
+</BLOCKQUOTE>
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="manpages.html">Parent</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   | <A HREF="index.html">Root</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Generated April 12, 2004</I><BR>
+<I>Last Modified October 17, 2000</I><BR>
+<I>Comments to <A HREF="http://www.cs.uchicago.edu/people/jhr">John Reppy.</A></I><BR>
+
+<HR>
+<P>
+
+This document may be distributed freely over the internet as long as the
+copyright notice and license terms below are prominently displayed within
+every machine-readable copy.  
+
+<P>
+
+<TABLE ALIGN=CENTER WIDTH="80%" BORDER="2" CELLPADDING="5">
+<TR>
+<TD>
+<P>
+
+Copyright &copy; 2004 AT&amp;T and Lucent Technologies.
+All rights reserved.
+
+<P>
+
+Permission is granted for internet users to make one paper copy for their
+own personal use.  Further hardcopy reproduction is strictly prohibited. 
+Permission to distribute the HTML document electronically on any medium
+other than the internet must be requested from the copyright holders by
+contacting the editors.
+Printed versions of the SML Basis Manual are available from Cambridge
+University Press.
+To order, please visit
+<A HREF="http://www.cup.org">www.cup.org</A> (North America) or
+<A HREF="http://www.cup.cam.ac.uk">www.cup.cam.ac.uk</A> (outside North America).<BR>
+
+</TABLE>
+<P>
+
+<HR>
+</BODY></HTML>

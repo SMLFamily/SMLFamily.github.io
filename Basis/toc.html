@@ -1,0 +1,355 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<TITLE>Table of Contents</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF"><A NAME="top"></A>
+<H1 align=CENTER>The Standard ML Basis Library</H1>
+<HR>
+
+
+<H2 align=CENTER>Table of Contents</H2>
+<UL>
+<LI>
+<A HREF="index.html#section:0">Introduction</A>
+<LI>
+<A HREF="overview.html#section:0">Overview</A>
+<UL>
+<LI>
+<A HREF="overview.html#section:1">Top-level environment</A>
+<LI>
+<A HREF="overview.html#section:2">Basic types</A>
+<LI>
+<A HREF="overview.html#section:3">Standard datatypes</A>
+<LI>
+<A HREF="overview.html#section:4">Vectors and arrays</A>
+<LI>
+<A HREF="overview.html#section:5">Text</A>
+<LI>
+<A HREF="overview.html#section:6">Input/output</A>
+<LI>
+<A HREF="overview.html#section:7">System interfaces</A>
+<LI>
+<A HREF="overview.html#section:8">Sockets</A>
+<LI>
+<A HREF="overview.html#section:9">Unix-specific interfaces</A>
+<LI>
+<A HREF="overview.html#section:10">Microsoft Windows-specific interfaces</A>
+<LI>
+<A HREF="overview.html#section:11">Required components</A>
+<UL>
+<LI>
+<A HREF="overview.html#section:12">Required signatures</A>
+<LI>
+<A HREF="overview.html#section:13">Required structures</A>
+</UL>
+<LI>
+<A HREF="overview.html#section:14">Optional components</A>
+<UL>
+<LI>
+<A HREF="overview.html#section:15">Optional signatures</A>
+<LI>
+<A HREF="overview.html#section:16">Optional structures</A>
+<LI>
+<A HREF="overview.html#section:17">Optional functors</A>
+</UL>
+</UL>
+<LI>
+<A HREF="top-level-chapter.html#section:sec:top-level-env">Top-level environment</A>
+<UL>
+<LI>
+<A HREF="top-level-chapter.html#section:1">Modules in the top-level environment</A>
+<LI>
+<A HREF="top-level-chapter.html#section:2">Top-level type, exception, and value identifiers</A>
+<LI>
+<A HREF="top-level-chapter.html#section:3">Overloaded identifiers</A>
+<LI>
+<A HREF="top-level-chapter.html#section:4">Infix identifiers</A>
+<LI>
+<A HREF="top-level-chapter.html#section:5">The operating environment</A>
+</UL>
+<LI>
+<A HREF="manpages.html#section:sec:man-pages">Manual Pages</A>
+<UL>
+<LI>
+<A HREF="array.html#section:0">The <CODE>Array</CODE> structure</A>
+<LI>
+<A HREF="array2.html#section:0">The <CODE>Array2</CODE> structure</A>
+<LI>
+<A HREF="array-slice.html#section:0">The <CODE>ArraySlice</CODE> structure</A>
+<LI>
+<A HREF="bin-io.html#section:0">The <CODE>BinIO</CODE> structure</A>
+<LI>
+<A HREF="bit-flags.html#section:0">The <CODE>BIT_FLAGS</CODE> signature</A>
+<LI>
+<A HREF="bool.html#section:0">The <CODE>Bool</CODE> structure</A>
+<LI>
+<A HREF="byte.html#section:0">The <CODE>Byte</CODE> structure</A>
+<LI>
+<A HREF="char.html#section:0">The <CODE>CHAR</CODE> signature</A>
+<LI>
+<A HREF="command-line.html#section:0">The <CODE>CommandLine</CODE> structure</A>
+<LI>
+<A HREF="date.html#section:0">The <CODE>Date</CODE> structure</A>
+<LI>
+<A HREF="general.html#section:0">The <CODE>General</CODE> structure</A>
+<LI>
+<A HREF="generic-sock.html#section:0">The <CODE>GenericSock</CODE> structure</A>
+<LI>
+<A HREF="ieee-float.html#section:0">The <CODE>IEEEReal</CODE> structure</A>
+<LI>
+<A HREF="imperative-io.html#section:0">The <CODE>IMPERATIVE_IO</CODE> signature</A>
+<LI>
+<A HREF="imperative-io-fn.html#section:0">The <CODE>ImperativeIO</CODE> functor</A>
+<LI>
+<A HREF="inet-sock.html#section:0">The <CODE>INetSock</CODE> structure</A>
+<LI>
+<A HREF="integer.html#section:0">The <CODE>INTEGER</CODE> signature</A>
+<LI>
+<A HREF="int-inf.html#section:0">The <CODE>IntInf</CODE> structure</A>
+<LI>
+<A HREF="io.html#section:0">The <CODE>IO</CODE> structure</A>
+<LI>
+<A HREF="list.html#section:0">The <CODE>List</CODE> structure</A>
+<LI>
+<A HREF="list-pair.html#section:0">The <CODE>ListPair</CODE> structure</A>
+<LI>
+<A HREF="math.html#section:0">The <CODE>MATH</CODE> signature</A>
+<LI>
+<A HREF="mono-array.html#section:0">The <CODE>MONO_ARRAY</CODE> signature</A>
+<LI>
+<A HREF="mono-array2.html#section:0">The <CODE>MONO_ARRAY2</CODE> signature</A>
+<LI>
+<A HREF="mono-array-slice.html#section:0">The <CODE>MONO_ARRAY_SLICE</CODE> signature</A>
+<LI>
+<A HREF="mono-vector.html#section:0">The <CODE>MONO_VECTOR</CODE> signature</A>
+<LI>
+<A HREF="mono-vector-slice.html#section:0">The <CODE>MONO_VECTOR_SLICE</CODE> signature</A>
+<LI>
+<A HREF="net-host-db.html#section:0">The <CODE>NetHostDB</CODE> structure</A>
+<LI>
+<A HREF="prot-db.html#section:0">The <CODE>NetProtDB</CODE> structure</A>
+<LI>
+<A HREF="serv-db.html#section:0">The <CODE>NetServDB</CODE> structure</A>
+<LI>
+<A HREF="option.html#section:0">The <CODE>Option</CODE> structure</A>
+<LI>
+<A HREF="os.html#section:0">The <CODE>OS</CODE> structure</A>
+<LI>
+<A HREF="os-file-sys.html#section:0">The <CODE>OS.FileSys</CODE> structure</A>
+<LI>
+<A HREF="os-io.html#section:0">The <CODE>OS.IO</CODE> structure</A>
+<LI>
+<A HREF="os-path.html#section:0">The <CODE>OS.Path</CODE> structure</A>
+<LI>
+<A HREF="os-process.html#section:0">The <CODE>OS.Process</CODE> structure</A>
+<LI>
+<A HREF="pack-float.html#section:0">The <CODE>PACK_REAL</CODE> signature</A>
+<LI>
+<A HREF="pack-word.html#section:0">The <CODE>PACK_WORD</CODE> signature</A>
+<LI>
+<A HREF="posix.html#section:0">The <CODE>Posix</CODE> structure</A>
+<LI>
+<A HREF="posix-error.html#section:0">The <CODE>Posix.Error</CODE> structure</A>
+<LI>
+<A HREF="posix-file-sys.html#section:0">The <CODE>Posix.FileSys</CODE> structure</A>
+<LI>
+<A HREF="posix-io.html#section:0">The <CODE>Posix.IO</CODE> structure</A>
+<LI>
+<A HREF="posix-proc-env.html#section:0">The <CODE>Posix.ProcEnv</CODE> structure</A>
+<LI>
+<A HREF="posix-process.html#section:0">The <CODE>Posix.Process</CODE> structure</A>
+<LI>
+<A HREF="posix-signal.html#section:0">The <CODE>Posix.Signal</CODE> structure</A>
+<LI>
+<A HREF="posix-sys-db.html#section:0">The <CODE>Posix.SysDB</CODE> structure</A>
+<LI>
+<A HREF="posix-tty.html#section:0">The <CODE>Posix.TTY</CODE> structure</A>
+<LI>
+<A HREF="prim-io.html#section:0">The <CODE>PRIM_IO</CODE> signature</A>
+<LI>
+<A HREF="prim-io-fn.html#section:0">The <CODE>PrimIO</CODE> functor</A>
+<LI>
+<A HREF="real.html#section:0">The <CODE>REAL</CODE> signature</A>
+<LI>
+<A HREF="socket.html#section:0">The <CODE>Socket</CODE> structure</A>
+<LI>
+<A HREF="stream-io.html#section:0">The <CODE>STREAM_IO</CODE> signature</A>
+<LI>
+<A HREF="stream-io-fn.html#section:0">The <CODE>StreamIO</CODE> functor</A>
+<LI>
+<A HREF="string.html#section:0">The <CODE>STRING</CODE> signature</A>
+<LI>
+<A HREF="string-cvt.html#section:0">The <CODE>StringCvt</CODE> structure</A>
+<LI>
+<A HREF="substring.html#section:0">The <CODE>SUBSTRING</CODE> signature</A>
+<LI>
+<A HREF="text.html#section:0">The <CODE>TEXT</CODE> signature</A>
+<LI>
+<A HREF="text-io.html#section:0">The <CODE>TEXT_IO</CODE> signature</A>
+<LI>
+<A HREF="text-stream-io.html#section:0">The <CODE>TEXT_STREAM_IO</CODE> signature</A>
+<LI>
+<A HREF="time.html#section:0">The <CODE>Time</CODE> structure</A>
+<LI>
+<A HREF="timer.html#section:0">The <CODE>Timer</CODE> structure</A>
+<LI>
+<A HREF="unix.html#section:0">The <CODE>Unix</CODE> structure</A>
+<LI>
+<A HREF="unix-sock.html#section:0">The <CODE>UnixSock</CODE> structure</A>
+<LI>
+<A HREF="vector.html#section:0">The <CODE>Vector</CODE> structure</A>
+<LI>
+<A HREF="vector-slice.html#section:0">The <CODE>VectorSlice</CODE> structure</A>
+<LI>
+<A HREF="windows.html#section:0">The <CODE>Windows</CODE> structure</A>
+<LI>
+<A HREF="word.html#section:0">The <CODE>WORD</CODE> signature</A>
+</UL>
+<LI>
+<A HREF="credits.html#section:0">Contributors</A>
+<LI>
+<A HREF="history.html#section:0">Change history</A>
+<UL>
+<LI>
+<A HREF="history.html#section:1">April 12, 2004</A>
+<LI>
+<A HREF="history.html#section:2">April 7, 2004</A>
+<LI>
+<A HREF="history.html#section:3">September 18, 2003</A>
+<LI>
+<A HREF="history.html#section:4">September 15, 2003</A>
+<LI>
+<A HREF="history.html#section:5">September 12, 2003</A>
+<LI>
+<A HREF="history.html#section:6">September 11, 2003</A>
+<LI>
+<A HREF="history.html#section:7">September 8, 2003</A>
+<LI>
+<A HREF="history.html#section:8">August 26, 2003</A>
+<LI>
+<A HREF="history.html#section:9">August 19, 2003</A>
+<LI>
+<A HREF="history.html#section:10">August 14, 2003</A>
+<LI>
+<A HREF="history.html#section:11">July 30, 2003</A>
+<LI>
+<A HREF="history.html#section:12">July 30, 2003</A>
+<LI>
+<A HREF="history.html#section:13">July 15, 2003</A>
+<LI>
+<A HREF="history.html#section:14">July 14, 2003</A>
+<LI>
+<A HREF="history.html#section:15">July 10, 2003</A>
+<LI>
+<A HREF="history.html#section:16">June 26, 2003</A>
+<LI>
+<A HREF="history.html#section:17">May 9, 2003</A>
+<LI>
+<A HREF="history.html#section:18">April 26, 2003</A>
+<LI>
+<A HREF="history.html#section:19">July 9, 2002</A>
+<LI>
+<A HREF="history.html#section:20">July 3, 2002</A>
+<LI>
+<A HREF="history.html#section:21">June 18, 2002</A>
+<LI>
+<A HREF="history.html#section:22">December 6, 2001</A>
+<LI>
+<A HREF="history.html#section:23">October 29, 2001</A>
+<LI>
+<A HREF="history.html#section:24">October 10, 2001</A>
+<LI>
+<A HREF="history.html#section:25">April 11, 2001</A>
+<LI>
+<A HREF="history.html#section:26">April 3, 2001</A>
+<LI>
+<A HREF="history.html#section:27">December 15, 2000</A>
+<LI>
+<A HREF="history.html#section:28">November 20, 2000</A>
+<LI>
+<A HREF="history.html#section:29">October 31, 2000</A>
+<LI>
+<A HREF="history.html#section:30">October 24, 2000</A>
+<LI>
+<A HREF="history.html#section:31">October 17, 2000</A>
+<LI>
+<A HREF="history.html#section:32">September 20, 2000</A>
+<LI>
+<A HREF="history.html#section:33">September 6, 2000</A>
+<LI>
+<A HREF="history.html#section:34">September 4, 2000</A>
+<LI>
+<A HREF="history.html#section:35">July 17, 2000</A>
+<LI>
+<A HREF="history.html#section:36">June 1, 2000</A>
+<LI>
+<A HREF="history.html#section:37">March 29, 2000</A>
+<LI>
+<A HREF="history.html#section:38">Summer and Fall 1999</A>
+<LI>
+<A HREF="history.html#section:39">April 28, 1999</A>
+<LI>
+<A HREF="history.html#section:40">February 26, 1999</A>
+<LI>
+<A HREF="history.html#section:41">October 5, 1998</A>
+<LI>
+<A HREF="history.html#section:42">August 28, 1998</A>
+<LI>
+<A HREF="history.html#section:43">August 26, 1998</A>
+<LI>
+<A HREF="history.html#section:44">August 12, 1998</A>
+<LI>
+<A HREF="history.html#section:45">July 21, 1998</A>
+<LI>
+<A HREF="history.html#section:46">May 7, 1998</A>
+<LI>
+<A HREF="history.html#section:47">November 29, 1997</A>
+</UL>
+</UL>
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="">Parent</A>
+   | Contents
+   | <A HREF="index-all.html">Index</A>
+   | <A HREF="">Root</A>
+   ]</B>
+</CENTER>
+<HR>
+<P>
+
+This document may be distributed freely over the internet as long as the
+copyright notice and license terms below are prominently displayed within
+every machine-readable copy.  
+
+<P>
+
+<TABLE ALIGN=CENTER WIDTH="80%" BORDER="2" CELLPADDING="5">
+<TR>
+<TD>
+<P>
+
+Copyright &copy; 2004 AT&amp;T and Lucent Technologies.
+All rights reserved.
+
+<P>
+
+Permission is granted for internet users to make one paper copy for their
+own personal use.  Further hardcopy reproduction is strictly prohibited. 
+Permission to distribute the HTML document electronically on any medium
+other than the internet must be requested from the copyright holders by
+contacting the editors.
+Printed versions of the SML Basis Manual are available from Cambridge
+University Press.
+To order, please visit
+<A HREF="http://www.cup.org">www.cup.org</A> (North America) or
+<A HREF="http://www.cup.cam.ac.uk">www.cup.cam.ac.uk</A> (outside North America).<BR>
+
+</TABLE>
+<P>
+
+<HR>
+</BODY></HTML>

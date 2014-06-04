@@ -1,0 +1,247 @@
+<!-- HTML/general.html -->
+
+<!-- COPYRIGHT (c) 1997 Bell Labs, Lucent Technologies. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The General structure</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF"><A NAME="top"></A>
+<H1 align=CENTER>The Standard ML Basis Library</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>General</CODE> structure</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="GENERAL:SIG:SPEC"></A><CODE>GENERAL</CODE><BR>
+<B>structure</B>&nbsp;<A NAME="General:STR:SPEC"></A><CODE>General</CODE><B> :> </B>GENERAL<BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+ The structure <CODE>General</CODE> defines exceptions, datatypes, and functions which are used throughout the SML Basis Library, and are useful in a wide range of programs.  
+<P>
+All of the types and values defined in <CODE>General</CODE> are available unqualified at the top-level. 
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>eqtype</B>&nbsp;<A NAME="SIG:GENERAL.unit:TY:SPEC" HREF="#SIG:GENERAL.unit:TY">unit</A><BR>
+<B>type</B>&nbsp;<A NAME="SIG:GENERAL.exn:TY:SPEC" HREF="#SIG:GENERAL.exn:TY">exn</A>&nbsp;=&nbsp;exn<BR>
+<BR>
+<B>exception</B>&nbsp;<A NAME="SIG:GENERAL.Bind:EXN:SPEC" HREF="#SIG:GENERAL.Bind:EXN">Bind</A><BR>
+<B>exception</B>&nbsp;<A NAME="SIG:GENERAL.Match:EXN:SPEC" HREF="#SIG:GENERAL.Match:EXN">Match</A><BR>
+<B>exception</B>&nbsp;<A NAME="SIG:GENERAL.Chr:EXN:SPEC" HREF="#SIG:GENERAL.Chr:EXN">Chr</A><BR>
+<B>exception</B>&nbsp;<A NAME="SIG:GENERAL.Div:EXN:SPEC" HREF="#SIG:GENERAL.Div:EXN">Div</A><BR>
+<B>exception</B>&nbsp;<A NAME="SIG:GENERAL.Domain:EXN:SPEC" HREF="#SIG:GENERAL.Domain:EXN">Domain</A><BR>
+<B>exception</B>&nbsp;<A NAME="SIG:GENERAL.Fail:EXN:SPEC" HREF="#SIG:GENERAL.Fail:EXN">Fail</A>&nbsp;<B>of</B>&nbsp;string<BR>
+<B>exception</B>&nbsp;<A NAME="SIG:GENERAL.Overflow:EXN:SPEC" HREF="#SIG:GENERAL.Overflow:EXN">Overflow</A><BR>
+<B>exception</B>&nbsp;<A NAME="SIG:GENERAL.Size:EXN:SPEC" HREF="#SIG:GENERAL.Size:EXN">Size</A><BR>
+<B>exception</B>&nbsp;<A NAME="SIG:GENERAL.Span:EXN:SPEC" HREF="#SIG:GENERAL.Span:EXN">Span</A><BR>
+<B>exception</B>&nbsp;<A NAME="SIG:GENERAL.Subscript:EXN:SPEC" HREF="#SIG:GENERAL.Subscript:EXN">Subscript</A><BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:GENERAL.exnName:VAL:SPEC" HREF="#SIG:GENERAL.exnName:VAL">exnName</A>&nbsp;<B>:</B>&nbsp;exn&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="SIG:GENERAL.exnMessage:VAL:SPEC" HREF="#SIG:GENERAL.exnMessage:VAL">exnMessage</A>&nbsp;<B>:</B>&nbsp;exn&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<BR>
+<B>datatype</B>&nbsp;<A NAME="SIG:GENERAL.order:TY:SPEC" HREF="#SIG:GENERAL.order:TY">order</A>&nbsp;=&nbsp;<A NAME="SIG:GENERAL.LESS:TY:SPEC" HREF="#SIG:GENERAL.LESS:TY">LESS</A>&nbsp;|&nbsp;<A NAME="SIG:GENERAL.EQUAL:TY:SPEC" HREF="#SIG:GENERAL.EQUAL:TY">EQUAL</A>&nbsp;|&nbsp;<A NAME="SIG:GENERAL.GREATER:TY:SPEC" HREF="#SIG:GENERAL.GREATER:TY">GREATER</A><BR>
+<B>val</B>&nbsp;<A NAME="SIG:GENERAL.!:VAL:SPEC" HREF="#SIG:GENERAL.!:VAL">!</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;ref&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I><BR>
+<B>val</B>&nbsp;<A NAME="SIG:GENERAL.:=:VAL:SPEC" HREF="#SIG:GENERAL.:=:VAL">:=</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;ref&nbsp;<B>*</B>&nbsp;<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="SIG:GENERAL.o:VAL:SPEC" HREF="#SIG:GENERAL.o:VAL">o</A>&nbsp;<B>:</B>&nbsp;(<I>'b</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'c</I>)&nbsp;<B>*</B>&nbsp;(<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'b</I>)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'c</I><BR>
+<B>val</B>&nbsp;<A NAME="SIG:GENERAL.before:VAL:SPEC" HREF="#SIG:GENERAL.before:VAL">before</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;<B>*</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I><BR>
+<B>val</B>&nbsp;<A NAME="SIG:GENERAL.ignore:VAL:SPEC" HREF="#SIG:GENERAL.ignore:VAL">ignore</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;<B>-&gt;</B>&nbsp;unit</CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="SIG:GENERAL.unit:TY"></A><CODE><B>eqtype</B>&nbsp;unit</CODE>
+<DD>
+        The type containing a single value denoted <CODE>()</CODE>, which is typically used as a trivial argument or as a return value for a side-effecting function. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:GENERAL.exn:TY"></A><CODE><B>type</B>&nbsp;exn&nbsp;=&nbsp;exn</CODE>
+<DD>
+ The type of values transmitted when an exception is raised and  handled. This type is special in that it behaves like a datatype  with an extensible set of data constructors, where new constructors  are created by exception declarations. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:GENERAL.Bind:EXN"></A><CODE><B>exception</B>&nbsp;Bind<BR>
+<B>exception</B>&nbsp;Match</CODE>
+<DD>
+ Exceptions indicating that pattern matching failed in a <CODE>val</CODE> binding or, respectively, in a <CODE>case</CODE> expression or function application. This occurs when the matched value is not an instance of any of the supplied patterns. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:GENERAL.Chr:EXN"></A><CODE><B>exception</B>&nbsp;Chr</CODE>
+<DD>
+ The exception indicating an attempt to create a character with a code  outside the range supported by the underlying character type (see <CODE><A HREF="char.html#SIG:CHAR.chr:VAL:SPEC">CHAR.chr</A></CODE>). 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:GENERAL.Div:EXN"></A><CODE><B>exception</B>&nbsp;Div</CODE>
+<DD>
+ The exception indicating an attempt to divide by zero.  It replaces the <CODE>Mod</CODE> exception required by the SML'90 Definition. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:GENERAL.Domain:EXN"></A><CODE><B>exception</B>&nbsp;Domain</CODE>
+<DD>
+ The exception indicating that the argument of a mathematical  function is outside the domain of the function.  It is raised by functions in structures matching  the <CODE><A HREF="math.html#MATH:SIG:SPEC">MATH</A></CODE> or <CODE><A HREF="int-inf.html#INT_INF:SIG:SPEC">INT_INF</A></CODE> signatures.  It replaces the <CODE>Sqrt</CODE> and <CODE>Ln</CODE>  exceptions required by the SML'90 Definition. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:GENERAL.Fail:EXN"></A><CODE><B>exception</B>&nbsp;Fail&nbsp;<B>of</B>&nbsp;string</CODE>
+<DD>
+ A general-purpose exception used to signify the failure  of an operation. It is not raised by any function in the SML Basis Library,  but is provided for use by users and user-defined libraries. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:GENERAL.Overflow:EXN"></A><CODE><B>exception</B>&nbsp;Overflow</CODE>
+<DD>
+ The exception indicating that the result of an arithmetic function  is not representable, in particular, is too large.  It replaces the <CODE>Abs</CODE>, <CODE>Exp</CODE>,  <CODE>Neg</CODE>, <CODE>Prod</CODE>, <CODE>Quot</CODE>, and <CODE>Sum</CODE> exceptions required by  the SML'90 Definition. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:GENERAL.Size:EXN"></A><CODE><B>exception</B>&nbsp;Size</CODE>
+<DD>
+ The exception indicating an attempt to create an aggregate data  structure (such as an array, string, or vector) whose size is too large  or negative.  
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:GENERAL.Span:EXN"></A><CODE><B>exception</B>&nbsp;Span</CODE>
+<DD>
+ The exception indicating an attempt to apply  <CODE><A HREF="substring.html#SIG:SUBSTRING.span:VAL:SPEC">SUBSTRING.span</A></CODE> to two incompatible substrings. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:GENERAL.Subscript:EXN"></A><CODE><B>exception</B>&nbsp;Subscript</CODE>
+<DD>
+ The exception indicating that an index is out of range, typically  arising when the program is accessing an element in an aggregate  data structure (such as a list, string, array, or vector).  
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:GENERAL.exnName:VAL"></A>
+<DT> <CODE>exnName <VAR>ex</VAR> </CODE>
+<DD>
+returns a name for the exception <VAR>ex</VAR>. The name returned may be that of any exception constructor aliasing with <VAR>ex</VAR>.  For instance,  
+<PRE>
+let exception E1; exception E2 = E1 in exnName E2 end
+</PRE>
+ might evaluate to <CODE>&quot;E1&quot;</CODE> or <CODE>&quot;E2&quot;</CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:GENERAL.exnMessage:VAL"></A>
+<DT> <CODE>exnMessage <VAR>ex</VAR> </CODE>
+<DD>
+returns a message corresponding to exception <VAR>ex</VAR>. The precise format of the message may vary between implementations and locales, but will at least contain the string <CODE><CODE><A HREF="general.html#SIG:GENERAL.exnName:VAL:SPEC">exnName</A></CODE> <VAR>ex</VAR></CODE>.  
+<BLOCKQUOTE>
+<B>Example:</B><BR>
+
+<PRE>
+exnMessage Div = &quot;Div&quot;
+exnMessage (OS.SysErr (&quot;No such file&quot;, <A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A>)) = 
+  &quot;OS.SysErr \&quot;No such file\&quot;&quot;
+</PRE>
+</BLOCKQUOTE>
+  
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:GENERAL.order:TY"></A><CODE><B>datatype</B>&nbsp;order&nbsp;=&nbsp;LESS&nbsp;|&nbsp;EQUAL&nbsp;|&nbsp;GREATER</CODE>
+<DD>
+        Values of type <CODE><A HREF="general.html#SIG:GENERAL.order:TY:SPEC">order</A></CODE> are used when comparing elements of a type that has a linear ordering. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:GENERAL.!:VAL"></A>
+<DT> <CODE>! <VAR>re</VAR> </CODE>
+<DD>
+returns the value referred to by the reference <VAR>re</VAR>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:GENERAL.:=:VAL"></A>
+<DT> <CODE><VAR>re</VAR> := <VAR>a</VAR> </CODE>
+<DD>
+makes the reference <VAR>re</VAR> refer to the value <VAR>a</VAR>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:GENERAL.o:VAL"></A>
+<DT> <CODE><VAR>f</VAR> o <VAR>g</VAR> </CODE>
+<DD>
+is the function composition of <VAR>f</VAR> and <VAR>g</VAR>. Thus, <CODE>(<VAR>f</VAR> o <VAR>g</VAR>) <VAR>a</VAR></CODE> is equivalent to <CODE><VAR>f</VAR>(<VAR>g</VAR> <VAR>a</VAR>)</CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:GENERAL.before:VAL"></A>
+<DT> <CODE><VAR>a</VAR> before <VAR>b</VAR> </CODE>
+<DD>
+returns <VAR>a</VAR>. It provides a notational shorthand for evaluating <VAR>a</VAR>, then <VAR>b</VAR>, before returning the value of <VAR>a</VAR>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:GENERAL.ignore:VAL"></A>
+<DT> <CODE>ignore <VAR>a</VAR> </CODE>
+<DD>
+returns <CODE>()</CODE>.  The purpose of <CODE><A HREF="general.html#SIG:GENERAL.ignore:VAL:SPEC">ignore</A></CODE> is to discard the result of a computation, returning <CODE>()</CODE> instead.  This is useful, for example, when a higher-order function, such as <CODE><A HREF="list.html#SIG:LIST.app:VAL:SPEC">List.app</A></CODE>, requires a function  returning <CODE><A HREF="general.html#SIG:GENERAL.unit:TY:SPEC">unit</A></CODE>, but the function to be used returns values of some other type.
+<BR>
+<BR>
+
+</DL>
+<H4>Discussion</H4>
+<P>
+Some systems may provide a compatibility mode in which the exceptions replaced from SML'90 (<I>e.g.</I>, <CODE>Abs</CODE>, <CODE>Sqrt</CODE>) are provided at top-level as aliases for the new exceptions.
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="manpages.html">Parent</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   | <A HREF="index.html">Root</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Generated April 12, 2004</I><BR>
+<I>Last Modified February 20, 1997</I><BR>
+<I>Comments to <A HREF="http://www.cs.uchicago.edu/people/jhr">John Reppy.</A></I><BR>
+
+<HR>
+<P>
+
+This document may be distributed freely over the internet as long as the
+copyright notice and license terms below are prominently displayed within
+every machine-readable copy.  
+
+<P>
+
+<TABLE ALIGN=CENTER WIDTH="80%" BORDER="2" CELLPADDING="5">
+<TR>
+<TD>
+<P>
+
+Copyright &copy; 2004 AT&amp;T and Lucent Technologies.
+All rights reserved.
+
+<P>
+
+Permission is granted for internet users to make one paper copy for their
+own personal use.  Further hardcopy reproduction is strictly prohibited. 
+Permission to distribute the HTML document electronically on any medium
+other than the internet must be requested from the copyright holders by
+contacting the editors.
+Printed versions of the SML Basis Manual are available from Cambridge
+University Press.
+To order, please visit
+<A HREF="http://www.cup.org">www.cup.org</A> (North America) or
+<A HREF="http://www.cup.cam.ac.uk">www.cup.cam.ac.uk</A> (outside North America).<BR>
+
+</TABLE>
+<P>
+
+<HR>
+</BODY></HTML>

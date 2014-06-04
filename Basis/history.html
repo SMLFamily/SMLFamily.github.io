@@ -1,0 +1,437 @@
+<!-- HTML/history.html -->
+
+<!-- COPYRIGHT (c) 2001 Bell Labs, Lucent Technologies. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>Change history</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF"><A NAME="top"></A>
+<H1 align=CENTER>The Standard ML Basis Library</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>Change history</H2>
+<P>
+The following is a summary of the changes made to the SML Basis Library specification. The changes are listed with the most recent first. This list only covers actual changes or clarifications to the specification; it does not cover changes to the prose or layout. 
+<H3><A NAME="section:1"></A>April 12, 2004</H3>
+<UL>
+<LI>
+Added <CODE><A HREF="timer.html#SIG:TIMER.checkCPUTimes:VAL:SPEC">Timer.checkCPUTimes</A></CODE> function.
+</UL>
+<H3><A NAME="section:2"></A>April 7, 2004</H3>
+<UL>
+<LI>
+Clarified the definition of <CODE><A HREF="real.html#SIG:REAL.precision:VAL:SPEC">precision</A></CODE> to count the hidden bit. 
+<LI>
+Clarified the semantics of <CODE><A HREF="math.html#SIG:MATH.sinh:VAL:SPEC">sinh</A></CODE>, <CODE><A HREF="math.html#SIG:MATH.cosh:VAL:SPEC">cosh</A></CODE>, and <CODE><A HREF="math.html#SIG:MATH.tanh:VAL:SPEC">tanh</A></CODE>.
+</UL>
+<H3><A NAME="section:3"></A>September 18, 2003</H3>
+<P>
+Added <CODE><A HREF="time.html#SIG:TIME.fromNanoseconds:VAL:SPEC">fromNanoseconds</A></CODE> and <CODE><A HREF="time.html#SIG:TIME.toNanoseconds:VAL:SPEC">toNanoseconds</A></CODE> to the <CODE><A HREF="time.html#Time:STR:SPEC">Time</A></CODE> structure.
+<H3><A NAME="section:4"></A>September 15, 2003</H3>
+<UL>
+<LI>
+Changed the type of the <CODE>inputLine</CODE> function in both <CODE><A HREF="text-io.html#TEXT_IO:SIG:SPEC">TEXT_IO</A></CODE> and <CODE><A HREF="text-stream-io.html#TEXT_STREAM_IO:SIG:SPEC">TEXT_STREAM_IO</A></CODE>. 
+<LI>
+Changed the return type of the datagram socket output functions to be <CODE>unit</CODE>. 
+<LI>
+Change the non-blocking semantics of sockets to be consistent with the <CODE><A HREF="prim-io.html#PRIM_IO:SIG:SPEC">PRIM_IO</A></CODE> design (this change also avoids a nasty portablility problem).
+</UL>
+<H3><A NAME="section:5"></A>September 12, 2003</H3>
+<UL>
+<LI>
+Added the function <CODE><A HREF="real.html#SIG:REAL.realRound:VAL:SPEC">realRound</A></CODE> to the <CODE><A HREF="real.html#REAL:SIG:SPEC">REAL</A></CODE> signature. 
+<LI>
+Switched to consistent use of slices anywhere a subrange of arrays or vectors are required. The effected signatures and modules are <CODE><A HREF="byte.html#Byte:STR:SPEC">Byte</A></CODE>, <CODE><A HREF="prim-io.html#PRIM_IO:SIG:SPEC">PRIM_IO</A></CODE>, <CODE><A HREF="prim-io-fn.html#PrimIO:FCT:SPEC">PrimIO</A></CODE>, <CODE><A HREF="socket.html#Socket:STR:SPEC">Socket</A></CODE>, and <CODE><A HREF="posix.html#SIG:POSIX.IO:STR:SPEC">Posix.IO</A></CODE> 
+<LI>
+Note that <CODE><A HREF="posix-io.html#SIG:POSIX_IO.readVec:VAL:SPEC">Posix.IO.readVec</A></CODE> raises <CODE><A HREF="general.html#SIG:GENERAL.Size:EXN:SPEC">Size</A></CODE> with a negative argument, rather than <CODE><A HREF="general.html#SIG:GENERAL.Subscript:EXN:SPEC">Subscript</A></CODE>.
+</UL>
+<H3><A NAME="section:6"></A>September 11, 2003</H3>
+<UL>
+<LI>
+Specify all signature matching as opaque. 
+<LI>
+Note that <CODE><A HREF="stream-io.html#SIG:STREAM_IO.setBufferMode:VAL:SPEC">setBufferMode</A></CODE> does not permit flushing when switching between <CODE>LINE_BUF</CODE> and <CODE>BLOCK_BUF</CODE>. 
+<LI>
+Fix error requiring <CODE><A HREF="">ref</A></CODE> to live in <CODE><A HREF="general.html#General:STR:SPEC">General</A></CODE> 
+<LI>
+Note that <CODE>recvVec*</CODE> raise <CODE><A HREF="general.html#SIG:GENERAL.Size:EXN:SPEC">Size</A></CODE> with a negative second argument, rather than <CODE><A HREF="general.html#SIG:GENERAL.Subscript:EXN:SPEC">Subscript</A></CODE>. 
+<LI>
+Note that implementations not providing all floating point rounding modes are non-conforming. 
+<LI>
+Add <CODE><A HREF="mono-vector-slice.html#CharVectorSlice:STR:SPEC">CharVectorSlice</A></CODE> and <CODE><A HREF="mono-array-slice.html#CharArraySlice:STR:SPEC">CharArraySlice</A></CODE> to <CODE><A HREF="text.html#TEXT:SIG:SPEC">TEXT</A></CODE>. 
+<LI>
+Fix where type constraints on <CODE><A HREF="imperative-io-fn.html#ImperativeIO:FCT:SPEC">ImperativeIO</A></CODE> and <CODE><A HREF="stream-io-fn.html#StreamIO:FCT:SPEC">StreamIO</A></CODE>.
+</UL>
+<H3><A NAME="section:7"></A>September 8, 2003</H3>
+<P>
+Changed the names of the <CODE><A HREF="pack-word.html#PACK_WORD:SIG:SPEC">PACK_WORD</A></CODE> instances to <CODE>PackWord<I>&lt;N&gt;</I>Big</CODE> and  <CODE>PackWord<I>&lt;N&gt;</I>Little</CODE>.
+<H3><A NAME="section:8"></A>August 26, 2003</H3>
+<UL>
+<LI>
+Added the following optional structure instances: <CODE><A HREF="mono-vector.html#WordVector:STR:SPEC">WordVector</A></CODE> <CODE><A HREF="mono-vector-slice.html#WordVectorSlice:STR:SPEC">WordVectorSlice</A></CODE>, <CODE><A HREF="mono-array.html#WordArray:STR:SPEC">WordArray</A></CODE>, <CODE><A HREF="mono-array-slice.html#WordArraySlice:STR:SPEC">WordArraySlice</A></CODE>, <CODE><A HREF="mono-array2.html#WordArray2:STR:SPEC">WordArray2</A></CODE>, <CODE><A HREF="mono-vector.html#LargeIntVector:STR:SPEC">LargeIntVector</A></CODE> <CODE><A HREF="mono-vector-slice.html#LargeIntVectorSlice:STR:SPEC">LargeIntVectorSlice</A></CODE>, <CODE><A HREF="mono-array.html#LargeIntArray:STR:SPEC">LargeIntArray</A></CODE>, <CODE><A HREF="mono-array-slice.html#LargeIntArraySlice:STR:SPEC">LargeIntArraySlice</A></CODE>, <CODE><A HREF="mono-array2.html#LargeIntArray2:STR:SPEC">LargeIntArray2</A></CODE>, <CODE><A HREF="mono-vector.html#LargeWordVector:STR:SPEC">LargeWordVector</A></CODE> <CODE><A HREF="mono-vector-slice.html#LargeWordVectorSlice:STR:SPEC">LargeWordVectorSlice</A></CODE>, <CODE><A HREF="mono-array.html#LargeWordArray:STR:SPEC">LargeWordArray</A></CODE>, <CODE><A HREF="mono-array-slice.html#LargeWordArraySlice:STR:SPEC">LargeWordArraySlice</A></CODE>, <CODE><A HREF="mono-array2.html#LargeWordArray2:STR:SPEC">LargeWordArray2</A></CODE>, <CODE><A HREF="mono-vector.html#LargeRealVector:STR:SPEC">LargeRealVector</A></CODE> <CODE><A HREF="mono-vector-slice.html#LargeRealVectorSlice:STR:SPEC">LargeRealVectorSlice</A></CODE>, <CODE><A HREF="mono-array.html#LargeRealArray:STR:SPEC">LargeRealArray</A></CODE>, <CODE><A HREF="mono-array-slice.html#LargeRealArraySlice:STR:SPEC">LargeRealArraySlice</A></CODE>, and <CODE><A HREF="mono-array2.html#LargeRealArray2:STR:SPEC">LargeRealArray2</A></CODE>.
+</UL>
+<H3><A NAME="section:9"></A>August 19, 2003</H3>
+<UL>
+<LI>
+Specify that <CODE><A HREF="time.html#SIG:TIME.toSeconds:VAL:SPEC">Time.toSeconds</A></CODE>, etc. round towards 0.
+</UL>
+<H3><A NAME="section:10"></A>August 14, 2003</H3>
+<UL>
+<LI>
+Clarification in I/O system. Changed the description of the <CODE><A HREF="io.html#SIG:IO.ClosedStream:EXN:SPEC">IO.ClosedStream</A></CODE> exception. First, we note that this exception should be used if the output stream is terminated. (If we want to distinguish the cases, we could resurrect the <CODE>TerminatedStream</CODE> exception.) Second, we removed the requirement that the <CODE><A HREF="io.html#SIG:IO.ClosedStream:EXN:SPEC">IO.ClosedStream</A></CODE> be reported by the writer. Since we require that output on closed streams generate <CODE><A HREF="io.html#SIG:IO.ClosedStream:EXN:SPEC">IO.ClosedStream</A></CODE>, if we want the writer to do this, the StreamIO.output function would be forced to do a write, or check somehow with the writer to see if it is closed. This is not reasonable. This still leaves open the case that the writer is closed without using the StreamIO.outstream, so the exception only occurs when the stream is flushed. But it is also possible to close the file descriptor without telling the writer. 
+<LI>
+Fix wrong exception in <CODE><A HREF="time.html#Time:STR:SPEC">Time</A></CODE>. The <CODE><A HREF="time.html#SIG:TIME.Time:EXN:SPEC">Time</A></CODE> exception should be raised, not <CODE><A HREF="general.html#SIG:GENERAL.Overflow:EXN:SPEC">Overflow</A></CODE>, if a time value cannot be represented. 
+<LI>
+Added possible <CODE><A HREF="general.html#SIG:GENERAL.Subscript:EXN:SPEC">Subscript</A></CODE> exceptions for <CODE><A HREF="windows.html#SIG:WINDOWS.Reg.enumKeyEx:VAL:SPEC">Windows.Reg.enumKeyEx</A></CODE> and <CODE><A HREF="windows.html#SIG:WINDOWS.Reg.enumValueEx:VAL:SPEC">Windows.Reg.enumValueEx</A></CODE>.
+</UL>
+<H3><A NAME="section:11"></A>July 30, 2003</H3>
+<UL>
+<LI>
+Note that <CODE>~</CODE> is overloaded for <CODE><A HREF="word.html#SIG:WORD.word:TY:SPEC">Word.word</A></CODE>. 
+<LI>
+Remove deprecated <CODE><CODE><A HREF="substring.html#Substring:STR:SPEC">Substring</A></CODE>.all</CODE>, leaving <CODE><A HREF="substring.html#SIG:SUBSTRING.full:VAL:SPEC">Substring.full</A></CODE>. 
+<LI>
+Add <CODE><A HREF="word.html#SIG:WORD.toLarge:VAL:SPEC">WORD.toLarge</A></CODE>, <CODE><A HREF="word.html#SIG:WORD.toLargeX:VAL:SPEC">WORD.toLargeX</A></CODE> and <CODE><A HREF="word.html#SIG:WORD.fromLarge:VAL:SPEC">WORD.fromLarge</A></CODE> to the <CODE><A HREF="word.html#WORD:SIG:SPEC">WORD</A></CODE> signature as synonyms for <CODE><A HREF="word.html#SIG:WORD.toLargeWord:VAL:SPEC">WORD.toLargeWord</A></CODE>, <CODE><A HREF="word.html#SIG:WORD.toLargeWordX:VAL:SPEC">WORD.toLargeWordX</A></CODE>  and <CODE><A HREF="word.html#SIG:WORD.fromLargeWord:VAL:SPEC">WORD.fromLargeWord</A></CODE>, and deprecate the latter. This is to be consistent with reals and ints. 
+<LI>
+Changed <CODE><A HREF="time.html#SIG:TIME.fmt:VAL:SPEC">Time.fmt</A></CODE> to raise exception on negative precisions, to be consistent with <CODE><A HREF="real.html#SIG:REAL.fmt:VAL:SPEC">Real.fmt</A></CODE>. 
+<LI>
+Note that <CODE><A HREF="os-file-sys.html#SIG:OS_FILE_SYS.access_mode:TY:SPEC">OS.FileSys.A_EXEC</A></CODE> should be ignored by <CODE><A HREF="os-file-sys.html#SIG:OS_FILE_SYS.access:VAL:SPEC">OS.FileSys.access</A></CODE> on systems that have no notion of execute permission.
+</UL>
+<H3><A NAME="section:12"></A>July 30, 2003</H3>
+<UL>
+<LI>
+Clarified the semantics of the <CODE><A HREF="socket.html#Socket:STR:SPEC">Socket</A></CODE> structure. Specifically, what exceptions get raised when and how closed connections are detected. 
+<LI>
+Removed <CODE><A HREF="mono-array2.html#Word8Array2:STR:SPEC">Word8Array2</A></CODE> from the required structure list in the HTML version.
+</UL>
+<H3><A NAME="section:13"></A>July 15, 2003</H3>
+<UL>
+<LI>
+Note that <CODE><A HREF="posix-io.html#SIG:POSIX_IO.readVec:VAL:SPEC">Posix.IO.readVec</A></CODE> raises <CODE><A HREF="general.html#SIG:GENERAL.Subscript:EXN:SPEC">Subscript</A></CODE> if the integer argument is negative. 
+<LI>
+Note that top-level <CODE>use</CODE> function is optional. 
+<LI>
+Clarify meaning of <CODE><A HREF="string-cvt.html#SIG:STRING_CVT.realfmt:TY:SPEC">StringCvt.FIX</A></CODE> when <CODE>0</CODE> precision is specified. 
+<LI>
+Remove where clauses for vector and elem in <CODE><A HREF="text-io.html#TextIO:STR:SPEC">TextIO</A></CODE> as these are part of the <CODE><A HREF="text-stream-io.html#TEXT_STREAM_IO:SIG:SPEC">TEXT_STREAM_IO</A></CODE> signature. 
+<LI>
+Specify semantics of <CODE><A HREF="posix-error.html#SIG:POSIX_ERROR.errorName:VAL:SPEC">Error.errorName</A></CODE> and <CODE><A HREF="posix-error.html#SIG:POSIX_ERROR.syserror:VAL:SPEC">Error.syserror</A></CODE>. 
+<LI>
+Add missing where constraints to <CODE><A HREF="bin-io.html#BinIO:STR:SPEC">BinIO</A></CODE>.
+</UL>
+<H3><A NAME="section:14"></A>July 14, 2003</H3>
+<UL>
+<LI>
+Fixed the semantics of <CODE><A HREF="os-file-sys.html#SIG:OS_FILE_SYS.tmpName:VAL:SPEC">OS.FileSys.tmpName</A></CODE> to avoid a race condition.
+</UL>
+<H3><A NAME="section:15"></A>July 10, 2003</H3>
+<UL>
+<LI>
+Removed the values <CODE>platformWin32Window2000</CODE> and <CODE>platformWin32WindowsXP</CODE>, and added <CODE><A HREF="windows.html#SIG:WINDOWS.Config.platformWin32CE:VAL:SPEC">platformWin32CE</A></CODE> to <CODE><A HREF="windows.html#SIG:WINDOWS.Config:STR:SPEC">Windows.Config</A></CODE>. Dave Matthews pointed out that the first 2 are identical to <CODE><A HREF="windows.html#SIG:WINDOWS.Config.platformWin32NT:VAL:SPEC">platformWin32NT</A></CODE> and can't be used to identify a platform. The last reflects the CE system documented by Microsoft.
+</UL>
+<H3><A NAME="section:16"></A>June 26, 2003</H3>
+<UL>
+<LI>
+Added the type <CODE><A HREF="socket.html#SIG:SOCKET.sock_desc:TY:SPEC">Socket.sock_desc</A></CODE> with operations <CODE><A HREF="socket.html#SIG:SOCKET.sockDesc:VAL:SPEC">sockDesc</A></CODE>, <CODE><A HREF="socket.html#SIG:SOCKET.sameDesc:VAL:SPEC">sameDesc</A></CODE>, and <CODE><A HREF="socket.html#SIG:SOCKET.select:VAL:SPEC">select</A></CODE>. We also replaced the <CODE>Socket.pollDesc</CODE> function with <CODE><A HREF="socket.html#SIG:SOCKET.ioDesc:VAL:SPEC">ioDesc</A></CODE>. These changes were proposed in 1998 and agreed upon, but somehow never made it into the document before now.
+</UL>
+<H3><A NAME="section:17"></A>May 9, 2003</H3>
+<UL>
+<LI>
+Clarified the semantics of <CODE><A HREF="unix.html#Unix:STR:SPEC">Unix</A></CODE> module. 
+<LI>
+Added note that implementations may define <CODE><A HREF="os-io.html#SIG:OS_IO.iodesc:TY:SPEC">iodesc</A></CODE> values not covered by <CODE><A HREF="os-io.html#SIG:OS_IO.Kind:STR:SPEC">OS.IO.Kind</A></CODE>.
+</UL>
+<H3><A NAME="section:18"></A>April 26, 2003</H3>
+<UL>
+<LI>
+Note that the <CODE><A HREF="word.html#SysWord:STR:SPEC">SysWord</A></CODE> module may be provided by an implementation even when the <CODE><A HREF="posix.html#Posix:STR:SPEC">Posix</A></CODE> structure is not provided.
+</UL>
+<H3><A NAME="section:19"></A>July 9, 2002</H3>
+<UL>
+<LI>
+Removed <CODE>Windows.executeWithNullStreams</CODE>.
+</UL>
+<H3><A NAME="section:20"></A>July 3, 2002</H3>
+<UL>
+<LI>
+Changed the type of <CODE><A HREF="windows.html#SIG:WINDOWS.DDE.executeString:VAL:SPEC">Windows.DDE.executeString</A></CODE> so that the delay is a <CODE><A HREF="time.html#SIG:TIME.time:TY:SPEC">Time.time</A></CODE>. 
+<LI>
+Changed the specification of <CODE><A HREF="posix-file-sys.html#SIG:POSIX_FILE_SYS.pathconf:VAL:SPEC">Posix.FileSys.pathconf</A></CODE> and <CODE><A HREF="posix-file-sys.html#SIG:POSIX_FILE_SYS.fpathconf:VAL:SPEC">Posix.FileSys.fpathconf</A></CODE> so that a return value of false is represented by <CODE><CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">SOME</A></CODE> <VAR>0</VAR></CODE> rather than <CODE><CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A></CODE></CODE>. 
+<LI>
+Moved the <CODE>getpgrp</CODE> and <CODE>setpgrp</CODE> functions in <CODE><A HREF="posix.html#SIG:POSIX.TTY:STR:SPEC">Posix.TTY</A></CODE> into the substructure <CODE><A HREF="posix-tty.html#SIG:POSIX_TTY.TC:STR:SPEC">Posix.TTY.TC</A></CODE> for consistency.
+</UL>
+<H3><A NAME="section:21"></A>June 18, 2002</H3>
+<UL>
+<LI>
+Clarified the semantics of <CODE><A HREF="os-path.html#SIG:OS_PATH.toUnixPath:VAL:SPEC">OS.Path.toUnixPath</A></CODE>.
+</UL>
+<H3><A NAME="section:22"></A>December 6, 2001</H3>
+<UL>
+<LI>
+Revised the description of the <CODE><A HREF="posix-file-sys.html#SIG:POSIX_FILE_SYS.pathconf:VAL:SPEC">Posix.FileSys.pathconf</A></CODE> function to be more specific.
+</UL>
+<H3><A NAME="section:23"></A>October 29, 2001</H3>
+<UL>
+<LI>
+Revised the <CODE><A HREF="windows.html#Windows:STR:SPEC">Windows</A></CODE> structure to reflect the most recent proposals by Dave Matthews and Dave Berry. 
+<LI>
+Removed the <CODE>TerminatedStream</CODE> exception from the <CODE><A HREF="io.html#IO:STR:SPEC">IO</A></CODE> module, since the operation that uses it (<CODE>setPosIn</CODE>) was removed previously (1998-10-05).
+</UL>
+<H3><A NAME="section:24"></A>October 10, 2001</H3>
+<UL>
+<LI>
+Structures specified as signature instances are matched opaquely, so all types are abstract unless explicitly specified in the signature. A note should added to the front matter stating that this is a general policy for structures matching basis library signatures.
+</UL>
+<H3><A NAME="section:25"></A>April 11, 2001</H3>
+<UL>
+<LI>
+More cosmetic changes of the <CODE>scan</CODE> type. The affected signatures are <CODE><A HREF="char.html#CHAR:SIG:SPEC">CHAR</A></CODE>, <CODE><A HREF="date.html#DATE:SIG:SPEC">DATE</A></CODE>, <CODE><A HREF="ieee-float.html#IEEE_REAL:SIG:SPEC">IEEE_REAL</A></CODE>, <CODE><A HREF="integer.html#INTEGER:SIG:SPEC">INTEGER</A></CODE>, <CODE><A HREF="time.html#TIME:SIG:SPEC">TIME</A></CODE>, <CODE><A HREF="word.html#WORD:SIG:SPEC">WORD</A></CODE>.
+</UL>
+<H3><A NAME="section:26"></A>April 3, 2001</H3>
+<UL>
+<LI>
+Changed result type of <CODE><A HREF="bool.html#SIG:BOOL.scan:VAL:SPEC">Bool.scan</A></CODE> to be <CODE><A HREF="string-cvt.html#SIG:STRING_CVT.reader:TY:SPEC">StringCvt.reader</A></CODE> (this is a cosmetic change).
+</UL>
+<H3><A NAME="section:27"></A>December 15, 2000</H3>
+<UL>
+<LI>
+Changed the <CODE><A HREF="os-io.html#OS_IO:SIG:SPEC">OS_IO</A></CODE> signature to make <CODE><A HREF="os-io.html#SIG:OS_IO.poll_desc:TY:SPEC">poll_desc</A></CODE> be an <CODE><B>eqtype</B></CODE>.
+</UL>
+<H3><A NAME="section:28"></A>November 20, 2000</H3>
+<UL>
+<LI>
+Correction for slice structures: indexed operations (<I>e.g.</I>, <TT>appi</TT>) should supply the index in the slice (not the base array). 
+<LI>
+Removed <TT>NetDB</TT> structure from the Basis, as there did not seem to be any way to use it.
+</UL>
+<H3><A NAME="section:29"></A>October 31, 2000</H3>
+<UL>
+<LI>
+Clarified the definition of <CODE><A HREF="os-process.html#SIG:OS_PROCESS.sleep:VAL:SPEC">OS.Process.sleep</A></CODE>.
+</UL>
+<H3><A NAME="section:30"></A>October 24, 2000</H3>
+<UL>
+<LI>
+Fixed mistake in type of <CODE><A HREF="mono-vector-slice.html#SIG:MONO_VECTOR_SLICE.map:VAL:SPEC">map</A></CODE> and <CODE><A HREF="mono-vector-slice.html#SIG:MONO_VECTOR_SLICE.mapi:VAL:SPEC">mapi</A></CODE> in the <CODE><A HREF="mono-vector-slice.html#MONO_VECTOR_SLICE:SIG:SPEC">MONO_VECTOR_SLICE</A></CODE> signature.
+</UL>
+<H3><A NAME="section:31"></A>October 17, 2000</H3>
+<UL>
+<LI>
+Added the <TT>isSuffix</TT> function to the <CODE><A HREF="string.html#String:STR:SPEC">String</A></CODE> and <CODE><A HREF="substring.html#Substring:STR:SPEC">Substring</A></CODE> structures.
+</UL>
+<H3><A NAME="section:32"></A>September 20, 2000</H3>
+<UL>
+<LI>
+Changed <CODE><A HREF="real.html#SIG:REAL.scan:VAL:SPEC">scan</A></CODE>, <CODE><A HREF="real.html#SIG:REAL.fromString:VAL:SPEC">fromString</A></CODE> and <CODE><A HREF="real.html#SIG:REAL.fromDecimal:VAL:SPEC">fromDecimal</A></CODE> in <CODE><A HREF="real.html#Real:STR:SPEC">Real</A></CODE> structure to convert extreme values to <CODE>0</CODE> or infinity, instead of raising the <CODE><A HREF="general.html#SIG:GENERAL.Overflow:EXN:SPEC">Overflow</A></CODE> exception.
+</UL>
+<H3><A NAME="section:33"></A>September 6, 2000</H3>
+<UL>
+<LI>
+Removed references to <TT>SML90</TT> structure. 
+<LI>
+Fixed <CODE><A HREF="time.html#SIG:TIME.time:TY:SPEC">Time.time</A></CODE> to allow negative time values. 
+<LI>
+Extended range of <TT>offset</TT> field in <CODE><A HREF="date.html#SIG:DATE.date:VAL:SPEC">Date.date</A></CODE> to <TT>-23..23</TT>. 
+<LI>
+Noted that <CODE><A HREF="bit-flags.html#SIG:BIT_FLAGS.all:VAL:SPEC">BIT_FLAGS.all</A></CODE> may contain more set bits than those defined in a matching structure. 
+<LI>
+Renamed <TT>all</TT> (as used to create at slice or substring) to <TT>full</TT> to avoid conflict with the <TT>all</TT> combinator that tests a predicate over an aggregate. Maintain <CODE>all</CODE> in the <CODE><A HREF="substring.html#SUBSTRING:SIG:SPEC">SUBSTRING</A></CODE> signature, but depreciate its use. 
+<LI>
+Fixed <CODE><A HREF="bit-flags.html#SIG:BIT_FLAGS.clear:VAL:SPEC">BIT_FLAGS.clear</A></CODE> specification to return <CODE><A HREF="bit-flags.html#SIG:BIT_FLAGS.flags:TY:SPEC">flags</A></CODE>.
+</UL>
+<H3><A NAME="section:34"></A>September 4, 2000</H3>
+<UL>
+<LI>
+Changed <CODE>Windows.Status.nocontinuableException</CODE> to <CODE><A HREF="windows.html#SIG:WINDOWS.Status.noncontinuableException:VAL:SPEC">noncontinuableException</A></CODE>.
+</UL>
+<H3><A NAME="section:35"></A>July 17, 2000</H3>
+<UL>
+<LI>
+Added the <CODE>concatWith</CODE> function to the <CODE><A HREF="string.html#STRING:SIG:SPEC">STRING</A></CODE> and <CODE><A HREF="substring.html#SUBSTRING:SIG:SPEC">SUBSTRING</A></CODE> interfaces.
+</UL>
+<H3><A NAME="section:36"></A>June 1, 2000</H3>
+<UL>
+<LI>
+Added the values <TT>all</TT>, <TT>clear</TT> and <TT>intersect</TT> to <CODE><A HREF="bit-flags.html#BIT_FLAGS:SIG:SPEC">BIT_FLAGS</A></CODE>. 
+<LI>
+Added semantic constraints based on the correspondence with <TT>SysWord.word</TT>. 
+<LI>
+Added <CODE><A HREF="os-process.html#SIG:OS_PROCESS.sleep:VAL:SPEC">OS.Process.sleep</A></CODE>. 
+<LI>
+Added <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">option</A></CODE> modifier to return type of <CODE><A HREF="real.html#SIG:REAL.fromDecimal:VAL:SPEC">Real.fromDecimal</A></CODE> to reflect the possibility of an ill-formed argument. 
+<LI>
+Added <CODE>Windows&quot;&gt;Windows.executeWithNullStreams</CODE> (later removed). 
+<LI>
+Added <CODE><A HREF="list.html#SIG:LIST.collate:VAL:SPEC">List.collate</A></CODE>. 
+<LI>
+Added functions to <CODE><A HREF="list-pair.html#ListPair:STR:SPEC">ListPair</A></CODE> module that require equal length arguments. 
+<LI>
+Added functions <CODE><A HREF="string.html#SIG:STRING.isSubstring:VAL:SPEC">String.isSubstring</A></CODE> and <CODE><A HREF="substring.html#SIG:SUBSTRING.isSubstring:VAL:SPEC">Substring.isSubstring</A></CODE>. 
+<LI>
+Added <TT>update</TT> functions to <CODE><A HREF="vector.html#VECTOR:SIG:SPEC">VECTOR</A></CODE> and <CODE><A HREF="mono-vector.html#MONO_VECTOR:SIG:SPEC">MONO_VECTOR</A></CODE>. 
+<LI>
+Fixed <TT>\x</TT> escape in <CODE><A HREF="char.html#SIG:CHAR.fromCString:VAL:SPEC">Char.fromCString</A></CODE>. 
+<LI>
+Specified that <TT>Unix.reap</TT> and <TT>Windows.reap</TT> are non-ephemeral. 
+<LI>
+Really removed <TT>Vector</TT> substructure from <CODE><A HREF="mono-array2.html#MONO_ARRAY2:SIG:SPEC">MONO_ARRAY2</A></CODE> signature (see 1998-07-21). 
+<LI>
+Allowed <CODE><A HREF="real.html#SIG:REAL.scan:VAL:SPEC">Real.scan</A></CODE> to accept <TT>&quot;inf&quot;</TT> and <TT>&quot;nan&quot;</TT>. 
+<LI>
+Added slice structures for arrays and vectors, and modified array and vector signatures to reflect this. 
+<LI>
+Added <TT>find</TT>, <TT>findi</TT>, <TT>all</TT>, <TT>exists</TT>, <TT>collate</TT> uniformly to vector, array and slice structures.
+</UL>
+<H3><A NAME="section:37"></A>March 29, 2000</H3>
+<UL>
+<LI>
+Added the <CODE><A HREF="word.html#SIG:WORD.~:VAL:SPEC">~</A></CODE> operator to the <CODE><A HREF="word.html#WORD:SIG:SPEC">WORD</A></CODE> signature.
+</UL>
+<H3><A NAME="section:38"></A>Summer and Fall 1999</H3>
+<UL>
+<LI>
+The return type of <CODE><A HREF="timer.html#SIG:TIMER.checkCPUTimer:VAL:SPEC">Timer.checkCPUTimer</A></CODE> was changed to not include GC time. A new function <CODE><A HREF="timer.html#SIG:TIMER.checkGCTime:VAL:SPEC">Timer.checkGCTime</A></CODE> was added. 
+<LI>
+<CODE><A HREF="os-process.html#SIG:OS_PROCESS.status:TY:SPEC">OS.Process.status</A></CODE> is no longer an equality type. 
+<LI>
+Added the type <CODE><A HREF="unix.html#SIG:UNIX.exit_status:TY:SPEC">Unix.exit_status</A></CODE>. 
+<LI>
+The <CODE><A HREF="unix.html#SIG:UNIX.proc:TY:SPEC">Unix.proc</A></CODE> type is now a type constructor. The return types of <CODE><A HREF="unix.html#SIG:UNIX.execute:VAL:SPEC">Unix.execute</A></CODE>, <CODE><A HREF="unix.html#SIG:UNIX.executeInEnv:VAL:SPEC">Unix.executeInEnv</A></CODE>, <CODE><A HREF="unix.html#SIG:UNIX.streamsOf:VAL:SPEC">Unix.streamsOf</A></CODE>, and <CODE><A HREF="unix.html#SIG:UNIX.reap:VAL:SPEC">Unix.reap</A></CODE> were changed accordingly. 
+<LI>
+New functions <CODE><A HREF="unix.html#SIG:UNIX.textInstreamOf:VAL:SPEC">textInstreamOf</A></CODE>, <CODE><A HREF="unix.html#SIG:UNIX.textOutstreamOf:VAL:SPEC">textOutstreamOf</A></CODE>, <CODE><A HREF="unix.html#SIG:UNIX.binInstreamOf:VAL:SPEC">binInstreamOf</A></CODE>, and <CODE><A HREF="unix.html#SIG:UNIX.binOutstreamOf:VAL:SPEC">binOutstreamOf</A></CODE> were added to the <CODE><A HREF="unix.html#Unix:STR:SPEC">Unix</A></CODE> structure. 
+<LI>
+Added the function <CODE><A HREF="unix.html#SIG:UNIX.exit:VAL:SPEC">Unix.exit</A></CODE>. 
+<LI>
+Added the function <CODE><A HREF="os-process.html#SIG:OS_PROCESS.isSuccess:VAL:SPEC">OS.Process.isSuccess</A></CODE> for testing <CODE><A HREF="os-process.html#SIG:OS_PROCESS.status:TY:SPEC">OS.Process.status</A></CODE> values. 
+<LI>
+Added <CODE><A HREF="posix-io.html#SIG:POSIX_IO.mkBinReader:VAL:SPEC">mkBinReader</A></CODE>, <CODE><A HREF="posix-io.html#SIG:POSIX_IO.mkTextReader:VAL:SPEC">mkTextReader</A></CODE>, <CODE><A HREF="posix-io.html#SIG:POSIX_IO.mkBinWriter:VAL:SPEC">mkBinWriter</A></CODE>, and <CODE><A HREF="posix-io.html#SIG:POSIX_IO.mkTextWriter:VAL:SPEC">mkTextWriter</A></CODE> functions to the <CODE><A HREF="posix.html#SIG:POSIX.IO:STR:SPEC">Posix.IO</A></CODE> structure. 
+<LI>
+Added the function <CODE><A HREF="posix-process.html#SIG:POSIX_PROCESS.fromStatus:VAL:SPEC">Posix.Process.fromStatus</A></CODE>
+</UL>
+<H3><A NAME="section:39"></A>April 28, 1999</H3>
+<UL>
+<LI>
+Renamed <TT>POSIX_FLAGS</TT> signature to <CODE><A HREF="bit-flags.html#BIT_FLAGS:SIG:SPEC">BIT_FLAGS</A></CODE>. 
+<LI>
+Added the <CODE><A HREF="windows.html#Windows:STR:SPEC">Windows</A></CODE> structure specification.
+</UL>
+<H3><A NAME="section:40"></A>February 26, 1999</H3>
+<UL>
+<LI>
+Changed types of <CODE><A HREF="os-file-sys.html#SIG:OS_FILE_SYS.readDir:VAL:SPEC">OS.FileSys.readDir</A></CODE> and <CODE><A HREF="posix-file-sys.html#SIG:POSIX_FILE_SYS.readdir:VAL:SPEC">Posix.FileSys.readdir</A></CODE> to return a <CODE>string option</CODE> value instead of a <CODE>string</CODE>.
+</UL>
+<H3><A NAME="section:41"></A>October 5, 1998</H3>
+<UL>
+<LI>
+Several changes to <CODE><A HREF="stream-io.html#STREAM_IO:SIG:SPEC">STREAM_IO</A></CODE> signature: more specification of the relationships between <CODE><A HREF="stream-io.html#SIG:STREAM_IO.inputAll:VAL:SPEC">inputAll</A></CODE>, <CODE><A HREF="stream-io.html#SIG:STREAM_IO.inputN:VAL:SPEC">inputN</A></CODE>, and <CODE><A HREF="stream-io.html#SIG:STREAM_IO.input:VAL:SPEC">input</A></CODE>; changed type of <CODE><A HREF="stream-io.html#SIG:STREAM_IO.inputAll:VAL:SPEC">inputAll</A></CODE> and <CODE><A HREF="stream-io.html#SIG:STREAM_IO.filePosIn:VAL:SPEC">filePosIn</A></CODE>, and deleted <TT>getPosIn</TT>, <TT>setPosIn</TT>, and <TT>in_pos</TT>, as ratified at ICFP '98. 
+<LI>
+In the <CODE><A HREF="imperative-io.html#IMPERATIVE_IO:SIG:SPEC">IMPERATIVE_IO</A></CODE> interface: deleted <TT>getPosIn</TT>, and <TT>setPosIn</TT>; added new material at end about semantics of operations and about random access.
+</UL>
+<H3><A NAME="section:42"></A>August 28, 1998</H3>
+<UL>
+<LI>
+Added the description of the various sockets modules.
+</UL>
+<H3><A NAME="section:43"></A>August 26, 1998</H3>
+<UL>
+<LI>
+Added text to specify the behaviour of <CODE><A HREF="real.html#SIG:REAL.fromInt:VAL:SPEC">Real.fromInt</A></CODE> and <CODE><A HREF="real.html#SIG:REAL.fromLargeInt:VAL:SPEC">Real.fromLargeInt</A></CODE> in the case where the argument does not map exactly to a real value.
+</UL>
+<H3><A NAME="section:44"></A>August 12, 1998</H3>
+<UL>
+<LI>
+The functions <CODE><A HREF="os-path.html#SIG:OS_PATH.mkAbsolute:VAL:SPEC">OS.Path.mkAbsolute</A></CODE> and <CODE><A HREF="os-path.html#SIG:OS_PATH.mkRelative:VAL:SPEC">OS.Path.mkRelative</A></CODE> have been changed to take record arguments, instead of pairs.
+</UL>
+<H3><A NAME="section:45"></A>July 21, 1998</H3>
+<P>
+The question about when to include substructures versus when to include types has been resolved. We are adopting the convention of favoring types over substructures, which results in the following changes: 
+<DL>
+<DT> <CODE>signature <CODE><A HREF="string.html#STRING:SIG:SPEC">STRING</A></CODE></CODE>
+<DD>
+Replace the <TT>Char</TT> substructure with a type specification for <CODE><A HREF="string.html#SIG:STRING.char:TY:SPEC">char</A></CODE>.
+<DT> <CODE>signature <CODE><A HREF="substring.html#SUBSTRING:SIG:SPEC">SUBSTRING</A></CODE></CODE>
+<DD>
+Replace the <TT>String</TT> substructure with type specifications for <CODE><A HREF="substring.html#SIG:SUBSTRING.char:TY:SPEC">char</A></CODE> and <CODE><A HREF="substring.html#SIG:SUBSTRING.string:TY:SPEC">string</A></CODE>.
+<DT> <CODE>signature <CODE><A HREF="mono-array.html#MONO_ARRAY:SIG:SPEC">MONO_ARRAY</A></CODE></CODE>
+<DD>
+Replace the <TT>Vector</TT> substructure with a type specification for <CODE><A HREF="mono-array.html#SIG:MONO_ARRAY.vector:TY:SPEC">vector</A></CODE>.
+<DT> <CODE>signature <CODE><A HREF="mono-array2.html#MONO_ARRAY2:SIG:SPEC">MONO_ARRAY2</A></CODE></CODE>
+<DD>
+Replace the <TT>Vector</TT> substructure with a type specification for <CODE><A HREF="mono-array2.html#SIG:MONO_ARRAY2.vector:TY:SPEC">vector</A></CODE>.
+</DL>
+ In addition, there is a new structure and signature (<CODE><CODE><A HREF="text.html#Text:STR:SPEC">Text</A></CODE> : <CODE><A HREF="text.html#TEXT:SIG:SPEC">TEXT</A></CODE></CODE>), that collect together text related structures.
+<H3><A NAME="section:46"></A>May 7, 1998</H3>
+<P>
+There were many minor changes to the text and formatting. In addition, the following changes to the specification were made: 
+<UL>
+<LI>
+Fixed error in specification of the <CODE>region</CODE> type in the <CODE><A HREF="mono-array2.html#MONO_ARRAY2:SIG:SPEC">MONO_ARRAY2</A></CODE> signature.
+<LI>
+Fixed error in type of <CODE><A HREF="command-line.html#SIG:COMMAND_LINE.arguments:VAL:SPEC">CommandLine.arguments</A></CODE> function.
+<LI>
+Removed the argument to the NAN data constructor in the <CODE><A HREF="ieee-float.html#SIG:IEEE_REAL.float_class:TY:SPEC">IEEE_REAL.float_class</A></CODE> type, and eliminated the nan_mode type.
+<LI>
+Strengthed the semantics of <CODE><A HREF="os-io.html#SIG:OS_IO.poll:VAL:SPEC">OS.IO.poll</A></CODE>: the resulting list must respect the order of the argument list.
+<LI>
+Changed the name of <TT>wordTo</TT> in the <TT>POSIX_FLAGS</TT> signature to <CODE><A HREF="bit-flags.html#SIG:BIT_FLAGS.fromWord:VAL:SPEC">fromWord</A></CODE>.
+<LI>
+Changed the specification of <CODE><A HREF="char.html#SIG:CHAR.toCString:VAL:SPEC">Char.toCString</A></CODE>: always use three octal digits in escape sequences.
+</UL>
+<H3><A NAME="section:47"></A>November 29, 1997</H3>
+<P>
+The SML Basis Library specification was re-released on the web.  We do not have a list of changes prior to this release.
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="index.html">Parent</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   | <A HREF="index.html">Root</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Generated April 12, 2004</I><BR>
+<I>Last Modified July 9, 2002</I><BR>
+<I>Comments to <A HREF="http://www.cs.uchicago.edu/people/jhr">John Reppy.</A></I><BR>
+
+<HR>
+<P>
+
+This document may be distributed freely over the internet as long as the
+copyright notice and license terms below are prominently displayed within
+every machine-readable copy.  
+
+<P>
+
+<TABLE ALIGN=CENTER WIDTH="80%" BORDER="2" CELLPADDING="5">
+<TR>
+<TD>
+<P>
+
+Copyright &copy; 2004 AT&amp;T and Lucent Technologies.
+All rights reserved.
+
+<P>
+
+Permission is granted for internet users to make one paper copy for their
+own personal use.  Further hardcopy reproduction is strictly prohibited. 
+Permission to distribute the HTML document electronically on any medium
+other than the internet must be requested from the copyright holders by
+contacting the editors.
+Printed versions of the SML Basis Manual are available from Cambridge
+University Press.
+To order, please visit
+<A HREF="http://www.cup.org">www.cup.org</A> (North America) or
+<A HREF="http://www.cup.cam.ac.uk">www.cup.cam.ac.uk</A> (outside North America).<BR>
+
+</TABLE>
+<P>
+
+<HR>
+</BODY></HTML>

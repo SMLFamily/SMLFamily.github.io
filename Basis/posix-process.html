@@ -1,0 +1,309 @@
+<!-- HTML/posix-process.html -->
+
+<!-- COPYRIGHT (c) 1997 Bell Labs, Lucent Technologies. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The Posix.Process structure</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF"><A NAME="top"></A>
+<H1 align=CENTER>The Standard ML Basis Library</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>Posix.Process</CODE> structure</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="POSIX_PROCESS:SIG:SPEC"></A><CODE>POSIX_PROCESS</CODE><BR>
+<B>structure</B>&nbsp;<A NAME="Process:STR:SPEC"></A><CODE>Process</CODE><B> : </B>POSIX_PROCESS<BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+The structure <CODE>Posix.Process</CODE> describes the primitive POSIX operations dealing with processes, as described in Section 3 of the POSIX standard 1003.1,1996<B>[CITE]</B>. 
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>eqtype</B>&nbsp;<A NAME="SIG:POSIX_PROCESS.signal:TY:SPEC" HREF="#SIG:POSIX_PROCESS.signal:TY">signal</A><BR>
+<B>eqtype</B>&nbsp;<A NAME="SIG:POSIX_PROCESS.pid:TY:SPEC" HREF="#SIG:POSIX_PROCESS.pid:TY">pid</A><BR>
+<B>val</B>&nbsp;<A NAME="SIG:POSIX_PROCESS.wordToPid:VAL:SPEC" HREF="#SIG:POSIX_PROCESS.wordToPid:VAL">wordToPid</A>&nbsp;<B>:</B>&nbsp;SysWord.word&nbsp;<B>-&gt;</B>&nbsp;pid<BR>
+<B>val</B>&nbsp;<A NAME="SIG:POSIX_PROCESS.pidToWord:VAL:SPEC" HREF="#SIG:POSIX_PROCESS.pidToWord:VAL">pidToWord</A>&nbsp;<B>:</B>&nbsp;pid&nbsp;<B>-&gt;</B>&nbsp;SysWord.word<BR>
+<B>val</B>&nbsp;<A NAME="SIG:POSIX_PROCESS.fork:VAL:SPEC" HREF="#SIG:POSIX_PROCESS.fork:VAL">fork</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;pid&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="SIG:POSIX_PROCESS.exec:VAL:SPEC" HREF="#SIG:POSIX_PROCESS.exec:VAL">exec</A>&nbsp;&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;string&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I><BR>
+<B>val</B>&nbsp;<A NAME="SIG:POSIX_PROCESS.exece:VAL:SPEC" HREF="#SIG:POSIX_PROCESS.exece:VAL">exece</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;string&nbsp;list&nbsp;<B>*</B>&nbsp;string&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I><BR>
+<B>val</B>&nbsp;<A NAME="SIG:POSIX_PROCESS.execp:VAL:SPEC" HREF="#SIG:POSIX_PROCESS.execp:VAL">execp</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;string&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I><BR>
+<B>datatype</B>&nbsp;<A NAME="SIG:POSIX_PROCESS.waitpid_arg:TY:SPEC" HREF="#SIG:POSIX_PROCESS.waitpid_arg:TY">waitpid_arg</A><BR>
+&nbsp;&nbsp;=&nbsp;<A NAME="SIG:POSIX_PROCESS.W_ANY_CHILD:TY:SPEC" HREF="#SIG:POSIX_PROCESS.W_ANY_CHILD:TY">W_ANY_CHILD</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="SIG:POSIX_PROCESS.W_CHILD:TY:SPEC" HREF="#SIG:POSIX_PROCESS.W_CHILD:TY">W_CHILD</A>&nbsp;<B>of</B>&nbsp;pid<BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="SIG:POSIX_PROCESS.W_SAME_GROUP:TY:SPEC" HREF="#SIG:POSIX_PROCESS.W_SAME_GROUP:TY">W_SAME_GROUP</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="SIG:POSIX_PROCESS.W_GROUP:TY:SPEC" HREF="#SIG:POSIX_PROCESS.W_GROUP:TY">W_GROUP</A>&nbsp;<B>of</B>&nbsp;pid<BR>
+<B>datatype</B>&nbsp;<A NAME="SIG:POSIX_PROCESS.exit_status:TY:SPEC" HREF="#SIG:POSIX_PROCESS.exit_status:TY">exit_status</A><BR>
+&nbsp;&nbsp;=&nbsp;<A NAME="SIG:POSIX_PROCESS.W_EXITED:TY:SPEC" HREF="#SIG:POSIX_PROCESS.W_EXITED:TY">W_EXITED</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="SIG:POSIX_PROCESS.W_EXITSTATUS:TY:SPEC" HREF="#SIG:POSIX_PROCESS.W_EXITSTATUS:TY">W_EXITSTATUS</A>&nbsp;<B>of</B>&nbsp;Word8.word<BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="SIG:POSIX_PROCESS.W_SIGNALED:TY:SPEC" HREF="#SIG:POSIX_PROCESS.W_SIGNALED:TY">W_SIGNALED</A>&nbsp;<B>of</B>&nbsp;signal<BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="SIG:POSIX_PROCESS.W_STOPPED:TY:SPEC" HREF="#SIG:POSIX_PROCESS.W_STOPPED:TY">W_STOPPED</A>&nbsp;<B>of</B>&nbsp;signal<BR>
+<B>val</B>&nbsp;<A NAME="SIG:POSIX_PROCESS.fromStatus:VAL:SPEC" HREF="#SIG:POSIX_PROCESS.fromStatus:VAL">fromStatus</A>&nbsp;<B>:</B>&nbsp;OS.Process.status&nbsp;<B>-&gt;</B>&nbsp;exit_status<BR>
+<B>structure</B>&nbsp;W&nbsp;<B>:</B>&nbsp;<B>sig</B><BR>
+&nbsp;&nbsp;&nbsp;&nbsp;<B>include</B>&nbsp;<A HREF="bit-flags.html#BIT_FLAGS:SIG:SPEC">BIT_FLAGS</A><BR>
+&nbsp;&nbsp;&nbsp;&nbsp;<B>val</B>&nbsp;<A NAME="SIG:POSIX_PROCESS.untraced:VAL:SPEC" HREF="#SIG:POSIX_PROCESS.untraced:VAL">untraced</A>&nbsp;<B>:</B>&nbsp;flags<BR>
+&nbsp;&nbsp;<B>end</B><BR>
+<B>val</B>&nbsp;<A NAME="SIG:POSIX_PROCESS.wait:VAL:SPEC" HREF="#SIG:POSIX_PROCESS.wait:VAL">wait</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;pid&nbsp;<B>*</B>&nbsp;exit_status<BR>
+<B>val</B>&nbsp;<A NAME="SIG:POSIX_PROCESS.waitpid:VAL:SPEC" HREF="#SIG:POSIX_PROCESS.waitpid:VAL">waitpid</A>&nbsp;<B>:</B>&nbsp;waitpid_arg&nbsp;<B>*</B>&nbsp;W.flags&nbsp;list<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;pid&nbsp;<B>*</B>&nbsp;exit_status<BR>
+<B>val</B>&nbsp;<A NAME="SIG:POSIX_PROCESS.waitpid_nh:VAL:SPEC" HREF="#SIG:POSIX_PROCESS.waitpid_nh:VAL">waitpid_nh</A>&nbsp;<B>:</B>&nbsp;waitpid_arg&nbsp;<B>*</B>&nbsp;W.flags&nbsp;list<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;(pid&nbsp;<B>*</B>&nbsp;exit_status)&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="SIG:POSIX_PROCESS.exit:VAL:SPEC" HREF="#SIG:POSIX_PROCESS.exit:VAL">exit</A>&nbsp;<B>:</B>&nbsp;Word8.word&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I><BR>
+<B>datatype</B>&nbsp;<A NAME="SIG:POSIX_PROCESS.killpid_arg:TY:SPEC" HREF="#SIG:POSIX_PROCESS.killpid_arg:TY">killpid_arg</A><BR>
+&nbsp;&nbsp;=&nbsp;<A NAME="SIG:POSIX_PROCESS.K_PROC:TY:SPEC" HREF="#SIG:POSIX_PROCESS.K_PROC:TY">K_PROC</A>&nbsp;<B>of</B>&nbsp;pid<BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="SIG:POSIX_PROCESS.K_SAME_GROUP:TY:SPEC" HREF="#SIG:POSIX_PROCESS.K_SAME_GROUP:TY">K_SAME_GROUP</A><BR>
+&nbsp;&nbsp;|&nbsp;<A NAME="SIG:POSIX_PROCESS.K_GROUP:TY:SPEC" HREF="#SIG:POSIX_PROCESS.K_GROUP:TY">K_GROUP</A>&nbsp;<B>of</B>&nbsp;pid<BR>
+<B>val</B>&nbsp;<A NAME="SIG:POSIX_PROCESS.kill:VAL:SPEC" HREF="#SIG:POSIX_PROCESS.kill:VAL">kill</A>&nbsp;<B>:</B>&nbsp;killpid_arg&nbsp;<B>*</B>&nbsp;signal&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="SIG:POSIX_PROCESS.alarm:VAL:SPEC" HREF="#SIG:POSIX_PROCESS.alarm:VAL">alarm</A>&nbsp;<B>:</B>&nbsp;Time.time&nbsp;<B>-&gt;</B>&nbsp;Time.time<BR>
+<B>val</B>&nbsp;<A NAME="SIG:POSIX_PROCESS.pause:VAL:SPEC" HREF="#SIG:POSIX_PROCESS.pause:VAL">pause</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="SIG:POSIX_PROCESS.sleep:VAL:SPEC" HREF="#SIG:POSIX_PROCESS.sleep:VAL">sleep</A>&nbsp;<B>:</B>&nbsp;Time.time&nbsp;<B>-&gt;</B>&nbsp;Time.time</CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="SIG:POSIX_PROCESS.signal:TY"></A><CODE><B>eqtype</B>&nbsp;signal</CODE>
+<DD>
+ A POSIX signal, an asynchronous notification of an event. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:POSIX_PROCESS.pid:TY"></A><CODE><B>eqtype</B>&nbsp;pid</CODE>
+<DD>
+ A process ID, used as an identifier for an operating system process. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:POSIX_PROCESS.wordToPid:VAL"></A><CODE><B>val</B>&nbsp;wordToPid&nbsp;<B>:</B>&nbsp;SysWord.word&nbsp;<B>-&gt;</B>&nbsp;pid<BR>
+<B>val</B>&nbsp;pidToWord&nbsp;<B>:</B>&nbsp;pid&nbsp;<B>-&gt;</B>&nbsp;SysWord.word</CODE>
+<DD>
+These functions convert between a process ID and the integer representation used by the operating system. Note that there is no validation that a <CODE><A HREF="posix-process.html#SIG:POSIX_PROCESS.pid:TY:SPEC">pid</A></CODE> value generated using <CODE><A HREF="posix-process.html#SIG:POSIX_PROCESS.wordToPid:VAL:SPEC">wordToPid</A></CODE> is legal on the given system or that it corresponds to a currently running process. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:POSIX_PROCESS.fork:VAL"></A><CODE><B>val</B>&nbsp;fork&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;pid&nbsp;option</CODE>
+<DD>
+This creates a new process. The new child process is a copy of the calling parent process. After execution of <CODE><A HREF="posix-process.html#SIG:POSIX_PROCESS.fork:VAL:SPEC">fork</A></CODE>, both the parent and child process execute independently, but share various system resources. Upon successful completion, <CODE><A HREF="posix-process.html#SIG:POSIX_PROCESS.fork:VAL:SPEC">fork</A></CODE> returns <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A></CODE> in the child process, and the <CODE><A HREF="posix-process.html#SIG:POSIX_PROCESS.pid:TY:SPEC">pid</A></CODE> of the child in the parent process. It raises <CODE><A HREF="os.html#SIG:OS.SysErr:EXN:SPEC">OS.SysErr</A></CODE> on failure.  
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:POSIX_PROCESS.exec:VAL"></A>
+<DT> <CODE>exec (<VAR>path</VAR>, <VAR>args</VAR>) </CODE>
+<DT> <CODE>          exece (<VAR>path</VAR>, <VAR>args</VAR>, <VAR>env</VAR>) </CODE>
+<DT> <CODE>          execp (<VAR>file</VAR>, <VAR>args</VAR>) </CODE>
+<DD>
+These functions replace the current process image with a new process image. There is no return from a successful call, as the calling process image is overlaid by the new process image. In the first two forms, the <VAR>path</VAR> argument specifies the pathname of the executable file. In the last form, if <VAR>file</VAR> contains a slash character, it is treated as the pathname for the executable file; otherwise, an executable file with name <VAR>file</VAR> is searched for in the directories specified by the environment variable <B>PATH</B>.
+<P>
+Normally, the new image is given the same environment as the calling program. The <VAR>env</VAR> argument in <CODE><A HREF="posix-process.html#SIG:POSIX_PROCESS.exece:VAL:SPEC">exece</A></CODE> allows the program to specify a new environment.
+<P>
+The <VAR>args</VAR> argument is a list of string arguments to be passed to the new program. By convention, the first item in <VAR>args</VAR> is some form of the filename of the new program, usually the last arc in the path or filename.  
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:POSIX_PROCESS.waitpid_arg:TY"></A>
+<DT> <CODE><B>datatype</B>&nbsp;waitpid_arg</CODE>
+<DD>
+<DL>
+<DT> <CODE>=&nbsp;W_ANY_CHILD</CODE>
+<DD>
+ Any child process 
+<BR>
+<BR>
+
+<DT> <CODE>|&nbsp;W_CHILD&nbsp;<B>of</B>&nbsp;pid</CODE>
+<DD>
+ The child process with the given <CODE><A HREF="posix-process.html#SIG:POSIX_PROCESS.pid:TY:SPEC">pid</A></CODE> 
+<BR>
+<BR>
+
+<DT> <CODE>|&nbsp;W_SAME_GROUP</CODE>
+<DD>
+ Any child process in the same process group as the calling process 
+<BR>
+<BR>
+
+<DT> <CODE>|&nbsp;W_GROUP&nbsp;<B>of</B>&nbsp;pid</CODE>
+<DD>
+ Any child process whose process group ID is given by <CODE><A HREF="posix-process.html#SIG:POSIX_PROCESS.pid:TY:SPEC">pid</A></CODE>. 
+<BR>
+<BR>
+
+</DL>
+<DT> <A NAME="SIG:POSIX_PROCESS.exit_status:TY"></A><CODE><B>datatype</B>&nbsp;exit_status<BR>
+&nbsp;&nbsp;=&nbsp;W_EXITED<BR>
+&nbsp;&nbsp;|&nbsp;W_EXITSTATUS&nbsp;<B>of</B>&nbsp;Word8.word<BR>
+&nbsp;&nbsp;|&nbsp;W_SIGNALED&nbsp;<B>of</B>&nbsp;signal<BR>
+&nbsp;&nbsp;|&nbsp;W_STOPPED&nbsp;<B>of</B>&nbsp;signal</CODE>
+<DD>
+       These values represent the ways in which a process might stop. They correspond to, respectively, terminate successfully, terminate with the given value, terminate upon receipt of the given signal, and stop upon receipt of the given signal. The value carried by <CODE>W_EXITSTATUS</CODE> must never be zero. 
+<P>
+       If an implementation provides both the <CODE><A HREF="posix.html#Posix:STR:SPEC">Posix</A></CODE> and <CODE><A HREF="unix.html#Unix:STR:SPEC">Unix</A></CODE> structures, then the datatypes <CODE><A HREF="posix-process.html#SIG:POSIX_PROCESS.exit_status:TY:SPEC">Posix.Process.exit_status</A></CODE> and <CODE><A HREF="unix.html#SIG:UNIX.exit_status:TY:SPEC">Unix.exit_status</A></CODE> must be the same. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:POSIX_PROCESS.fromStatus:VAL"></A>
+<DT> <CODE>fromStatus <VAR>sts</VAR> </CODE>
+<DD>
+returns a concrete view of the given status. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:POSIX_PROCESS.W:STR"></A>
+<DT> <CODE><B>structure</B>&nbsp;W</CODE>
+<DD>
+<BR>
+
+<DL>
+<DT> <A NAME="SIG:POSIX_PROCESS.W.untraced:VAL"></A><CODE><B>val</B>&nbsp;untraced&nbsp;<B>:</B>&nbsp;flags</CODE>
+<DD>
+ In systems supporting job control, this flag requests the status of child processes that are stopped. 
+<BR>
+<BR>
+
+</DL>
+<DT> <A NAME="SIG:POSIX_PROCESS.wait:VAL"></A><CODE><B>val</B>&nbsp;wait&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;pid&nbsp;<B>*</B>&nbsp;exit_status</CODE>
+<DD>
+This function allows a calling process to obtain status information on any of its child processes. Execution of <CODE><A HREF="posix-process.html#SIG:POSIX_PROCESS.wait:VAL:SPEC">wait</A></CODE> suspends execution until status information on one of its child processes is available. If status information is available prior to the execution of <CODE><A HREF="posix-process.html#SIG:POSIX_PROCESS.wait:VAL:SPEC">wait</A></CODE>, return is immediate. <CODE><A HREF="posix-process.html#SIG:POSIX_PROCESS.wait:VAL:SPEC">wait</A></CODE> returns the process ID of the child and its exit status.  
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:POSIX_PROCESS.waitpid:VAL"></A>
+<DT> <CODE>waitpid (<VAR>procs</VAR>, <VAR>l</VAR>) </CODE>
+<DD>
+is identical to <CODE><A HREF="posix-process.html#SIG:POSIX_PROCESS.wait:VAL:SPEC">wait</A></CODE> except that the status is reported only for child processes specified by <VAR>procs</VAR>. A set of flags <VAR>l</VAR> may be used to modify the behavior of <CODE><A HREF="posix-process.html#SIG:POSIX_PROCESS.waitpid:VAL:SPEC">waitpid</A></CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:POSIX_PROCESS.waitpid_nh:VAL"></A>
+<DT> <CODE>waitpid_nh (<VAR>procs</VAR>, <VAR>l</VAR>) </CODE>
+<DD>
+is identical to <CODE><A HREF="posix-process.html#SIG:POSIX_PROCESS.waitpid:VAL:SPEC">waitpid</A></CODE>, except that the call does not suspend if status information for one of the children specified by <VAR>procs</VAR> is not immediately available.  
+<BLOCKQUOTE>
+<B>Rationale:</B><BR>
+
+<P>
+In C, <CODE><A HREF="posix-process.html#SIG:POSIX_PROCESS.waitpid_nh:VAL:SPEC">waitpid_nh</A></CODE> is handled by <CODE><A HREF="posix-process.html#SIG:POSIX_PROCESS.waitpid:VAL:SPEC">waitpid</A></CODE>, using an additional flag to indicate no hanging. In SML, the semantics of <CODE><A HREF="posix-process.html#SIG:POSIX_PROCESS.waitpid_nh:VAL:SPEC">waitpid_nh</A></CODE> indicated a different return type from that of <CODE><A HREF="posix-process.html#SIG:POSIX_PROCESS.waitpid:VAL:SPEC">waitpid</A></CODE>, hence the split into two functions.
+</BLOCKQUOTE>
+ 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:POSIX_PROCESS.exit:VAL"></A>
+<DT> <CODE>exit <VAR>i</VAR> </CODE>
+<DD>
+terminates the calling process. If the parent process is executing a <CODE><A HREF="posix-process.html#SIG:POSIX_PROCESS.wait:VAL:SPEC">wait</A></CODE> related call, the exit status <VAR>i</VAR> is made available to it. <CODE><A HREF="posix-process.html#SIG:POSIX_PROCESS.exit:VAL:SPEC">exit</A></CODE> does not return to the caller.
+<P>
+Calling <CODE><A HREF="posix-process.html#SIG:POSIX_PROCESS.exit:VAL:SPEC">exit</A></CODE> does not flush or close any open <CODE><A HREF="io.html#IO:STR:SPEC">IO</A></CODE> streams, nor does it call <CODE><A HREF="os-process.html#SIG:OS_PROCESS.atExit:VAL:SPEC">OS.Process.atExit</A></CODE>. It does close any open POSIX files, and performs the actions associated with the C version of <CODE><A HREF="posix-process.html#SIG:POSIX_PROCESS.exit:VAL:SPEC">exit</A></CODE>.  
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:POSIX_PROCESS.killpid_arg:TY"></A>
+<DT> <CODE><B>datatype</B>&nbsp;killpid_arg</CODE>
+<DD>
+<DL>
+<DT> <CODE>=&nbsp;K_PROC&nbsp;<B>of</B>&nbsp;pid</CODE>
+<DD>
+The process with ID <CODE><A HREF="posix-process.html#SIG:POSIX_PROCESS.pid:TY:SPEC">pid</A></CODE>. 
+<BR>
+<BR>
+
+<DT> <CODE>|&nbsp;K_SAME_GROUP</CODE>
+<DD>
+All processes in the same process group as the calling process. 
+<BR>
+<BR>
+
+<DT> <CODE>|&nbsp;K_GROUP&nbsp;<B>of</B>&nbsp;pid</CODE>
+<DD>
+All processes in the process group specified by <CODE><A HREF="posix-process.html#SIG:POSIX_PROCESS.pid:TY:SPEC">pid</A></CODE>. 
+<BR>
+<BR>
+
+</DL>
+<DT> <A NAME="SIG:POSIX_PROCESS.kill:VAL"></A>
+<DT> <CODE>kill (<VAR>procs</VAR>, <VAR>sig</VAR>) </CODE>
+<DD>
+sends the signal <VAR>sig</VAR> to the process or group of processes specified by <VAR>procs</VAR>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:POSIX_PROCESS.alarm:VAL"></A>
+<DT> <CODE>alarm <VAR>t</VAR> </CODE>
+<DD>
+causes the system to send an alarm signal (<CODE><A HREF="posix-signal.html#SIG:POSIX_SIGNAL.alrm:VAL:SPEC">alrm</A></CODE>) to the calling process after <VAR>t</VAR> seconds have elapsed. If there is a previous alarm request with time remaining, the <CODE><A HREF="posix-process.html#SIG:POSIX_PROCESS.alarm:VAL:SPEC">alarm</A></CODE> function returns a nonzero value corresponding to the number of seconds remaining on the previous request. Zero time is returned if there are no outstanding calls. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:POSIX_PROCESS.pause:VAL"></A><CODE><B>val</B>&nbsp;pause&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;unit</CODE>
+<DD>
+This suspends the calling process until the delivery of a signal that is either caught or that terminates the process. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:POSIX_PROCESS.sleep:VAL"></A>
+<DT> <CODE>sleep <VAR>t</VAR> </CODE>
+<DD>
+causes the current process to be suspended from execution until either <VAR>t</VAR> seconds have elapsed, or until the receipt of a signal that is either caught or that terminates the process.
+<BR>
+<BR>
+
+</DL>
+<H4>See Also</H4>
+<BLOCKQUOTE>
+<CODE><A HREF="bit-flags.html#BIT_FLAGS:SIG:SPEC">BIT_FLAGS</A></CODE>, <CODE><A HREF="os.html#SIG:OS.Process:STR:SPEC">OS.Process</A></CODE>, <CODE><A HREF="posix.html#Posix:STR:SPEC">Posix</A></CODE>, <CODE><A HREF="posix.html#SIG:POSIX.Signal:STR:SPEC">Posix.Signal</A></CODE>
+</BLOCKQUOTE>
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="manpages.html">Parent</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   | <A HREF="index.html">Root</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Generated April 12, 2004</I><BR>
+<I>Last Modified July 1, 2002</I><BR>
+<I>Comments to <A HREF="http://www.cs.uchicago.edu/people/jhr">John Reppy.</A></I><BR>
+
+<HR>
+<P>
+
+This document may be distributed freely over the internet as long as the
+copyright notice and license terms below are prominently displayed within
+every machine-readable copy.  
+
+<P>
+
+<TABLE ALIGN=CENTER WIDTH="80%" BORDER="2" CELLPADDING="5">
+<TR>
+<TD>
+<P>
+
+Copyright &copy; 2004 AT&amp;T and Lucent Technologies.
+All rights reserved.
+
+<P>
+
+Permission is granted for internet users to make one paper copy for their
+own personal use.  Further hardcopy reproduction is strictly prohibited. 
+Permission to distribute the HTML document electronically on any medium
+other than the internet must be requested from the copyright holders by
+contacting the editors.
+Printed versions of the SML Basis Manual are available from Cambridge
+University Press.
+To order, please visit
+<A HREF="http://www.cup.org">www.cup.org</A> (North America) or
+<A HREF="http://www.cup.cam.ac.uk">www.cup.cam.ac.uk</A> (outside North America).<BR>
+
+</TABLE>
+<P>
+
+<HR>
+</BODY></HTML>

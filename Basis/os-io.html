@@ -1,0 +1,277 @@
+<!-- HTML/os-io.html -->
+
+<!-- COPYRIGHT (c) 1997 Bell Labs, Lucent Technologies. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The OS.IO structure</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF"><A NAME="top"></A>
+<H1 align=CENTER>The Standard ML Basis Library</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>OS.IO</CODE> structure</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="OS_IO:SIG:SPEC"></A><CODE>OS_IO</CODE><BR>
+<B>structure</B>&nbsp;<A NAME="IO:STR:SPEC"></A><CODE>IO</CODE><B> : </B>OS_IO<BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+ The <CODE>OS.IO</CODE> structure provides a general interface for polling I/O devices.  This interface has been modeled after the Unix SVR4 poll interface. A <CODE><A HREF="os-io.html#SIG:OS_IO.poll_desc:TY:SPEC">poll_desc</A></CODE>, created from an I/O descriptor, can be used to test for various polling conditions. 
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>eqtype</B>&nbsp;<A NAME="SIG:OS_IO.iodesc:TY:SPEC" HREF="#SIG:OS_IO.iodesc:TY">iodesc</A><BR>
+<B>val</B>&nbsp;<A NAME="SIG:OS_IO.hash:VAL:SPEC" HREF="#SIG:OS_IO.hash:VAL">hash</A>&nbsp;<B>:</B>&nbsp;iodesc&nbsp;<B>-&gt;</B>&nbsp;word<BR>
+<B>val</B>&nbsp;<A NAME="SIG:OS_IO.compare:VAL:SPEC" HREF="#SIG:OS_IO.compare:VAL">compare</A>&nbsp;<B>:</B>&nbsp;iodesc&nbsp;<B>*</B>&nbsp;iodesc&nbsp;<B>-&gt;</B>&nbsp;order<BR>
+<B>eqtype</B>&nbsp;<A NAME="SIG:OS_IO.iodesc_kind:TY:SPEC" HREF="#SIG:OS_IO.iodesc_kind:TY">iodesc_kind</A><BR>
+<B>val</B>&nbsp;<A NAME="SIG:OS_IO.kind:VAL:SPEC" HREF="#SIG:OS_IO.kind:VAL">kind</A>&nbsp;<B>:</B>&nbsp;iodesc&nbsp;<B>-&gt;</B>&nbsp;iodesc_kind<BR>
+<B>structure</B>&nbsp;Kind&nbsp;<B>:</B>&nbsp;<B>sig</B><BR>
+&nbsp;&nbsp;&nbsp;&nbsp;<B>val</B>&nbsp;<A NAME="SIG:OS_IO.file:VAL:SPEC" HREF="#SIG:OS_IO.file:VAL">file</A>&nbsp;&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;iodesc_kind<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;<B>val</B>&nbsp;<A NAME="SIG:OS_IO.dir:VAL:SPEC" HREF="#SIG:OS_IO.dir:VAL">dir</A>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;iodesc_kind<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;<B>val</B>&nbsp;<A NAME="SIG:OS_IO.symlink:VAL:SPEC" HREF="#SIG:OS_IO.symlink:VAL">symlink</A>&nbsp;<B>:</B>&nbsp;iodesc_kind<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;<B>val</B>&nbsp;<A NAME="SIG:OS_IO.tty:VAL:SPEC" HREF="#SIG:OS_IO.tty:VAL">tty</A>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;iodesc_kind<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;<B>val</B>&nbsp;<A NAME="SIG:OS_IO.pipe:VAL:SPEC" HREF="#SIG:OS_IO.pipe:VAL">pipe</A>&nbsp;&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;iodesc_kind<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;<B>val</B>&nbsp;<A NAME="SIG:OS_IO.socket:VAL:SPEC" HREF="#SIG:OS_IO.socket:VAL">socket</A>&nbsp;&nbsp;<B>:</B>&nbsp;iodesc_kind<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;<B>val</B>&nbsp;<A NAME="SIG:OS_IO.device:VAL:SPEC" HREF="#SIG:OS_IO.device:VAL">device</A>&nbsp;&nbsp;<B>:</B>&nbsp;iodesc_kind<BR>
+&nbsp;&nbsp;<B>end</B><BR>
+<B>eqtype</B>&nbsp;<A NAME="SIG:OS_IO.poll_desc:TY:SPEC" HREF="#SIG:OS_IO.poll_desc:TY">poll_desc</A><BR>
+<B>type</B>&nbsp;<A NAME="SIG:OS_IO.poll_info:TY:SPEC" HREF="#SIG:OS_IO.poll_info:TY">poll_info</A><BR>
+<B>val</B>&nbsp;<A NAME="SIG:OS_IO.pollDesc:VAL:SPEC" HREF="#SIG:OS_IO.pollDesc:VAL">pollDesc</A>&nbsp;<B>:</B>&nbsp;iodesc&nbsp;<B>-&gt;</B>&nbsp;poll_desc&nbsp;option<BR>
+<B>val</B>&nbsp;<A NAME="SIG:OS_IO.pollToIODesc:VAL:SPEC" HREF="#SIG:OS_IO.pollToIODesc:VAL">pollToIODesc</A>&nbsp;<B>:</B>&nbsp;poll_desc&nbsp;<B>-&gt;</B>&nbsp;iodesc<BR>
+<B>exception</B>&nbsp;<A NAME="SIG:OS_IO.Poll:EXN:SPEC" HREF="#SIG:OS_IO.Poll:EXN">Poll</A><BR>
+<B>val</B>&nbsp;<A NAME="SIG:OS_IO.pollIn:VAL:SPEC" HREF="#SIG:OS_IO.pollIn:VAL">pollIn</A>&nbsp;&nbsp;<B>:</B>&nbsp;poll_desc&nbsp;<B>-&gt;</B>&nbsp;poll_desc<BR>
+<B>val</B>&nbsp;<A NAME="SIG:OS_IO.pollOut:VAL:SPEC" HREF="#SIG:OS_IO.pollOut:VAL">pollOut</A>&nbsp;<B>:</B>&nbsp;poll_desc&nbsp;<B>-&gt;</B>&nbsp;poll_desc<BR>
+<B>val</B>&nbsp;<A NAME="SIG:OS_IO.pollPri:VAL:SPEC" HREF="#SIG:OS_IO.pollPri:VAL">pollPri</A>&nbsp;<B>:</B>&nbsp;poll_desc&nbsp;<B>-&gt;</B>&nbsp;poll_desc<BR>
+<B>val</B>&nbsp;<A NAME="SIG:OS_IO.poll:VAL:SPEC" HREF="#SIG:OS_IO.poll:VAL">poll</A>&nbsp;<B>:</B>&nbsp;poll_desc&nbsp;list&nbsp;<B>*</B>&nbsp;Time.time&nbsp;option<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;poll_info&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="SIG:OS_IO.isIn:VAL:SPEC" HREF="#SIG:OS_IO.isIn:VAL">isIn</A>&nbsp;&nbsp;<B>:</B>&nbsp;poll_info&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="SIG:OS_IO.isOut:VAL:SPEC" HREF="#SIG:OS_IO.isOut:VAL">isOut</A>&nbsp;<B>:</B>&nbsp;poll_info&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="SIG:OS_IO.isPri:VAL:SPEC" HREF="#SIG:OS_IO.isPri:VAL">isPri</A>&nbsp;<B>:</B>&nbsp;poll_info&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="SIG:OS_IO.infoToPollDesc:VAL:SPEC" HREF="#SIG:OS_IO.infoToPollDesc:VAL">infoToPollDesc</A>&nbsp;<B>:</B>&nbsp;poll_info&nbsp;<B>-&gt;</B>&nbsp;poll_desc</CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="SIG:OS_IO.iodesc:TY"></A><CODE><B>eqtype</B>&nbsp;iodesc</CODE>
+<DD>
+ An <CODE>iodesc</CODE> is an abstraction for an opened OS object that  supports I/O (<I>e.g.</I>, a file, console, or socket).  In Unix, an <CODE>iodesc</CODE> corresponds to a file descriptor, while in  Microsoft Windows it corresponds to a file handle. 
+<P>
+ Since <CODE><A HREF="os-io.html#SIG:OS_IO.iodesc:TY:SPEC">iodesc</A></CODE> values correspond to low-level, OS-specific objects, they are not typically created explicitly by the user, but are generated as a side-effect of the creation of a more high-level abstraction. For example, <CODE><A HREF="text-io.html#SIG:TEXT_IO.openIn:VAL:SPEC">TextIO.openIn</A></CODE> creates an <CODE><A HREF="imperative-io.html#SIG:IMPERATIVE_IO.instream:TY:SPEC">instream</A></CODE> value, from which the underlying <CODE>PrimIO.reader</CODE> can be accessed. This latter value may contain the corresponding <CODE><A HREF="os-io.html#SIG:OS_IO.iodesc:TY:SPEC">iodesc</A></CODE> value. 
+<P>
+    If the underlying operating system is known, there will usually be mechanisms for converting between <CODE><A HREF="os-io.html#SIG:OS_IO.iodesc:TY:SPEC">iodesc</A></CODE> values and the type of value used by the operating system. For example, the functions <CODE><A HREF="posix-file-sys.html#SIG:POSIX_FILE_SYS.fdToIOD:VAL:SPEC">Posix.FileSys.fdToIOD</A></CODE> and <CODE><A HREF="posix-file-sys.html#SIG:POSIX_FILE_SYS.iodToFD:VAL:SPEC">Posix.FileSys.iodToFD</A></CODE> provide this service for POSIX implementations, translating between <CODE><A HREF="os-io.html#SIG:OS_IO.iodesc:TY:SPEC">iodesc</A></CODE>s and open file descriptors.  
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:OS_IO.hash:VAL"></A>
+<DT> <CODE>hash <VAR>iod</VAR> </CODE>
+<DD>
+returns a hash value for the I/O descriptor <VAR>iod</VAR>. 
+<BLOCKQUOTE>
+<B>Implementation note:</B><BR>
+
+<P>
+<CODE><A HREF="os-io.html#SIG:OS_IO.hash:VAL:SPEC">hash</A></CODE> must have the property that values produced are well distributed when taken modulo 2<SUP>(<VAR>n</VAR>)</SUP> for any <VAR>n</VAR>. 
+</BLOCKQUOTE>
+ 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:OS_IO.compare:VAL"></A>
+<DT> <CODE>compare (<VAR>iod</VAR>, <VAR>iod'</VAR>) </CODE>
+<DD>
+returns <CODE><A HREF="general.html#SIG:GENERAL.order:TY:SPEC">LESS</A></CODE>, <CODE><A HREF="general.html#SIG:GENERAL.order:TY:SPEC">EQUAL</A></CODE>, or <CODE><A HREF="general.html#SIG:GENERAL.order:TY:SPEC">GREATER</A></CODE>  when <VAR>iod</VAR> is less than, equal to, or greater than  <VAR>iod'</VAR>, respectively, in some underlying linear ordering on <CODE><A HREF="os-io.html#SIG:OS_IO.iodesc:TY:SPEC">iodesc</A></CODE> values. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:OS_IO.iodesc_kind:TY"></A><CODE><B>eqtype</B>&nbsp;iodesc_kind</CODE>
+<DD>
+ This abstract type is used to represent the <I>kind</I> of system  object that an <CODE><A HREF="os-io.html#SIG:OS_IO.iodesc:TY:SPEC">iodesc</A></CODE> represents.  The possible values are defined in the <CODE><A HREF="os-io.html#SIG:OS_IO.Kind:STR:SPEC">Kind</A></CODE>  substructure. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:OS_IO.kind:VAL"></A>
+<DT> <CODE>kind <VAR>iod</VAR> </CODE>
+<DD>
+returns the kind of system object that the I/O descriptor <VAR>iod</VAR>  represents.  This will raise <CODE><A HREF="os.html#SIG:OS.SysErr:EXN:SPEC">OS.SysErr</A></CODE> if, for example,  <VAR>iod</VAR> refers to a closed file. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:OS_IO.Kind:STR"></A>
+<DT> <CODE><B>structure</B>&nbsp;Kind</CODE>
+<DD>
+<BR>
+
+<DL>
+<DT> <A NAME="SIG:OS_IO.Kind.file:VAL"></A><CODE><B>val</B>&nbsp;file&nbsp;<B>:</B>&nbsp;iodesc_kind<BR>
+<B>val</B>&nbsp;dir&nbsp;<B>:</B>&nbsp;iodesc_kind<BR>
+<B>val</B>&nbsp;symlink&nbsp;<B>:</B>&nbsp;iodesc_kind<BR>
+<B>val</B>&nbsp;tty&nbsp;<B>:</B>&nbsp;iodesc_kind<BR>
+<B>val</B>&nbsp;pipe&nbsp;<B>:</B>&nbsp;iodesc_kind<BR>
+<B>val</B>&nbsp;socket&nbsp;<B>:</B>&nbsp;iodesc_kind<BR>
+<B>val</B>&nbsp;device&nbsp;<B>:</B>&nbsp;iodesc_kind</CODE>
+<DD>
+ These values represent the various kinds of system objects  that an I/O descriptor might represent.  The following list summarizes the intended meaning of  these values:  
+<DL>
+<DT> <CODE><A HREF="os-io.html#SIG:OS_IO.Kind.file:VAL:SPEC">file</A></CODE> 
+<DD>
+A regular file in the file system.   The I/O descriptor associated with a stream produced by one   of the <CODE><A HREF="bin-io.html#BinIO:STR:SPEC">BinIO</A></CODE> or <CODE><A HREF="text-io.html#TextIO:STR:SPEC">TextIO</A></CODE> file   opening operations will always have this kind.   
+<DT> <CODE><A HREF="os-io.html#SIG:OS_IO.Kind.dir:VAL:SPEC">dir</A></CODE> 
+<DD>
+A directory in the file system.   I/O descriptors associated with file system objects for   which <CODE><A HREF="os-file-sys.html#SIG:OS_FILE_SYS.isDir:VAL:SPEC">OS.FileSys.isDir</A></CODE> returns   <CODE>true</CODE> will have this kind.   
+<DT> <CODE><A HREF="os-io.html#SIG:OS_IO.Kind.symlink:VAL:SPEC">symlink</A></CODE> 
+<DD>
+A symbolic link or file system alias.   I/O descriptors associated with file system objects for   which <CODE><A HREF="os-file-sys.html#SIG:OS_FILE_SYS.isLink:VAL:SPEC">OS.FileSys.isLink</A></CODE> returns   <CODE>true</CODE> will have this kind.   
+<DT> <CODE><A HREF="os-io.html#SIG:OS_IO.Kind.tty:VAL:SPEC">tty</A></CODE> 
+<DD>
+A terminal console.   
+<DT> <CODE><A HREF="os-io.html#SIG:OS_IO.Kind.pipe:VAL:SPEC">pipe</A></CODE> 
+<DD>
+A pipe to another system process.   
+<DT> <CODE><A HREF="os-io.html#SIG:OS_IO.Kind.socket:VAL:SPEC">socket</A></CODE> 
+<DD>
+A network socket.   
+<DT> <CODE><A HREF="os-io.html#SIG:OS_IO.Kind.device:VAL:SPEC">device</A></CODE> 
+<DD>
+A logical or physical hardware device.  
+</DL>
+  Note that a given implementation may define other  <CODE><A HREF="os-io.html#SIG:OS_IO.iodesc:TY:SPEC">iodesc</A></CODE> values not covered by these definitions.  
+<BR>
+<BR>
+
+</DL>
+<DT> <A NAME="SIG:OS_IO.poll_desc:TY"></A><CODE><B>eqtype</B>&nbsp;poll_desc</CODE>
+<DD>
+ An abstract representation of a polling operation on an I/O descriptor.  
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:OS_IO.poll_info:TY"></A><CODE><B>type</B>&nbsp;poll_info</CODE>
+<DD>
+ An abstract representation of the per-descriptor information  returned by the <CODE>poll</CODE> operation.  
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:OS_IO.pollDesc:VAL"></A>
+<DT> <CODE>pollDesc <VAR>iod</VAR> </CODE>
+<DD>
+create a polling operation on the given descriptor;  <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A></CODE> is returned when  no polling is supported by the I/O device.  
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:OS_IO.pollToIODesc:VAL"></A>
+<DT> <CODE>pollToIODesc <VAR>pd</VAR> </CODE>
+<DD>
+return the I/O descriptor that is being polled using <VAR>pd</VAR>.  
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:OS_IO.pollIn:VAL"></A>
+<DT> <CODE>pollIn <VAR>pd</VAR> </CODE>
+<DT> <CODE>          pollOut <VAR>pd</VAR> </CODE>
+<DT> <CODE>          pollPri <VAR>pd</VAR> </CODE>
+<DD>
+These return a poll descriptor that has input (respectively, output, high-priority) polling added to the poll descriptor <VAR>pd</VAR>. It raises <CODE><A HREF="os-io.html#SIG:OS_IO.Poll:EXN:SPEC">Poll</A></CODE> if input (respectively, output, high-priority events) is not appropriate for the underlying I/O device. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:OS_IO.poll:VAL"></A>
+<DT> <CODE>poll (<VAR>l</VAR>, <VAR>timeout</VAR>) </CODE>
+<DD>
+polls a collection of I/O devices for the conditions specified  by the list of poll descriptors <VAR>l</VAR>.  The argument <VAR>timeout</VAR> specifies the timeout where:  
+<UL>
+<LI>
+<CODE><CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A></CODE></CODE> means wait indefinitely.  
+<LI>
+<CODE><CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">SOME</A></CODE>(Time.zeroTime)</CODE> means do not block.  
+<LI>
+<CODE><CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">SOME</A></CODE>(t)</CODE> means timeout after time <CODE>t</CODE>.  
+</UL>
+  This returns a list of <CODE><CODE><A HREF="os-io.html#SIG:OS_IO.poll_info:TY:SPEC">poll_info</A></CODE></CODE> values corresponding to  those descriptors in <VAR>l</VAR> whose conditions are enabled.  The returned list respects the order of the argument list, and a  value in the returned list will reflect a (nonempty) subset of the  conditions specified in the corresponding argument descriptor.  The <CODE>poll</CODE> function will raise <CODE><A HREF="os.html#SIG:OS.SysErr:EXN:SPEC">OS.SysErr</A></CODE> if,  for example, one of the file descriptors refers to a closed file.  
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:OS_IO.isIn:VAL"></A>
+<DT> <CODE>isIn <VAR>info</VAR> </CODE>
+<DT> <CODE>          isOut <VAR>info</VAR> </CODE>
+<DT> <CODE>          isPri <VAR>info</VAR> </CODE>
+<DD>
+These return <CODE>true</CODE> if input (respectively, output, priority information) is present in <VAR>info</VAR>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:OS_IO.infoToPollDesc:VAL"></A>
+<DT> <CODE>infoToPollDesc <VAR>pi</VAR> </CODE>
+<DD>
+returns the underlying poll descriptor from poll  information <VAR>pi</VAR>. 
+<BR>
+<BR>
+
+</DL>
+<H4>See Also</H4>
+<BLOCKQUOTE>
+<CODE><A HREF="prim-io.html#PRIM_IO:SIG:SPEC">PRIM_IO</A></CODE>, <CODE><A HREF="os.html#OS:STR:SPEC">OS</A></CODE>
+</BLOCKQUOTE>
+<H4>Discussion</H4>
+<BLOCKQUOTE>
+<B>Question:</B><BR>
+
+<P>
+Why are the file attributes only available for open files?
+</BLOCKQUOTE>
+  
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="manpages.html">Parent</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   | <A HREF="index.html">Root</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Generated April 12, 2004</I><BR>
+<I>Last Modified July 1, 2002</I><BR>
+<I>Comments to <A HREF="http://www.cs.uchicago.edu/people/jhr">John Reppy.</A></I><BR>
+
+<HR>
+<P>
+
+This document may be distributed freely over the internet as long as the
+copyright notice and license terms below are prominently displayed within
+every machine-readable copy.  
+
+<P>
+
+<TABLE ALIGN=CENTER WIDTH="80%" BORDER="2" CELLPADDING="5">
+<TR>
+<TD>
+<P>
+
+Copyright &copy; 2004 AT&amp;T and Lucent Technologies.
+All rights reserved.
+
+<P>
+
+Permission is granted for internet users to make one paper copy for their
+own personal use.  Further hardcopy reproduction is strictly prohibited. 
+Permission to distribute the HTML document electronically on any medium
+other than the internet must be requested from the copyright holders by
+contacting the editors.
+Printed versions of the SML Basis Manual are available from Cambridge
+University Press.
+To order, please visit
+<A HREF="http://www.cup.org">www.cup.org</A> (North America) or
+<A HREF="http://www.cup.cam.ac.uk">www.cup.cam.ac.uk</A> (outside North America).<BR>
+
+</TABLE>
+<P>
+
+<HR>
+</BODY></HTML>

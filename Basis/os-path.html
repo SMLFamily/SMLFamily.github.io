@@ -1,0 +1,682 @@
+<!-- HTML/os-path.html -->
+
+<!-- COPYRIGHT (c) 1997 Bell Labs, Lucent Technologies. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The OS.Path structure</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF"><A NAME="top"></A>
+<H1 align=CENTER>The Standard ML Basis Library</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>OS.Path</CODE> structure</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="OS_PATH:SIG:SPEC"></A><CODE>OS_PATH</CODE><BR>
+<B>structure</B>&nbsp;<A NAME="Path:STR:SPEC"></A><CODE>Path</CODE><B> : </B>OS_PATH<BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+The <CODE>OS.Path</CODE> structure provides support for manipulating the <EM>syntax</EM> of file system paths independent of the underlying file system. It is purposely designed not to rely on any file system operations: none of the functions accesses the actual file system. There are two reasons for this design: many systems support multiple file systems that may have different semantics and applications may need to manipulate paths that do not exist in the underlying file system.
+<P>
+Before discussing the model of paths and the semantics of the individual operations, we need to define some terms: 
+<UL>
+<LI>
+An <EM>arc</EM> denotes a directory or file relative to the directory in which it is recorded. In a path string, arcs are separated by the arc separator character. This character is <CODE>#&quot;/&quot;</CODE> in Unix in Microsoft Windows, <CODE>#&quot;\\&quot;</CODE> is used. This character is <CODE>#&quot;/&quot;</CODE> in Unix in Microsoft Windows, both <CODE>#&quot;\\&quot;</CODE> and <CODE>#&quot;/&quot;</CODE> are allowed. For example, in Unix, the path <CODE>&quot;abc/def&quot;</CODE> contains two arcs: <CODE>&quot;abc&quot;</CODE> and <CODE>&quot;def&quot;</CODE>. There are two special arcs: <CODE><A HREF="os-path.html#SIG:OS_PATH.parentArc:VAL:SPEC">parentArc</A></CODE> and <CODE><A HREF="os-path.html#SIG:OS_PATH.currentArc:VAL:SPEC">currentArc</A></CODE>. Under both Unix and Microsoft Windows, the <CODE><A HREF="os-path.html#SIG:OS_PATH.parentArc:VAL:SPEC">parentArc</A></CODE> is <CODE>&quot;..&quot;</CODE> and <CODE><A HREF="os-path.html#SIG:OS_PATH.currentArc:VAL:SPEC">currentArc</A></CODE> is <CODE>&quot;.&quot;</CODE>. An empty arc corresponds to an empty string.
+<P>
+Although represented concretely as a string, an arc should be viewed as an abstraction in the context of the <CODE>OS.Path</CODE> structure, with a limited set of valid representations. In particular, a non-empty string <VAR>a</VAR> corresponds to <I>valid</I> representation of an arc only if <CODE><CODE><A HREF="os-path.html#SIG:OS_PATH.fromString:VAL:SPEC">fromString</A></CODE> <VAR>a</VAR></CODE> returns  <CODE>{isAbs=false, vol=&quot;&quot;, arcs=[<VAR>a</VAR>]}</CODE>.
+<LI>
+A <EM>path</EM> corresponds to a list of arcs, with an optional root, that denotes the path of directories leading to a file or directory in the file system hierarchy.
+<LI>
+An <EM>absolute path</EM> has a root. Unix examples include <CODE>&quot;/&quot;</CODE> and <CODE>&quot;/a/b&quot;</CODE>; Microsoft Windows examples include <CODE>&quot;\&quot;</CODE>, <CODE>&quot;\a\b&quot;</CODE>, and <CODE>&quot;A:\a\b&quot;</CODE>.  
+<LI>
+A <EM>relative path</EM> is one without a root. Unix examples include <CODE>&quot;..&quot;</CODE> and <CODE>&quot;a/b&quot;</CODE>; Microsoft Windows examples include <CODE>&quot;..&quot;</CODE>, <CODE>&quot;a\b&quot;</CODE>, and <CODE>&quot;A:a\b&quot;</CODE>.
+<LI>
+A <EM>canonical path</EM> contains no occurrences of the empty arc, no occurrences of the current arc unless the current arc is the only arc in the path, and contains parent arcs only at the beginning and only if the path is relative. Some examples of canonical paths, using Unix syntax, are as follows: <CODE>&quot;.&quot;</CODE> <CODE>&quot;/.&quot;</CODE>,   <CODE>&quot;/&quot;</CODE>,   <CODE>&quot;a&quot;</CODE>,   <CODE>&quot;a/b/c&quot;</CODE>, <CODE>&quot;..&quot;</CODE>, <CODE>&quot;../a&quot;</CODE>, <CODE>&quot;../../a/b/c&quot;</CODE>, and <CODE>&quot;/a/b/c&quot;</CODE>. 
+<BLOCKQUOTE>
+<B>System note [WINDOWS]:</B><BR>
+
+<P>
+In a Microsoft Windows implementation, canonical paths are entirely lowercase.
+</BLOCKQUOTE>
+<LI>
+A path has an associated <EM>volume</EM>. Under Unix, there is only one volume, whose name is <CODE>&quot;&quot;</CODE>. Under Microsoft Windows, example volume names are  <CODE>&quot;&quot;</CODE>, <CODE>&quot;A:&quot;</CODE>, and <CODE>&quot;C:&quot;</CODE>.
+</UL>
+<P>
+In addition to operations for canonicalizing paths and computing relative paths, the <CODE><A HREF="os.html#SIG:OS.Path:STR:SPEC">Path</A></CODE> structure supports path manipulations relative to three different views of a path: 
+<OL>
+<LI>
+A navigation oriented view, where a path is broken down into its root and a non-empty list of arcs.  A path is either absolute or relative. The root of a path specifies the volume to which the path is taken to be relative. For Unix, there is only the <CODE>&quot;&quot;</CODE> volume.
+<LI>
+A directory/file view, where a path is broken down into a directory specifier and a filename.
+<LI>
+A base/extension view, where a path is broken down into a base filename and an extension. We make the assumption that the extension separator character is <CODE>#&quot;.&quot;</CODE>. This works for Microsoft Windows, OS/2, and Unix; the Macintosh does not really have a notion of extension.
+</OL>
+<P>
+Our main design principle is that the functions should behave in a natural fashion when applied to <EM>canonical</EM> paths. All functions, except <CODE><A HREF="os-path.html#SIG:OS_PATH.concat:VAL:SPEC">concat</A></CODE>, preserve canonical paths, <I>i.e.</I>, if all arguments are canonical, then so is the result.
+<P>
+Note that although the model of path manipulation provided by the <CODE><A HREF="os.html#SIG:OS.Path:STR:SPEC">Path</A></CODE> structure is operating system independent, the analysis of strings is not. In particular, any given implementation of the <CODE><A HREF="os.html#SIG:OS.Path:STR:SPEC">Path</A></CODE> structure has an implicit notion of what the arc separator character is. Thus, on a Microsoft Windows system, <CODE><A HREF="os.html#SIG:OS.Path:STR:SPEC">Path</A></CODE> will treat the string <CODE>&quot;\\d\\e&quot;</CODE> as representing an absolute path with two arcs, whereas on a Unix system, it will correspond to a relative path with one arc. 
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>exception</B>&nbsp;<A NAME="SIG:OS_PATH.Path:EXN:SPEC" HREF="#SIG:OS_PATH.Path:EXN">Path</A><BR>
+<B>exception</B>&nbsp;<A NAME="SIG:OS_PATH.InvalidArc:EXN:SPEC" HREF="#SIG:OS_PATH.InvalidArc:EXN">InvalidArc</A><BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:OS_PATH.parentArc:VAL:SPEC" HREF="#SIG:OS_PATH.parentArc:VAL">parentArc</A>&nbsp;<B>:</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="SIG:OS_PATH.currentArc:VAL:SPEC" HREF="#SIG:OS_PATH.currentArc:VAL">currentArc</A>&nbsp;<B>:</B>&nbsp;string<BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:OS_PATH.fromString:VAL:SPEC" HREF="#SIG:OS_PATH.fromString:VAL">fromString</A>&nbsp;<B>:</B>&nbsp;string<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;{<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;isAbs&nbsp;<B>:</B>&nbsp;bool,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vol&nbsp;<B>:</B>&nbsp;string,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;arcs&nbsp;<B>:</B>&nbsp;string&nbsp;list<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<BR>
+<B>val</B>&nbsp;<A NAME="SIG:OS_PATH.toString:VAL:SPEC" HREF="#SIG:OS_PATH.toString:VAL">toString</A>&nbsp;<B>:</B>&nbsp;{<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;isAbs&nbsp;<B>:</B>&nbsp;bool,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vol&nbsp;<B>:</B>&nbsp;string,<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;arcs&nbsp;<B>:</B>&nbsp;string&nbsp;list<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:OS_PATH.validVolume:VAL:SPEC" HREF="#SIG:OS_PATH.validVolume:VAL">validVolume</A>&nbsp;<B>:</B>&nbsp;{isAbs&nbsp;<B>:</B>&nbsp;bool,&nbsp;vol&nbsp;<B>:</B>&nbsp;string}&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:OS_PATH.getVolume:VAL:SPEC" HREF="#SIG:OS_PATH.getVolume:VAL">getVolume</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="SIG:OS_PATH.getParent:VAL:SPEC" HREF="#SIG:OS_PATH.getParent:VAL">getParent</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:OS_PATH.splitDirFile:VAL:SPEC" HREF="#SIG:OS_PATH.splitDirFile:VAL">splitDirFile</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;{dir&nbsp;<B>:</B>&nbsp;string,&nbsp;file&nbsp;<B>:</B>&nbsp;string}<BR>
+<B>val</B>&nbsp;<A NAME="SIG:OS_PATH.joinDirFile:VAL:SPEC" HREF="#SIG:OS_PATH.joinDirFile:VAL">joinDirFile</A>&nbsp;<B>:</B>&nbsp;{dir&nbsp;<B>:</B>&nbsp;string,&nbsp;file&nbsp;<B>:</B>&nbsp;string}&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="SIG:OS_PATH.dir:VAL:SPEC" HREF="#SIG:OS_PATH.dir:VAL">dir</A>&nbsp;&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="SIG:OS_PATH.file:VAL:SPEC" HREF="#SIG:OS_PATH.file:VAL">file</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:OS_PATH.splitBaseExt:VAL:SPEC" HREF="#SIG:OS_PATH.splitBaseExt:VAL">splitBaseExt</A>&nbsp;<B>:</B>&nbsp;string<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;{base&nbsp;<B>:</B>&nbsp;string,&nbsp;ext&nbsp;<B>:</B>&nbsp;string&nbsp;option<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<BR>
+<B>val</B>&nbsp;<A NAME="SIG:OS_PATH.joinBaseExt:VAL:SPEC" HREF="#SIG:OS_PATH.joinBaseExt:VAL">joinBaseExt</A>&nbsp;<B>:</B>&nbsp;{base&nbsp;<B>:</B>&nbsp;string,&nbsp;ext&nbsp;<B>:</B>&nbsp;string&nbsp;option}<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="SIG:OS_PATH.base:VAL:SPEC" HREF="#SIG:OS_PATH.base:VAL">base</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="SIG:OS_PATH.ext:VAL:SPEC" HREF="#SIG:OS_PATH.ext:VAL">ext</A>&nbsp;&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;string&nbsp;option<BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:OS_PATH.mkCanonical:VAL:SPEC" HREF="#SIG:OS_PATH.mkCanonical:VAL">mkCanonical</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="SIG:OS_PATH.isCanonical:VAL:SPEC" HREF="#SIG:OS_PATH.isCanonical:VAL">isCanonical</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="SIG:OS_PATH.mkAbsolute:VAL:SPEC" HREF="#SIG:OS_PATH.mkAbsolute:VAL">mkAbsolute</A>&nbsp;<B>:</B>&nbsp;{path&nbsp;<B>:</B>&nbsp;string,&nbsp;relativeTo&nbsp;<B>:</B>&nbsp;string}<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="SIG:OS_PATH.mkRelative:VAL:SPEC" HREF="#SIG:OS_PATH.mkRelative:VAL">mkRelative</A>&nbsp;<B>:</B>&nbsp;{path&nbsp;<B>:</B>&nbsp;string,&nbsp;relativeTo&nbsp;<B>:</B>&nbsp;string}<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="SIG:OS_PATH.isAbsolute:VAL:SPEC" HREF="#SIG:OS_PATH.isAbsolute:VAL">isAbsolute</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="SIG:OS_PATH.isRelative:VAL:SPEC" HREF="#SIG:OS_PATH.isRelative:VAL">isRelative</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="SIG:OS_PATH.isRoot:VAL:SPEC" HREF="#SIG:OS_PATH.isRoot:VAL">isRoot</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:OS_PATH.concat:VAL:SPEC" HREF="#SIG:OS_PATH.concat:VAL">concat</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>*</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:OS_PATH.fromUnixPath:VAL:SPEC" HREF="#SIG:OS_PATH.fromUnixPath:VAL">fromUnixPath</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="SIG:OS_PATH.toUnixPath:VAL:SPEC" HREF="#SIG:OS_PATH.toUnixPath:VAL">toUnixPath</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;string</CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="SIG:OS_PATH.parentArc:VAL"></A><CODE><B>val</B>&nbsp;parentArc&nbsp;<B>:</B>&nbsp;string</CODE>
+<DD>
+          The string denoting the parent directory (<I>e.g.</I>, <CODE>&quot;..&quot;</CODE> on Microsoft Windows  and Unix). 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:OS_PATH.currentArc:VAL"></A><CODE><B>val</B>&nbsp;currentArc&nbsp;<B>:</B>&nbsp;string</CODE>
+<DD>
+          The string denoting the current directory (<I>e.g.</I>, <CODE>&quot;.&quot;</CODE> on Microsoft Windows and Unix). 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:OS_PATH.fromString:VAL"></A>
+<DT> <CODE>fromString <VAR>path</VAR> </CODE>
+<DD>
+returns the decomposition <CODE>{<VAR>isAbs</VAR>, <VAR>vol</VAR>, <VAR>arcs</VAR>}</CODE> of the path specified by <VAR>path</VAR>. <VAR>vol</VAR> is the volume name and <VAR>arcs</VAR> is the list of (possibly empty) arcs of the path. <VAR>isAbs</VAR> is <CODE>true</CODE> if the path is absolute. Under Unix, the volume name is always the empty string; under Microsoft Windows, in addition it can have the form <CODE>&quot;A:&quot;</CODE>, <CODE>&quot;C:&quot;</CODE>, etc. 
+<P>
+          Here are some examples for Unix paths:  
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TH ALIGN=CENTER VALIGN=TOP>
+<VAR>path</VAR>
+<TH ALIGN=CENTER VALIGN=TOP>
+<CODE>fromString <VAR>path</VAR></CODE>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;&quot;</CODE>
+<TD ALIGN=CENTER VALIGN=TOP>
+  <CODE>{isAbs=false, vol=&quot;&quot;, arcs=[]}</CODE>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;/&quot;</CODE>
+<TD ALIGN=CENTER VALIGN=TOP>
+  <CODE>{isAbs=true,  vol=&quot;&quot;, arcs=[&quot;&quot;]}</CODE>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;//&quot;</CODE>
+<TD ALIGN=CENTER VALIGN=TOP>
+  <CODE>{isAbs=true,  vol=&quot;&quot;, arcs=[&quot;&quot;, &quot;&quot;]}</CODE>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;a&quot;</CODE>
+<TD ALIGN=CENTER VALIGN=TOP>
+  <CODE>{isAbs=false, vol=&quot;&quot;, arcs=[&quot;a&quot;]}</CODE>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;/a&quot;</CODE>
+<TD ALIGN=CENTER VALIGN=TOP>
+  <CODE>{isAbs=true,  vol=&quot;&quot;, arcs=[&quot;a&quot;]}</CODE>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;//a&quot;</CODE>
+<TD ALIGN=CENTER VALIGN=TOP>
+  <CODE>{isAbs=true,  vol=&quot;&quot;, arcs=[&quot;&quot;,&quot;a&quot;]}</CODE>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;a/&quot;</CODE>
+<TD ALIGN=CENTER VALIGN=TOP>
+  <CODE>{isAbs=false, vol=&quot;&quot;, arcs=[&quot;a&quot;, &quot;&quot;]}</CODE>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;a//&quot;</CODE>
+<TD ALIGN=CENTER VALIGN=TOP>
+  <CODE>{isAbs=false, vol=&quot;&quot;, arcs=[&quot;a&quot;, &quot;&quot;, &quot;&quot;]}</CODE>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;a/b&quot;</CODE>
+<TD ALIGN=CENTER VALIGN=TOP>
+  <CODE>{isAbs=false, vol=&quot;&quot;, arcs=[&quot;a&quot;, &quot;b&quot;]}</CODE>
+</TABLE>
+</CENTER>
+<HR>
+ 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:OS_PATH.toString:VAL"></A>
+<DT> <CODE>toString {<VAR>isAbs</VAR>, <VAR>vol</VAR>, <VAR>arcs</VAR>} </CODE>
+<DD>
+makes a string out of a path represented as a list of arcs. <VAR>isAbs</VAR> specifies whether or not the path is absolute, and <VAR>vol</VAR> provides a corresponding volume. It returns <CODE>&quot;&quot;</CODE> when applied to <CODE>{isAbs=false, vol=&quot;&quot;, arcs=[]}</CODE>. The exception <CODE><A HREF="os-path.html#SIG:OS_PATH.Path:EXN:SPEC">Path</A></CODE> is raised if <CODE><CODE><A HREF="os-path.html#SIG:OS_PATH.validVolume:VAL:SPEC">validVolume</A></CODE>{<VAR>isAbs</VAR>, <VAR>vol</VAR>}</CODE> is <CODE>false</CODE>, or if <VAR>isAbs</VAR> is <CODE>false</CODE> and <VAR>arcs</VAR> has an initial empty arc. The exception <CODE><A HREF="os-path.html#SIG:OS_PATH.InvalidArc:EXN:SPEC">InvalidArc</A></CODE> is raised if any component in <VAR>arcs</VAR> is not a valid representation of an arc. The exception <CODE><A HREF="general.html#SIG:GENERAL.Size:EXN:SPEC">Size</A></CODE> is raised if the resulting string would have size greater than <CODE><A HREF="string.html#SIG:STRING.maxSize:VAL:SPEC">String.maxSize</A></CODE>. 
+<P>
+          <CODE><CODE><A HREF="os-path.html#SIG:OS_PATH.toString:VAL:SPEC">toString</A></CODE> o <CODE><A HREF="os-path.html#SIG:OS_PATH.fromString:VAL:SPEC">fromString</A></CODE></CODE> is the identity. <CODE><CODE><A HREF="os-path.html#SIG:OS_PATH.fromString:VAL:SPEC">fromString</A></CODE> o <CODE><A HREF="os-path.html#SIG:OS_PATH.toString:VAL:SPEC">toString</A></CODE></CODE> is also the identity, provided no exception is raised and none of the strings in <VAR>arcs</VAR> contains an embedded arc separator character. In addition, <CODE><CODE><A HREF="os-path.html#SIG:OS_PATH.isRelative:VAL:SPEC">isRelative</A></CODE>(<CODE><A HREF="os-path.html#SIG:OS_PATH.toString:VAL:SPEC">toString</A></CODE> {isAbs=false, vol, arcs})</CODE> evaluates to <CODE>true</CODE> when defined. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:OS_PATH.validVolume:VAL"></A>
+<DT> <CODE>validVolume {<VAR>isAbs</VAR>, <VAR>vol</VAR>} </CODE>
+<DD>
+returns <CODE>true</CODE> if <VAR>vol</VAR> is a valid volume name for an absolute or relative path, respectively as <VAR>isAbs</VAR> is <CODE>true</CODE> or <CODE>false</CODE>. Under Unix, the only valid volume name is <CODE>&quot;&quot;</CODE>. Under Microsoft Windows, the valid volume names have the form <CODE>&quot;a:&quot;</CODE>, <CODE>&quot;A:&quot;</CODE>, <CODE>&quot;b:&quot;</CODE>, <CODE>&quot;B:&quot;</CODE>, etc. and, if <CODE><VAR>isAbs</VAR> = false</CODE>, also <CODE>&quot;&quot;</CODE>. Under MacOS, <VAR>isAbs</VAR> can be <CODE>true</CODE> if and only if <VAR>vol</VAR> is <CODE>&quot;&quot;</CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:OS_PATH.getVolume:VAL"></A>
+<DT> <CODE>getVolume <VAR>path</VAR> </CODE>
+<DD>
+returns the volume portion of the path <VAR>path</VAR>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:OS_PATH.getParent:VAL"></A>
+<DT> <CODE>getParent <VAR>path</VAR> </CODE>
+<DD>
+returns a string denoting the parent directory of <VAR>path</VAR>. It holds that <CODE><CODE><A HREF="os-path.html#SIG:OS_PATH.getParent:VAL:SPEC">getParent</A></CODE> <VAR>path</VAR> = <VAR>path</VAR></CODE> if and only if <VAR>path</VAR> is a root. If the last arc is empty or the parent arc, then <CODE><A HREF="os-path.html#SIG:OS_PATH.getParent:VAL:SPEC">getParent</A></CODE> appends a parent arc. If the last arc is the current arc, then it is replaced with the parent arc. Note that if <VAR>path</VAR> is canonical, then the result of <CODE><A HREF="os-path.html#SIG:OS_PATH.getParent:VAL:SPEC">getParent</A></CODE> will also be canonical. 
+<P>
+          Here are some examples for Unix paths:  
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TH ALIGN=CENTER VALIGN=TOP>
+<VAR>path</VAR> 
+<TH ALIGN=CENTER VALIGN=TOP>
+<CODE>getParent <VAR>path</VAR></CODE>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;/&quot;</CODE> 
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;/&quot;</CODE>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;a&quot;</CODE> 
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;.&quot;</CODE>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;a/&quot;</CODE> 
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;a/..&quot;</CODE>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;a///&quot;</CODE> 
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;a///..&quot;</CODE>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;a/b&quot;</CODE> 
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;a&quot;</CODE>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;a/b/&quot;</CODE> 
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;a/b/..&quot;</CODE>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;..&quot;</CODE> 
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;../..&quot;</CODE>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;.&quot;</CODE> 
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;..&quot;</CODE>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;&quot;</CODE>  
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;..&quot;</CODE>
+</TABLE>
+</CENTER>
+<HR>
+ 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:OS_PATH.splitDirFile:VAL"></A>
+<DT> <CODE>splitDirFile <VAR>path</VAR> </CODE>
+<DD>
+splits the string path <VAR>path</VAR> into its directory and file parts, where the file part is defined to be the last arc. The file will be <CODE>&quot;&quot;</CODE>, if the last arc is <CODE>&quot;&quot;</CODE>. 
+<P>
+          Here are some examples for Unix paths:  
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TH ALIGN=CENTER VALIGN=TOP>
+<VAR>path</VAR> 
+<TH ALIGN=CENTER VALIGN=TOP>
+<CODE>splitDirFile <VAR>path</VAR></CODE>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;&quot;</CODE>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>{dir = &quot;&quot;, file = &quot;&quot;}</CODE>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;.&quot;</CODE>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>{dir = &quot;&quot;, file = &quot;.&quot;}</CODE>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;b&quot;</CODE>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>{dir = &quot;&quot;, file = &quot;b&quot;}</CODE>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;b/&quot;</CODE>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>{dir = &quot;b&quot;, file = &quot;&quot;}</CODE>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;a/b&quot;</CODE>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>{dir = &quot;a&quot;, file = &quot;b&quot;}</CODE>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;/a&quot;</CODE>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>{dir = &quot;/&quot;, file = &quot;a&quot;}</CODE>
+</TABLE>
+</CENTER>
+<HR>
+ 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:OS_PATH.joinDirFile:VAL"></A>
+<DT> <CODE>joinDirFile {<VAR>dir</VAR>, <VAR>file</VAR>} </CODE>
+<DD>
+creates a whole path out of a directory and a file by extending the path <VAR>dir</VAR> with the arc <VAR>file</VAR>. If the string <VAR>file</VAR> does not correspond to an arc, raises <CODE><A HREF="os-path.html#SIG:OS_PATH.InvalidArc:EXN:SPEC">InvalidArc</A></CODE>. The exception <CODE><A HREF="general.html#SIG:GENERAL.Size:EXN:SPEC">Size</A></CODE> is raised if the resulting string would have size greater than <CODE><A HREF="string.html#SIG:STRING.maxSize:VAL:SPEC">String.maxSize</A></CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:OS_PATH.dir:VAL"></A>
+<DT> <CODE>dir <VAR>path</VAR> </CODE>
+<DT> <CODE>          file <VAR>path</VAR> </CODE>
+<DD>
+return the directory and file parts of a path, respectively. They are equivalent to <CODE>#dir o <CODE><A HREF="os-path.html#SIG:OS_PATH.splitDirFile:VAL:SPEC">splitDirFile</A></CODE></CODE> and <CODE>#file o <CODE><A HREF="os-path.html#SIG:OS_PATH.splitDirFile:VAL:SPEC">splitDirFile</A></CODE></CODE>, respectively, although they are probably more efficient. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:OS_PATH.splitBaseExt:VAL"></A>
+<DT> <CODE>splitBaseExt <VAR>path</VAR> </CODE>
+<DD>
+splits the path <VAR>path</VAR> into its base and extension parts. The extension is a non-empty sequence of characters following the right-most, non-initial, occurrence of <CODE>&quot;.&quot;</CODE> in the last arc; <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A></CODE> is returned if the extension is not defined. The base part is everything to the left of the extension except the final <CODE>&quot;.&quot;</CODE>. Note that if there is no extension, a terminating <CODE>&quot;.&quot;</CODE> is included with the base part. 
+<P>
+          Here are some examples for Unix paths:  
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TH ALIGN=CENTER VALIGN=TOP>
+<VAR>path</VAR>  
+<TH ALIGN=CENTER VALIGN=TOP>
+<CODE>splitBaseExt <VAR>path</VAR></CODE>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;&quot;</CODE>   
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>{base = &quot;&quot;, ext = NONE}</CODE>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;.login&quot;</CODE>  
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>{base = &quot;.login&quot;, ext = NONE}</CODE>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;/.login&quot;</CODE>  
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>{base = &quot;/.login&quot;, ext = NONE}</CODE>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;a&quot;</CODE>  
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>{base = &quot;a&quot;, ext = NONE}</CODE>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;a.&quot;</CODE>  
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>{base = &quot;a.&quot;, ext = NONE}</CODE>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;a.b&quot;</CODE>  
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>{base = &quot;a&quot;, ext = SOME &quot;b&quot;}</CODE>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;a.b.c&quot;</CODE>  
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>{base = &quot;a.b&quot;, ext = SOME &quot;c&quot;}</CODE>
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;.news/comp&quot;</CODE> 
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>{base = &quot;.news/comp&quot;, ext = NONE} </CODE>
+</TABLE>
+</CENTER>
+<HR>
+ 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:OS_PATH.joinBaseExt:VAL"></A>
+<DT> <CODE>joinBaseExt {<VAR>base</VAR>, <VAR>ext</VAR>} </CODE>
+<DD>
+returns an arc composed of the base name and the extension (if different from <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A></CODE>). It is a left inverse of <CODE><A HREF="os-path.html#SIG:OS_PATH.splitBaseExt:VAL:SPEC">splitBaseExt</A></CODE>, <I>i.e.</I>, <CODE><CODE><A HREF="os-path.html#SIG:OS_PATH.joinBaseExt:VAL:SPEC">joinBaseExt</A></CODE> o <CODE><A HREF="os-path.html#SIG:OS_PATH.splitBaseExt:VAL:SPEC">splitBaseExt</A></CODE></CODE> is the identity. The opposite does not hold, since the extension may be empty, or may contain extension separators. Note that although <CODE><A HREF="os-path.html#SIG:OS_PATH.splitBaseExt:VAL:SPEC">splitBaseExt</A></CODE> will never return the extension <CODE><CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">SOME</A></CODE>(&quot;&quot;)</CODE>, <CODE><A HREF="os-path.html#SIG:OS_PATH.joinBaseExt:VAL:SPEC">joinBaseExt</A></CODE> treats this as equivalent to <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A></CODE>. The exception <CODE><A HREF="general.html#SIG:GENERAL.Size:EXN:SPEC">Size</A></CODE> is raised if the resulting string would have size greater than <CODE><A HREF="string.html#SIG:STRING.maxSize:VAL:SPEC">String.maxSize</A></CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:OS_PATH.base:VAL"></A>
+<DT> <CODE>base <VAR>path</VAR> </CODE>
+<DT> <CODE>          ext <VAR>path</VAR> </CODE>
+<DD>
+These return the base and extension parts of a path, respectively. They are equivalent to <CODE>#base o <CODE><A HREF="os-path.html#SIG:OS_PATH.splitBaseExt:VAL:SPEC">splitBaseExt</A></CODE></CODE> and <CODE>#ext o <CODE><A HREF="os-path.html#SIG:OS_PATH.splitBaseExt:VAL:SPEC">splitBaseExt</A></CODE></CODE>, respectively, although they are probably more efficient. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:OS_PATH.mkCanonical:VAL"></A>
+<DT> <CODE>mkCanonical <VAR>path</VAR> </CODE>
+<DD>
+returns the canonical path equivalent to <VAR>path</VAR>. Redundant occurrences of the parent arc, the current arc, and the empty arc are removed.  The canonical path will never be the empty string; the empty path is converted to the current directory path (<CODE>&quot;.&quot;</CODE> under Unix and Microsoft Windows). 
+<P>
+          Note that the syntactic canonicalization provided by <CODE><A HREF="os-path.html#SIG:OS_PATH.mkCanonical:VAL:SPEC">mkCanonical</A></CODE> may not preserve file system meaning in the presence of symbolic links (see <CODE><A HREF="os-path.html#SIG:OS_PATH.concat:VAL:SPEC">concat</A></CODE>). 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:OS_PATH.isCanonical:VAL"></A>
+<DT> <CODE>isCanonical <VAR>path</VAR> </CODE>
+<DD>
+returns <CODE>true</CODE> if <VAR>path</VAR> is a canonical path. It is equivalent to <CODE>(<VAR>path</VAR> = <CODE><A HREF="os-path.html#SIG:OS_PATH.mkCanonical:VAL:SPEC">mkCanonical</A></CODE> <VAR>path</VAR>)</CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:OS_PATH.mkAbsolute:VAL"></A>
+<DT> <CODE>mkAbsolute {<VAR>path</VAR>, <VAR>relativeTo</VAR>} </CODE>
+<DD>
+returns an absolute path that is equivalent to the path <VAR>path</VAR> relative to the absolute path <VAR>relativeTo</VAR>. If <VAR>path</VAR> is already absolute, it is returned unchanged. Otherwise, the function returns the canonical concatenation of <VAR>relativeTo</VAR> with <VAR>path</VAR>, <I>i.e.</I>, <CODE><CODE><A HREF="os-path.html#SIG:OS_PATH.mkCanonical:VAL:SPEC">mkCanonical</A></CODE> (<CODE><A HREF="os-path.html#SIG:OS_PATH.concat:VAL:SPEC">concat</A></CODE> (<VAR>abs</VAR>, <VAR>p</VAR>))</CODE>. Thus, if <VAR>path</VAR> and <VAR>relativeTo</VAR> are canonical, the result will be canonical. If <VAR>relativeTo</VAR> is not absolute, or if the two paths refer to different volumes, then the <CODE><A HREF="os-path.html#SIG:OS_PATH.Path:EXN:SPEC">Path</A></CODE> exception is raised. The exception <CODE><A HREF="general.html#SIG:GENERAL.Size:EXN:SPEC">Size</A></CODE> is raised if the resulting string would have size greater than <CODE><A HREF="string.html#SIG:STRING.maxSize:VAL:SPEC">String.maxSize</A></CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:OS_PATH.mkRelative:VAL"></A>
+<DT> <CODE>mkRelative {<VAR>path</VAR>, <VAR>relativeTo</VAR>} </CODE>
+<DD>
+returns a relative path <VAR>p</VAR> that, when taken relative to the canonical form of the absolute path <VAR>relativeTo</VAR>, is equivalent to the path <VAR>path</VAR>. If <VAR>path</VAR> is relative, it is returned unchanged. If <VAR>path</VAR> is absolute, the procedure for computing the relative path is to first compute the canonical form <VAR>abs</VAR> of <VAR>relativeTo</VAR>.  If <VAR>path</VAR> and <VAR>abs</VAR> are equal, then the current arc is the result.  Otherwise, the common prefix is stripped from <VAR>path</VAR> and <VAR>abs</VAR> giving <VAR>p'</VAR> and <VAR>abs'</VAR>.  The resulting path is then formed by appending <VAR>p'</VAR>  to a path consisting of one parent arc for each arc in <VAR>abs'</VAR>.  Note that if both paths are canonical, then the result will be canonical. 
+<P>
+          If <VAR>relativeTo</VAR> is not absolute, or if <VAR>path</VAR> and <VAR>relativeTo</VAR> are both absolute but have different roots, the <CODE><A HREF="os-path.html#SIG:OS_PATH.Path:EXN:SPEC">Path</A></CODE> exception is raised. The exception <CODE><A HREF="general.html#SIG:GENERAL.Size:EXN:SPEC">Size</A></CODE> is raised if the resulting string would have size greater than <CODE><A HREF="string.html#SIG:STRING.maxSize:VAL:SPEC">String.maxSize</A></CODE>. 
+<P>
+          Here are some examples for Unix paths:  
+<HR>
+<CENTER>
+<TABLE ALIGN=CENTER>
+<TR>
+<TH ALIGN=CENTER VALIGN=TOP>
+<CODE><VAR>path</VAR></CODE>  
+<TH ALIGN=CENTER VALIGN=TOP>
+<CODE><VAR>relativeTo</VAR></CODE>  
+<TH ALIGN=CENTER VALIGN=TOP>
+<CODE>mkRelative{<VAR>path</VAR>, <VAR>relativeTo</VAR>}</CODE>  
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;a/b&quot;</CODE> 
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;/c/d&quot;</CODE> 
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;a/b&quot;</CODE>  
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;/&quot;</CODE>  
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;/a/b/c&quot;</CODE> 
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;../../..&quot;</CODE>  
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;/a/b/&quot;</CODE> 
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;/a/c&quot;</CODE> 
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;../b/&quot;</CODE>  
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;/a/b&quot;</CODE> 
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;/a/c&quot;</CODE> 
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;../b&quot;</CODE>  
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;/a/b/&quot;</CODE> 
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;/a/c/&quot;</CODE> 
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;../b/&quot;</CODE>  
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;/a/b&quot;</CODE> 
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;/a/c/&quot;</CODE> 
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;../b&quot;</CODE>  
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;/&quot;</CODE>  
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;/&quot;</CODE> 
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;.&quot;</CODE>  
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;/&quot;</CODE>  
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;/.&quot;</CODE> 
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;.&quot;</CODE>  
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;/&quot;</CODE>  
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;/..&quot;</CODE> 
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;.&quot;</CODE>  
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;/a/b/../c&quot;</CODE> 
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;/a/d&quot;</CODE> 
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;../b/../c&quot;</CODE>  
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;/a/b&quot;</CODE> 
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;/c/d&quot;</CODE> 
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;../../a/b&quot;</CODE>  
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;/c/a/b&quot;</CODE> 
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;/c/d&quot;</CODE> 
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;../a/b&quot;</CODE>  
+<TR>
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;/c/d/a/b&quot;</CODE> 
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;/c/d&quot;</CODE> 
+<TD ALIGN=CENTER VALIGN=TOP>
+<CODE>&quot;a/b&quot;</CODE>  
+</TABLE>
+</CENTER>
+<HR>
+ 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:OS_PATH.isAbsolute:VAL"></A>
+<DT> <CODE>isAbsolute <VAR>path</VAR> </CODE>
+<DT> <CODE>          isRelative <VAR>path</VAR> </CODE>
+<DD>
+These return <CODE>true</CODE> if <VAR>path</VAR> is, respectively, absolute or relative. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:OS_PATH.isRoot:VAL"></A>
+<DT> <CODE>isRoot <VAR>path</VAR> </CODE>
+<DD>
+returns <CODE>true</CODE> if <VAR>path</VAR> is a canonical specification of a root directory. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:OS_PATH.concat:VAL"></A>
+<DT> <CODE>concat (<VAR>path</VAR>, <VAR>t</VAR>) </CODE>
+<DD>
+returns the path consisting of <VAR>path</VAR> followed by <VAR>t</VAR>. It raises the exception <CODE><A HREF="os-path.html#SIG:OS_PATH.Path:EXN:SPEC">Path</A></CODE> if <VAR>t</VAR> is not a relative path or if <VAR>path</VAR> and <VAR>t</VAR> refer to different volumes. The exception <CODE><A HREF="general.html#SIG:GENERAL.Size:EXN:SPEC">Size</A></CODE> is raised if the resulting string would have size greater than <CODE><A HREF="string.html#SIG:STRING.maxSize:VAL:SPEC">String.maxSize</A></CODE>. 
+<P>
+          A implementation of <CODE>concat</CODE> might be: 
+<PRE>
+fun concat (p1, p2) = (case (fromString p1, fromString p2)
+       of (_, {isAbs=true, ...}) =&gt; raise Path
+        | ({isAbs, vol=v1, arcs=al1},
+           {vol=v2, arcs=al2, ...}
+          ) =&gt; if ((v2 = &quot;&quot;) orelse (v1 = v2))
+              then toString{
+                  isAbs=isAbs, vol=v1,
+                  arcs=concatArcs(al1, al2)
+                }
+              else raise Path
+      (* end case *))
+</PRE>
+  where <CODE>concatArcs</CODE> is like <CODE><A HREF="list.html#SIG:LIST.@:VAL:SPEC">List.@</A></CODE>,  except that a trailing empty arc in the first argument is dropped.  Note that <CODE><A HREF="os-path.html#SIG:OS_PATH.concat:VAL:SPEC">concat</A></CODE> should not be confused with the concatenation of two strings. 
+<P>
+          <CODE><A HREF="os-path.html#SIG:OS_PATH.concat:VAL:SPEC">concat</A></CODE> does not preserve canonical paths. For example, <CODE><CODE><A HREF="os-path.html#SIG:OS_PATH.concat:VAL:SPEC">concat</A></CODE>(&quot;a/b&quot;, &quot;../c&quot;)</CODE> returns <CODE>&quot;a/b/../c&quot;</CODE>. The parent arc is not removed because <CODE>&quot;a/b/../c&quot;</CODE> and <CODE>&quot;a/c&quot;</CODE> may not be equivalent in the presence of symbolic links. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:OS_PATH.fromUnixPath:VAL"></A>
+<DT> <CODE>fromUnixPath <VAR>s</VAR> </CODE>
+<DD>
+converts the Unix-style path <VAR>s</VAR> to the path syntax of the host operating system. Slash characters are translated to the directory separators of the local system, as are parent arcs and current arcs.  This function raises the <CODE><A HREF="os-path.html#SIG:OS_PATH.InvalidArc:EXN:SPEC">InvalidArc</A></CODE> exception if  any arc in the Unix path is invalid in the host system's path syntax  (<I>e.g.</I>, an arc that has a backslash character in it when the  host system is Microsoft Windows).  
+<P>
+ Note that the syntax of Unix pathnames necessarily limits this  function.  It is not possible to specify paths that have a non-empty volume name  or paths that have a slash in one of their arcs using this function. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:OS_PATH.toUnixPath:VAL"></A>
+<DT> <CODE>toUnixPath <VAR>s</VAR> </CODE>
+<DD>
+converts the path <VAR>s</VAR>, which is in the host operating system's  syntax, to a Unix-style path.  If the path <VAR>s</VAR> has a non-empty volume name, then the  <CODE><A HREF="os-path.html#SIG:OS_PATH.Path:EXN:SPEC">Path</A></CODE> exception is raised.  Also, if any arc in the pathname contains the slash character,  then the <CODE><A HREF="os-path.html#SIG:OS_PATH.InvalidArc:EXN:SPEC">InvalidArc</A></CODE> exception is raised.
+<BR>
+<BR>
+
+</DL>
+<H4>See Also</H4>
+<BLOCKQUOTE>
+<CODE><A HREF="os.html#OS:STR:SPEC">OS</A></CODE>, <CODE><A HREF="os.html#SIG:OS.FileSys:STR:SPEC">OS.FileSys</A></CODE>, <CODE><A HREF="os.html#SIG:OS.IO:STR:SPEC">OS.IO</A></CODE>, <CODE><A HREF="os.html#SIG:OS.Process:STR:SPEC">OS.Process</A></CODE>, <CODE><A HREF="posix.html#SIG:POSIX.FileSys:STR:SPEC">Posix.FileSys</A></CODE>
+</BLOCKQUOTE>
+<H4>Discussion</H4>
+<P>
+Syntactically, two paths can be checked for equality by applying string equality to canonical versions of the paths. Since volumes and individual arcs are just special classes of paths, an identical test for equality can be applied to these classes.
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="manpages.html">Parent</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   | <A HREF="index.html">Root</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Generated April 12, 2004</I><BR>
+<I>Last Modified June 18, 2002</I><BR>
+<I>Comments to <A HREF="http://www.cs.uchicago.edu/people/jhr">John Reppy.</A></I><BR>
+
+<HR>
+<P>
+
+This document may be distributed freely over the internet as long as the
+copyright notice and license terms below are prominently displayed within
+every machine-readable copy.  
+
+<P>
+
+<TABLE ALIGN=CENTER WIDTH="80%" BORDER="2" CELLPADDING="5">
+<TR>
+<TD>
+<P>
+
+Copyright &copy; 2004 AT&amp;T and Lucent Technologies.
+All rights reserved.
+
+<P>
+
+Permission is granted for internet users to make one paper copy for their
+own personal use.  Further hardcopy reproduction is strictly prohibited. 
+Permission to distribute the HTML document electronically on any medium
+other than the internet must be requested from the copyright holders by
+contacting the editors.
+Printed versions of the SML Basis Manual are available from Cambridge
+University Press.
+To order, please visit
+<A HREF="http://www.cup.org">www.cup.org</A> (North America) or
+<A HREF="http://www.cup.cam.ac.uk">www.cup.cam.ac.uk</A> (outside North America).<BR>
+
+</TABLE>
+<P>
+
+<HR>
+</BODY></HTML>

@@ -1,0 +1,216 @@
+<!-- HTML/list-pair.html -->
+
+<!-- COPYRIGHT (c) 1997 Bell Labs, Lucent Technologies. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The ListPair structure</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF"><A NAME="top"></A>
+<H1 align=CENTER>The Standard ML Basis Library</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>ListPair</CODE> structure</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="LIST_PAIR:SIG:SPEC"></A><CODE>LIST_PAIR</CODE><BR>
+<B>structure</B>&nbsp;<A NAME="ListPair:STR:SPEC"></A><CODE>ListPair</CODE><B> :> </B>LIST_PAIR<BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+The <CODE>ListPair</CODE> structure provides operations on pairs of lists. The operations fall into two categories. Those in the first category, whose names do not end in <CODE>&quot;Eq&quot;</CODE>, do not require that the lists have the same length. When the lists are of uneven lengths, the excess elements from the tail of the longer list are ignored. The operations in the second category, whose names have the suffix <CODE>&quot;Eq&quot;</CODE>, differ from their similarly named operations in the first category only when the list arguments have unequal lengths, in which case they typically raise the <CODE><A HREF="list-pair.html#SIG:LIST_PAIR.UnequalLengths:EXN:SPEC">UnequalLengths</A></CODE> exception. 
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>exception</B>&nbsp;<A NAME="SIG:LIST_PAIR.UnequalLengths:EXN:SPEC" HREF="#SIG:LIST_PAIR.UnequalLengths:EXN">UnequalLengths</A><BR>
+<B>val</B>&nbsp;<A NAME="SIG:LIST_PAIR.zip:VAL:SPEC" HREF="#SIG:LIST_PAIR.zip:VAL">zip</A>&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>*</B>&nbsp;<I>'b</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;(<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'b</I>)&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="SIG:LIST_PAIR.zipEq:VAL:SPEC" HREF="#SIG:LIST_PAIR.zipEq:VAL">zipEq</A>&nbsp;<B>:</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>*</B>&nbsp;<I>'b</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;(<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'b</I>)&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="SIG:LIST_PAIR.unzip:VAL:SPEC" HREF="#SIG:LIST_PAIR.unzip:VAL">unzip</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'b</I>)&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>*</B>&nbsp;<I>'b</I>&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="SIG:LIST_PAIR.app:VAL:SPEC" HREF="#SIG:LIST_PAIR.app:VAL">app</A>&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'b</I>&nbsp;<B>-&gt;</B>&nbsp;unit)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>*</B>&nbsp;<I>'b</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="SIG:LIST_PAIR.appEq:VAL:SPEC" HREF="#SIG:LIST_PAIR.appEq:VAL">appEq</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'b</I>&nbsp;<B>-&gt;</B>&nbsp;unit)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>*</B>&nbsp;<I>'b</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;unit<BR>
+<B>val</B>&nbsp;<A NAME="SIG:LIST_PAIR.map:VAL:SPEC" HREF="#SIG:LIST_PAIR.map:VAL">map</A>&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'b</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'c</I>)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>*</B>&nbsp;<I>'b</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;<I>'c</I>&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="SIG:LIST_PAIR.mapEq:VAL:SPEC" HREF="#SIG:LIST_PAIR.mapEq:VAL">mapEq</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'b</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'c</I>)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>*</B>&nbsp;<I>'b</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;<I>'c</I>&nbsp;list<BR>
+<B>val</B>&nbsp;<A NAME="SIG:LIST_PAIR.foldl:VAL:SPEC" HREF="#SIG:LIST_PAIR.foldl:VAL">foldl</A>&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'b</I>&nbsp;<B>*</B>&nbsp;<I>'c</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'c</I>)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;<I>'c</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>*</B>&nbsp;<I>'b</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;<I>'c</I><BR>
+<B>val</B>&nbsp;<A NAME="SIG:LIST_PAIR.foldr:VAL:SPEC" HREF="#SIG:LIST_PAIR.foldr:VAL">foldr</A>&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'b</I>&nbsp;<B>*</B>&nbsp;<I>'c</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'c</I>)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;<I>'c</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>*</B>&nbsp;<I>'b</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;<I>'c</I><BR>
+<B>val</B>&nbsp;<A NAME="SIG:LIST_PAIR.foldlEq:VAL:SPEC" HREF="#SIG:LIST_PAIR.foldlEq:VAL">foldlEq</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'b</I>&nbsp;<B>*</B>&nbsp;<I>'c</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'c</I>)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;<I>'c</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>*</B>&nbsp;<I>'b</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;<I>'c</I><BR>
+<B>val</B>&nbsp;<A NAME="SIG:LIST_PAIR.foldrEq:VAL:SPEC" HREF="#SIG:LIST_PAIR.foldrEq:VAL">foldrEq</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'b</I>&nbsp;<B>*</B>&nbsp;<I>'c</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'c</I>)<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;<I>'c</I>&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>*</B>&nbsp;<I>'b</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;<I>'c</I><BR>
+<B>val</B>&nbsp;<A NAME="SIG:LIST_PAIR.all:VAL:SPEC" HREF="#SIG:LIST_PAIR.all:VAL">all</A>&nbsp;&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'b</I>&nbsp;<B>-&gt;</B>&nbsp;bool)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>*</B>&nbsp;<I>'b</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="SIG:LIST_PAIR.exists:VAL:SPEC" HREF="#SIG:LIST_PAIR.exists:VAL">exists</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'b</I>&nbsp;<B>-&gt;</B>&nbsp;bool)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>*</B>&nbsp;<I>'b</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="SIG:LIST_PAIR.allEq:VAL:SPEC" HREF="#SIG:LIST_PAIR.allEq:VAL">allEq</A>&nbsp;<B>:</B>&nbsp;(<I>'a</I>&nbsp;<B>*</B>&nbsp;<I>'b</I>&nbsp;<B>-&gt;</B>&nbsp;bool)&nbsp;<B>-&gt;</B>&nbsp;<I>'a</I>&nbsp;list&nbsp;<B>*</B>&nbsp;<I>'b</I>&nbsp;list&nbsp;<B>-&gt;</B>&nbsp;bool</CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="SIG:LIST_PAIR.UnequalLengths:EXN"></A><CODE><B>exception</B>&nbsp;UnequalLengths</CODE>
+<DD>
+    This exception is raised by those functions that require arguments of identical length. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:LIST_PAIR.zip:VAL"></A>
+<DT> <CODE>zip (<VAR>l1</VAR>, <VAR>l2</VAR>) </CODE>
+<DT> <CODE>      zipEq (<VAR>l1</VAR>, <VAR>l2</VAR>) </CODE>
+<DD>
+These functions combine the two lists <VAR>l1</VAR> and <VAR>l2</VAR> into a list of pairs, with the first element of each list comprising the first element of the result, the second elements comprising the second element of the result, and so on. If the lists are of unequal lengths, <CODE><A HREF="list-pair.html#SIG:LIST_PAIR.zip:VAL:SPEC">zip</A></CODE> ignores the excess elements from the tail of the longer one, while <CODE><A HREF="list-pair.html#SIG:LIST_PAIR.zipEq:VAL:SPEC">zipEq</A></CODE> raises the exception <CODE><A HREF="list-pair.html#SIG:LIST_PAIR.UnequalLengths:EXN:SPEC">UnequalLengths</A></CODE>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:LIST_PAIR.unzip:VAL"></A>
+<DT> <CODE>unzip <VAR>l</VAR> </CODE>
+<DD>
+returns a pair of lists formed by splitting the elements of <VAR>l</VAR>. This is the inverse of <CODE>zip</CODE> for equal length lists. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:LIST_PAIR.app:VAL"></A>
+<DT> <CODE>app <VAR>f</VAR> (<VAR>l1</VAR>, <VAR>l2</VAR>) </CODE>
+<DT> <CODE>      appEq <VAR>f</VAR> (<VAR>l1</VAR>, <VAR>l2</VAR>) </CODE>
+<DD>
+These apply the function <VAR>f</VAR> to the list of pairs of elements generated from left to right from the lists <VAR>l1</VAR> and <VAR>l2</VAR>. If the lists are of unequal lengths, the former ignores the excess elements from the tail of the longer one, and the latter raises <CODE><A HREF="list-pair.html#SIG:LIST_PAIR.UnequalLengths:EXN:SPEC">UnequalLengths</A></CODE>. The above expressions are respectively equivalent to: 
+<PRE>
+      <A HREF="list.html#SIG:LIST.app:VAL:SPEC">List.app</A> <VAR>f</VAR> (zip (<VAR>l1</VAR>, <VAR>l2</VAR>))
+      <A HREF="list.html#SIG:LIST.app:VAL:SPEC">List.app</A> <VAR>f</VAR> (zipEq (<VAR>l1</VAR>, <VAR>l2</VAR>))
+      
+</PRE>
+ ignoring possible side-effects of the function <VAR>f</VAR>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:LIST_PAIR.map:VAL"></A>
+<DT> <CODE>map <VAR>f</VAR> (<VAR>l1</VAR>, <VAR>l2</VAR>) </CODE>
+<DT> <CODE>      mapEq <VAR>f</VAR> (<VAR>l1</VAR>, <VAR>l2</VAR>) </CODE>
+<DD>
+These map the function <VAR>f</VAR> over the list of pairs of elements generated from left to right from the lists <VAR>l1</VAR> and <VAR>l2</VAR>, returning the list of results. If the lists are of unequal lengths, the former ignores the excess elements from the tail of the longer one, and the latter raises <CODE><A HREF="list-pair.html#SIG:LIST_PAIR.UnequalLengths:EXN:SPEC">UnequalLengths</A></CODE>. The above expressions are respectively equivalent to: 
+<PRE>
+      <A HREF="list.html#SIG:LIST.map:VAL:SPEC">List.map</A> <VAR>f</VAR> (zip (<VAR>l1</VAR>, <VAR>l2</VAR>))
+      <A HREF="list.html#SIG:LIST.map:VAL:SPEC">List.map</A> <VAR>f</VAR> (zipEq (<VAR>l1</VAR>, <VAR>l2</VAR>))
+      
+</PRE>
+ ignoring possible side-effects of the function <VAR>f</VAR>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:LIST_PAIR.foldl:VAL"></A>
+<DT> <CODE>foldl <VAR>f</VAR> <VAR>init</VAR> (<VAR>l1</VAR>, <VAR>l2</VAR>) </CODE>
+<DT> <CODE>          foldr <VAR>f</VAR> <VAR>init</VAR> (<VAR>l1</VAR>, <VAR>l2</VAR>) </CODE>
+<DT> <CODE>          foldlEq <VAR>f</VAR> <VAR>init</VAR> (<VAR>l1</VAR>, <VAR>l2</VAR>) </CODE>
+<DT> <CODE>          foldrEq <VAR>f</VAR> <VAR>init</VAR> (<VAR>l1</VAR>, <VAR>l2</VAR>) </CODE>
+<DD>
+These return the result of folding the function <VAR>f</VAR> in the specified direction over the pair of lists <VAR>l1</VAR> and <VAR>l2</VAR> starting with the value  <VAR>init</VAR>. They are respectively equivalent to: 
+<PRE>
+      <A HREF="list.html#SIG:LIST.foldl:VAL:SPEC">List.foldl</A> <VAR>f'</VAR> <VAR>init</VAR> (zip (<VAR>l1</VAR>, <VAR>l2</VAR>))
+      <A HREF="list.html#SIG:LIST.foldr:VAL:SPEC">List.foldr</A> <VAR>f'</VAR> <VAR>init</VAR> (zip (<VAR>l1</VAR>, <VAR>l2</VAR>))
+      <A HREF="list.html#SIG:LIST.foldl:VAL:SPEC">List.foldl</A> <VAR>f'</VAR> <VAR>init</VAR> (zipEq (<VAR>l1</VAR>, <VAR>l2</VAR>))
+      <A HREF="list.html#SIG:LIST.foldr:VAL:SPEC">List.foldr</A> <VAR>f'</VAR> <VAR>init</VAR> (zipEq (<VAR>l1</VAR>, <VAR>l2</VAR>))
+      
+</PRE>
+ where <VAR>f'</VAR> is <CODE>fn ((a,b),c) =&gt; f(a,b,c)</CODE> and ignoring possible side-effects of the function <VAR>f</VAR>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:LIST_PAIR.all:VAL"></A>
+<DT> <CODE>all <VAR>f</VAR> (<VAR>l1</VAR>, <VAR>l2</VAR>) </CODE>
+<DT> <CODE>        exists <VAR>f</VAR> (<VAR>l1</VAR>, <VAR>l2</VAR>) </CODE>
+<DD>
+These functions provide short-circuit testing of a predicate over a pair of lists. They are respectively equivalent to: 
+<PRE>
+      <A HREF="list.html#SIG:LIST.all:VAL:SPEC">List.all</A> <VAR>f</VAR> (zip (<VAR>l1</VAR>, <VAR>l2</VAR>))
+      <A HREF="list.html#SIG:LIST.exists:VAL:SPEC">List.exists</A> <VAR>f</VAR> (zip (<VAR>l1</VAR>, <VAR>l2</VAR>))
+      
+</PRE>
+ 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:LIST_PAIR.allEq:VAL"></A>
+<DT> <CODE>allEq <VAR>f</VAR> (<VAR>l1</VAR>, <VAR>l2</VAR>) </CODE>
+<DD>
+returns <CODE>true</CODE> if <VAR>l1</VAR> and <VAR>l2</VAR> have equal length and all pairs of elements satisfy the predicate <VAR>f</VAR>. That is, the expression is equivalent to: 
+<PRE>
+        (<A HREF="list.html#SIG:LIST.length:VAL:SPEC">List.length</A> <VAR>l1</VAR> = <A HREF="list.html#SIG:LIST.length:VAL:SPEC">List.length</A> <VAR>l2</VAR>) andalso
+      (<A HREF="list.html#SIG:LIST.all:VAL:SPEC">List.all</A> <VAR>f</VAR> (zip (<VAR>l1</VAR>, <VAR>l2</VAR>)))
+      
+</PRE>
+ This function does not appear to have any nice algebraic relation with the other functions, but it is included as providing a useful notion of equality, analogous to the notion of equality of lists over equality types. 
+<BLOCKQUOTE>
+<B>Implementation note:</B><BR>
+
+<P>
+The implementation is simple: 
+<PRE>
+        fun allEq p ([], []) = true
+          | allEq p (x::xs, y::ys) = p(x,y) andalso allEq p (xs,ys)
+          | allEq _ _ = false
+      
+</PRE>
+ 
+</BLOCKQUOTE>
+<BR>
+<BR>
+
+</DL>
+<H4>See Also</H4>
+<BLOCKQUOTE>
+<CODE><A HREF="list.html#List:STR:SPEC">List</A></CODE>
+</BLOCKQUOTE>
+<H4>Discussion</H4>
+<P>
+  Note that a function requiring equal length arguments should determine this lazily, <I>i.e.</I>, it should act as though the lists have equal length and invoke the user-supplied function argument, but raise the exception if it arrives at the end of one list before the end of the other.
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="manpages.html">Parent</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   | <A HREF="index.html">Root</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Generated April 12, 2004</I><BR>
+<I>Last Modified May 28, 2000</I><BR>
+<I>Comments to <A HREF="http://www.cs.uchicago.edu/people/jhr">John Reppy.</A></I><BR>
+
+<HR>
+<P>
+
+This document may be distributed freely over the internet as long as the
+copyright notice and license terms below are prominently displayed within
+every machine-readable copy.  
+
+<P>
+
+<TABLE ALIGN=CENTER WIDTH="80%" BORDER="2" CELLPADDING="5">
+<TR>
+<TD>
+<P>
+
+Copyright &copy; 2004 AT&amp;T and Lucent Technologies.
+All rights reserved.
+
+<P>
+
+Permission is granted for internet users to make one paper copy for their
+own personal use.  Further hardcopy reproduction is strictly prohibited. 
+Permission to distribute the HTML document electronically on any medium
+other than the internet must be requested from the copyright holders by
+contacting the editors.
+Printed versions of the SML Basis Manual are available from Cambridge
+University Press.
+To order, please visit
+<A HREF="http://www.cup.org">www.cup.org</A> (North America) or
+<A HREF="http://www.cup.cam.ac.uk">www.cup.cam.ac.uk</A> (outside North America).<BR>
+
+</TABLE>
+<P>
+
+<HR>
+</BODY></HTML>

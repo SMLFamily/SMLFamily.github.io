@@ -1,0 +1,99 @@
+<!-- HTML/imperative-io-fn.html -->
+
+<!-- COPYRIGHT (c) 1997 Bell Labs, Lucent Technologies. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The ImperativeIO functor</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF"><A NAME="top"></A>
+<H1 align=CENTER>The Standard ML Basis Library</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>ImperativeIO</CODE> functor</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>functor</B>&nbsp;<A NAME="ImperativeIO:FCT:SPEC"></A><CODE>ImperativeIO</CODE><B> (</B> ... <B>)</B><B> : </B>IMPERATIVE_IO&nbsp;&nbsp;<FONT COLOR="#FF0000"><CODE><I>(* OPTIONAL *)</I></CODE></FONT><BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+The optional <CODE>ImperativeIO</CODE> functor can be used to implement (derive) an imperative-style stream I/O facility in terms of a lazy functional stream I/O facility. In the imperative style, input and output operations do not return a new stream each time but cause side-effects on their arguments. Most functions can raise the <CODE><A HREF="io.html#SIG:IO.Io:EXN:SPEC">Io</A></CODE> exception for various reasons, including illegal or inconsistent parameters, IO failures, and attempts to do I/O on closed output streams. 
+<P>
+The <CODE>ImperativeIO</CODE> functor is not often needed, as the required <CODE><A HREF="bin-io.html#BinIO:STR:SPEC">BinIO</A></CODE> and <CODE><A HREF="text-io.html#TextIO:STR:SPEC">TextIO</A></CODE> structures supply imperative-style I/O for most situations. It plays a useful role when the programmer needs to construct I/O facilities with element types other than <CODE><A HREF="char.html#SIG:CHAR.char:TY:SPEC">char</A></CODE> or <CODE><A HREF="word.html#SIG:WORD.word:TY:SPEC">Word8.word</A></CODE>, or ones based on user-specified I/O primitives. 
+<HR>
+<H4>Functor argument interface</H4>
+<BLOCKQUOTE>
+<CODE><B>structure</B>&nbsp;StreamIO&nbsp;<B>:</B>&nbsp;<A HREF="stream-io.html#STREAM_IO:SIG:SPEC">STREAM_IO</A><BR>
+<B>structure</B>&nbsp;Vector&nbsp;<B>:</B>&nbsp;<A HREF="mono-vector.html#MONO_VECTOR:SIG:SPEC">MONO_VECTOR</A><BR>
+<B>structure</B>&nbsp;Array&nbsp;<B>:</B>&nbsp;<A HREF="mono-array.html#MONO_ARRAY:SIG:SPEC">MONO_ARRAY</A><BR>
+<B>sharing</B>&nbsp;<B>type</B>&nbsp;StreamIO.elem&nbsp;=&nbsp;Vector.elem&nbsp;=&nbsp;Array.elem<BR>
+<B>sharing</B>&nbsp;<B>type</B>&nbsp;StreamIO.vector&nbsp;=&nbsp;Vector.vector&nbsp;=&nbsp;Array.vector</CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="ARG:ImperativeIO.StreamIO:STR"></A><CODE><B>structure</B>&nbsp;StreamIO&nbsp;<B>:</B>&nbsp;<A HREF="stream-io.html#STREAM_IO:SIG:SPEC">STREAM_IO</A></CODE>
+<DD>
+ The particular functional stream I/O facility from which this  imperative I/O facility is derived.  Most functions  just call functions in <CODE>StreamIO</CODE> and do a little extra  bookkeeping.  
+<BR>
+<BR>
+
+</DL>
+<H4>See Also</H4>
+<BLOCKQUOTE>
+<CODE><A HREF="imperative-io.html#IMPERATIVE_IO:SIG:SPEC">IMPERATIVE_IO</A></CODE>, <CODE><A HREF="mono-array.html#MONO_ARRAY:SIG:SPEC">MONO_ARRAY</A></CODE>, <CODE><A HREF="mono-vector.html#MONO_VECTOR:SIG:SPEC">MONO_VECTOR</A></CODE>, <CODE><A HREF="prim-io-fn.html#PrimIO:FCT:SPEC">PrimIO</A></CODE>, <CODE><A HREF="stream-io.html#STREAM_IO:SIG:SPEC">STREAM_IO</A></CODE>, <CODE><A HREF="stream-io-fn.html#StreamIO:FCT:SPEC">StreamIO</A></CODE>
+</BLOCKQUOTE>
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="manpages.html">Parent</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   | <A HREF="index.html">Root</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Generated April 12, 2004</I><BR>
+<I>Last Modified April 15, 1996</I><BR>
+<I>Comments to <A HREF="http://www.cs.uchicago.edu/people/jhr">John Reppy.</A></I><BR>
+
+<HR>
+<P>
+
+This document may be distributed freely over the internet as long as the
+copyright notice and license terms below are prominently displayed within
+every machine-readable copy.  
+
+<P>
+
+<TABLE ALIGN=CENTER WIDTH="80%" BORDER="2" CELLPADDING="5">
+<TR>
+<TD>
+<P>
+
+Copyright &copy; 2004 AT&amp;T and Lucent Technologies.
+All rights reserved.
+
+<P>
+
+Permission is granted for internet users to make one paper copy for their
+own personal use.  Further hardcopy reproduction is strictly prohibited. 
+Permission to distribute the HTML document electronically on any medium
+other than the internet must be requested from the copyright holders by
+contacting the editors.
+Printed versions of the SML Basis Manual are available from Cambridge
+University Press.
+To order, please visit
+<A HREF="http://www.cup.org">www.cup.org</A> (North America) or
+<A HREF="http://www.cup.cam.ac.uk">www.cup.cam.ac.uk</A> (outside North America).<BR>
+
+</TABLE>
+<P>
+
+<HR>
+</BODY></HTML>

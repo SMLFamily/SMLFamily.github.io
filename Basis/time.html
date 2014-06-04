@@ -1,0 +1,249 @@
+<!-- HTML/time.html -->
+
+<!-- COPYRIGHT (c) 1997 Bell Labs, Lucent Technologies. -->
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>The Time structure</TITLE>
+<META NAME=generator CONTENT="ML-Doc::html-gen">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF"><A NAME="top"></A>
+<H1 align=CENTER>The Standard ML Basis Library</H1>
+<HR>
+
+
+<H2><A NAME="section:0"></A>The <CODE>Time</CODE> structure</H2>
+<HR>
+<H4>Synopsis</H4>
+<BLOCKQUOTE>
+<CODE><B>signature</B>&nbsp;<A NAME="TIME:SIG:SPEC"></A><CODE>TIME</CODE><BR>
+<B>structure</B>&nbsp;<A NAME="Time:STR:SPEC"></A><CODE>Time</CODE><B> :> </B>TIME<BR>
+</CODE>
+</BLOCKQUOTE>
+<P>
+The structure <CODE>Time</CODE> provides an abstract type for representing times and time intervals, and functions for manipulating, converting, writing, and reading them. 
+<HR>
+<H4>Interface</H4>
+<BLOCKQUOTE>
+<CODE><B>eqtype</B>&nbsp;<A NAME="SIG:TIME.time:TY:SPEC" HREF="#SIG:TIME.time:TY">time</A><BR>
+<B>exception</B>&nbsp;<A NAME="SIG:TIME.Time:EXN:SPEC" HREF="#SIG:TIME.Time:EXN">Time</A><BR>
+<B>val</B>&nbsp;<A NAME="SIG:TIME.zeroTime:VAL:SPEC" HREF="#SIG:TIME.zeroTime:VAL">zeroTime</A>&nbsp;<B>:</B>&nbsp;time<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TIME.fromReal:VAL:SPEC" HREF="#SIG:TIME.fromReal:VAL">fromReal</A>&nbsp;<B>:</B>&nbsp;LargeReal.real&nbsp;<B>-&gt;</B>&nbsp;time<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TIME.toReal:VAL:SPEC" HREF="#SIG:TIME.toReal:VAL">toReal</A>&nbsp;<B>:</B>&nbsp;time&nbsp;<B>-&gt;</B>&nbsp;LargeReal.real<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TIME.toSeconds:VAL:SPEC" HREF="#SIG:TIME.toSeconds:VAL">toSeconds</A>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;time&nbsp;<B>-&gt;</B>&nbsp;LargeInt.int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TIME.toMilliseconds:VAL:SPEC" HREF="#SIG:TIME.toMilliseconds:VAL">toMilliseconds</A>&nbsp;<B>:</B>&nbsp;time&nbsp;<B>-&gt;</B>&nbsp;LargeInt.int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TIME.toMicroseconds:VAL:SPEC" HREF="#SIG:TIME.toMicroseconds:VAL">toMicroseconds</A>&nbsp;<B>:</B>&nbsp;time&nbsp;<B>-&gt;</B>&nbsp;LargeInt.int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TIME.toNanoseconds:VAL:SPEC" HREF="#SIG:TIME.toNanoseconds:VAL">toNanoseconds</A>&nbsp;&nbsp;<B>:</B>&nbsp;time&nbsp;<B>-&gt;</B>&nbsp;LargeInt.int<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TIME.fromSeconds:VAL:SPEC" HREF="#SIG:TIME.fromSeconds:VAL">fromSeconds</A>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;LargeInt.int&nbsp;<B>-&gt;</B>&nbsp;time<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TIME.fromMilliseconds:VAL:SPEC" HREF="#SIG:TIME.fromMilliseconds:VAL">fromMilliseconds</A>&nbsp;<B>:</B>&nbsp;LargeInt.int&nbsp;<B>-&gt;</B>&nbsp;time<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TIME.fromMicroseconds:VAL:SPEC" HREF="#SIG:TIME.fromMicroseconds:VAL">fromMicroseconds</A>&nbsp;<B>:</B>&nbsp;LargeInt.int&nbsp;<B>-&gt;</B>&nbsp;time<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TIME.fromNanoseconds:VAL:SPEC" HREF="#SIG:TIME.fromNanoseconds:VAL">fromNanoseconds</A>&nbsp;&nbsp;<B>:</B>&nbsp;LargeInt.int&nbsp;<B>-&gt;</B>&nbsp;time<BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TIME.+:VAL:SPEC" HREF="#SIG:TIME.+:VAL">+</A>&nbsp;<B>:</B>&nbsp;time&nbsp;<B>*</B>&nbsp;time&nbsp;<B>-&gt;</B>&nbsp;time<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TIME.-:VAL:SPEC" HREF="#SIG:TIME.-:VAL">-</A>&nbsp;<B>:</B>&nbsp;time&nbsp;<B>*</B>&nbsp;time&nbsp;<B>-&gt;</B>&nbsp;time<BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TIME.compare:VAL:SPEC" HREF="#SIG:TIME.compare:VAL">compare</A>&nbsp;<B>:</B>&nbsp;time&nbsp;<B>*</B>&nbsp;time&nbsp;<B>-&gt;</B>&nbsp;order<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TIME.\|@LT\|:VAL:SPEC" HREF="#SIG:TIME.\|@LT\|:VAL">&lt;</A>&nbsp;&nbsp;<B>:</B>&nbsp;time&nbsp;<B>*</B>&nbsp;time&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TIME.\|@LTE\|:VAL:SPEC" HREF="#SIG:TIME.\|@LTE\|:VAL">&lt;=</A>&nbsp;<B>:</B>&nbsp;time&nbsp;<B>*</B>&nbsp;time&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TIME.\|@GT\|:VAL:SPEC" HREF="#SIG:TIME.\|@GT\|:VAL">&gt;</A>&nbsp;&nbsp;<B>:</B>&nbsp;time&nbsp;<B>*</B>&nbsp;time&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TIME.\|@GTE\|:VAL:SPEC" HREF="#SIG:TIME.\|@GTE\|:VAL">&gt;=</A>&nbsp;<B>:</B>&nbsp;time&nbsp;<B>*</B>&nbsp;time&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TIME.now:VAL:SPEC" HREF="#SIG:TIME.now:VAL">now</A>&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;time<BR>
+<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TIME.fmt:VAL:SPEC" HREF="#SIG:TIME.fmt:VAL">fmt</A>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;int&nbsp;<B>-&gt;</B>&nbsp;time&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TIME.toString:VAL:SPEC" HREF="#SIG:TIME.toString:VAL">toString</A>&nbsp;<B>:</B>&nbsp;time&nbsp;<B>-&gt;</B>&nbsp;string<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TIME.scan:VAL:SPEC" HREF="#SIG:TIME.scan:VAL">scan</A>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>:</B>&nbsp;(char,&nbsp;<I>'a</I>)&nbsp;StringCvt.reader<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>-&gt;</B>&nbsp;(time,&nbsp;<I>'a</I>)&nbsp;StringCvt.reader<BR>
+<B>val</B>&nbsp;<A NAME="SIG:TIME.fromString:VAL:SPEC" HREF="#SIG:TIME.fromString:VAL">fromString</A>&nbsp;<B>:</B>&nbsp;string&nbsp;<B>-&gt;</B>&nbsp;time&nbsp;option</CODE>
+</BLOCKQUOTE>
+<H4>Description</H4>
+<DL>
+<DT> <A NAME="SIG:TIME.time:TY"></A><CODE><B>eqtype</B>&nbsp;time</CODE>
+<DD>
+ The type used to represent both absolute times and durations  of time intervals, including negative values moving to the past. Absolute times are represented in the same  way as time intervals, and can be thought of as time intervals  starting at some fixed reference point.  Their discrimination  is only conceptual.  Consequently, operations can be applied  to all meaningful combinations (but also meaningless ones) of  absolute times and intervals. 
+<BLOCKQUOTE>
+<B>Implementation note:</B><BR>
+
+<P>
+Time values are required to have fixed-point semantics. 
+</BLOCKQUOTE>
+ 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:TIME.Time:EXN"></A><CODE><B>exception</B>&nbsp;Time</CODE>
+<DD>
+ The exception raised when the result of conversions to <CODE><A HREF="time.html#SIG:TIME.time:TY:SPEC">time</A></CODE> or of  operations over <CODE><A HREF="time.html#SIG:TIME.time:TY:SPEC">time</A></CODE> is not representable, or when an illegal operation has been attempted. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:TIME.zeroTime:VAL"></A><CODE><B>val</B>&nbsp;zeroTime&nbsp;<B>:</B>&nbsp;time</CODE>
+<DD>
+ This denotes both the empty time interval and a common reference  point for specifying absolute time values. It is equivalent to <CODE><CODE><A HREF="time.html#SIG:TIME.fromReal:VAL:SPEC">fromReal</A></CODE>(0.0)</CODE>. 
+<P>
+          Absolute points  on the time scale can be thought of as being represented as  intervals starting at <CODE><A HREF="time.html#SIG:TIME.zeroTime:VAL:SPEC">zeroTime</A></CODE>.  The function <CODE><A HREF="date.html#SIG:DATE.fromTimeLocal:VAL:SPEC">Date.fromTimeLocal</A></CODE>  can be used to see what time <CODE><A HREF="time.html#SIG:TIME.zeroTime:VAL:SPEC">zeroTime</A></CODE>  actually represents in the local timezone. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:TIME.fromReal:VAL"></A>
+<DT> <CODE>fromReal <VAR>r</VAR> </CODE>
+<DD>
+converts the real number <VAR>r</VAR> to the time value  denoting <VAR>r</VAR> seconds.  Depending on the resolution of  <CODE><A HREF="time.html#SIG:TIME.time:TY:SPEC">time</A></CODE>, fractions of a microsecond may be lost.  It raises <CODE><A HREF="time.html#SIG:TIME.Time:EXN:SPEC">Time</A></CODE> when the result is not representable. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:TIME.toReal:VAL"></A>
+<DT> <CODE>toReal <VAR>t</VAR> </CODE>
+<DD>
+converts the time value <VAR>t</VAR> to a real number denoting  the value of <VAR>t</VAR> in seconds.  When the type <CODE><A HREF="real.html#SIG:REAL.real:TY:SPEC">real</A></CODE>  has less precision than <CODE><A HREF="time.html#SIG:TIME.time:TY:SPEC">Time.time</A></CODE> (for example, when  it is implemented as a single-precision float), information  about microseconds or, for very large values, even seconds, may be lost. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:TIME.toSeconds:VAL"></A>
+<DT> <CODE>toSeconds <VAR>t</VAR> </CODE>
+<DT> <CODE>          toMilliseconds <VAR>t</VAR> </CODE>
+<DT> <CODE>          toMicroseconds <VAR>t</VAR> </CODE>
+<DT> <CODE>          toNanoseconds <VAR>t</VAR> </CODE>
+<DD>
+These functions return the number of full seconds (respectively, milliseconds, microseconds, or nanoseconds) in <VAR>t</VAR>; fractions of  the time unit are dropped, <I>i.e.</I>, the values are rounded towards 0. Thus, if <VAR>t</VAR> denotes 2.01 seconds, the functions return <CODE>2</CODE>, <CODE>2010</CODE>, <CODE>2010000</CODE>, and <CODE>2010000000</CODE>  respectively.  When the result is not representable  by <CODE><A HREF="integer.html#SIG:INTEGER.int:TY:SPEC">LargeInt.int</A></CODE>, the exception  <CODE><A HREF="general.html#SIG:GENERAL.Overflow:EXN:SPEC">Overflow</A></CODE> is raised. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:TIME.fromSeconds:VAL"></A>
+<DT> <CODE>fromSeconds <VAR>n</VAR> </CODE>
+<DT> <CODE>          fromMilliseconds <VAR>n</VAR> </CODE>
+<DT> <CODE>          fromMicroseconds <VAR>n</VAR> </CODE>
+<DT> <CODE>          fromNanoseconds <VAR>n</VAR> </CODE>
+<DD>
+These convert the number <VAR>n</VAR> to a time value denoting <VAR>n</VAR>  seconds (respectively, milliseconds, microseconds, or nanoseconds). If the result is not representable by the  <CODE><A HREF="time.html#SIG:TIME.time:TY:SPEC">time</A></CODE> type, then the exception <CODE><A HREF="time.html#SIG:TIME.Time:EXN:SPEC">Time</A></CODE> is raised. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:TIME.+:VAL"></A>
+<DT> <CODE><VAR>t1</VAR> + <VAR>t2</VAR> </CODE>
+<DD>
+returns a time interval denoting the duration of <VAR>t1</VAR>  plus that of <VAR>t2</VAR>, when both <VAR>t1</VAR> and <VAR>t2</VAR>  are interpreted as intervals.  Equivalently, when <VAR>t1</VAR>  is interpreted as an absolute time and <VAR>t2</VAR> as an  interval, the absolute time that is <VAR>t2</VAR> later than  <VAR>t1</VAR> is returned.  (Both views are equivalent as  absolute times are represented as intervals from   <CODE><A HREF="time.html#SIG:TIME.zeroTime:VAL:SPEC">zeroTime</A></CODE>).  When the result is not representable as a time value, the  exception <CODE><A HREF="time.html#SIG:TIME.Time:EXN:SPEC">Time</A></CODE> is raised.  This operation is commutative. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:TIME.-:VAL"></A>
+<DT> <CODE><VAR>t1</VAR> - <VAR>t2</VAR> </CODE>
+<DD>
+returns a time interval denoting the duration of <VAR>t1</VAR>  minus that of <VAR>t2</VAR>, when both <VAR>t1</VAR> and <VAR>t2</VAR> are  interpreted as intervals.  Equivalently, when <VAR>t1</VAR> is  interpreted as an absolute time and <VAR>t2</VAR> as an interval,  the absolute time that is <VAR>t2</VAR> earlier than <VAR>t1</VAR> is  returned; when both <VAR>t1</VAR> and <VAR>t2</VAR> are interpreted as  absolute times, the interval between <VAR>t1</VAR> and <VAR>t2</VAR>  is returned.  (All views are equivalent as absolute times are  represented as intervals from <CODE><A HREF="time.html#SIG:TIME.zeroTime:VAL:SPEC">zeroTime</A></CODE>).  When the result is not representable as a time value, the  exception <CODE><A HREF="time.html#SIG:TIME.Time:EXN:SPEC">Time</A></CODE> is raised. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:TIME.compare:VAL"></A>
+<DT> <CODE>compare (<VAR>t1</VAR>, <VAR>t2</VAR>) </CODE>
+<DD>
+returns <CODE><A HREF="general.html#SIG:GENERAL.order:TY:SPEC">LESS</A></CODE>, <CODE><A HREF="general.html#SIG:GENERAL.order:TY:SPEC">EQUAL</A></CODE>, or <CODE><A HREF="general.html#SIG:GENERAL.order:TY:SPEC">GREATER</A></CODE>  when the time interval <VAR>t1</VAR> is shorter than, of same  length as, or longer than <VAR>t2</VAR>, respectively, or the  absolute time <VAR>t1</VAR> is earlier than, coincides with, or  is later than the absolute time <VAR>t2</VAR>. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:TIME.\|@LT\|:VAL"></A><CODE><B>val</B>&nbsp;&lt;&nbsp;<B>:</B>&nbsp;time&nbsp;<B>*</B>&nbsp;time&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;&lt;=&nbsp;<B>:</B>&nbsp;time&nbsp;<B>*</B>&nbsp;time&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;&gt;&nbsp;<B>:</B>&nbsp;time&nbsp;<B>*</B>&nbsp;time&nbsp;<B>-&gt;</B>&nbsp;bool<BR>
+<B>val</B>&nbsp;&gt;=&nbsp;<B>:</B>&nbsp;time&nbsp;<B>*</B>&nbsp;time&nbsp;<B>-&gt;</B>&nbsp;bool</CODE>
+<DD>
+          These return <CODE>true</CODE> if the corresponding relation holds between the two times. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:TIME.now:VAL"></A><CODE><B>val</B>&nbsp;now&nbsp;<B>:</B>&nbsp;unit&nbsp;<B>-&gt;</B>&nbsp;time</CODE>
+<DD>
+The current time. This is usually interpreted as an absolute  time, the time at which the function call was made.  Although <CODE><A HREF="time.html#SIG:TIME.now:VAL:SPEC">now</A></CODE> does not normally raise an exception, this  may happen when it is called at a time that is not  representable. 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:TIME.fmt:VAL"></A>
+<DT> <CODE>fmt <VAR>n</VAR> <VAR>t</VAR> </CODE>
+<DT> <CODE>          toString <VAR>t</VAR> </CODE>
+<DD>
+These return a string containing a decimal number representing  <VAR>t</VAR> in seconds. Using <CODE><A HREF="time.html#SIG:TIME.fmt:VAL:SPEC">fmt</A></CODE>, the fractional part is rounded to  <VAR>n</VAR> decimal digits. If <VAR>n</VAR> = 0, there should be no fractional part. Having <VAR>n</VAR> &lt; 0 causes the <CODE><A HREF="general.html#SIG:GENERAL.Size:EXN:SPEC">Size</A></CODE> exception to be raised.  <CODE><A HREF="time.html#SIG:TIME.toString:VAL:SPEC">toString</A></CODE> rounds <VAR>t</VAR> to 3  decimal digits.  It is equivalent to <CODE>fmt 3 <VAR>t</VAR></CODE>.  
+<BLOCKQUOTE>
+<B>Example:</B><BR>
+
+<PRE>
+fmt 3 (fromReal 1.8) = &quot;1.800&quot;
+fmt 0 (fromReal 1.8) = &quot;2&quot;
+fmt 0 zeroTime = &quot;0&quot;
+</PRE>
+  
+</BLOCKQUOTE>
+ 
+<BR>
+<BR>
+
+<DT> <A NAME="SIG:TIME.scan:VAL"></A>
+<DT> <CODE>scan <VAR>getc</VAR> <VAR>src</VAR> </CODE>
+<DT> <CODE>          fromString <VAR>s</VAR> </CODE>
+<DD>
+These functions scan a time value from a character stream or a string.  They recognize a number of seconds specified as a  string that matches the regular expression:  
+<BLOCKQUOTE>
+[<TT>+~-</TT>]<SUP>?</SUP>([<TT>0</TT>-<TT>9</TT>]<SUP>+</SUP><TT>.</TT>[<TT>0</TT>-<TT>9</TT>]<SUP>+</SUP><SUP>?</SUP>&nbsp;|&nbsp;<TT>.</TT>[<TT>0</TT>-<TT>9</TT>]<SUP>+</SUP>)
+</BLOCKQUOTE>
+ Initial whitespace is ignored.  Both functions raise <CODE><A HREF="time.html#SIG:TIME.Time:EXN:SPEC">Time</A></CODE> when the value is syntactically  correct but not representable. 
+<P>
+          The function <CODE><A HREF="time.html#SIG:TIME.scan:VAL:SPEC">scan</A></CODE> takes a character source <VAR>src</VAR> and an reader <VAR>getc</VAR> and tries to parse a time  value from <VAR>src</VAR>.  It returns <CODE><CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">SOME</A></CODE>(<VAR>t</VAR>,<VAR>r</VAR>)</CODE> where <VAR>t</VAR> is the time value denoted  by a prefix of <VAR>src</VAR> and <VAR>r</VAR> is the rest of  <VAR>src</VAR>; or it returns <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A></CODE> when no prefix of <VAR>src</VAR>  is a representation of a time value. 
+<P>
+ The function <CODE><A HREF="time.html#SIG:TIME.fromString:VAL:SPEC">fromString</A></CODE>  parses a time value from the string <VAR>s</VAR>,  returning <CODE><CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">SOME</A></CODE>(<VAR>t</VAR>)</CODE> where <VAR>t</VAR>  is the time value denoted  by a prefix of <VAR>s</VAR> or <CODE><A HREF="option.html#SIG:OPTION.option:TY:SPEC">NONE</A></CODE> when no prefix of  <VAR>s</VAR> is a representation of a time value. Note that this function is equivalent to <CODE><CODE><A HREF="string-cvt.html#SIG:STRING_CVT.scanString:VAL:SPEC">StringCvt.scanString</A></CODE> <CODE><A HREF="time.html#SIG:TIME.scan:VAL:SPEC">scan</A></CODE></CODE>. 
+<BR>
+<BR>
+
+</DL>
+<H4>See Also</H4>
+<BLOCKQUOTE>
+<CODE><A HREF="date.html#Date:STR:SPEC">Date</A></CODE>, <CODE><A HREF="string-cvt.html#StringCvt:STR:SPEC">StringCvt</A></CODE>, <CODE><A HREF="timer.html#Timer:STR:SPEC">Timer</A></CODE>
+</BLOCKQUOTE>
+
+
+<HR>
+<CENTER>
+<B>[ <A HREF="#top">Top</A>
+   | <A HREF="manpages.html">Parent</A>
+   | <A HREF="toc.html">Contents</A>
+   | <A HREF="index-all.html">Index</A>
+   | <A HREF="index.html">Root</A>
+   ]</B>
+</CENTER>
+<P>
+<I>Generated April 12, 2004</I><BR>
+<I>Last Modified October 4, 1997</I><BR>
+<I>Comments to <A HREF="http://www.cs.uchicago.edu/people/jhr">John Reppy.</A></I><BR>
+
+<HR>
+<P>
+
+This document may be distributed freely over the internet as long as the
+copyright notice and license terms below are prominently displayed within
+every machine-readable copy.  
+
+<P>
+
+<TABLE ALIGN=CENTER WIDTH="80%" BORDER="2" CELLPADDING="5">
+<TR>
+<TD>
+<P>
+
+Copyright &copy; 2004 AT&amp;T and Lucent Technologies.
+All rights reserved.
+
+<P>
+
+Permission is granted for internet users to make one paper copy for their
+own personal use.  Further hardcopy reproduction is strictly prohibited. 
+Permission to distribute the HTML document electronically on any medium
+other than the internet must be requested from the copyright holders by
+contacting the editors.
+Printed versions of the SML Basis Manual are available from Cambridge
+University Press.
+To order, please visit
+<A HREF="http://www.cup.org">www.cup.org</A> (North America) or
+<A HREF="http://www.cup.cam.ac.uk">www.cup.cam.ac.uk</A> (outside North America).<BR>
+
+</TABLE>
+<P>
+
+<HR>
+</BODY></HTML>
