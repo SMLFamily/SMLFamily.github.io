@@ -1,0 +1,67 @@
+\contentsline {section}{\numberline {1}Introduction}{1}
+\contentsline {section}{\numberline {2}Syntax of the Core}{3}
+\contentsline {subsection}{\numberline {2.1}Reserved Words}{3}
+\contentsline {subsection}{\numberline {2.2}Special constants}{3}
+\contentsline {subsection}{\numberline {2.3}Comments}{4}
+\contentsline {subsection}{\numberline {2.4}Identifiers}{4}
+\contentsline {subsection}{\numberline {2.5}Lexical analysis}{5}
+\contentsline {subsection}{\numberline {2.6}Infixed operators}{5}
+\contentsline {subsection}{\numberline {2.7}Derived Forms}{6}
+\contentsline {subsection}{\numberline {2.8}Grammar}{6}
+\contentsline {subsection}{\numberline {2.9}Syntactic Restrictions}{9}
+\contentsline {section}{\numberline {3}Syntax of Modules}{10}
+\contentsline {subsection}{\numberline {3.1}Reserved Words}{10}
+\contentsline {subsection}{\numberline {3.2}Identifiers}{10}
+\contentsline {subsection}{\numberline {3.3}Infixed operators}{10}
+\contentsline {subsection}{\numberline {3.4}Grammar for Modules}{10}
+\contentsline {subsection}{\numberline {3.5}Syntactic Restrictions}{12}
+\contentsline {subsection}{\numberline {3.6}Closure Restrictions}{14}
+\contentsline {section}{\numberline {4}Static Semantics for the Core}{16}
+\contentsline {subsection}{\numberline {4.1}Simple Objects}{16}
+\contentsline {subsection}{\numberline {4.2}Compound Objects}{16}
+\contentsline {subsection}{\numberline {4.3}Projection, Injection and Modification}{18}
+\contentsline {subsection}{\numberline {4.4}Types and Type functions}{18}
+\contentsline {subsection}{\numberline {4.5}Type Schemes}{19}
+\contentsline {subsection}{\numberline {4.6}Scope of Explicit Type Variables}{19}
+\contentsline {subsection}{\numberline {4.7}Non-expansive Expressions}{20}
+\contentsline {subsection}{\numberline {4.8}Closure}{20}
+\contentsline {subsection}{\numberline {4.9}Type Environments and Well-formedness}{21}
+\contentsline {subsection}{\numberline {4.10}Inference Rules}{23}
+\contentsline {subsection}{\numberline {4.11}Further Restrictions}{30}
+\contentsline {subsection}{\numberline {4.12}Principal Environments}{30}
+\contentsline {section}{\numberline {5}Static Semantics for Modules}{31}
+\contentsline {subsection}{\numberline {5.1}Semantic Objects}{31}
+\contentsline {subsection}{\numberline {5.2}Consistency}{32}
+\contentsline {subsection}{\numberline {5.3}Well-formedness}{32}
+\contentsline {subsection}{\numberline {5.4}Cycle-freedom}{33}
+\contentsline {subsection}{\numberline {5.5}Admissibility}{33}
+\contentsline {subsection}{\numberline {5.6}Type Realisation}{33}
+\contentsline {subsection}{\numberline {5.7}Realisation}{33}
+\contentsline {subsection}{\numberline {5.8}Type Explication}{33}
+\contentsline {subsection}{\numberline {5.9}Signature Instantiation}{34}
+\contentsline {subsection}{\numberline {5.10}Functor Signature Instantiation}{34}
+\contentsline {subsection}{\numberline {5.11}Enrichment}{34}
+\contentsline {subsection}{\numberline {5.12}Signature Matching}{35}
+\contentsline {subsection}{\numberline {5.13}Principal Signatures}{35}
+\contentsline {subsection}{\numberline {5.14}Inference Rules}{36}
+\contentsline {subsection}{\numberline {5.15}Functor Signature Matching}{44}
+\contentsline {section}{\numberline {6}Dynamic Semantics for the Core}{45}
+\contentsline {subsection}{\numberline {6.1}Reduced Syntax}{45}
+\contentsline {subsection}{\numberline {6.2}Simple Objects}{45}
+\contentsline {subsection}{\numberline {6.3}Compound Objects}{46}
+\contentsline {subsection}{\numberline {6.4}Basic Values}{47}
+\contentsline {subsection}{\numberline {6.5}Basic Exceptions}{47}
+\contentsline {subsection}{\numberline {6.6}Closures}{48}
+\contentsline {subsection}{\numberline {6.7}Inference Rules}{48}
+\contentsline {section}{\numberline {7}Dynamic Semantics for Modules}{56}
+\contentsline {subsection}{\numberline {7.1}Reduced Syntax}{56}
+\contentsline {subsection}{\numberline {7.2}Compound Objects}{56}
+\contentsline {subsection}{\numberline {7.3}Inference Rules}{57}
+\contentsline {section}{\numberline {8}Programs}{62}
+\contentsline {section}{\numberline {A}Appendix: Derived Forms}{65}
+\contentsline {section}{\numberline {B}Appendix: Full Grammar}{68}
+\contentsline {section}{\numberline {C}Appendix: The Initial Static Basis}{73}
+\contentsline {section}{\numberline {D}Appendix: The Initial Dynamic Basis}{76}
+\contentsline {section}{\numberline {E}Appendix: The Development of ML}{80}
+\contentsline {section}{\numberline {}{\vrule width0pt height2cm depth0pt References}}{86}
+\contentsline {section}{\numberline {}{Index}}{89}

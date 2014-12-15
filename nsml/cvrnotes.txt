@@ -1,0 +1,13 @@
+TODO
+- extend definition of non-expansive to package expressions & functors (what about recursive module expressions ?)
+- simplify longstrid and longfunid rules ala longvid
+- consider removing vidpath and "longmodid where ..." expressions
+  since they are (more or less) definable (unlike tyconpath).
+  removing them reduces # of rules, simplifies definition of
+  non-expansive, and the compiler!
+- improve explanation of functor signature expressions.
+- consider relaxing restriction on applicative decs to applicative functor
+  bodies, to allow more instance of package elimination.
+- there is a descrepancy between the implementation of Str in mosml, which
+  can contain a GE, and the definition, which cannot. In mosml,
+  we use extended Str's so they can double as environments...

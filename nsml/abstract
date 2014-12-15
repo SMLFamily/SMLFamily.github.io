@@ -1,0 +1,7 @@
+
+The need for this third Version of the definition of Standard ML has
+arisen because of the discovery of an error concerning signature
+matching.  We have also taken the opportunity to make a number of
+minor changes as a consequence of comments and corrections which we
+received following the printing of Version 2. Most of the changes are
+just clarifications of the document.

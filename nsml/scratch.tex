@@ -1,0 +1,106 @@
+\subsection{Types, Type Applications and Type functions} % (cvr)
+\label{tyfun-sec}
+A type $\tau$ is an {\sl equality type},\index{22.3} or {\sl admits equality}, if it is
+of one of the forms
+\begin{itemize}
+\item $\alpha$, where $\alpha$ admits equality;
+\item $\{\lab_1\mapsto\tau_1,\ \cdots,\ \lab_n\mapsto\tau_n\}$,
+      where each $\tau_i$ admits equality;
+% \item $\tauk\t$, where $t$ and all members of $\tauk$ admit equality; % (cvr)
+\item $\apptype{\tauk}{\typeapp}$, where \typeapp\ and all members of $\tauk$ admit equality; % (cvr)
+
+\item $(\tau')\REF$.\index{23.1}
+\end{itemize}
+% (cvr
+(Note that  if $\tau$ is a package type \longpackagetype\ then 
+it \emph{does not} admit equality.)
+
+A type application $\typeapp$ is an {\sl equality type application},
+\index{22.3} or {\sl admits equality}, if it is
+of one of the forms
+\begin{itemize}
+\item $\t$, where $\t$ admits equality;
+\item $\apptypeapp{\typeapp'}{\typefnc}$, where \typeapp\ and \typefnc\ both
+       admit equality.
+\end{itemize}
+
+A type function $\typefnc$ is an {\sl equality type function},
+\index{22.3} or {\sl admits equality}, if it is
+of one of the forms
+\begin{itemize}
+\item \typetypefnc{\alphak}{\typefnc'}, where, when the type variables $\alphak$
+      are chosen to admit equality, then $\typefnc'$ also admits equality;
+\item \typefnctypefnc{\t}{\typefnc'}, where,  when the type name $\t$
+      is chosen to admit equality, then $\typefnc'$ also admits equality;
+\item \typeapptypefnc{\typeapp}, where \typeapp\ admits equality.
+\end{itemize}
+
+% cvr)
+% (cvr
+% \label{tyfcn-lab}
+% A type function $\theta=\Lambda\alphak.\tau$\index{23.2}
+%  has arity $k$; it must be
+% {\sl closed} -- i.e.
+% $\TyVarFcn(\tau)\subseteq\alphak$ -- and the bound variables must
+% be distinct. Two type functions are considered equal
+% if they only differ in their choice of bound variables (alpha-conversion).
+% In particular, the equality attribute has no significance in a 
+% bound variable of a type function; for example, $\Lambda\alpha.\alpha\to
+% \alpha$ and $\Lambda\beta.\beta\to\beta$ are equal type functions
+% even if $\alpha$ admits equality but $\beta$ does not.
+% %poly 
+% Similarly, the imperative attribute has no significance 
+% in the bound variable of a type function.
+% If $t$ has arity $k$, then we write $t$ to mean $\Lambda\alphak.\alphak\t$
+% (eta-conversion); thus $\TyNames\subseteq\TypeFcn$. $\theta=\Lambda\alphak.\tau$
+% is an {\sl equality} type function, or {\sl admits equality}, if when the
+% type variables $\alphak$ are chosen to admit equality then $\tau$ also admits
+% equality.
+\label{tyfcn-lab}
+A type function $\theta=\Lambda\alphak.\tau$\index{23.2}
+ has the arity $\k$ as its kind; its bound variables must
+be distinct.
+A type function $\typefnc=\typefnctypefnc{\t[\K]}{\typefnc'}$\index{23.2}
+ has kind $\Karr{\K}{\K'}$, provided $\typefnc'$ has kind $\K'$.
+
+Two type functions are considered equal if they have the same kind
+and differ in their choice of bound variables or
+type names.
+In particular, the equality attribute has no significance in a 
+bound variable or type name of a type function;
+for example, $\Lambda\alpha.\alpha\to\alpha$ 
+(\typefnctypefnc{\t[\K]}{\apptypeapp{\t}{\typefnc}})
+and $\Lambda\beta.\beta\to\beta$
+ (\typefnctypefnc{\u[\K]}{\apptypeapp{\u}{\typefnc}}) are equal type functions
+even if $\alpha$ ($\t$) admits equality but $\beta$($\u$) does not (provided
+$\t,\u \not \in \TyNamesFcn \typefnc$).
+
+If the type application \typeapp\ has kind \k\ then we
+identify the type function $\typefnc = \typeapp$ with the type function
+\typetypefnc{\alphak}{\apptype{\alphak}{\typeapp}}\ 
+(provided $(\TyVarsFcn \alphak) \cap (\TyVarsFcn \typeapp) = \emptyset$) (eta-conversion).
+If the type application \typeapp\ has kind \Karr{\K}{\K'} then we
+identify the type function $\typefnc = \typeapp$ with the type function
+\typefnctypefnc{\t[\K]}{\typeapptypefnc{\apptypeapp{\typeapp}{\typeapptypefnc{\t}}}}\
+ (provided $\t\not \in \TyNamesFcn \typeapp$) (eta-conversion).
+
+For convenience, when $\t$ has arity $k$, we 
+shall write the type name $\t$ to mean
+the type function $\typetypefnc{\alphak}{\apptype{\alphak}{\tynametypeapp{\t}}}$.
+
+% cvr)
+
+We write the application of a type function $\typefnc[\k]$ to a vector
+$\tauk$ of types as $\tauk\theta$.
+If $\typefnc=\typetypefnc{\alphak}{\tau}$ we set $\tauk\theta=\tau\{\tauk/\alphak\}$
+(beta-conversion). 
+
+We write $\tau\{\thetak/\t^{(\k)}\}$ for the result of substituting type
+functions $\thetak$ for type names $\t^{(k)}$ in $\tau$.
+We assume that all beta-conversions
+are carried out after substitution, so that for example
+\[(\tauk\t)\{\typetypefnc{\alphak}{\tau}/\t\}=\tau\{\tauk/\alphak\}.\]
+(assuming $\t \not \in \TyNamesFcn \tauk$); and
+\[(\typeapptypefnc{\apptypeapp{\t}{\typefnc}})\{\typefnctypefnc{\u}{\typefnc'}/\t\}=
+     \typefnc'\{\typefnc/\u\}.\]
+(assuming $\t \not \in \TyNamesFcn \typefnc$).

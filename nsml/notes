@@ -1,0 +1,21 @@
+From RM@ED.ECSVAX Sun Jul 17 02:50:14 1988
+Received: from ecsvax by lfcs.ed.ac.uk; Sun, 17 Jul 88 02:50:12 BST
+Date: 17 Jul 88 02:55:09 BST
+From: RM@ED.ECSVAX (Robin Milner)
+To: mads@ed.LFCS (MADS)
+Subject: ML
+Message-Id: <"17-JUL-1988 02:55:09">
+Status: R
+
+Two points arising from chat with Dave:
+ 1) I agree with him that it's a little better to have # as a keyword,
+    #lab as a new expression form.  (This will allow space in "# lab"
+    which is OK I think).  So I think the simplest is
+     a) include # as a keyword in 2.1
+     b) delete the (new) second paragraph of 2.7
+     c) Replace "#lab" by "# lab" in Fig 17 and in Fig 21
+    I think that's all the change needed.  Dave's point is valid I think
+    - that it's annoying to have a new lexical item in a derived form, and
+    gives the (false) impression that things are more complex than they are.
+ 2) (next mail)
+

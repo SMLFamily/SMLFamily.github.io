@@ -1,0 +1,1205 @@
+\newcommand{\ml}[1]{{\tt #1}}
+\newcommand{\boxml}[1]{\mbox{\tt #1}}
+\renewcommand{\cdots}{\mbox{$\cdot\!\cdot\!\cdot$}}
+
+        % Core Language
+\newcommand{\ttlbrace}{\mbox{\tt\char'173}}
+\newcommand{\ttdoublelbrace}{\mbox{\tt\char'173\char'173}} % cvr
+\newcommand{\ttrbrace}{\mbox{\tt\char'175}}
+\newcommand{\ttdoublerbrace}{\mbox{\tt\char'175\char'175}} % cvr
+\newcommand{\lttbrace}{\mbox{\tt\char'173}}
+\newcommand{\rttbrace}{\mbox{\tt\char'175}}
+\newcommand{\ttprime}{\mbox{\tt\char'047}}
+\newcommand{\tttilde}{\mbox{\tt\char'176}}
+\newcommand\uconst{\mbox{\tt\char'134u$xxxx$}}
+\newcommand{\tteq}{\mbox{\tt=}}
+\newcommand{\ttperiod}{\mbox{\tt.}}
+\newcommand{\ABSTYPE}{{\tt abstype}}
+\newcommand{\ABSTRACT}{{\tt :>}}
+\newcommand{\AND }{{\tt and}}
+\newcommand{\ANDALSO }{{\tt andalso}}
+\newcommand{\AS}{{\tt as}}
+\newcommand{\CASE}{{\tt case}}
+\newcommand{\DO}{{\tt do}}
+\newcommand{\DATATYPE}{{\tt datatype}}
+\newcommand{\ELSE}{{\tt else}}
+\newcommand{\END}{{\tt end}}
+\newcommand{\EXCEPTION}{{\tt exception}}
+\newcommand{\FUN}{{\tt fun}}
+\newcommand{\FN}{{\tt fn}}
+\newcommand{\HANDLE}{{\tt handle}}
+\newcommand{\IF}{{\tt if}}
+\newcommand{\IN}{{\tt in}}
+\newcommand{\INFIX}{{\tt infix}}
+\newcommand{\INFIXR}{{\tt infixr}}
+\newcommand{\LET}{{\tt let}}
+\newcommand{\LOCAL}{{\tt local}}
+\newcommand{\NONFIX}{{\tt nonfix}}
+\newcommand{\OF}{{\tt of}}
+\newcommand{\OP}{{\tt op}}
+\newcommand{\ORELSE}{{\tt orelse}}
+\newcommand{\RAISE}{{\tt raise}}
+\newcommand{\REC}{{\tt rec}}
+\newcommand{\THEN}{{\tt then}}
+\newcommand{\TYPE}{{\tt type}}
+\newcommand{\VAL}{{\tt val}}
+\newcommand{\WITH}{{\tt with}}
+\newcommand{\WITHTYPE}{{\tt withtype}}
+\newcommand{\WHILE}{{\tt while}}
+
+        % Modules
+\newcommand{\EQTYPE}{\ml{eqtype}}
+\newcommand{\FUNCTOR}{\ml{functor}}
+\newcommand{\FUNSIG}{\ml{funsig}} % (cvr)
+\newcommand{\INCLUDE}{\ml{include}}
+\newcommand{\SIG}{\ml{sig}}
+\newcommand{\OPEN}{\ml{open}}
+\newcommand{\PACK}{\ml{pack}}
+\newcommand{\UNPACK}{\ml{unpack}}
+\newcommand{\SHARING}{\ml{sharing}}
+\newcommand{\SIGNATURE}{\ml{signature}}
+\newcommand{\STRUCT}{\ml{struct}}
+\newcommand{\STRUCTURE}{\ml{structure}}
+%\newcommand{\MODULE}{\ml{module}} % (cvr)
+\newcommand{\WHERE}{\ml{where}} % (cvr)
+
+          % Identifier class names
+%\newcommand{\Var}{{\rm Var}}
+%\newcommand{\Con}{{\rm Con}}
+\newcommand{\VId}{{\rm VId}} % (cvr)
+\newcommand{\SCon}{{\rm SCon}}
+%\newcommand{\Exn}{{\rm ExCon}}
+\newcommand{\TyVar}{{\rm TyVar}}
+\newcommand{\TyId}{{\rm TyId}} % (cvr) 
+% \newcommand{\EtyVar}{{\rm EtyVar}}% (cvr)
+\newcommand{\ETyId}{{\rm ETyId}} % (cvr)
+\newcommand{\ImpTyVar}{{\rm ImpTyVar}}
+\newcommand{\AppTyVar}{{\rm AppTyVar}}
+\newcommand{\TyCon}{{\rm TyCon}}
+\newcommand{\Lab}{{\rm Lab}}
+\newcommand{\StrId}{{\rm StrId}}
+\newcommand{\ModId}{{\rm ModId}}
+\newcommand{\FunId}{{\rm FunId}}
+\newcommand{\SigId}{{\rm SigId}}
+\newcommand{\LongStrId}{{\rm longStrId}}
+\newcommand{\LongFunId}{{\rm longFunId}}
+\newcommand{\LongModId}{{\rm longModId}}
+
+
+          % Identifier class variables
+\newcommand{\id}{{\it id}}
+%\newcommand{\var}{{\it var}}
+%\newcommand{\con}{{\it con}}
+\newcommand{\vid}{{\it vid}} % (cvr)
+\newcommand{\scon}{{\it scon}}
+%\newcommand{\exn}{{\it excon}}
+
+
+% (cvr
+\newcommand{\tyvar}{{\it tyvar}}
+
+% \newcommand{\atyvar}{\mbox{\tt \ttprime a}}
+% \newcommand{\btyvar}{\mbox{\tt \ttprime b}}
+% \newcommand{\ctyvar}{\mbox{\tt \ttprime c}}
+% \newcommand{\aityvar}{\mbox{\tt \ttprime\_a}}
+% \newcommand{\aetyvar}{\mbox{\tt \ttprime\ttprime a}}
+
+\newcommand{\tyid}{{\it tyid}}
+\newcommand{\atyid}{\mbox{\tt \ttprime a}}
+\newcommand{\btyid}{\mbox{\tt \ttprime b}}
+\newcommand{\ctyid}{\mbox{\tt \ttprime c}}
+\newcommand{\aetyid}{\mbox{\tt \ttprime\ttprime a}}
+% cvr)
+\newcommand{\tycon}{{\it tycon}}
+\newcommand{\lab}{{\it lab}}
+\newcommand{\strid}{{\it strid}}
+\newcommand{\modid}{{\it modid}} % (cvr)
+
+\newcommand{\tyconpath}{{\it tyconpath}} % (cvr)
+%\newcommand{\vidpath}{{\it vidpath}} % (cvr)
+
+% \newcommand{\longvar}{{\it longvar}} % (cvr)
+\newcommand{\longvid}{{\it longvid}} % (cvr)
+% \newcommand{\longcon}{{\it longcon}} % (cvr)
+% \newcommand{\longexn}{{\it longexcon}} % (cvr)
+\newcommand{\longtycon}{{\it longtycon}}
+\newcommand{\longstrid}{{\it longstrid}} % (cvr)
+\newcommand{\longfunid}{{\it longfunid}} % (cvr)
+\newcommand{\longmodid}{{\it longmodid}} % (cvr)
+\newcommand{\idlongid}[1]{\ensuremath{{#1}}} % (cvr)
+\newcommand{\dotlongid}[2]{\ensuremath{{#1}\ml{.}{#2}}} % (cvr)
+
+          % General classes
+\newcommand{\phrase}{{\it phrase}}
+
+          % Core Syntax Classes
+\newcommand{\apexp}{{\it appexp}}
+\newcommand{\atpat}{{\it atpat}}
+\newcommand{\atexp}{{\it atexp}}
+\newcommand{\bind}{{\it bind}}
+\newcommand{\constrs}{{\it conbind}}
+\newcommand{\ConBind}{{\rm ConBind}}
+\newcommand{\datbind}{{\it datbind}}
+\newcommand{\dec}{{\it dec}}
+\newcommand{\dir}{{\it dir}}
+\newcommand{\exnbind}{{\it exbind}}
+\renewcommand{\exp}{{\it exp}}
+\newcommand{\fvalbind}{{\it fvalbind}}
+\newcommand{\handler}{{\it handler}}
+\newcommand{\hanrule}{{\it hrule}}
+\newcommand{\inexp}{{\it infexp}}
+\newcommand{\labexps}{{\it exprow}}
+\newcommand{\labpats}{{\it patrow}}
+\newcommand{\labtys}{{\it tyrow}}
+\newcommand{\match}{{\it match}}
+\newcommand{\pat}{{\it pat}}
+\newcommand{\mrule}{{\it mrule}}
+\newcommand{\ty}{{\it ty}}
+\newcommand{\tyseq}{{\it tyseq}}
+%\newcommand{\tyvarseq}{{\it tyvarseq}} % (cvr)
+\newcommand{\tyidseq}{{\it tyidseq}} % (cvr)
+\newcommand{\typbind}{{\it typbind}}
+\newcommand{\valbind}{{\it valbind}}
+
+ % ranged over by the variables
+
+
+
+
+       % Modules syntax classes
+
+\newcommand{\datdesc}{{\it datdesc}}
+\newcommand{\condesc}{{\it condesc}}
+\newcommand{\exndesc}{{\it exdesc}}
+\newcommand{\funbind}{{\it funbind}}
+\newcommand{\fundec}{{\it fundec}}
+\newcommand{\fundesc}{{\it fundesc}}
+\newcommand{\funid}{{\it funid}}
+% \newcommand{\funsigexp}{{\it funsigexp}} % (cvr)
+\newcommand{\funspec}{{\it funspec}}
+\newcommand{\funtyp}{{\it funtyp}}
+\newcommand{\longstridk}{\strid_1.\cdots.\strid_k}
+\newcommand{\longtyconk}{\strid_1.\cdots.\strid_k.\tycon}
+\newcommand{\topdec}{{\it topdec}}
+\newcommand{\program}{{\it program}}
+%\newcommand{\modbind}{{\it modbind}} % (cvr)
+\newcommand{\sigid}{{\it sigid}}
+\newcommand{\shareq}{{\it shareq}}
+\newcommand{\sigbind}{{\it sigbind}}
+\newcommand{\sigdec}{{\it sigdec}}
+\newcommand{\sigexp}{{\it sigexp}}
+\newcommand{\spec}{{\it spec}}
+% (cvr
+\newcommand{\strbind}{{\it strbind}}
+% \newcommand{\strdec}{{\it strdec}}
+% \newcommand{\strexp}{{\it strexp}}
+\newcommand{\atmodexp}{{\it atmodexp}}
+\newcommand{\modexp}{{\it modexp}}
+% cvr)
+\newcommand{\strdesc}{{\it strdesc}} % (cvr)
+%\newcommand{\moddesc}{{\it moddesc}} % (cvr) 
+
+\newcommand{\typdesc}{{\it typdesc}}
+\newcommand{\valdesc}{{\it valdesc}}
+           % Core Language Phrases
+
+% (cvr
+           % VIdPaths
+%\newcommand{\longvidpath}{\mbox{$\opp\longvid$}}
+%\newcommand{\anonvidpath}{\mbox{$\opp\\longvid\ \WHERE\ \strid\ \ml{=}\ \modexp$}}
+% cvr)
+
+
+           % Expressions
+
+\newcommand{\recexp}{\mbox{$\langle\labexps\rangle$}}
+\newcommand{\longlabexps}{\mbox{\lab\ \ml{=} \exp\
+                          $\langle$ \ml{,} \labexps$\rangle$}}
+\newcommand{\parexp}{\mbox{\ml{(} \exp\ \ml{)}}}
+\newcommand{\appexp}
+           {\mbox{\exp\ \atexp}}
+%\newcommand{\infexp}
+%           {\mbox{$\exp_1\ \id\ \exp_2$}
+% (cvr
+\newcommand{\infexp}
+           {\mbox{$\exp_1\ \vid\ \exp_2$}}
+% cvr)
+% (cvr
+\newcommand{\structureatexp}
+           {\mbox{\ml{[}\STRUCTURE\ \modexp\ \AS\ \sigexp \ml{]}}}
+\newcommand{\functoratexp}
+           {\mbox{\ml{[}\FUNCTOR\ \modexp\ \AS\ \sigexp \ml{]}}}
+%\newcommand{\openatexp}{\mbox{$\UNPACK\ \exp_1\ \AS\ \modid\ \ml{:}\ \sigexp\ \IN\ \exp_2\ \END $}}
+% cvr)
+\newcommand{\opp}
+           {\mbox{$\langle\OP\rangle$}}
+\newcommand{\typedexp}
+           {\mbox{\exp\ \ml{:} \ty}}
+\newcommand{\handlexp}
+           {\mbox{\exp\ \HANDLE\ \match}}
+\newcommand{\raisexp}
+           {\mbox{\RAISE\ \exp}}
+\newcommand{\letexp}
+           {\mbox{\LET\ \dec\ \IN\ \exp\ \END}}
+\newcommand{\fnexp}
+           {\mbox{\FN\ \match}}
+
+           % Matches and Handlers
+\newcommand{\longmatch}
+           {\mbox{\mrule\ $\langle$ \ml{|} \match$\rangle$}}
+\newcommand{\longmatcha}
+           {\mbox{\mrule\ \ml{|} \match}}
+\newcommand{\longmrule}
+           {\mbox{\pat\ \ml{=>} \exp}}
+\newcommand{\longhandler}
+           {\mbox{\hanrule\ $\langle$ \ml{||} \handler$\rangle$}}
+\newcommand{\longhandlera}
+           {\mbox{\hanrule\ \ml{||} \handler}}
+\newcommand{\longhanrule}
+           {\mbox{\longexn\ \WITH\ \match}}
+\newcommand{\lasthanrule}
+           {\mbox{? \ml{=>} \exp}}
+
+
+          % Declarations
+
+%\newcommand{\valdec}
+%           {\mbox{\VAL\ \valbind}}
+% (cvr
+\newcommand{\valdec}
+           {\mbox{\VAL\ \tyidseq\ \valbind}}
+% cvr)
+\newcommand{\valdecS}
+           {\mbox{$\VAL_{\U}$\ \valbind}}
+
+
+\newcommand{\typedec}
+           {\mbox{\TYPE\ \typbind}}
+\newcommand{\datatypedec}
+           {\mbox{\DATATYPE\ \datbind}}
+% (cvr
+\newcommand{\datatyperepdec}
+           {\mbox{$\DATATYPE\ \tycon\ 
+                  \tteq\  
+                  \DATATYPE\ \tyconpath
+          $}}
+% cvr) 
+\newcommand{\datatypedeca}
+           {\mbox{\DATATYPE\ \datbind\ $\langle\WITHTYPE\ \typbind\rangle$}}
+\newcommand{\abstypedec}
+           {\mbox{\ABSTYPE\ \datbind\ \WITH\ \dec\ \END}}
+\newcommand{\abstypedeca}
+           {\mbox{\ABSTYPE\ \datbind\ $\langle\WITHTYPE\ \typbind\rangle$}}
+\newcommand{\exceptiondec}
+           {\mbox{\EXCEPTION\ \exnbind}}
+\newcommand{\localdec}
+           {\mbox{\LOCAL\ $\dec_1\ \IN\ \dec_2$\ \END}}
+% (cvr
+\newcommand{\opendec}{\mbox{$\OPEN\ \longstrid_1\ \cdots\ \longstrid_n $}} 
+\newcommand{\structuredec}{\mbox{$\STRUCTURE\ \strbind $}}
+%\newcommand{\moduledec}{\mbox{$\MODULE\ \modbind $}}
+\newcommand{\functordec}{\mbox{$\FUNCTOR\ \funbind $}}
+\newcommand{\signaturedec}{\mbox{$\SIGNATURE\ \sigbind $}}
+% cvr)
+
+\newcommand{\emptydec}
+           {\mbox{\qquad}}
+\newcommand{\seqdec}
+           {\mbox{$\dec_1\ \langle\ml{;}\rangle\ \dec_2$}}
+% \newcommand{\longinfix}
+%            {\mbox{$\INFIX\ \langle d\rangle\ \id_1\ \cdots\ \id_n$}}
+% \newcommand{\longinfixr}
+%            {\mbox{$\INFIXR\ \langle d\rangle\ \id_1\ \cdots\ \id_n$}}
+% \newcommand{\longnonfix}
+%            {\mbox{$\NONFIX\ \id_1\ \cdots\ \id_n$}}
+% (cvr
+\newcommand{\longinfix}
+           {\mbox{$\INFIX\ \langle d\rangle\ \vid_1\ \cdots\ \vid_n$}}
+\newcommand{\longinfixr}
+           {\mbox{$\INFIXR\ \langle d\rangle\ \vid_1\ \cdots\ \vid_n$}}
+\newcommand{\longnonfix}
+           {\mbox{$\NONFIX\ \vid_1\ \cdots\ \vid_n$}}
+% cvr)
+          % Bindings
+\newcommand{\longvalbind}
+           {\mbox{\pat\ \ml{=} \exp\ $\langle\AND\ \valbind\rangle$}}
+\newcommand{\recvalbind}
+           {\mbox{\REC\ \valbind}}
+\newcommand{\longtypbind}
+           {\mbox{\tyidseq\ \tycon\ \ml{=} \ty
+            \ $\langle\AND\ \typbind\rangle$}}
+\newcommand{\longdatbind}
+           {\mbox{\tyidseq\ \tycon\ \ml{=} \constrs
+                  \ $\langle\AND\ \datbind\rangle$}}
+% \newcommand{\longconstrs}
+%            {\mbox{$\con\ \langle\OF\ \ty\rangle\
+%                    \langle$ \ml{|} \constrs$\rangle$}}
+% \newcommand{\longerconstrs}
+%            {\mbox{$\con\ \langle\OF\ \ty\rangle\
+%                    \langle\langle$ \ml{|} \constrs$\rangle\rangle$}}
+% (cvr
+\newcommand{\longconstrs}
+           {\mbox{$\vid\ \langle\OF\ \ty\rangle\
+                   \langle$ \ml{|} \constrs$\rangle$}}
+\newcommand{\longerconstrs}
+           {\mbox{$\vid\ \langle\OF\ \ty\rangle\
+                   \langle\langle$ \ml{|} \constrs$\rangle\rangle$}}
+% cvr)
+
+% \newcommand{\generativeexnbind}
+%            {\mbox{$\langle\OP\rangle\exn\ \langle\OF\ \ty\rangle\
+%                    \langle\AND\ \exnbind\rangle$}}
+% \newcommand{\eqexnbind}
+%            {\mbox{$\langle\OP\rangle$\exn\ \ml{=} 
+%                   $\langle\OP\rangle\longexn\ 
+%                   \langle\AND\ \exnbind\rangle$}}
+% (cvr
+\newcommand{\generativeexnbind}
+           {\mbox{$\langle\OP\rangle\vid\ \langle\OF\ \ty\rangle\
+                   \langle\AND\ \exnbind\rangle$}}
+% \newcommand{\eqexnbind}
+%            {\mbox{$\langle\OP\rangle$\vid\ \ml{=} 
+%                   $\langle\OP\rangle\vidpath\ 
+%                   \langle\AND\ \exnbind\rangle$}}
+\newcommand{\eqexnbind}
+           {\mbox{$\langle\OP\rangle$\vid\ \ml{=} 
+                  $\langle\OP\rangle\longvid\ 
+                  \langle\AND\ \exnbind\rangle$}}
+
+% cvr)
+% (cvr
+% \newcommand{\longexnbinda}
+%            {\mbox{\exn\ $\langle\OF\ \ty\rangle$\ 
+%                   $\langle\langle\AND\ \exnbind\rangle\rangle$}}
+% \newcommand{\longexnbindaa}
+%            {\mbox{\exn\
+%                   $\langle\AND\ \exnbind\rangle$}}
+% \newcommand{\longexnbindb}
+%            {\mbox{\exn\ \ml{=}\ \longexn\ $\langle\AND\ \exnbind\rangle$}}
+
+\newcommand{\longexnbinda}
+           {\mbox{\vid\ $\langle\OF\ \ty\rangle$\ 
+                  $\langle\langle\AND\ \exnbind\rangle\rangle$}}
+
+
+\newcommand{\longexnbindaa}
+           {\mbox{\vid\
+                  $\langle\AND\ \exnbind\rangle$}}
+% \newcommand{\longexnbindb}
+%            {\mbox{\vid\ \ml{=}\ \vidpath\ $\langle\AND\ \exnbind\rangle$}}
+
+ \newcommand{\longexnbindb}
+            {\mbox{\vid\ \ml{=}\ \longvid\ $\langle\AND\ \exnbind\rangle$}}
+
+
+% cvr)
+% from version 1:
+%\newcommand{\longexnbind}
+%           {\mbox{\exn\ $\langle$\ml{:} $\ty\rangle
+%                  \langle$\ml{=} $\longexn\rangle
+%                  \ \langle\AND\ \exnbind\rangle$}}
+%\newcommand{\longexnbinda}
+%           {\mbox{\exn\ $\langle$\ml{:} $\ty\rangle
+%                  \ \langle\langle\AND\ \exnbind\rangle\rangle$}}
+%\newcommand{\longexnbindaa}
+%           {\mbox{\exn\
+%                  $\langle\AND\ \exnbind\rangle$}}
+%\newcommand{\longexnbindb}
+%           {\mbox{\exn\ $\langle$\ml{:} $\ty\rangle
+%                  \ $\ml{=} $\longexn
+%                  \ \langle\langle\AND\ \exnbind\rangle\rangle$}}
+%\newcommand{\longexnbindbb}
+%           {\mbox{\exn\ \ml{=} \longexn\
+%                  $\langle\AND\ \exnbind\rangle$}}
+
+          % Patterns
+\newcommand{\wildpat}{\mbox{\ml{\_}}}
+\newcommand{\recpat}{\mbox{$\langle\labpats\rangle$}}
+\newcommand{\wildrec}{\mbox{\ml{...}}}
+\newcommand{\longlabpats}{\mbox{\lab\ \ml{=} \pat\
+                          $\langle$ \ml{,} \labpats$\rangle$}}
+\newcommand{\parpat}{\mbox{\ml{(} \pat\ \ml{)}}}
+% \newcommand{\conpat}
+%            {\mbox{\longcon\ \atpat}}
+% \newcommand{\exconpat}
+%            {\mbox{\longexn\ \atpat}}
+% (cvr
+\newcommand{\conpat}
+            {\mbox{\longvid\ \atpat}}
+% cvr)
+% \newcommand{\infpat}
+%            {\mbox{$\pat_1\ \con\ \pat_2$}}
+% \newcommand{\infexpat}
+%            {\mbox{$\pat_1\ \exn\ \pat_2$}}
+% (cvr
+\newcommand{\infpat}
+            {\mbox{$\pat_1\ \vid\ \pat_2$}}
+% cvr)
+\newcommand{\typedpat}
+           {\mbox{\pat\ \ml{:} \ty}}
+%\newcommand{\layeredpat}
+%           {\mbox{\var$\langle$\ml{:} \ty$\rangle$ \AS\ \pat}}
+% (cvr
+\newcommand{\layeredpat}
+           {\mbox{\vid$\langle$\ml{:} \ty$\rangle$ \AS\ \pat}}
+% cvr)
+% (cvr
+           % TyConPaths
+\newcommand{\longtyconpath}{\mbox{$\longtycon$}}
+%\newcommand{\anontyconpath}{\mbox{\ttdoublelbrace\ $\modexp$ \ttdoublerbrace\ {\ttperiod}\ \tycon}}
+\newcommand{\anontyconpath}{\mbox{$\longtycon\ \WHERE\ \strid\ \ml{=}\ \modexp$}}
+% cvr)
+
+          % Types
+\newcommand{\rectype}{\mbox{$\langle\labtys\rangle$}}
+\newcommand{\longlabtys}{\mbox{\lab\ \ml{:} \ty\
+                          $\langle$ \ml{,} \labtys$\rangle$}}
+
+%\newcommand{\constype}
+%           {\mbox{\tyseq\ \longtycon}}
+% (cvr
+\newcommand{\constype}
+           {\mbox{\tyseq\ \tyconpath}}
+% cvr)
+\newcommand{\funtype}
+           {\mbox{\ty\ \ml{->} \ty$'$}}
+% (cvr
+\newcommand{\packtype}
+           {\mbox{\ml{[} \sigexp\ \ml{]}}}
+% cvr)
+\newcommand{\partype}{\mbox{\ml{(} \ty\ \ml{)}}}
+\newcommand{\longtyseq}{\mbox{\ml{(} $\ty_1,\cdots\,\ty_k$ \ml{)}}}
+\newcommand{\longtyidseq}{\mbox{\ml{(} $\tyvar_1,\cdots,\tyvar_k$ \ml{)}}}
+
+
+	% Non-Expansive Expressions
+\newcommand{\nvidpath}{\ensuremath{\it nvidpath}}
+%\newcommand{\nanonvidpath}{\mbox{$\opp\ \longvid\ \WHERE\ \strid\ \ml{=}\ \nmodexp$}}
+
+\newcommand{\nexp}{\ensuremath{\it nexp}}
+\newcommand{\nexprow}{\ensuremath{\it nexprow}}
+\newcommand{\conexp}{\ensuremath{\it conexp}}
+\newcommand{\nmodexp}{\ensuremath{\it nmodexp}} % cvr
+%\newcommand{\natmodexp}{\ensuremath{\it natmodexp}} % cvr
+%\newcommand{\nanonatmodexp}{\mbox{$\opp\ \longmodid\ \WHERE\ \strid\ \ml{=}\ \nmodexp$}}
+\newcommand{\nparatmodexp}{\mbox{\ml{(} \nmodexp\ \ml{)}}}
+\newcommand{\nstructureexp}
+           {\mbox{\ml{[}\STRUCTURE\ \nmodexp\ \AS\ \sigexp \ml{]}}}
+\newcommand{\nfunctorexp}
+           {\mbox{\ml{[}\FUNCTOR\ \nmodexp\ \AS\ \sigexp \ml{]}}}
+\newcommand{\nconmodexp}{\mbox{\nmodexp\ \ml{:}\ \sigexp}}
+\newcommand{\nabsmodexp}{\mbox{\nmodexp\ \ml{:>}\ \sigexp}}
+\newcommand{\ngenfunctormodexp}
+  {\mbox{\FUNCTOR\ \ml{(}\modid\ml{:}\sigexp\ml{)} \ml{=>}\ \modexp}}
+\newcommand{\nappfunctormodexp}
+  {\mbox{\FUNCTOR\ \modid\ml{:}\sigexp\ \ml{=>}\ \modexp}}
+\newcommand{\nrecmodexp}
+  {\mbox{\REC\ \ml{(}\strid\ml{:}\sigexp\ml{)}\nmodexp}}
+	% Applicative Declarations and Module Expressions
+
+\newcommand{\adec}{{\it appdec}}
+\newcommand{\aseqdec}
+           {\mbox{$\adec_1\ \langle\ml{;}\rangle\ \adec_2$}}
+\newcommand{\alocaldec}
+           {\mbox{\LOCAL\ $\adec_1\ \IN\ \adec_2$\ \END}}
+\newcommand{\aabstypedec}
+           {\mbox{\ABSTYPE\ \datbind\ \WITH\ \adec\ \END}}
+\newcommand{\astructuredec}{\mbox{$\STRUCTURE\ \astrbind $}}
+\newcommand{\afunctordec}{\mbox{$\FUNCTOR\ \afunbind $}}
+\newcommand{\astrbind}{{\it appstrbind}}
+\newcommand{\astrbinder}
+           {\mbox{$\strid\ \tteq\ \amodexp\ \langle\AND\ \astrbind\rangle$}}
+\newcommand{\afunbind}{{\it appfunbind}}
+\newcommand{\afunbinder}
+           {\mbox{$\funid\ \tteq\ \amodexp\ \langle\AND\ \afunbind\rangle$}}
+  % applicative atomic module expressions 
+\newcommand{\aatmodexp}{{\it appatmodexp}}
+\newcommand{\adecatmodexp}{\mbox{\STRUCT\ \adec\ \END}}
+\newcommand{\aletatmodexp}{\mbox{\LET\ \adec\ \IN\ \modexp\ \END}}
+\newcommand{\aparatmodexp}{\mbox{\ml{(} \amodexp\ \ml{)}}}
+  
+  % applicative module expressions
+
+\newcommand{\amodexp}{{\it appmodexp}}
+\newcommand{\aconmodexp}{\mbox{\amodexp\ \ml{:}\ \sigexp}}
+\newcommand{\aabsmodexp}{\mbox{\amodexp\ \ml{:>}\ \sigexp}}
+\newcommand{\afunappmodexp}{\mbox{\funid\ \ml{(}\ \modexp\ \ml{)} }}
+\newcommand{\agenfunctormodexp}
+  {\mbox{\FUNCTOR\ \ml{(}\modid\ml{:}\sigexp\ml{)} \ml{=>}\ \modexp}}
+\newcommand{\aappfunctormodexp}
+  {\mbox{\FUNCTOR\ \modid\ml{:}\sigexp\ \ml{=>}\ \modexp}}
+\newcommand{\aappmodexp}{\mbox{\amodexp\ \aatmodexp}}
+\newcommand{\arecmodexp}
+  {\mbox{\REC\ \ml{(}\strid\ml{:}\sigexp\ml{)}\amodexp}}
+
+
+
+        % Modules Phrases
+
+\newcommand{\emptyphrase}{\qquad}
+
+
+% (cvr
+    	% structure-level declarations
+
+%\newcommand{\singstrdec}{\mbox{$\STRUCTURE\ \strbind $}}
+% \newcommand{\localstrdec}{\mbox{$\LOCAL\ \strdec_1\ \IN\ \strdec_2\ \END $}}
+%\newcommand{\openstrdec}{\mbox{$\OPEN\ \longstri%d_1\ \cdots\ \longstrid_n $}}
+
+%\newcommand{\emptystrdec}{\emptyphrase}
+%\newcommand{\seqstrdec}{\mbox{$\strdec_1\ \langle$\ml{;}$\rangle\ \strdec_2 $}}
+% cvr)
+
+% (cvr
+%         % structure bindings
+
+% \newcommand{\strbinder}
+%            {\mbox{$\strid\ \langle$\ml{:}$\ \sigexp\rangle$
+%             \ml{=} $\strexp\ \langle\langle\AND\ \strbind\rangle\rangle$}}
+% \newcommand{\strbindera}
+%            {\mbox{$\strid\ \langle$\ml{:}$\ \sigexp\rangle$
+%             \ml{=} $\strexp\ \langle\AND\ \strbind\rangle$}}
+          % module bindings
+
+\newcommand{\strbinder}
+           {\mbox{$\strid\ \tteq\ \modexp\ \langle\AND\ \strbind\rangle$}}
+
+\newcommand{\asstrbinder}
+           {\mbox{$\strid\ \AS\ \sigexp\ \tteq\ \exp\ \langle\AND\ \strbind\rangle$}}
+
+\newcommand{\asstrbind}
+           {\mbox{$\strid\ \AS\ \sigexp\ \tteq\ \exp$}}
+
+
+% 	% structure expressions
+
+% \newcommand{\encstrexp}{\mbox{\STRUCT\ \strdec\ \END}}
+% \newcommand{\funappdec}{\mbox{\funid\ \ml{(}\ \strdec\ \ml{)} }}
+% \newcommand{\funappstr}{\mbox{\funid\ \ml{(}\ \strexp\ \ml{)} }}
+% \newcommand{\letstrexp}{\mbox{\LET\ \strdec\ \IN\ \strexp\ \END}}
+
+
+  % atomic module expressions 
+
+\newcommand{\decatmodexp}{\mbox{\STRUCT\ \dec\ \END}}
+%\newcommand{\anonatmodexp}{\mbox{$\opp\ \longmodid\ \WHERE\ \strid\ \ml{=}\ \modexp$}}
+
+\newcommand{\letatmodexp}{\mbox{\LET\ \dec\ \IN\ \modexp\ \END}}
+\newcommand{\paratmodexp}{\mbox{\ml{(} \modexp\ \ml{)}}}
+  
+  % module expressions
+
+\newcommand{\conmodexp}{\mbox{\modexp\ \ml{:}\ \sigexp}}
+\newcommand{\absmodexp}{\mbox{\modexp\ \ml{:>}\ \sigexp}}
+%\newcommand{\funappmodexp}{\mbox{\funid\ \ml{(}\ \modexp\ \ml{)} }}
+\newcommand{\genfunctormodexp}
+  {\mbox{\FUNCTOR\ \ml{(}\modid\ml{:}\sigexp\ml{)} \ml{=>}\ \modexp}}
+\newcommand{\appfunctormodexp}
+  {\mbox{\FUNCTOR\ \modid\ml{:}\sigexp\ \ml{=>}\ \modexp}}
+\newcommand{\appmodexp}{\mbox{\modexp\ \atmodexp}}
+\newcommand{\recmodexp}
+  {\mbox{\REC\ \ml{(}\strid\ml{:}\sigexp\ml{)}\modexp}}
+
+% cvr)
+
+\newcommand{\funappdec}{\mbox{\funid\ \ml{(}\ \dec\ \ml{)} }}
+
+        % specifications
+
+% \newcommand{\valspec}{\mbox{\VAL\  \valdesc}}
+\newcommand{\valspec}{\ensuremath{\VAL\ \tyidseq\ \valdesc}} % (cvr)
+
+\newcommand{\typespec}{\mbox{\TYPE\ \typdesc}}
+\newcommand{\eqtypespec}{\mbox{\EQTYPE\ \typdesc}}
+\newcommand{\datatypespec}{\mbox{\DATATYPE\ \datdesc}}
+% (cvr
+\newcommand{\datatyperepspec}
+           {\mbox{$\DATATYPE\ \tycon\ 
+                  \tteq\
+                  \DATATYPE\ tyconpath
+          $}}
+% cvr) 
+\newcommand{\exceptionspec}{\mbox{\EXCEPTION\ \exndesc}}
+\newcommand{\structurespec}{\mbox{\STRUCTURE\ \strdesc}} % (cvr)
+\newcommand{\functorspec}{\mbox{\FUNCTOR\ \fundesc}} % (cvr)
+\newcommand{\signaturespec}{\mbox{\SIGNATURE\ \sigbind}} % (cvr)
+% \newcommand{\sharingspec}{\mbox{\SHARING\ \shareq}}
+\newcommand{\localspec}{\mbox{$\LOCAL\ \spec_1\ \IN\ \spec_2\ \END$}}
+\newcommand{\openspec}{\mbox{$\OPEN\ \longstrid_1\ \cdots\ \longstrid_n $}}
+\newcommand{\emptyspec}{\emptyphrase}
+\newcommand{\seqspec}{\mbox{$\spec_1\ \langle$\ml{;}$\rangle\ \spec_2$}}
+% \newcommand{\inclspec}{\mbox{$\INCLUDE\ \sigid_1\ \cdots\ \sigid_n $}} % (cvr)
+\newcommand{\includespec}{\mbox{\INCLUDE\ \sigexp}} % (cvr)
+\newcommand{\inclspec}{\mbox{$\INCLUDE\ \sigid_1\ \cdots\ \sigid_n $}}
+\newcommand{\sharespec}{\mbox{$\spec\ \SHARING\ \TYPE\  \longtycon_1\ \tteq\ \cdots\ \tteq\ \longtycon_n $}} % (cvr)
+
+
+        % descriptions
+
+% \newcommand{\valdescription}
+%           {\mbox{\var\ \ml{:} $\ty\ \langle\AND\ \valdesc\rangle$}}
+\newcommand{\valdescription}
+           {\mbox{\vid\ \ml{:} $\ty\ \langle\AND\ \valdesc\rangle$}}
+
+\newcommand{\typdescription}
+           {\mbox{\tyidseq\ \tycon\ $\langle\AND\ \typdesc\rangle$}}
+
+\newcommand{\datdescription}
+           {\mbox{\tyidseq\ \tycon\ \ml{=} \condesc
+             \ $\langle\AND\ \datdesc\rangle$}}
+
+% \newcommand{\condescription}
+%            {\mbox{$\con\ \langle\OF\ \ty\rangle\
+%                    \langle$ \ml{|} \condesc$\rangle$}}
+\newcommand{\condescription}
+           {\mbox{$\vid\ \langle\OF\ \ty\rangle\
+                   \langle$ \ml{|} \condesc$\rangle$}}
+
+% \newcommand{\longcondescription}
+%            {\mbox{$\con\ \langle\OF\ \ty\rangle\
+%                    \langle\langle$ \ml{|} \condesc$\rangle\rangle$}}
+\newcommand{\longcondescription}
+           {\mbox{$\vid\ \langle\OF\ \ty\rangle\
+                   \langle\langle$ \ml{|} \condesc$\rangle\rangle$}}
+
+% \newcommand{\exndescription}
+%            {\mbox{\exn\ $\langle\OF\ \ty\rangle$
+%             \ $\langle\AND\ \exndesc\rangle$}}
+\newcommand{\exndescription}
+           {\mbox{\vid\ $\langle\OF\ \ty\rangle$
+            \ $\langle\AND\ \exndesc\rangle$}}
+
+
+% \newcommand{\exndescriptiona}
+%            {\mbox{\exn\ $\langle\OF\ \ty\rangle$
+%             \ $\langle\langle\AND\ \exndesc\rangle\rangle$}}
+\newcommand{\exndescriptiona}
+           {\mbox{\vid\ $\langle\OF\ \ty\rangle$
+             \ $\langle\langle\AND\ \exndesc\rangle\rangle$}}
+
+\newcommand{\strdescription}
+           {\mbox{\strid\ \ml{:} \sigexp
+            \ $\langle\AND\ \strdesc\rangle$}}
+\newcommand{\fundescription}
+           {\mbox{\funid\ \ml{:} \sigexp
+             \ $\langle\AND\ \fundesc\rangle$}}
+
+
+%         % sharing equations
+
+% \newcommand{\strshareq}{\mbox{$\longstrid_1$ \ml{=} $\cdots$
+%                                              \ml{=} $\longstrid_n$ }}
+% \newcommand{\typshareq}{\mbox{$\TYPE\ \longtycon_1$ \ml{=} $\cdots$
+%                                                     \ml{=} $\longtycon_n$ }}
+% \newcommand{\multshareq}{\mbox{$\shareq_1\ \AND\ \shareq_2$}}
+
+
+	% signature expressions
+
+% \newcommand{\encsigexp}{\mbox{\SIG\ \spec\ \END}}
+\newcommand{\specsigexp}{\mbox{\SIG\ \spec\ \END}}
+\newcommand{\wheresigexp}{\mbox{\sigexp\ \WHERE\ \TYPE\ \tyidseq\ \longtycon\
+\ml{=} \ty}}
+\newcommand{\trfunsigexp}{\mbox{\FUNCTOR\ \modid\ \ml{:}\ $\sigexp_1$ \ml{->}\ $\sigexp_2$}}
+\newcommand{\opfunsigexp}{\mbox{\FUNCTOR\ \ml{(}\modid\ \ml{:}\ $\sigexp_1$\ml{)} \ml{->}\ $\sigexp_2$}}
+\newcommand{\recsigexp}
+  {\mbox{\REC\ \ml{(}\strid\ml{:}\sigexp\ml{)}\sigexp}}
+
+% (cvr
+%        % signature declarations
+
+%\newcommand{\singsigdec}{\mbox{$\SIGNATURE\ \sigbind $}}
+%\newcommand{\emptysigdec}{\emptyphrase}
+%\newcommand{\seqsigdec}{\mbox{$\sigdec_1\ \langle$\ml{;}$\rangle\ \sigdec_2 $}}
+% cvr)
+
+        % signature bindings
+
+\newcommand{\sigbinder}
+           {\mbox{\sigid\ \ml{=} \sigexp
+            \ $\langle\AND\ \sigbind\rangle$}}
+
+
+        % functor declarations
+
+\newcommand{\singfundec}{\mbox{$\FUNCTOR\ \funbind $}}
+\newcommand{\emptyfundec}{\emptyphrase}
+\newcommand{\seqfundec}{\mbox{$\fundec_1\ \langle$\ml{;}$\rangle\ \fundec_2 $}}
+
+
+% (cvr
+%        % functor bindings
+% \newcommand{\funbinder}
+%            {\mbox{\funid\ \ml{(} \spec\ \ml{)}
+%                           $\langle$\ml{:}$\ \sigexp\rangle$\ \ml{=} $\strexp$
+%                           $\langle\langle\AND\ \funbind\rangle\rangle$}}
+% \newcommand{\funbindera}
+%            {\mbox{\funid\ \ml{(} \spec\ \ml{)}
+%                           $\langle$\ml{:}$\ \sigexp\rangle$\ \ml{=} $\strexp$}}
+% \newcommand{\funstrbinder}
+%            {\mbox{\funid\ \ml{(}\ \strid\ \ml{:}\ \sigexp\ \ml{)}
+%                         $\langle$\ml{:}$\ \sigexp'\rangle$\ \ml{=} $\strexp$}}
+% \newcommand{\optfunbind}
+%            {\mbox{$\langle\langle\AND\ \funbind\rangle\rangle$}}
+% \newcommand{\optfunbinda}
+%            {\mbox{$\langle\AND\ \funbind\rangle$}}
+% \newcommand{\funstrbindera}
+%            {\mbox{\funid\ \ml{(}\ \strid\ \ml{)}\ \ml{=} \strexp
+%             \ $\langle\AND\ \funbind\rangle$}}
+% \newcommand{\funbinder}
+%            {\mbox{\funid\ \ml{(}\ \modid\ \ml{:}\ \sigexp\ \ml{)}
+%                          \ml{=} $\modexp$}}
+
+\newcommand{\funbinder}
+           {\mbox{$\funid\ \tteq\ \modexp\ \langle\AND\ \funbind\rangle$}}
+
+\newcommand{\asfunbinder}
+           {\mbox{$\funid\ \AS\ \sigexp\ \tteq\ \exp\ \langle\AND\ \funbind\rangle$}}
+
+\newcommand{\asfunbind}
+           {\mbox{$\funid\ \AS\ \sigexp\ \tteq\ \exp$}}
+
+% cvr)
+% (cvr
+%         %functor signature expressions
+% \newcommand{\longfunsigexp}
+%            {\mbox{\ml{(}\ \spec\ \ml{)}
+%                           \ml{:}\ \sigexp}}
+% \newcommand{\longfunsigexpa}
+%            {\mbox{\ml{(}\ \strid\ \ml{:}\ \sigexp\ \ml{)}
+%                           \ml{:}\ \sigexp$'$}}
+%         % functor specifications
+% \newcommand{\singfunspec}{\mbox{\FUNCTOR\ \fundesc}}
+% \newcommand{\emptyfunspec}{\emptyphrase}
+% \newcommand{\seqfunspec}
+%            {\mbox{$\funspec_1\ \langle$\ml{;}$\rangle\ \funspec_2$}}
+%         % functor descriptions
+% \newcommand{\longfundesc}
+%            {\mbox{\funid\ \funsigexp\ $\langle\AND\ \fundesc\rangle$}}
+% cvr)
+	% programs
+\newcommand{\longprog}{\mbox{\topdec\\ml{;}\ $\langle\program\rangle$}}
+\newcommand{\seqprog}
+ {\mbox{$\program_1\ \langle$\ml{;}$\rangle\ \program_2$}}
+% **************** END SYNTAX *************************
+\newcommand{\ML}{{\rm ML}}
+
+
+% 	finite sets and maps (assume math mode)
+%
+\newcommand{\Fin}{\mathop{\rm Fin}\nolimits}
+\newcommand{\Dom}{\mathop{\rm Dom}\nolimits}
+\newcommand{\Ran}{\mathop{\rm Ran}\nolimits}
+\newcommand{\finfun}[2]{#1\stackrel{{\rm fin}}{\to}#2}
+\newcommand{\emptymap}{\{\}}
+\newcommand{\kmap}[2]{\{#1_1\mapsto#2_1,\cdots,#1_k\mapsto#2_k\}}
+\newcommand{\plusmap}[2]{#1 + #2}
+%
+\newcommand{\TyVarSet}{{\rm TyVarSet}}
+%
+%
+%	Names     (assume math mode)
+% \newcommand{\TyNames}{{\rm TyName}}
+\newcommand{\TyName}[1][]{\ensuremath{{\rm TyName}^{#1}}}
+\newcommand{\TyNameSets}{{\rm TyNameSet}}
+% \newcommand{\StrNames}{{\rm StrName}}  % (cvr)
+% \newcommand{\StrNameSets}{{\rm StrNameSet}} % (cvr)
+
+% Identifier Status
+\newcommand{\IdStatus}{{\rm IdStatus}}  % (cvr)
+\newcommand{\is}{{\it is}}  % (cvr)
+\newcommand{\estatus}{{\ml{e}}}  % (cvr)
+\newcommand{\vstatus}{{\ml{v}}}  % (cvr)
+\newcommand{\cstatus}{{\ml{c}}}  % (cvr)
+% Expectations
+\newcommand{\Expectation}{{\rm Expectation}}  % (cvr)
+\newcommand{\expect}{{\it ex}}  % (cvr)
+\newcommand{\expectofsig}[1]{\ensuremath{{\rm expect}({#1})}}  % (cvr)
+\newcommand{\expectoffun}[1]{\ensuremath{{\rm expect}({#1})}} % (cvr)
+\newcommand{\expectstr}{{\ml{s}}}  % (cvr)
+\newcommand{\expectfun}{{\ml{f}}}  % (cvr)
+\newcommand{\expectmod}{{\ml{m}}}  % (cvr)
+% Kinds
+\newcommand{\Arity}{{\rm Arity}}  % (cvr)
+\newcommand{\Kind}{{\rm Kind}}  % (cvr)
+\newcommand{\K}{\ensuremath{K}} % (cvr)
+\newcommand{\Karr}[2]{\ensuremath{{#1}\rightarrow{#2}}}
+
+\newcommand{\NameSets}{{\rm NameSet}}
+\newcommand{\TyNamesk}{\TyNames^{k}} % (cvr)
+\newcommand{\TyNamesK}{\TyNames^{\K}} % (cvr)
+\newcommand{\Addr}{{\rm Addr}}
+\newcommand{\Exc}{{\rm ExName}}
+\newcommand{\BasVal}{{\rm BasVal}}
+\newcommand{\SVal}{{\rm SVal}}
+\newcommand{\BasExc}{{\rm BasExName}}
+\newcommand{\BasTyp}{{\rm BasTyp}}
+\newcommand{\CONT}{{\tt !}}
+\newcommand{\ASS}{{\tt :=}}
+\newcommand{\FAIL}{{\rm FAIL}}
+\newcommand{\Fail}{{\rm FAIL}}
+\newcommand{\fail}{{\rm FAIL}}
+\newcommand{\APPLY}{{\rm APPLY}}
+
+\newcommand{\A}{a}
+\newcommand{\e}{\mbox{\it en}}
+\newcommand{\sv}{\mbox{\it sv}}
+\newcommand{\exval}{e}
+\newcommand{\excs}{\mbox{\it ens}}
+\newcommand{\exns}{\mbox{\it excons}} % used in the dynamic sem. of mod.
+\newcommand{\f}{f}
+\newcommand{\m}{m}
+\newcommand{\mem}{\mbox{\it mem}}
+\newcommand{\M}{M}
+\newcommand{\n}{n}
+\newcommand{\N}{N}
+\newcommand{\p}{p}
+\renewcommand{\r}{r} % (cvr) 
+\newcommand{\res}{\mbox{\it res}}
+\newcommand{\s}{s}
+\renewcommand{\t}[1][]{\ensuremath{{\rm t}^{{#1}}}} % (cvr)
+\renewcommand{\u}[1][]{\ensuremath{{\rm u}^{{#1}}}} % (cvr)
+\newcommand{\T}{\ensuremath{T}}
+
+\newcommand{\V}{v}
+\newcommand{\vars}{\mbox{\it vars}}
+\newcommand{\X}{X}
+
+          % Compound Objects (Core Language)
+\newcommand{\IdEnv}{\ensuremath{{\rm IdEnv}}}
+\newcommand{\IE}{\mbox{$I\!E$}}
+\newcommand{\TyEnv}{{\rm TyEnv}}
+\newcommand{\TE}{\mbox{$T\!E$}}
+\newcommand{\TyStr}{{\rm TyStr}}
+% (cvr
+% \newcommand{\ConEnv}{{\rm ConEnv}}
+% \newcommand{\CE}{\mbox{$C\!E$}}
+% cvr)
+
+% \newcommand{\VarEnv}{{\rm VarEnv}} % (cvr)
+\newcommand{\ValEnv}{{\rm ValEnv}}   % (cvr)
+\newcommand{\VE}{\mbox{$V\!E$}}
+
+% (cvr
+% \newcommand{\ExnEnv}{{\rm ExConEnv}}
+% \newcommand{\EE}{\mbox{$E\!E$}}
+% cvr)
+
+\newcommand{\IntEnv}{{\rm IntEnv}}
+%\newcommand{\IE}{\mbox{$I\!E$}}
+
+\newcommand{\Env}{{\rm Env}}
+\newcommand{\E}{E}
+% (cvr
+% \newcommand{\longE}[1]{(\SE_{#1},\TE_{#1},\VE_{#1},\EE_{#1})} 
+\newcommand{\longenv}[1][]{(\GE_{#1},\FE_{#1},\SE_{#1},\TE_{#1},\VE_{#1})}
+% cvr)
+% (cvr
+\newcommand{\StrEnv}{{\rm StrEnv}}
+\newcommand{\SE}{\ensuremath{S\!E}}
+%\newcommand{\ModEnv}{\ensuremath{\rm ModEnv}}
+%\newcommand{\ME}{\ensuremath{M\!E}}
+% cvr)
+
+% (cvr
+\newcommand{\Str}{{\rm Str}}
+% \renewcommand{\S}{S}
+\renewcommand{\S}{\ensuremath{S}}
+% \newcommand{\longS}[1]{(\m_{#1},(\SE_{#1},\TE_{#1},\VE_{#1},\EE_{#1}))}
+\newcommand{\longstr}[1][]{(\FE_#1,\SE_{#1},\TE_{#1},\VE_{#1})}
+
+\newcommand{\RS}{\ensuremath{R\!S}}
+\newcommand{\RecStr}{{\rm RecStr}}
+\newcommand{\recstr}[2]{\ensuremath({#1},{#2})}
+\newcommand{\longrecstr}[2]{\recstr{\RS_{#1}}{\RS_{#2}}}
+
+% cvr)
+
+% (cvr
+\newcommand{\Mod}{{\rm Mod}}
+\renewcommand{\M}{\ensuremath{M}}
+% cvr)
+
+% (cvr
+%\newcommand{\AppFun}{{\rm AppFun}}
+\newcommand{\F}{\ensuremath{F}}
+%\newcommand{\longappfun}[1][]{\ensuremath{\appfun{\T_{#1}}{\M_{#1}}{M_{#1}'}}}
+%\newcommand{\appfun}[3]{\ensuremath{\forall{#1}{.}{#2}\rightarrow{#3}}}
+% cvr)
+
+
+\newcommand{\Int}{{\rm Int}}
+\newcommand{\I}{I}
+
+\newcommand{\Context}{\rm Context}
+% \newcommand{\C}{C} % (cvr)
+\newcommand{\C}{\ensuremath{C}} % (cvr)
+\newcommand{\context}{\ensuremath{C}} % (cvr)
+\newcommand{\longcontext}{(\IE,\E)} % (cvr)
+
+
+
+\newcommand{\Record}{{\rm Record}}
+\newcommand{\ExVal}{{\rm ExVal}}
+% \newcommand{\Fun}{{\rm Fun}}  % used? % (cvr) 
+\newcommand{\Pack}{{\rm Pack}}
+\newcommand{\Closure}{{\rm Closure}}
+\newcommand{\FunctorClosure}{{\rm FunctorClosure}}
+\newcommand{\Match}{{\rm Match}}
+\newcommand{\State}{{\rm State}}
+\newcommand{\StrExp}{{\rm StrExp}}
+\newcommand{\Mem}{{\rm Mem}}
+\newcommand{\ExcSet}{{\rm ExNameSet}}
+\newcommand{\Val}{{\rm Val}}
+
+\newcommand{\arity}{\mathop{\rm arity}\nolimits}
+% (cvr
+\renewcommand{\k}{\ensuremath{k}} % (cvr)
+\newcommand{\keq}{\ensuremath{k^{=}}} % (cvr)
+\newcommand{\longtauk}{(\tau_1,\cdots,\tau_\k)}
+\newcommand{\tauk}{\ensuremath{\tau^{(\k)}}}
+\newcommand{\longalphak}{(\alpha_1,\cdots,\alpha_\k)}
+\newcommand{\alphak}{\ensuremath{\alpha^{(\k)}}}
+\newcommand{\alphakt}{\ensuremath{\alpha^{(\k)}\t}}
+\newcommand{\thetak}{\ensuremath{\theta^{\k}}}
+\newcommand{\tk}{\ensuremath{\t{\k}}}
+\newcommand{\tK}{\ensuremath{\t{\K}}}
+\newcommand{\TypeFnc}[1][]{\ensuremath{{\rm TypeFcn}^{#1}}}
+\newcommand{\typefnc}[1][]{\ensuremath{\theta^{#1}}}
+\newcommand{\typetypefnc}[2]{\ensuremath{\Lambda{#1}.{#2}}}
+\newcommand{\typefnctypefnc}[2]{\ensuremath{\Lambda{#1}.{#2}}}
+\newcommand{\typeapptypefnc}[1]{\ensuremath{#1}}
+\newcommand{\TypeApp}[1][]{\ensuremath{{\rm TypeApp}^{#1}}}
+\newcommand{\typeapp}[1][]{\ensuremath{\vartheta^{#1}}}
+\newcommand{\apptypeapp}[2]{\ensuremath{{#1}\ {#2}}}
+\newcommand{\tynametypeapp}[1]{\ensuremath{{#1}}}
+% cvr)
+\newcommand{\Type}{{\rm Type}}
+\newcommand{\ConsType}{{\rm ConsType}}
+\newcommand{\apptype}[2]{\ensuremath{{#1}\ {#2}}}
+\newcommand{\PackType}{{\rm PackType}}
+\newcommand{\packagetype}[1]{\ensuremath{{[}{#1}{]}}}
+\newcommand{\longpackagetype}[1][]{\ensuremath{{[}\XM_{#1}{]}}}
+
+\newcommand{\RecType}{{\rm RecType}}
+\newcommand{\FunType}{{\rm FunType}}
+\newcommand{\constypek}{\t(\tau_1,\cdots,\tau_k)}
+\newcommand{\TypeScheme}{{\rm TypeScheme}}
+\newcommand{\tych}{\sigma}
+\newcommand{\longtych}{\forall\alphak.\tau}
+\newcommand{\Abs}{\mathop{\rm Abs}\nolimits}
+\newcommand{\Inter}{\mathop{\rm Inter}\nolimits}
+\newcommand{\Rec}{\mathop{\rm Rec}\nolimits}
+%\newcommand{\TypeFcn}{{\rm TypeFcn}}
+\newcommand{\TyConFcn}{\mathop{\rm TyCon}\nolimits} % used?
+\newcommand{\TyVarFcn}{\mathop{\rm tyvars}\nolimits}
+\newcommand{\imptyvars}{\mathop{\rm imptyvars}\nolimits}
+\newcommand{\apptyvars}{\mathop{\rm apptyvars}\nolimits}
+\newcommand{\scontype}{\mathop{\rm type}\nolimits}
+\newcommand{\sconval}{\mathop{\rm val}\nolimits}
+
+%         Compound Objects (Modules)
+
+% (cvr
+\newcommand{\EXISTENTIAL}[1]{\ensuremath{{\rm Ex}({#1})}}
+\newcommand{\EXISTS}[2]{\ensuremath{\exists{#1}{.}{#2}}}
+\newcommand{\PARAMETERISED}[1]{\ensuremath{{\rm Par}({#1})}}
+\newcommand{\LAMBDA}[2]{\ensuremath{\Lambda{#1}{.}{#2}}}
+
+\newcommand{\ExMod}{{\rm ExMod}}
+\newcommand{\XM}{\ensuremath{X}}
+\newcommand{\exmod}[2]{\ensuremath{\EXISTS{#1}{#2}}}
+\newcommand{\longexmod}[1][]{\ensuremath{\exmod{\T_{#1}}{\M_{#1}}}}
+
+\newcommand{\Sig}{{\rm Sig}}
+% \newcommand{\sig}{\Sigma}
+\newcommand{\G}{\ensuremath{G}}
+% \newcommand{\longsig}[1]{(\N_{#1})\S_{#1}}
+\newcommand{\sig}[2]{\ensuremath{\LAMBDA{#1}{#2}}}
+% \newcommand{\longsig}[1]{(\N_{#1})\S_{#1}}
+\newcommand{\longsig}[1][]{\ensuremath{\sig{\T_{#1}}{\M_{#1}}}}
+% \newcommand{\FunSig}{{\rm FunSig}}
+\newcommand{\Fun}{{\rm Fun}} 
+% \newcommand{\funsig}{\Phi}
+%\newcommand{\fun}{\ensuremath{\Phi}}
+\newcommand{\fun}[3]{\ensuremath{\forall{#1}{.}{#2}\rightarrow{#3}}}
+% \newcommand{\longfunsig}[1]{(\N_{#1})(\S_{#1},(\N_{#1}')\S_{#1}
+\newcommand{\longfun}[1][]{\ensuremath{\fun{\T_{#1}}{\M_{#1}}{\XM_{#1}}}}
+\newcommand{\FunEnv}{{\rm FunEnv}}
+% \newcommand{\F}{F}
+\newcommand{\FE}{\ensuremath{F\!E}}
+
+
+\newcommand{\SigEnv}{{\rm SigEnv}}
+% \newcommand{\G}{G}
+\newcommand{\GE}{\ensuremath{G\!E}}
+
+% \newcommand{\Basis}{{\rm Basis}}
+% \newcommand{\B}{B}
+% \newcommand{\Bstat}{B_{\rm STAT}}
+% \newcommand{\Bdyn}{B_{\rm DYN}}
+% cvr)
+\newcommand{\IntBasis}{{\rm IntBasis}}
+\newcommand{\IB}{\mbox{$I\!B$}}
+
+
+%         Selection of Components
+%
+\newcommand{\of}[2]{\ensuremath{#1 \mathbin{\rm of} #2}}
+\newcommand{\In}{\mbox{\rm in}}
+%
+%         Names in Structures
+% \newcommand{\StrNamesFcn}{\mathop{\rm strnames}\nolimits} % (cvr)
+\newcommand{\TyNamesFcn}{\mathop{\rm tynames}\nolimits}
+\newcommand{\TyVarsFcn}{\mathop{\rm tyvars}\nolimits}
+\newcommand{\NamesFcn}{\mathop{\rm names}\nolimits}
+%
+%         Type Schemes (assume math mode)
+%
+\newcommand{\cl}[2]{{\rm Clos}_{#1}#2}
+%
+%         Realisations (assume math mode)
+%
+% \newcommand{\tyrea}{\varphi_{\rm Ty}} % (cvr)
+\newcommand{\tyrea}{\ensuremath{\varphi}} % (cvr)
+
+% \newcommand{\strrea}{\varphi_{\rm Str}} % (cvr)
+% \newcommand{\rea}{\varphi} % (cvr)
+% \newcommand{\longrea}{(\tyrea,\strrea)} % (cvr)
+%
+%             Support (assume math mode)
+%
+\newcommand{\Supp}{\mathop{\rm Supp}\nolimits}
+\newcommand{\Yield}{\mathop{\rm Yield}\nolimits}
+%
+%           Instantiation (assume math mode)
+%
+% \newcommand{\siginst}[3]{#1 {\geq_{#2}} #3} % (cvr)
+\newcommand{\siginstantiates}[2]{{#1} \geq {#2}} % (cvr)
+% \newcommand{\sigord}[3]{#1 {\geq_{#2}} #3} % (cvr)
+% \newcommand{\funsiginst}[3]{#1 {\geq_{#2}} #3}
+\newcommand{\funinstantiates}[2]{\ensuremath{{#1} \geq {#2}}} % (cvr)
+%\newcommand{\appfuninstantiates}[2]{\ensuremath{{#1} \geq {#2}}} % (cvr)
+\newcommand{\funinst}[2]{\ensuremath{{#1} \rightarrow {#2}}} % (cvr)
+%\newcommand{\appfuninst}[2]{\ensuremath{{#1} \rightarrow {#2}}} % (cvr)
+
+%
+%            Inference Rules
+%
+%
+\newcommand{\ts}{\vdash}
+\newcommand{\tsdyn}{\vdash_{\rm DYN}}
+\newcommand{\tsstat}{\vdash_{\rm STAT}}
+
+\newcommand{\ra}{\Rightarrow}
+
+%            Initial Static Basis
+
+%              Type names
+\newcommand{\BOOL}{\mbox{\tt bool}}
+\newcommand{\INT}{\mbox{\tt int}}
+\newcommand{\REAL}{\mbox{\tt real}}
+\newcommand{\WORD}{\mbox{\tt word}} % (cvr)
+\newcommand{\CHAR}{\mbox{\tt char}} % (cvr)
+\newcommand{\NUM}{\mbox{\tt num}}
+\newcommand{\EXCN}{\mbox{\tt exn}}
+\newcommand{\STRING}{\mbox{\tt string}}
+\newcommand{\LIST}{\mbox{\tt list}}
+\newcommand{\INSTREAM}{\mbox{\tt instream}}
+\newcommand{\OUTSTREAM}{\mbox{\tt outstream}}
+
+%              Constructors
+\newcommand{\FALSE}{\mbox{\tt false}}
+\newcommand{\TRUE}{\mbox{\tt true}}
+\newcommand{\NIL}{\mbox{\tt nil}}
+% (cvr
+\newcommand{\CONS}{\mbox{\tt ::}}
+\newcommand{\IT}{\mbox{\tt it}}
+% cvr)
+\newcommand{\REF}{\mbox{\tt ref}}
+\newcommand{\UNIT}{\mbox{\tt unit}}
+
+%              Basic Values BasVal
+%\newcommand{\MAP}{\mbox{\tt map}}
+%\newcommand{\REV}{\mbox{\tt rev}}
+%\newcommand{\NOT}{\mbox{\tt not}}
+%\newcommand{\NEG}{\mbox{\verb-~-}}
+%\newcommand{\ABS}{\mbox{\tt abs}}
+%\newcommand{\FLOOR}{\mbox{\tt floor}}
+%\newcommand{\REAL}{\mbox{\tt real}}
+%\newcommand{\SQRT}{\mbox{\tt sqrt}}
+%\newcommand{\SIN}{\mbox{\tt sin}}
+%\newcommand{\COS}{\mbox{\tt cos}}
+%\newcommand{\ARCTAN}{\mbox{\tt arctan}}
+%\newcommand{\EXP}{\mbox{\tt exp}}
+%\newcommand{\LN}{\mbox{\tt ln}}
+%\newcommand{\SIZE}{\mbox{\tt size}}
+%\newcommand{\CHR}{\mbox{\tt chr}}
+%\newcommand{\ORD}{\mbox{\tt ord}}
+%\newcommand{\EXPLODE}{\mbox{\tt explode}}
+%\newcommand{\IMPLODE}{\mbox{\tt implode}}
+%\newcommand{\REALDIV}{\mbox{\tt /}}
+%\newcommand{\DIV}{\mbox{\tt div}}
+%\newcommand{\MOD}{\mbox{\tt mod}}
+%\newcommand{\TIMES}{\mbox{\tt  *}}
+%\newcommand{\PLUS}{\mbox{\tt +}}
+%\newcommand{\MINUS}{\mbox{\tt -}}
+%\newcommand{\APPEND}{\mbox{\verb-@-}}
+%\newcommand{\EQ}{\mbox{\verb-=-}}
+%\newcommand{\NEQ}{\mbox{\verb-<>-}}
+%\newcommand{\LESS}{\mbox{\verb-<-}}
+%\newcommand{\GREATER}{\mbox{\verb->-}}
+%\newcommand{\LEQ}{\mbox{\verb-<=-}}
+%\newcommand{\GEQ}{\mbox{\verb->=-}}
+%\newcommand{\COMP}{\mbox{\tt o}}
+
+%\newcommand{\STDIN}{\mbox{\tt std\_in}}
+%\newcommand{\OPENIN}{\mbox{\tt open\_in}}
+%\newcommand{\INPUT}{\mbox{\tt input}}
+%\newcommand{\LOOKAHEAD}{\mbox{\tt lookahead}}
+%\newcommand{\CLOSEIN}{\mbox{\tt close\_in}}
+%\newcommand{\ENDSTREAM}{\mbox{\tt end\_of\_stream}}
+%\newcommand{\STDOUT}{\mbox{\tt std\_out}}
+%\newcommand{\OPENOUT}{\mbox{\tt open\_out}}
+%\newcommand{\OUTPUT}{\mbox{\tt output}}
+%\newcommand{\CLOSEOUT}{\mbox{\tt close\_out}}
+%\newcommand{\IOFAILURE}{\mbox{\tt io\_failure}}
+\newcommand{\comment}{{\it Comment:\ }}
+\newcommand{\comments}{{\it Comments:\ }}
+\newcommand{\rulesec}[2]{\subsection*{{\bf#1}\hfill\fbox{$#2$}}}
+%
+\font\msxm=msxm10
+\textfont10=\msxm
+\mathchardef\restrict="0A16
+%
+% $$f\restrict_A$$                   % Example of use
+%alignment
+%\halign{\indent$#$&\quad$#$&\quad$#$\hfil&\quad\parbox[t]{6cm}{\strut#\strut}\cr
+
+
+\newcommand{\derivedstrbinder}
+           {\ensuremath{\strid\ \boxml{:}\ \sigexp\ \boxml{=}\ \modexp\,\langle \boxml{and}\ \strbind \rangle}}
+\newcommand{\equivalentstrbinder}
+           {\ensuremath{\strid\ \boxml{=}\ \modexp\ \boxml{:}\ \sigexp\,\langle\boxml{and}\ \strbind\rangle}}
+\newcommand{\derivedabststrbinder}
+           {\ensuremath{\strid\ \boxml{:>}\ \sigexp\ \boxml{=}\ \modexp\,\langle \boxml{and}\ \strbind \rangle}}
+\newcommand{\equivalentabststrbinder}
+           {\ensuremath{\strid\ \boxml{=}\ \modexp\ \boxml{:>}\ \sigexp\,\langle\boxml{and}\ \strbind\rangle}}
+
+
+
+
+
+\newcommand{\funarg}[1]{\ensuremath{\langle\boxml{(}\rangle_{#1}\modid_{#1}\boxml{:}\sigexp_{#1}\langle\boxml{)}\rangle_{#1}}}
+
+
+
+
+
+
+
+
+
+
+
+
