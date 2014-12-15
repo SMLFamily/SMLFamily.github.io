@@ -1,0 +1,689 @@
+\section{Syntax of the Core}
+\label{syn-core-sec}
+
+\subsection{Reserved Words}
+The\index{6.1}
+following are the {\sl reserved words} used in the Core.   They
+may not (except ~{\tt =}~) be used as identifiers.   
+%In this document the alphabetic reserved words are 
+%always shown in typewriter font.
+
+% (cvr
+% \vspace*{-6pt}
+% \begin{verbatim}
+%      abstype   and   andalso   as   case   do   datatype   else
+%      end    exception    fn    fun    handle    if   in   infix
+%      infixr   let     local    nonfix   of   op   open   orelse
+%      raise   rec   then   type   val   with   withtype    while
+%      (  )   [  ]   {  }  ,  :  ;  ...    _   |  =   =>   ->   #   
+% \end{verbatim}
+% \vspace*{-6pt}
+
+\vspace*{-6pt}
+\begin{verbatim}
+abstype  and   andalso  as  case   do   datatype    else    end
+exception  fn     fun    functor    handle    if    in    infix
+infixr  let local nonfix   of  op   open   orelse  raise    rec 
+signature structure then  type val  with  withtype  where while  
+(  )   [  ]   {  }   ,   :   ;   .   ...  _  |   =   =>   ->  #     
+\end{verbatim}
+\vspace*{-6pt}
+% cvr)
+\subsection{Special constants}
+\label{cr:speccon}
+
+An \index{6.2} {\sl integer constant (in decimal notation)} is an optional
+negation symbol (\tttilde) followed by a non-empty sequence of decimal digits
+(\verb+0+-\verb+9+). 
+An {\sl integer constant (in hexadecimal notation)} is an optional
+negation symbol followed by \verb+0x+ followed by a non-empty sequence of
+hexadecimal digits (\verb+0+-\verb+9+\verb+a+-\verb+f+\verb+A+-\verb+F+, where 
+\verb+A+-\verb+F+ are alternatives for \verb+a+-\verb+f+,
+respectively).
+
+A {\sl word constant (in decimal notation) \sl} is \verb+0w+ followed
+by a non-empty sequence of decimal digits.
+A {\sl word constant (in
+hexadecimal notation)} is \verb+0wx+ followed by a non-empty sequence of
+hexadecimal digits.
+
+A {\sl real constant} is an integer constant in decimal notation,
+possibly followed by a point ({\tt .}) and one or
+more digits, possibly followed by an exponent symbol ~{\tt E}~ and an integer
+constant in decimal notation; at least one of the optional parts must occur, hence no integer
+constant is a real constant.
+Examples: ~~{\tt 0.7}~~~{\tt 3.32E5}~~~\verb(3E~7(~~.  Non-examples:
+~~{\tt 23}~~~{\tt .3}~~~{\tt 4.E5}~~~{\tt 1E2.0}~~.
+
+We assume an underlying alphabet of $N$ characters 
+($N \geq 256$), numbered 0 to $N-1$, which agrees with the ASCII 
+character set on the characters numbered 0 to 127.
+The interval $[0, N-1]$ is called the {\sl ordinal range} of
+the alphabet.
+A {\sl string constant} is a sequence, between quotes ({\tt "}), of zero or
+more printable characters (i.e., numbered 33--126), spaces or escape 
+sequences.
+Each escape sequence starts with the
+escape character ~\verb+\+~, and stands for a character sequence. The
+escape sequences are:
+\smallskip
+
+%\begin{quote}
+%\begin{tabular}{ll}
+\halign{\indent#\hfil&\quad\parbox[t]{11cm}{\strut#\strut}\cr
+\verb+\a+ & A single character interpreted by the system as alert (ASCII 7) \cr
+\verb+\b+ & Backspace (ASCII 8) \cr
+\verb+\t+   & Horizontal Tab (ASCII 9)\cr
+\verb+\n+   & Linefeed, also known as newline (ASCII 10) \cr
+\verb+\v+   & Vertical Tab (ASCII 11)\cr
+\verb+\f+   & Form Feed (ASCII 12) \cr
+\verb+\r+   & Carriage return (ASCII 13) \cr
+\verb+\^+$c$  & The control character $c$, where $c$ may
+                be any character with number 64--95. The number
+                of ~{\tt\char'134\char'136}$c$~ is 64 less than the 
+                number of $c$.\cr
+\verb+\+$ddd$ & The single character with number $ddd$ (3 decimal digits
+denoting an integer in the ordinal range of the alphabet).\cr
+\uconst & The single character with number $xxxx$ (4 hexadecimal digits
+denoting an integer in the ordinal range of the alphabet).\cr
+\verb+\"+   & {\tt "}\cr
+\verb+\\+   & {\tt\char'134}\cr
+\verb+\+$f\cdot\cdot f$\verb+\+
+            & This sequence is ignored,
+              where $f\cdot\cdot f$ stands for a sequence 
+             of one or more formatting characters.\cr
+}
+%\end{tabular}
+%\end{quote}
+\smallskip
+
+The {\sl formatting characters}\index{6.3} are a subset of the non-printable
+            characters including at least space, tab, newline, formfeed.
+The last form allows long strings to be written on more than one line, by
+            writing ~\verb+\+~ at the end of one line and at the start of the
+            next.\nopagebreak
+
+A character constant is a sequence of the form \verb+#+$s$, where $s$
+is a string constant denoting a string of size one character.
+
+Libraries may provide multiple numeric types and multiple string types. To each string type corresponds an alphabet with ordinal range $[0, N -  1]$ for some 
+$N\geq 256$; each alphabet must agree with the ASCII character set on the characters numbered 0 to 127. When multiple alphabets are supported, all characters of a given string constant are interpreted over the same alphabet. For each special constant, overloading resolution is used for determining the type of the constant (see \ref{overloading-app}).
+
+We denote by {\SCon} the class of {\sl special constants}, i.e., the integer,
+real, and string constants; we shall use {\scon}
+to range over \SCon.\index{6.4}
+
+\subsection{Comments}
+A\index{7.1} {\sl comment} 
+is any character sequence within comment brackets ~{\tt (* *)}~
+in which
+comment brackets are properly nested. No space is allowed between the two characters which make up a comment bracket  ~{\tt(*}~ or  ~{\tt*)}~.
+An unmatched ~{\tt (*}~ should be
+detected by the compiler.
+
+%
+\subsection{Identifiers}
+\label{cyn-core-identifiers-sec}
+The classes of {\sl identifiers}\index{7.2} for the Core are shown in
+Figure~\ref{identifiers}.
+
+\begin{figure}[tp]
+\vspace{4pt}
+\makeatletter{}
+\tabskip\@centering
+\halign to\textwidth
+{#\hfil\tabskip1em&(#)\hfil\tabskip1em&#\hfil\tabskip\@centering\cr
+%\Var	& value variables	& long\cr
+%\Con	& value constructors	& long\cr
+%\Exn    & exception constructors& long\cr
+\VId   & value identifiers & long\cr % (cvr)
+%\TyVar	& type variables	& \cr
+\TyId	& type identifiers	& \cr
+
+\TyCon  & type constructors     & long\cr
+\Lab    & record labels         & \cr
+\StrId  & structure identifiers & long\cr
+%\FunId  & functor identifiers & long\cr
+%\ModId  & module identifiers & long\cr
+}
+\makeatother
+\caption{Identifiers}
+\label{identifiers}
+\vspace*{-3mm}
+\end{figure}
+% We use $\vid$, $\tyvar$ to range over \VId, \TyVar\ etc.  For each class
+We use $\vid$, $\tyid$ to range over \VId, \TyId\ etc.  For each class
+{\rm X} marked ``long'' there is a class {\rm longX} of {\sl long identifiers}; if
+$x$ ranges over {\rm X} then {\it longx} ranges over {\rm longX}.  The syntax of
+these long identifiers is given by the following: 
+\vspace*{-6pt}
+% \begin{quote}
+% \begin{tabular}{rcll} {\it longx} & $::=$ & $x$ & identifier\\
+% & &$\modid_1.\cdots.\modid_n.x$ & qualified identifier ($n\geq 1$)
+% \end{tabular} 
+% \end{quote}
+\begin{quote}
+\begin{tabular}{rcll} {\it longx} & $::=$ & $x$ & identifier\\
+& &$\longstrid.x$ & qualified identifier ($n\geq 1$)
+\end{tabular} 
+\end{quote}
+\vspace*{-6pt}
+The qualified identifiers constitute a link between the Core and the
+Modules. Throughout this document, the term ``identifier'', occurring 
+without an adjective, refers to non-qualified identifiers only.
+%version 2: For each class X marked
+%``long'' there is also a class
+%\[ {\rm LongX} = \StrId^\ast \times {\rm X} \]
+%If $x$ ranges over X, then {\it longx}, or
+%$\strid_1.\cdots.\strid_k.x$, $k\geq 0$, ranges over LongX.
+%These long identifiers constitute the only link between the Core
+%and the language constructs for Modules; by omitting them, and the $\OPEN$
+%declaration,
+%we obtain the Core as a complete programming language in
+%its own right. (The corresponding adjustment to the Core static and
+%dynamic semantics is simply to omit structure environments $\SE$.).
+
+An identifier is either {\sl alphanumeric}: any sequence of
+letters, digits, primes ({\tt '}) and underbars (\wildpat) starting
+with a letter or prime, or {\sl symbolic}: any non-empty sequence of the
+following {\sl symbols}\index{7.3}
+\vspace*{-6pt}
+\begin{center}
+%\verb(!  %  &  $  +  -  /  :  <  =  >  ?  (@\verb(  \  ~  `  ^  |  *(
+\verb(!  %  &  $  #  +  -  /  :  <  =  >  ?  @  \  ~  `  ^  |  *(
+\end{center}
+\vspace*{-6pt}
+In either case, however, reserved words are excluded.   This means that for
+example ~\verb+#+~ and ~{\tt |}~ are not identifiers, but  ~\verb+##+~ and
+~{\tt |=|}~ are identifiers.
+The only exception to this rule is that the symbol ~{\tt =}~, which is
+a reserved word, is also allowed as an identifier to stand for
+the equality predicate.
+The identifier ~{\tt =}~ may not be re-bound;
+this precludes any syntactic ambiguity.
+
+% A type variable $\tyvar$\index{7.4}\label{etyvar-lab} may be any
+% alphanumeric identifier starting with a prime; the subclass \EtyVar\ of
+% \TyVar, the {\sl equality} type variables, consists of those which
+% start with two or more primes.  
+
+A type identifier $\tyid$\index{7.4}\label{etyid-lab} may be any
+alphanumeric identifier starting with a prime; the subclass \ETyId\ of
+\TyId, the {\sl equality} type identifiers, consists of those which
+start with two or more primes.  
+
+%poly 
+% sml'90
+% The subclass $\ImpTyVar$ of
+% $\TyVar$, the {\sl imperative} type variables, consists of those which
+% start with one or two primes followed by an underbar.  The complement
+% $\AppTyVar=\TyVar\setminus\ImpTyVar$\index{8.1} consists of the {\sl
+% applicative} type variables.  
+The other four classes ({\VId}, {\TyCon}, {\Lab} and {\StrId}) are represented by identifiers
+not starting with a prime. However,\index{7.5} {\tt *} is excluded from {\TyCon},
+to avoid confusion with the derived form of tuple type (see
+Figure~\ref{typ-gram}). The class \Lab\index{8.2} is extended to
+include the {\em numeric} labels ~{\tt 1}~~{\tt 2}~~{\tt 3}~ $\cdots$,
+i.e. any numeral not starting with~{\tt 0}.
+
+% \TyVar\ is therefore disjoint % (cvr)
+\TyId\ is therefore disjoint % (cvr)
+from the other four classes.   Otherwise, the syntax class of an occurrence of
+identifier $\id$ in a Core phrase (ignoring derived forms, 
+Section~\ref{cor-der-form-sec}) is determined thus:
+\begin{enumerate}
+  \item Immediately before ``.'' -- i.e. in a long identifier -- or in an
+        $\OPEN$ declaration, $\id$ is a structure
+        identifier.  The following rules assume that all occurrences of
+        structure identifiers have been removed.
+  \item At the start of a component in a record type, record pattern or record
+        expression,  $\id$ is a record label.
+  \item Elsewhere in types $\id$ is a type constructor.
+%  \item Elsewhere $\id$ is an exception name if it occurs immediately after
+%        $\RAISE$, at the start of a handler rule $\hanrule$, or within an
+%        $\EXCEPTION$ declaration or specification.
+%   \item Elsewhere, $\id$ is an exception constructor if it occurs in
+%         the scope of an exception binding which introduces it as such, 
+%         or a value constructor if it occurs in the
+%         scope of a datatype binding which introduced it as such;
+%         otherwise it is a value variable.
+   \item Elsewhere, $\id$ is a value identifier.
+\end{enumerate}
+% It follows from the last rule that no value declaration can make a
+% ``hole'' in the scope of a value or exception constructor 
+% by introducing the same identifier as a variable; this
+% is because, in the scope of the declaration which introduces $\id$ as a value
+% or exception constructor, any occurrence of $\id$ in a pattern 
+% is interpreted as the
+% constructor and not as the binding occurrence of a new variable.
+
+% cvr: TODO
+By means of the above rules a compiler can determine the class to which each
+identifier occurrence belongs; for the remainder of this document we shall
+therefore assume that the classes are all disjoint.
+
+\subsection{Lexical analysis}
+Each\index{8.4} item of lexical analysis is either a reserved word, a numeric label, a
+special constant or a long identifier.
+Comments and formatting characters
+separate items (except within string constants; see Section~\ref{cr:speccon})
+and are otherwise
+ignored.   At each stage the longest next item is taken.
+
+\subsection{Infixed operators}
+An\index{8.5} identifier may be given {\sl infix status} by the
+~$\INFIX$~ or ~$\INFIXR$~ directive, which may occur as a
+declaration or specification; 
+% this status only pertains to its use as a $\var$, a
+% $\con$ or an $\exn$ within the scope (see below) of the directive.
+% (cvr
+this status only pertains to its use as a $\vid$ within the scope
+(see below) of the directive.
+% cvr) 
+(Note that qualified identifiers never have infix status.)  If $\vid$
+has infix status, then ``$\exp_1\ \vid\ \exp_2$'' (resp. ``$\pat_1\
+\vid\ \pat_2$'') may occur -- in parentheses if necessary -- wherever
+the application ``$\vid$\verb+{+{\tt 1=}$\exp_1$\verb+,+{\tt
+2=}$\exp_2$\verb+}+'' or its derived form
+``$\vid$\verb+(+$\exp_1$\verb+,+$\exp_2$\verb+)+'' (resp
+``$\vid$\verb+(+$\pat_1$\verb+,+$\pat_2$\verb+)+'') would otherwise
+occur.  On the other hand, an occurrence of any long identifier (qualified
+or not) prefixed by {\OP} is treated as non-infixed. The only required
+use of {\OP} in the Core is in prefixing a non-infixed occurrence of an
+identifier $\vid$ which has infix status; elsewhere in the Core {\OP}, where
+permitted, has no effect.\index{9.1}\footnote{In Modules, {\OP} is used
+to resolve the occurrence of long module identifier to either a
+long structure identifier or a long functor identifier,
+whenever the interpretation of the original identifier is not 
+determined by the context}.
+%version 2: On the other 
+%hand, non-infixed occurrences of $\id$ must be prefixed by the reserved word
+%~$\OP$~.\index{9.1} 
+Infix status is cancelled by the ~$\NONFIX$~
+directive.  We refer to the three directives collectively as {\sl
+fixity directives}.
+
+The form of the fixity directives is as follows ($n\geq 1$):
+\[ \longinfix \]
+\[ \longinfixr \]
+\[ \longnonfix \]
+where $\langle d\rangle$ is an optional decimal digit $d$ indicating
+binding precedence. A higher value of $d$ indicates tighter binding;
+the default is $0$.
+% ~$\INFIX$~ and ~$\INFIXR$~ dictate left and right
+% associativity respectively; association is always to the left for different
+% operators of the same precedence. 
+% (cvr
+~$\INFIX$~ and ~$\INFIXR$~ dictate left and right
+associativity respectively.
+In an expression of the form 
+ $\exp_1\ \vid_1\ \exp_2\ \vid_2\ \exp_3$, 
+where $\vid_1$ and $\vid_2$ are infixed operators with the same precedence, either both must associate to the left or both must associate to the right. For example, suppose that \verb+<<+ and \verb+>>+ have equal precedence, but associate to the left and right respectively; then
+\begin{quote}
+\begin{tabular}{rcl}
+\verb+x << y << z+ & parses as & \verb+(x << y) << z+ \\
+\verb+x >> y >> z+ & parses as & \verb+x >> (y >> z)+ \\
+\verb+x << y >> z+ & is illegal & \\
+\verb+ x >> y << z+ & is illegal & 
+\end{tabular}
+\end{quote}
+% cvr)
+
+The precedence of infix operators relative
+to other expression and pattern constructions is given in
+Appendix~\ref{core-gram-app}.
+
+The {\sl scope}\index{9.2} of a fixity directive $\dir$ is the ensuing program text,
+except that if $\dir$ occurs in a declaration $\dec$ in either of the phrases
+\[ \LET\ \dec\ \IN\ \cdots\ \END \]
+\[ \LOCAL\ \dec\ \IN\ \cdots\ \END \]
+then the scope of $\dir$ does not extend beyond the phrase. Further scope
+limitations are imposed for Modules.
+
+These directives and ~$\OP$~ are omitted from the Core semantic rules, since they affect only parsing.
+
+\subsection{Derived Forms}
+\label{cor-der-form-sec}
+There\index{9.3} are many standard syntactic forms in ML whose meaning can be expressed
+in terms of a smaller number of syntactic forms, called the {\sl bare} language.
+These derived forms, and their equivalent forms in the bare language, are
+given in
+Appendix~\ref{derived-forms-app}.
+
+%With one exception, these derived forms use no new lexical items.  The
+%exception is that the symbol \verb+#+ prefixed to an identifier of the
+%class Lab constitutes a
+%lexical item;  \verb+#+{\it lab} denotes a selector function on records, cf. page~\pageref{der-exp}.
+
+\subsection{Grammar}
+
+The phrase classes for the Core are shown in Figure~\ref{cor-phr}.
+We use the variable 
+%$\vidpath$ to range of VIdPath, 
+$\atexp$ to range over AtExp, etc.
+
+The grammatical rules for the Core are shown in Figures~\ref{exp-syn},
+\ref{dec-syn} and  \ref{pat-syn}.
+
+%\clearpage
+\begin{figure}[tp]
+\vspace{4pt}
+\makeatletter{}
+\tabskip\@centering
+\halign to\textwidth
+{#\hfil\tabskip1em&#\hfil\tabskip\@centering\cr
+%VIdPath & value identifier paths \cr % (cvr)
+AtExp	& atomic expressions \cr
+ExpRow  & expression rows \cr
+Exp     & expressions \cr
+Match   & matches \cr
+Mrule   & match rules \cr
+\noalign{\vspace{2mm}}
+%\cr
+Dec     & declarations \cr
+ValBind & value bindings \cr
+TypBind & type bindings \cr
+DatBind & datatype bindings \cr
+ConBind & constructor bindings \cr
+%version 1: Constrs & datatype constructions \cr
+ExBind  & exception bindings \cr
+\noalign{\vspace{2mm}}
+%\cr
+AtPat   & atomic patterns \cr
+PatRow  & pattern rows \cr
+Pat     & patterns \cr
+\noalign{\vspace{2mm}}
+%\cr
+TyConPath & type constructor paths \cr % (cvr)
+Ty      & type expressions \cr
+TyRow   & type-expression rows \cr
+}
+\makeatother
+\caption{Core Phrase Classes}
+\label{cor-phr}
+\end{figure}
+
+The following\index{10.1} conventions are adopted in presenting the grammatical rules,
+and in their interpretation:
+\begin{itemize}
+  \item The brackets\index{10.2} ~$\langle\ \rangle$~ enclose optional phrases.
+  \item For any syntax class X (over which $x$ ranges)
+we define the syntax class Xseq (over which {\it xseq} ranges) as follows:
+    \begin{quote}
+    \begin{tabular}{rcll}
+       {\it xseq} & $::=$ & $x$ & (singleton sequence)\\
+                  &       &     & (empty sequence)\\
+                  &       & \ml{(}$x_1$\ml{,}$\cdots$\ml{,}$x_n$\ml{)}
+                                & (sequence,~$n\geq 1$) \\
+    \end{tabular}
+    \end{quote}
+(Note that the ``$\cdots$'' used here, meaning syntactic iteration, must not be
+confused with ``$\wildrec$'' which is a reserved word of the language.)
+  \item Alternative forms for each phrase class are in order of decreasing
+        precedence; this resolves ambiguity in parsing, as explained
+        in Appendix~\ref{core-gram-app}.\index{10.3}
+  \item L (resp. R)\index{10.4} means left (resp. right) association.
+
+\item The syntax of types binds more tightly than that of expressions.
+
+\item Each\index{10.6} iterated construct (e.g. $\match$, $\cdots$)
+extends as far
+right as possible; thus, parentheses may be needed around an expression which
+terminates with a match, e.g. ``$\FN\ \match$'', if this occurs within a
+larger
+match.
+\end{itemize}
+
+
+\begin{figure}[tp]
+\vspace{4pt}
+\makeatletter{}
+\tabskip\@centering
+\halign to\textwidth
+{#\hfil\tabskip1em&\hfil$#$\hfil&#\hfil&#\hfil\tabskip\@centering\cr
+% (cvr
+%\vidpath& ::= & \longvidpath  & long value identifier \cr
+%        &     & \anonvidpath &  value projection \cr
+% cvr)
+\noalign{\vspace{6pt}}
+  \atexp& ::=	& \scon 	& special constant\cr
+        & 	& \opp\longvid	& value identifier \cr
+%        &       & \opp\longvar & exception constructor\cr
+%        &       & \opp\longcon	& value constructor\cr
+%        &       & \opp\longexn  & exception constructor\cr
+	&	& \verb+{ +\recexp\verb+ }+
+	                	& record\cr
+	&	& \letexp	& local declaration\cr
+        &       & \structureatexp    & structure package \cr
+        &       & \functoratexp    & functor package \cr
+%        &       & \openatexp    & package elimination \cr
+	&	& \parexp	& \cr
+\noalign{\vspace{6pt}}
+\labexps& ::=	& \longlabexps	& expression row\cr
+\noalign{\vspace{6pt}}
+  \exp  & ::=	& \atexp 	& atomic\cr
+	&	& \appexp	& application (L)\cr
+	&	& \infexp       & infixed application\cr
+	&	& \typedexp	& typed (L)\cr
+	&	& \handlexp	& handle exception\cr
+	&	& \raisexp	& raise exception\cr
+	&	& \fnexp        & function\cr
+\noalign{\vspace{6pt}}
+\match  & ::=	& \longmatch    & \cr
+\noalign{\vspace{6pt}}
+\mrule	& ::=	& \longmrule	& \cr
+% \noalign{\vspace{6pt}}
+%   \dec  & ::=	& \valdec	& value declaration\cr
+% 	&	& \typedec	& type declaration\cr
+% 	&	& \datatypedec  & datatype declaration\cr
+% % (cvr
+% %        &       & \datatyperepdec & datatype replication \cr
+%          &       & $\DATATYPE\ \tyidseq_1\ \tycon\ \verb+=+$ & \cr
+%          &       & $\quad\quad\quad  \DATATYPE\ \tyidseq_2\ \tyconpath$ &  datatype replication \cr
+% % cvr)
+% 	&	& \abstypedec   & abstype declaration\cr
+% 	&	& \exceptiondec & exception declaration\cr
+% 	&	& \localdec	& local declaration\cr
+% %        &       & \openstrdec   & open declaration ($n\geq 1$) \c
+% % (cvr
+%         &       & \opendec   & open declaration ($n\geq 1$) \cr % (cvr)
+%         &       & \structuredec   & structure declaration  \cr % (cvr)
+%         &       & \moduledec   & module declaration \cr % (cvr)
+%         &       & \functordec   & functor declaration  \cr % (cvr)
+%         &       & \signaturedec   & signature declaration \cr % (cvr)
+% % cvr)
+% 	&	& \emptydec	& empty declaration\cr
+% 	&	& \seqdec	& sequential declaration\cr
+%         &       & \longinfix    & infix (L) directive\cr
+%         &       & \longinfixr   & infix (R) directive\cr
+%         &       & \longnonfix   & nonfix directive\cr
+% \noalign{\vspace{6pt}}
+% \valbind& ::=   & \longvalbind   & \cr
+% 	&	& \recvalbind	& \cr
+% \noalign{\vspace{6pt}}
+% \typbind& ::=	& \longtypbind	& \cr
+% \noalign{\vspace{6pt}}
+% \datbind& ::=	& \longdatbind	& \cr
+% \noalign{\vspace{6pt}}
+% \constrs& ::=	& \opp\longconstrs & \cr
+% \noalign{\vspace{6pt}}
+% \exnbind& ::=	& \generativeexnbind	& \cr
+%         &       & \eqexnbind   & \cr
+% \noalign{\vspace{6pt}}
+}
+\makeatother
+\vspace{-2mm}
+\caption{Grammar: Expressions and Matches
+% , Declarations and Bindings
+\index{11}
+% \index{12.1}
+}
+\label{exp-syn}
+\end{figure}
+
+\begin{figure}[tp]
+\vspace{4pt}
+\makeatletter{}
+\tabskip\@centering
+\halign to\textwidth
+{#\hfil\tabskip1em&\hfil$#$\hfil&#\hfil&#\hfil\tabskip\@centering\cr
+% (cvr
+% \noalign{\vspace{6pt}}
+  \dec  & ::=	& \valdec	& value declaration\cr
+	&	& \typedec	& type declaration\cr
+	&	& \datatypedec  & datatype declaration\cr
+% (cvr
+        &       & \datatyperepdec & datatype replication \cr
+%         &       & $\DATATYPE\ \tyidseq_1\ \tycon\ \verb+=+$ & \cr
+%         &       & $\quad\quad\quad  \DATATYPE\ \tyidseq_2\ \tyconpath$ &  datatype replication \cr
+% cvr)
+	&	& \abstypedec   & abstype declaration\cr
+	&	& \exceptiondec & exception declaration\cr
+	&	& \localdec	& local declaration\cr
+%        &       & \openstrdec   & open declaration ($n\geq 1$) \c
+% (cvr
+        &       & \opendec   & open declaration \cr
+        &       &            & \qquad ($n\geq 1$) \cr % (cvr)
+        &       & \structuredec   & structure declaration  \cr % (cvr)
+%        &       & \moduledec   & module declaration \cr % (cvr)
+        &       & \functordec   & functor declaration  \cr % (cvr)
+        &       & \signaturedec   & signature declaration \cr % (cvr)
+% cvr)
+	&	& \emptydec	& empty declaration\cr
+	&	& \seqdec	& sequential declaration\cr
+        &       & \longinfix    & infix (L) directive\cr
+        &       & \longinfixr   & infix (R) directive\cr
+        &       & \longnonfix   & nonfix directive\cr
+\noalign{\vspace{6pt}}
+\valbind& ::=   & \longvalbind   & \cr
+	&	& \recvalbind	& \cr
+\noalign{\vspace{6pt}}
+\typbind& ::=	& \longtypbind	& \cr
+\noalign{\vspace{6pt}}
+\datbind& ::=	& \longdatbind	& \cr
+\noalign{\vspace{6pt}}
+\constrs& ::=	& \opp\longconstrs & \cr
+\noalign{\vspace{6pt}}
+\exnbind& ::=	& \generativeexnbind	& \cr
+        &       & \eqexnbind   & \cr
+\noalign{\vspace{6pt}}
+}
+\makeatother
+\vspace{-2mm}
+\caption{Grammar: Declarations and Bindings\index{12.1}}
+\label{dec-syn}
+\end{figure}
+
+\clearpage % 1 August
+\begin{figure}[tp]
+%\vspace{4pt}
+\makeatletter{}
+\tabskip\@centering
+\halign to\textwidth
+{#\hfil\tabskip1em&\hfil$#$\hfil&#\hfil&#\hfil\tabskip\@centering\cr
+  \atpat& ::=	& \wildpat	& wildcard\cr
+  	&	& \scon  	& special constant\cr
+% (cvr
+   	&	& \opp\longvid 	& variable\cr
+% cvr)
+%   	&	& \opp\var  	& variable\cr
+% 	&	& \opp\longcon  & constant\cr
+%         &       & \opp\longexn  & exception constant\cr
+	&	& \verb+{ +\recpat\verb+ }+
+	                        & record\cr
+	&	& \parpat       & \cr
+\noalign{\vspace{6pt}}
+\labpats& ::=	& \wildrec	& wildcard\cr
+  	&	& \longlabpats 	& pattern row\cr
+\noalign{\vspace{6pt}}
+  \pat	& ::=	& \atpat	& atomic\cr
+	&	& \opp\conpat	& value construction\cr
+%        &       & \opp\exconpat  & exception construction\cr
+	&	& \infpat       & infixed value construction\cr
+%        &       & \infexpat     & infixed exception construction\cr
+	&	& \typedpat	& typed\cr
+	&	& \opp\layeredpat	& layered\cr
+\noalign{\vspace{6pt}}
+% (cvr
+\tyconpath& ::= & \longtyconpath  & long type constructor \cr
+          &     & \anontyconpath &  type projection \cr
+% cvr)
+\noalign{\vspace{6pt}}
+  \ty   & ::=	% & \tyvar        & type variable\cr
+                  & \tyid        & type identifier\cr
+	&	& \verb+{ +\rectype\verb+ }+
+	                        & record type expression\cr
+	&	& \constype 	& type construction\cr
+	&	& \funtype      & function type expression (R)\cr
+        &       & \packtype     & package type expression\cr % (cvr)
+	&	& \partype      & \cr
+\noalign{\vspace{6pt}}
+\labtys & ::=	& \longlabtys   & type-expression row\cr
+\noalign{\vspace{6pt}}
+}
+\makeatother
+\vspace{-2mm}
+\caption{Grammar: Patterns and Type expressions\index{12.2}\index{13.1}}
+\label{pat-syn}
+\end{figure}
+
+% \nopagebreak[4]
+
+\subsection{Syntactic Restrictions}\index{13.2}
+\label{core-syntactic-restrictions}
+\begin{itemize}
+%\item No pattern may contain the same $\var$ twice. No expression row,
+%      pattern row or type row may bind the same $\lab$ twice.
+% (cvr
+\item No expression row, pattern row or type row may bind the same $\lab$ twice.
+% cvr)
+\item No binding $\valbind$, $\typbind$, $\datbind$ or $\exnbind$ may bind
+      the same identifier twice; this applies also to value constructors within
+      a $\datbind$.
+\item No $\tyidseq$ may contain the $\tyid$ twice.
+% (cvr
+%     Any $\tyvar$
+%     occurring within the right side must occur in $\tyvarseq$. 
+% cvr)
+% (cvr
+
+\item For each value binding \pat\ \ml{=} \exp\ within $\REC$,
+      $\exp$ must be of the form \fnexp.
+      or more type expressions. The derived form
+      of function-value binding given in Appendix~\ref{derived-forms-app},
+      page~\pageref{der-dec}, necessarily obeys this restriction.
+
+\item No $\datbind$, $\valbind$ or $\exnbind$ may bind $\TRUE$, $\FALSE$,  
+$\NIL$, $\CONS$ or $\REF$. 
+No $\datbind$ or $\exnbind$ may bind {\tt it}.
+
+\item No real constant may occur in a pattern.
+\item In a value declaration  $\VAL\, \tyidseq\, \valbind$, if $\valbind$
+     contains another value declaration  $\VAL\, \tyidseq'\, \valbind'$ 
+     then $\tyidseq$ and $\tyidseq'$ must be disjoint.  In other 
+     words, no type variable may be scoped by two value
+     declarations of which one occurs inside the other.  This
+     restriction applies after $\tyidseq$ and $\tyidseq'$ have been
+     extended to include implicitly scoped type variables, as
+     explained in Section~\ref{scope-sec}.
+
+
+
+%from version 1:
+%\item Every non-local exception binding -- that is, not localised by $\LET$
+%      or $\LOCAL$ -- must be explicitly constrained by a type containing
+%      no type variables.
+%not needed, covered by polymorphic references and exceptions:
+%\item Any type expression $\ty$ occurring in a non-local 
+%      exception binding -- that is,
+%      one not localised by $\LET$ or $\LOCAL$ -- must contain no type
+%      variables.
+\end{itemize}
+
+
+
+
+
+
+
+

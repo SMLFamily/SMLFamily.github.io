@@ -1,0 +1,105 @@
+\section{Scope of Explicit Type Identifiers}
+\label{scope-sec}
+
+% In\index{23.10} the Core language, a type or datatype binding can 
+% explicitly introduce type variables whose scope is that binding.
+% In the modules, a description of a value, type, or datatype
+% may contain explicit type variables whose scope is that
+% description. However, we\index{23.11} still have to account for the
+% scope of an explicit type variable occurring in the ``\ml{:} $\ty$'' 
+% of a typed expression or pattern 
+% or in the ``\ml{of} $\ty$'' of an exception binding. For the rest
+% of this section, we consider such occurrences of type variables only.
+
+% Every occurrence of a value declaration is said to
+% {\sl scope} a set of explicit type variables determined as follows.
+
+% %Every explicit type variable $\alpha$ is {\sl scoped at} a value binding
+% %which is determined as follows.
+
+% First, an occurrence of $\alpha$ in a value declaration $\valdec$ is said
+% to be {\sl unguarded} if the occurrence is not part of a smaller value
+% declaration within $\valbind$.
+% In this case we say that $\alpha$ {\sl occurs unguarded} in the 
+% value declaration.
+
+% Then we say that $\alpha$ is {\sl scoped at} a particular occurrence
+% $O$ of $\valdec$ in a program if 
+% (1) $\alpha$ occurs unguarded in this value declaration, and 
+% (2) $\alpha$ does not occur unguarded in any larger value declaration
+% containing the occurrence $O$.\label{scope-def-lab}
+
+% Hence, associated with every occurrence of a value declaration there is 
+% a set $\U$ of the explicit type variables that are scoped at that
+% occurrence. One may think of each occurrence of $\VAL$ as being implicitly
+% decorated with such a  set, for instance:
+
+% \vspace*{3mm}
+% \halign{\indent$#$&$#$&$#$\cr
+% \mbox{$\VAL_{\{\}}$ \ml{x = }}&\mbox{\ml{(}}&
+% \mbox{\ml{let $\VAL_{\{\mbox{\ml{'a}}\}}$ Id1:'a->'a = fn z=>z in Id1 Id1 end,}}\cr
+% & &\mbox{\ml{let $\VAL_{\{\mbox{\ml{'a}}\}}$ Id2:'a->'a = fn z=>z in Id2 Id2 end)}}\cr
+% \noalign{\vspace*{3mm}}
+% \mbox{$\VAL_{\{\mbox{\ml{'a}}\}}$ \ml{x = }}&\mbox{\ml{(}}&
+% \mbox{\ml{let $\VAL_{\{\}}$ Id:'a->'a = fn z=>z in Id Id end,}}\cr
+% & &\mbox{\ml{fn z=> z:'a)}}\cr}
+
+% According to the inference rules in Section~\ref{stat-cor-inf-rules}
+% the first example can be elaborated, but the second cannot since \ml{'a}
+% is bound at the outer value declaration leaving no possibility of two 
+% different instantiations of the type of \ml{Id} in the application
+% \ml{Id Id}.
+
+In\index{23.10} the Core language, a type or datatype binding can explicitly
+introduce type identifiers whose scope is that binding.
+Similary, in Modules, a type or datatype description can explicitly
+introduce type identifiers whose scope is that description.
+Moreover, in a
+Core value declaration  \valdec,
+ the sequence \tyidseq\ binds
+type identifiers: a type identifier occurs free in \valdec\
+iff it occurs free in \valbind\ and is not in the sequence
+\tyidseq.
+Similarly, in a Modules value specification \valspec,  
+the sequence \tyidseq\ binds
+type identifiers: a type identifier occurs free in \valspec\
+iff it occurs free in \valdesc\ and is not in the sequence
+\tyidseq.
+However,\index{23.11} explicit binding of type identifiers at \ml{val}\ is
+optional, so we still have to account for the scope of any
+type indentifiers that occur free in type expressions.
+
+Every occurrence of a value declaration or specification is said to {\sl scope} a set of explicit type identifiers determined as follows.
+
+First, a free occurrence of $\alpha$ in a value declaration
+\valdec\ or value specification \valspec\  is said to be {\sl unguarded} if the occurrence is not part
+of a smaller value declaration or specification within the phrase.
+In this case we say that {\sl $\alpha$ occurs unguarded} in the phrase.
+
+Then we say that $\alpha$ is {\sl implicitly  scoped} at a particular value
+declaration \valdec\ or value specification \valspec\
+in a program if (1) $\alpha$ occurs
+unguarded in this phrase, and (2) $\alpha$ does not occur
+unguarded in any larger value declaration or specification containing the given phrase.
+\label{scope-def-lab}
+
+Henceforth, we assume that for every value declaration or specification
+ $\VAL\ \tyidseq\cdots$
+ occurring in the program, every explicit type identifier implicitly scoped at the 
+$\VAL$ has been added to \tyidseq . Thus for example, in the two declarations
+
+\begin{verbatim}
+val x = let val id:'a->'a = fn z=>z in id id end 
+val x = (let val id:'a->'a = fn z=>z in id id end; fn z=>z:'a)
+\end{verbatim}
+the type identifier \verb+'a+ is scoped differently; they become respectively
+
+\begin{verbatim}
+val x = let val 'a id:'a->'a = fn z=>z in id id end
+val 'a x = (let val id:'a->'a = fn z=>z in id id end; fn z=>z:'a)
+\end{verbatim}
+
+Then, according to the inference rules in Section~\ref{stat-cor-inf-rules} the first example can be elaborated, but the second cannot since
+\verb+'a+ is bound at the outer value declaration leaving no possibility of two different instantiations of the type of
+\verb+id+ in the application \verb+id id+.
+

@@ -1,0 +1,304 @@
+\documentstyle[a4,12pt]{article}
+\title{The Definition of Standard ML:\\
+Changes from Version 3}
+\author{David Berry\\Robin Milner}
+\include{mac} % macros
+%for agfa: \voffset -12mm
+\begin{document}
+
+\maketitle
+
+\noindent
+ The definition of Standard ML published in book form [1]
+contains some minor changes from Version 3 [2].  Most of these were required
+to ensure the existence of principal signatures as claimed in Section 5.13.  
+The others are minor syntactic clarifications.
+
+In addition to these changes, the book also has a new preface which
+replaces the prefaces to the first three versions of the definition, and
+several minor changes to the presentation.
+
+Line numbers and page numbers refer to Version~3.  The page numbers in
+the book are more or less the same up to and including Page~35 of Version~3,
+and one greater thereafter.
+\bigskip
+
+{\samepage
+\noindent
+{\bf Section 2.2.}
+
+\begin{description}
+\item[Line 6:] The {\tt +} sign has been deleted from before {\tt 3.32E5}.
+\item[Line 8:] Printable characters are those numbered 33-126.
+\item[Line 16:]
+The escape sequence \verb+\^c+ is allowed for any $c$ with number 64-95.
+The number of \verb+\^c+ is 64 less than the number of $c$.
+\end{description}
+\bigskip
+
+}
+{\samepage
+\noindent
+{\bf Section 2.8.}
+
+\begin{description}
+\item[Page 9:] An optional {\tt op} is allowed before a {\it longcon}
+or a {\it longexcon} in an atomic pattern. This change also applies to
+Page 72 in Appendix B.
+\end{description}
+\bigskip
+
+}
+\newpage
+{\samepage
+\noindent
+{\bf Section 4.9.}
+\medskip
+
+\noindent
+The text up to and excluding the last paragraph is replaced with the following:
+
+}
+\begin{quotation}
+\noindent
+A type structure $(\theta,\CE)$ is {\sl well-formed} if either
+$\CE=\emptymap$, or $\theta$ is a type name $t$.
+(The latter case arises, with $\CE\neq\emptymap$, in $\DATATYPE$
+declarations.)
+All type structures occurring in elaborations are assumed to
+be well-formed.
+
+A type structure $(\t,\CE)$ is said to
+{\sl respect equality} if, whenever $\t$ admits equality, then
+either $\t=\REF$ (see Appendix~C) or,
+for each $\CE(\con)$ of the form
+$\forall\alphak.(\tau\rightarrow\alphak\t)$,
+the type function $\Lambda\alphak.\tau$ also admits equality.
+(This ensures that the equality
+predicate ~{\tt =}~ will be applicable to a constructed value $(\con,v)$ of
+type $\tauk\t$ only when it is applicable to the value $v$ itself,
+whose type is $\tau\{\tauk/\alphak\}$.)
+A type environment $\TE$ {\sl respects equality} if all its type
+structures do so.
+
+Let $\TE$ be a type environment, and let $T$ be the set of type names
+$\t$ such that $(\t,\CE)$ occurs in $\TE$ for some
+$\CE\neq\emptymap$.  Then $\TE$ is said to {\sl maximise equality}
+if (a) $\TE$ respects equality, and also (b) if any larger subset of
+$T$ were to admit equality (without any change in the equality
+attribute of any type names not in $T$) then $\TE$ would cease to
+respect equality.
+\end{quotation}
+\medskip
+
+{\samepage
+\noindent
+{\bf Section 4.10.}
+\medskip
+
+\noindent
+Rules 19 and 20 both have an extra premise, and the associated comment has
+changed:
+\setcounter{equation}{18}
+
+}
+\begin{quotation}
+\begin{equation}        % datatype declaration
+\label{datatypedec-rule}
+\frac{\begin{array}{c}
+\C\oplus\TE\ts\datbind\ra\VE,\TE\qquad
+      \forall(\t,\CE)\in\Ran\TE,\ \t\notin(\of{\T}{\C}) \\
+     \mbox{$\TE$ maximises equality}
+     \end{array}
+     }
+     {\C\ts\datatypedec\ra(\VE,\TE)\ \In\ \Env}
+\end{equation}
+
+\begin{equation}        % abstype declaration
+\label{abstypedec-rule}
+\frac{\begin{array}{rl}
+      \C\oplus\TE\ts\datbind\ra\VE,\TE\qquad &
+      \forall(\t,\CE)\in\Ran\TE,\ \t\notin(\of{\T}{\C})\\
+      \C\oplus(\VE,\TE)\ts\dec\ra\E\qquad &
+     \mbox{$\TE$ maximises equality}
+      \end{array}
+     }
+     {\C\ts\abstypedec\ra\Abs(\TE,\E)}
+\end{equation}
+
+\begin{description}
+\item{(\ref{datatypedec-rule}),(\ref{abstypedec-rule})}
+The side conditions
+express that the elaboration of each datatype binding
+generates new type names and that as many of these new names
+as possible admit equality.  Adding $\TE$ to the context on the left
+of the $\ts$ captures the recursive nature of the binding.
+\end{description}
+\end{quotation}
+
+
+{\samepage
+\noindent
+{\bf Section 4.12.}
+\medskip
+
+\noindent
+The following initial paragraph has been added:
+
+}
+\begin{quotation}
+\noindent
+The notion of {\sl enrichment}, $\E\succ\E'$, between environments
+$\E=(\SE,\TE,\VE,\EE)$ and $\E'=(\SE',\TE',\VE',\EE')$ is defined
+in Section~5.11. For the present section,  $\E\succ\E'$
+may be taken to mean $\SE=\SE'=\emptymap$, $\TE=\TE'$,
+$\EE=\EE'$, $\Dom\VE=\Dom\VE'$ and, for each $\id\in\Dom\VE$,
+$\VE(\id)\succ\VE'(\id)$.
+\end{quotation}
+\bigskip
+
+{\samepage
+\noindent
+{\bf Section 5.5.}
+\medskip
+
+\noindent
+The following requirement has been added:
+\medskip
+
+}
+We also require that
+\begin{enumerate}
+\item In every sentence $A\ts\phrase\ra A'$  inferred by the rules
+given in Section~5.14, the assembly $\{A,A'\}$ is
+admissible.
+\item In the special case of a sentence $\B\ts\sigexp\ra\S$,
+we further require that the assembly consisting of all semantic
+objects occurring in the entire inference of this sentence be
+admissible. This  is important for the definition of principal
+signatures in Section~5.13.
+\end{enumerate}
+\medskip
+
+{\samepage
+\noindent
+{\bf Section 5.9.}
+\medskip
+
+\noindent
+The phrase ``We claim that'' has been replaced with ``It can be shown that''.
+\bigskip
+
+}
+{\samepage
+\noindent
+{\bf Section 5.12.}
+\medskip
+
+\noindent
+The phrase ``We claim that'' has been replaced with ``It can be shown that''.
+\bigskip
+
+}
+{\samepage
+\noindent
+{\bf Section 5.13.}
+\medskip
+
+\noindent
+This section has been completely replaced with the following:
+
+}
+\begin{quotation}
+\noindent
+The definitions in this section concern the elaboration of signature
+expressions; more precisely they concern inferences of sentences of the
+form $\B\ts\sigexp\ra\S$, where $\S$ is a structure and $\B$ is a basis.
+Recall, from Section~5.5, that the assembly of all semantic
+objects in such an inference must be admissible.
+
+For any basis $\B$ and any structure $\S$,
+we say that $\B$ {\sl covers} $\S$
+if for every substructure $(m,E)$ of $\S$ such that
+$m\in\of{\N}{\B}$:
+\begin{enumerate}
+\item
+For every structure identifier $\strid\in\Dom\E$,
+$\B$ contains a substructure $(m,\E')$ with $m$
+free and $\strid\in\Dom\E'$
+\item
+For every type constructor $\tycon\in\Dom\E$,
+$\B$ contains a substructure $(m,\E')$ with $m$ free
+and $\tycon\in\Dom\E'$
+\end{enumerate}
+(This condition is not a consequence of consistency of $\{\B,\S\}$;
+informally, it states that if $\S$ shares a substructure with $\B$,
+then $\S$ mentions no more components of the substructure than
+$\B$ does.)
+
+We say that a signature
+$\longsig{}$ is {\sl principal for $\sigexp$ in $\B$} if, choosing $\N$
+so that $(\of{\N}{\B})\cap\N=\emptyset$,
+\begin{enumerate}
+\item $\B$ covers $\S$
+\item $\B\vdash\sigexp\ra\S$
+\item Whenever $\B\vdash\sigexp\ra\S'$, then $\sigord{\longsig{}}{}{\S'}$
+\end{enumerate}
+We claim that if $\sigexp$ elaborates in $\B$ to some structure covered
+by $\B$, then it possesses a principal signature in $\B$.
+
+Analogous to the definition given for type environments in
+Section~4.9, we say that a semantic object $A$
+{\sl respects equality} if every type environment occurring in
+$A$ respects equality.
+
+Now let us assume that $\sigexp$ possesses a principal signature
+$\sig_0=\longsig{0}$ in $B$. We wish to
+define, in terms of $\sig_0$, another signature $\sig$ which provides more
+information about the equality attributes of structures which will
+match $\sig_0$. To this end, let $\T_0$ be the set of type names $\t\in\N_0$
+which do not admit equality, and such that $(\t,\CE)$ occurs in $\S_0$
+for some $\CE\ne\emptymap$.  Then we say $\sig$ is
+{\sl equality-principal for $\sigexp$ in $\B$} if
+\begin{enumerate}
+\item
+$\sig$ respects equality
+\item
+$\sig$ is obtained from $\sig_0$ just by making as many
+members of $\T_0$ admit equality as possible, subject to 1.~above
+\end{enumerate}
+It is easy to show that, if any such $\sig$ exists, it is determined
+uniquely by $\sig_0$; moreover, $\sig$ exists if $\sig_0$ itself
+respects equality.
+\end{quotation}
+\medskip
+
+{\samepage
+\noindent
+{\bf Section 5.14.}
+\medskip
+
+\noindent
+The requirement that $(N)S$ be principal in Rule 65 (and the associated
+comment) has been changed to requiring that it be equality-principal.
+\bigskip
+
+}
+
+\noindent
+{\bf Reference:}
+
+\begin{description}
+\item[{[1]}]
+Robin Milner, Mads Tofte and Robert Harper, {\it The Definition of
+Standard ML}, MIT, 1990.
+\item[{[2]}]
+Robert Harper, Robin Milner and Mads Tofte, {\it The Definition of
+Standard ML, Version 3}, Report ECS-LFCS-89-81, Laboratory for Foundations
+of Computer Science, Department of Computer Science, University of Edinburgh,
+1989.
+\end{description}
+
+
+\end{document}
+
